@@ -4,3 +4,7 @@ build/
 dist/
 private/
 *.swp
+Debug/
+Release/
+*.suo
+*.user
