@@ -1,0 +1,6 @@
+*.[oa]
+*.o.d
+build/
+dist/
+private/
+*.swp
