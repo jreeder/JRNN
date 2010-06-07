@@ -36,11 +36,16 @@ namespace JRNN {
         void setNumInputs(int numInputs);
         void setNumOutputs(int numOutputs);
         void distData(int numTrain, int numVal, int numTest);
+        void redistData();
 
     private:
         int size;
         int numInputs;
         int numOutputs;
+        int numTrain;
+        int numVal;
+        int numTest;
+        int randSeed;
         std::vector<int> randomRange;
         matDouble inputs;
         matDouble outputs;
@@ -52,6 +57,7 @@ namespace JRNN {
         matDouble testOuts;
 
         void genRandRange();
+        void distribute();
 
     };
 

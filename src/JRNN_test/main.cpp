@@ -47,7 +47,7 @@ int main(int argc, char** argv) {
         //bp.trainToConvergence(0.1, 50000);
         bp.trainToValConv(50000);
         int epochs = bp.getEpochs();
-        if (epochs > 1000 || skips > 1000){
+        if (epochs > 10000){
             myfile << epochs << "\t";
             hashedDoubleMap testresults = bp.testWiClass(dataset::TEST);
             std::pair<std::string,double> p;
@@ -58,7 +58,7 @@ int main(int argc, char** argv) {
             i++;
         }
         else{
-            skips++;
+            ds->redistData();
         }
         bp.reset();
     }

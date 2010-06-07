@@ -95,9 +95,23 @@ void dataset::loadFromFile(std::string filepath, int numInputs, int numOutputs){
 }
 
 void dataset::distData(int numTrain, int numVal, int numTest){
-    int i = 0;
+    this->numTrain = numTrain;
+    this->numVal = numVal;
+    this->numTest = numTest;
+    this->randSeed = 1983;
     genRandRange();
+    distribute();
+}
+
+void dataset::redistData(){
+    this->randSeed++;
+    genRandRange();
+    distribute();
+}
+
+void dataset::distribute(){
     //TODO: need to place some error checks here ... this is very unsafe.
+    int i = 0;
     for (;i < numTrain; i++)
     {
         this->trainIns.push_back(inputs[randomRange[i]]);
@@ -114,7 +128,7 @@ void dataset::distData(int numTrain, int numVal, int numTest){
 }
 
 void dataset::genRandRange(){
-    srand(1983);
+    srand(this->randSeed);
     vector<int> source;
     source.reserve(this->size);
     this->randomRange.resize(this->size);
