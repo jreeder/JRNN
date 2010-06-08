@@ -126,7 +126,7 @@ connection connection::operator *(const connection& rhs) {
 
 double connection::randomWeight(){
     double tmpDouble;
-    tmpDouble = ((rand() % 10000 + 1)/(double)5000)-1;
+    tmpDouble = ((rand() % 10000 + 1)/(double)10000)-0.5;
     return tmpDouble;
 }
 

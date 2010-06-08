@@ -38,28 +38,32 @@ int main(int argc, char** argv) {
     datasetPtr ds(new dataset());
     ds->loadFromFile(filename, numIn,numOut);
     ds->distData(100,100,500);
-    network net(numIn,numHid,numOut);
+    networkPtr net = network::createFFMLPNetwork(numIn,numHid,numOut);
     //net.printConnections();
-    BackPropTrainer bp(net, ds, 0.01);
+//    BackPropTrainer bp(net, ds, 0.01);
+    RPropTrainer bp(net, ds, 1.2, 0.5);
 //    cout << bp.trainEpoch() << endl;
     int skips = 0;
     for (int i = 0; i < 30;){
-        //bp.trainToConvergence(0.1, 50000);
-        bp.trainToValConv(50000);
+        //bp.trainToConvergence(0.1, 1000);
+        bp.trainToValConv(1000);
         int epochs = bp.getEpochs();
-        if (epochs > 10000){
+        //if (epochs > 10000){
             myfile << epochs << "\t";
+            cout << epochs << "\t";
             hashedDoubleMap testresults = bp.testWiClass(dataset::TEST);
             std::pair<std::string,double> p;
             BOOST_FOREACH(p, testresults){
                 myfile << p.first << " " << p.second << "\t";
+                cout << p.first << " " << p.second << "\t";
             }
             myfile << endl;
+            cout << endl;
             i++;
-        }
-        else{
-            ds->redistData();
-        }
+//        }
+//        else{
+//            ds->redistData();
+//        }
         bp.reset();
     }
     myfile.close();

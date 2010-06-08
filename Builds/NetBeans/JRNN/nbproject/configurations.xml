@@ -12,6 +12,7 @@
       </logicalFolder>
       <logicalFolder name="trainers" displayName="trainers" projectFiles="true">
         <itemPath>../../../include/JRNN/trainers/BackPropTrainer.h</itemPath>
+        <itemPath>../../../include/JRNN/trainers/RPropTrainer.h</itemPath>
       </logicalFolder>
       <logicalFolder name="utility" displayName="utility" projectFiles="true">
         <itemPath>../../../include/JRNN/utility/dataset.h</itemPath>
@@ -33,6 +34,7 @@
       </logicalFolder>
       <logicalFolder name="trainers" displayName="trainers" projectFiles="true">
         <itemPath>../../../src/JRNN/trainers/BackPropTrainer.cpp</itemPath>
+        <itemPath>../../../src/JRNN/trainers/RPropTrainer.cpp</itemPath>
       </logicalFolder>
       <logicalFolder name="utility" displayName="utility" projectFiles="true">
         <itemPath>../../../src/JRNN/utility/dataset.cpp</itemPath>

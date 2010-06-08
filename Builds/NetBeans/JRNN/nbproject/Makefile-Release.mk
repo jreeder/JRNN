@@ -36,6 +36,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/_ext/_DOTDOT/_DOTDOT/_DOTDOT/src/JRNN/structure/layer.o \
 	${OBJECTDIR}/_ext/_DOTDOT/_DOTDOT/_DOTDOT/src/JRNN/trainers/BackPropTrainer.o \
 	${OBJECTDIR}/_ext/_DOTDOT/_DOTDOT/_DOTDOT/src/JRNN/structure/network.o \
+	${OBJECTDIR}/_ext/_DOTDOT/_DOTDOT/_DOTDOT/src/JRNN/trainers/RPropTrainer.o \
 	${OBJECTDIR}/_ext/_DOTDOT/_DOTDOT/_DOTDOT/src/JRNN/utility/dataset.o
 
 # C Compiler Flags
@@ -88,6 +89,11 @@ ${OBJECTDIR}/_ext/_DOTDOT/_DOTDOT/_DOTDOT/src/JRNN/structure/network.o: nbprojec
 	${MKDIR} -p ${OBJECTDIR}/_ext/_DOTDOT/_DOTDOT/_DOTDOT/src/JRNN/structure
 	${RM} $@.d
 	$(COMPILE.cc) -O2 -I../../../../boost_1_43_0 -I../../../include/JRNN -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/_DOTDOT/_DOTDOT/_DOTDOT/src/JRNN/structure/network.o ../../../src/JRNN/structure/network.cpp
+
+${OBJECTDIR}/_ext/_DOTDOT/_DOTDOT/_DOTDOT/src/JRNN/trainers/RPropTrainer.o: nbproject/Makefile-${CND_CONF}.mk ../../../src/JRNN/trainers/RPropTrainer.cpp 
+	${MKDIR} -p ${OBJECTDIR}/_ext/_DOTDOT/_DOTDOT/_DOTDOT/src/JRNN/trainers
+	${RM} $@.d
+	$(COMPILE.cc) -O2 -I../../../../boost_1_43_0 -I../../../include/JRNN -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/_DOTDOT/_DOTDOT/_DOTDOT/src/JRNN/trainers/RPropTrainer.o ../../../src/JRNN/trainers/RPropTrainer.cpp
 
 ${OBJECTDIR}/_ext/_DOTDOT/_DOTDOT/_DOTDOT/src/JRNN/utility/dataset.o: nbproject/Makefile-${CND_CONF}.mk ../../../src/JRNN/utility/dataset.cpp 
 	${MKDIR} -p ${OBJECTDIR}/_ext/_DOTDOT/_DOTDOT/_DOTDOT/src/JRNN/utility

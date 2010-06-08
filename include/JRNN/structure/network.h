@@ -16,7 +16,7 @@ namespace JRNN{
 
     class network {
     public:
-        network(int numIn, int numHid, int numOut);
+        network();
 //        network(const network& orig);
         virtual ~network();
         void activate(vecDouble inputs);
@@ -29,6 +29,7 @@ namespace JRNN{
         void setWeights(hashedDoubleMap weights);
         void reset();
         void printConnections();
+        static networkPtr createFFMLPNetwork(int numIn, int numHid, int numOut);
         
     private:
         int numIn;

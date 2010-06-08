@@ -91,6 +91,9 @@ void dataset::loadFromFile(std::string filepath, int numInputs, int numOutputs){
     else {
         this->size = 0;
     }
+    for (int i = 0; i < this->size; i ++){
+        this->randomRange.push_back(i);
+    }
 
 }
 
@@ -98,8 +101,8 @@ void dataset::distData(int numTrain, int numVal, int numTest){
     this->numTrain = numTrain;
     this->numVal = numVal;
     this->numTest = numTest;
-    this->randSeed = 1983;
-    genRandRange();
+    this->randSeed = 314159;
+    //genRandRange();
     distribute();
 }
 

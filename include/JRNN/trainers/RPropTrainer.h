@@ -1,22 +1,21 @@
 /* 
- * File:   BackPropTrainer.h
+ * File:   RPropTrainer.h
  * Author: jreeder
  *
- * Created on May 20, 2010, 3:32 PM
+ * Created on June 7, 2010, 11:10 PM
  */
 
-#ifndef _BACKPROPTRAINER_H
-#define	_BACKPROPTRAINER_H
-
-#include "JRNN.h"
+#ifndef _RPROPTRAINER_H
+#define	_RPROPTRAINER_H
 
 namespace JRNN {
 
-class BackPropTrainer {
+class RPropTrainer {
+    //TODO: need to abstract this class and backproptrainer and use inheritance
 public:
-    BackPropTrainer(networkPtr network, datasetPtr inDataSet, double learningRate);
-    BackPropTrainer(const BackPropTrainer& orig);
-    virtual ~BackPropTrainer();
+    RPropTrainer(networkPtr network, datasetPtr inDataSet, double etaPlus, double etaMinus);
+    RPropTrainer(const RPropTrainer& orig);
+    virtual ~RPropTrainer();
     double trainEpoch();
     double testOnData(dataset::datatype type);
     hashedDoubleMap testWiClass(dataset::datatype type);
@@ -30,29 +29,34 @@ public:
 private:
     networkPtr mNetwork;
     int epochCount;
-    static const int continueEpochs = 50; //Number of epochs to continue looking for improvement on validation set.
+    double etaPlus;
+    double etaMinus;
+    static const int continueEpochs = 50;
+    static const double deltaMax = 50;
+    static const double deltaMin = 0.000001;
     int trainingIndex;
     double learningRate;
     doubles MSE_Rec;
     doubles vMSE_Rec;
     datasetPtr data;
-//    matDouble trainingIns;
-//    matDouble trainingOuts;
-//    matDouble valIns;
-//    matDouble valOuts;
-//    matDouble testIns;
-//    matDouble testOuts;
     hashedDoubleMap localGradients;
     hashedDoubleMap weightUpdates;
+    hashedDoubleMap lastUpdate;
+    hashedDoubleMap dw;
+    hashedDoubleMap dw_last;
+    hashedDoubleMap delta;
+    hashedDoubleMap delta_last;
     hashedDoubleMap bestWeights;
     hashedIntMap taskErrors;
     hashedDoubleMap taskErrorRate;
 
+    void RPropUpdate(conPtr con);
+    int sign(double num);
     vecDouble squareVec(vecDouble vector);
     vecDouble applyThreshold(vecDouble vector);
     void calcWeightUpdates(layerPtr layer, vecDouble desiredOut = vecDouble());
 };
 
 }
-#endif	/* _BACKPROPTRAINER_H */
+#endif	/* _RPROPTRAINER_H */
 

@@ -22,6 +22,7 @@
 #include <string>
 #include <stdlib.h>
 #include <time.h>
+#include <algorithm>
 
 
 
@@ -56,6 +57,7 @@ using boost::lexical_cast;
 #include "structure/connection.h"
 #include "utility/dataset.h"
 #include "trainers/BackPropTrainer.h"
+#include "trainers/RPropTrainer.h"
 
 #endif	/* _JRNN_H */
 

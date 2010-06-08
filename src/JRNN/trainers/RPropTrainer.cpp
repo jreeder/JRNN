@@ -1,38 +1,34 @@
 /* 
- * File:   BackPropTrainer.cpp
+ * File:   RPropTrainer.cpp
  * Author: jreeder
  * 
- * Created on May 20, 2010, 3:32 PM
+ * Created on June 7, 2010, 11:10 PM
  */
 
 #include "JRNN.h"
 
-using namespace JRNN;
+namespace JRNN {
 
-BackPropTrainer::BackPropTrainer(networkPtr inNetwork, datasetPtr inDataSet, double learningRate) {
-    this->mNetwork = inNetwork;
+RPropTrainer::RPropTrainer(networkPtr network, datasetPtr inDataSet, double etaPlus, double etaMinus) {
+    this->mNetwork = network;
     this->data = inDataSet;
-    //TODO: right now I'm assuming the dataset is ready to go. need to add in a flah
-    //that says it is ready or not and do something here accordingly. 
-//    this->trainingIns = trainingData;
-//    this->trainingOuts = desiredOuts;
-    this->learningRate = learningRate;
+    this->etaPlus = etaPlus;
+    this->etaMinus = etaMinus;
     this->epochCount = 0;
 }
 
-BackPropTrainer::BackPropTrainer(const BackPropTrainer& orig) {
+RPropTrainer::RPropTrainer(const RPropTrainer& orig) {
     this->mNetwork = orig.mNetwork;
     this->data = orig.data;
-//    this->trainingIns = orig.trainingIns;
-//    this->trainingOuts = orig.trainingOuts;
-    this->learningRate = orig.learningRate;
+    this->etaMinus = orig.etaMinus;
+    this->etaPlus = orig.etaPlus;
     this->epochCount = orig.epochCount;
 }
 
-BackPropTrainer::~BackPropTrainer() {
+RPropTrainer::~RPropTrainer() {
 }
 
-void BackPropTrainer::reset(){
+void RPropTrainer::reset(){
     this->MSE_Rec.clear();
     this->bestWeights.clear();
     this->epochCount = 0;
@@ -42,9 +38,13 @@ void BackPropTrainer::reset(){
     this->taskErrors.clear();
     this->weightUpdates.clear();
     this->vMSE_Rec.clear();
+    this->dw.clear();
+    this->dw_last.clear();
+    this->delta.clear();
+    this->delta_last.clear();
 }
 
-double BackPropTrainer::trainEpoch(){
+double RPropTrainer::trainEpoch(){
     matDouble trainingIns = data->getInputs(dataset::TRAIN);
     matDouble trainingOuts = data->getOutputs(dataset::TRAIN);
     matDouble::iterator itData;
@@ -63,25 +63,27 @@ double BackPropTrainer::trainEpoch(){
         vecDouble error = desiredOut - output;
         vecDouble sqError = squareVec(error);
         SSE += ublas::sum(sqError);
-        this->weightUpdates.clear();
+        //this->weightUpdates.clear();
         this->localGradients.clear();
         calcWeightUpdates(this->mNetwork->getLayer("out"), desiredOut);
-        conList consToUpdate = this->mNetwork->getConnections();
-        BOOST_FOREACH(conPtr con, consToUpdate){
-            double tmp = this->weightUpdates[con->getName()];
-            //cout << "weight update: " << tmp << endl;
-            (*con.get()) += this->weightUpdates[con->getName()];
-        }
         itData++;
         itOut++;
     }
+    conList consToUpdate = this->mNetwork->getConnections();
+    BOOST_FOREACH(conPtr con, consToUpdate){
+        this->RPropUpdate(con);
+        double tmp = this->weightUpdates[con->getName()];
+        //cout << "weight update: " << tmp << endl;
+        (*con.get()) += this->weightUpdates[con->getName()];
+    }
+    this->dw.clear();
     this->epochCount++;
     SSE /= (double)trainingIns.size();
     this->MSE_Rec.push_back(SSE);
     return SSE;
 }
 
-double BackPropTrainer::testOnData(dataset::datatype type){
+double RPropTrainer::testOnData(dataset::datatype type){
     matDouble ins = data->getInputs(type);
     matDouble outs = data->getOutputs(type);
     matDouble::iterator itIns = ins.begin();
@@ -103,7 +105,7 @@ double BackPropTrainer::testOnData(dataset::datatype type){
     return SSE;
 }
 
-hashedDoubleMap BackPropTrainer::testWiClass(dataset::datatype type){
+hashedDoubleMap RPropTrainer::testWiClass(dataset::datatype type){
     //TODO: need to make this more robust so we can have more than one output per task;
     matDouble ins = data->getInputs(type);
     matDouble outs = data->getOutputs(type);
@@ -141,7 +143,7 @@ hashedDoubleMap BackPropTrainer::testWiClass(dataset::datatype type){
     return this->taskErrorRate;
 }
 
-void BackPropTrainer::calcWeightUpdates(layerPtr layer, vecDouble desiredOut){
+void RPropTrainer::calcWeightUpdates(layerPtr layer, vecDouble desiredOut){
     if(layer->getType() != layer::input){
         nodeList& nodes = layer->getNodes();
         switch(layer->getType()){
@@ -155,8 +157,8 @@ void BackPropTrainer::calcWeightUpdates(layerPtr layer, vecDouble desiredOut){
                     this->localGradients[name] = delta;
                     conList cons = nodes[i]->getConnections(node::IN);
                     BOOST_FOREACH(conPtr con, cons){
-                        double dw = this->learningRate * con->getValue() * delta;
-                        this->weightUpdates[con->getName()] = dw;
+                        double dwtmp = con->getValue() * delta;
+                        this->dw[con->getName()] += dwtmp;
                     }
                 }
                 break;
@@ -174,8 +176,8 @@ void BackPropTrainer::calcWeightUpdates(layerPtr layer, vecDouble desiredOut){
                     this->localGradients[name] = delta;
                     conList inCons = nodes[i]->getConnections(node::IN);
                     BOOST_FOREACH(conPtr con, inCons){
-                        double dw = this->learningRate * con->getValue() * delta;
-                        this->weightUpdates[con->getName()] = dw;
+                        double dwtmp = con->getValue() * delta;
+                        this->dw[con->getName()] += dwtmp;
                     }
                 }
                 break;
@@ -186,18 +188,56 @@ void BackPropTrainer::calcWeightUpdates(layerPtr layer, vecDouble desiredOut){
     }
 }
 
-doubles& BackPropTrainer::getMSERec(){
-    return this->MSE_Rec;
-}
-
-void BackPropTrainer::trainToConvergence(double maxSSE, int maxEpoch){
-    double curSSE = 10;
-    while(curSSE > maxSSE && this->epochCount < maxEpoch){
-        curSSE = this->trainEpoch();
+void RPropTrainer::RPropUpdate(conPtr con){
+    std::string conName = con->getName();
+    double tmpMax = deltaMax;
+    double tmpMin = deltaMin;
+    if (dw_last[conName] * dw[conName] > 0){
+        delta[conName] = std::min(delta_last[conName] * etaPlus, tmpMax);
+        weightUpdates[conName] = sign(dw[conName]) * delta[conName];
+        delta_last[conName] = delta[conName];
+        dw_last[conName] = dw[conName];
+    }
+    else if (dw_last[conName] * dw[conName] < 0){
+        delta[conName] = std::max(delta_last[conName] * etaMinus, tmpMin);
+        //weightUpdates[conName] = -sign(dw_last[conName]) * delta_last[conName];
+        weightUpdates[conName] = 0;
+        dw_last[conName] = 0;
+        delta_last[conName] = delta[conName];
+    }
+    else {
+        delta[conName] = delta[conName] == 0 ? 1 : delta[conName];
+        weightUpdates[conName] = sign(dw[conName]) * delta[conName];
+        dw_last[conName] = dw[conName];
+        delta_last[conName] = delta[conName];
     }
 }
 
-void BackPropTrainer::trainToValConv(int maxEpoch){
+int RPropTrainer::sign(double num){
+    if (num > 0.0){
+        return 1;
+    }
+    else if (num < 0.0){
+        return -1;
+    }
+    else{
+        return 0;
+    }
+}
+
+doubles& RPropTrainer::getMSERec(){
+    return this->MSE_Rec;
+}
+
+void RPropTrainer::trainToConvergence(double maxSSE, int maxEpoch){
+    double curSSE = 10;
+    while(curSSE > maxSSE && this->epochCount < maxEpoch){
+        curSSE = this->trainEpoch();
+        //cout << curSSE << endl;
+    }
+}
+
+void RPropTrainer::trainToValConv(int maxEpoch){
     double curSSE = 10;
     double bestVERR = this->testOnData(dataset::VAL);
     bool proceed = true;
@@ -226,14 +266,14 @@ void BackPropTrainer::trainToValConv(int maxEpoch){
     }
 }
 
-vecDouble BackPropTrainer::squareVec(vecDouble vector){
+vecDouble RPropTrainer::squareVec(vecDouble vector){
     vecDouble::iterator it = vector.begin();
     for(;it < vector.end(); it++){
         (*it) = pow((*it),2);
     }
     return vector;
 }
-vecDouble BackPropTrainer::applyThreshold(vecDouble vector){
+vecDouble RPropTrainer::applyThreshold(vecDouble vector){
     vecDouble::iterator it = vector.begin();
     for(;it != vector.end(); it++){
         if ((*it) < 0.5){
@@ -246,11 +286,13 @@ vecDouble BackPropTrainer::applyThreshold(vecDouble vector){
     return vector;
 }
 
-doubles& BackPropTrainer::getVMSERec(){
+doubles& RPropTrainer::getVMSERec(){
     return this->vMSE_Rec;
 }
 
 
-int BackPropTrainer::getEpochs(){
+int RPropTrainer::getEpochs(){
     return this->epochCount;
+}
+
 }

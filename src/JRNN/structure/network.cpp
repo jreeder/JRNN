@@ -9,19 +9,36 @@
 
 using namespace JRNN;
 
-network::network(int numIn, int numHid, int numOut) {
-    this->numIn = numIn;
-    this->numOut = numOut;
-    this->numHid = numHid;
-    layers.insert(std::pair<std::string, layerPtr>("input", layerPtr(new layer(layer::input,numIn,0,"input"))));
-    layers.insert(std::pair<std::string, layerPtr>("hidden", layerPtr(new layer(layer::hidden, numHid, 1,"hidden"))));
-    layers.insert(std::pair<std::string, layerPtr>("out", layerPtr(new layer(layer::out,numOut, 2,"out"))));
-    layers.insert(std::pair<std::string, layerPtr>("bias", layerPtr(new layer(layer::bias, 1, -1, "bias"))));
-    layers["input"]->buildLayer(node::linear);
-    layers["hidden"]->buildLayer(node::sigmoid);
-    layers["out"]->buildLayer(node::sigmoid);
-    layers["bias"]->buildLayer(node::bias);
-    fullyConnect();
+network::network() {
+//    this->numIn = numIn;
+//    this->numOut = numOut;
+//    this->numHid = numHid;
+//    layers.insert(std::pair<std::string, layerPtr>("input", layerPtr(new layer(layer::input,numIn,0,"input"))));
+//    layers.insert(std::pair<std::string, layerPtr>("hidden", layerPtr(new layer(layer::hidden, numHid, 1,"hidden"))));
+//    layers.insert(std::pair<std::string, layerPtr>("out", layerPtr(new layer(layer::out,numOut, 2,"out"))));
+//    layers.insert(std::pair<std::string, layerPtr>("bias", layerPtr(new layer(layer::bias, 1, -1, "bias"))));
+//    layers["input"]->buildLayer(node::linear);
+//    layers["hidden"]->buildLayer(node::sigmoid);
+//    layers["out"]->buildLayer(node::sigmoid);
+//    layers["bias"]->buildLayer(node::bias);
+//    fullyConnect();
+}
+
+networkPtr network::createFFMLPNetwork(int numIn, int numHid, int numOut){
+    networkPtr np(new network());
+    np->numIn = numIn;
+    np->numOut = numOut;
+    np->numHid = numHid;
+    np->layers.insert(std::pair<std::string, layerPtr>("input", layerPtr(new layer(layer::input,numIn,0,"input"))));
+    np->layers.insert(std::pair<std::string, layerPtr>("hidden", layerPtr(new layer(layer::hidden, numHid, 1,"hidden"))));
+    np->layers.insert(std::pair<std::string, layerPtr>("out", layerPtr(new layer(layer::out,numOut, 2,"out"))));
+    np->layers.insert(std::pair<std::string, layerPtr>("bias", layerPtr(new layer(layer::bias, 1, -1, "bias"))));
+    np->layers["input"]->buildLayer(node::linear);
+    np->layers["hidden"]->buildLayer(node::sigmoid);
+    np->layers["out"]->buildLayer(node::sigmoid);
+    np->layers["bias"]->buildLayer(node::bias);
+    np->fullyConnect();
+    return np;
 }
 
 void network::fullyConnect(){
