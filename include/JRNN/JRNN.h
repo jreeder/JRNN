@@ -29,25 +29,25 @@
 namespace ublas = boost::numeric::ublas;
 
 namespace JRNN {
-    class node;
-    class network;
-    class connection;
-    class layer;
-    class dataset;
+    class Node;
+    class Network;
+    class Connection;
+    class Layer;
+    class Dataset;
     typedef boost::unordered_map<std::string, double> hashedDoubleMap;
     typedef boost::unordered_map<std::string, int> hashedIntMap;
-    typedef boost::shared_ptr<node> nodePtr;
-    typedef std::vector<nodePtr> nodeList;
+    typedef boost::shared_ptr<Node> NodePtr;
+    typedef std::vector<NodePtr> NodeList;
     typedef ublas::vector<double> vecDouble;
-    typedef boost::shared_ptr<network> networkPtr;
-    typedef boost::shared_ptr<connection> conPtr;
-    typedef boost::shared_ptr<layer> layerPtr;
-    typedef std::vector<conPtr> conList;
-    typedef boost::shared_ptr<layer> layerPtr;
-    typedef std::map<std::string,layerPtr> layerMap;
+    typedef boost::shared_ptr<Network> NetworkPtr;
+    typedef boost::shared_ptr<Connection> ConPtr;
+    typedef boost::shared_ptr<Layer> LayerPtr;
+    typedef std::vector<ConPtr> ConList;
+    typedef boost::shared_ptr<Layer> LayerPtr;
+    typedef std::map<std::string,LayerPtr> LayerMap;
     typedef std::vector<ublas::vector<double> > matDouble;
     typedef std::vector<double> doubles;
-    typedef boost::shared_ptr<dataset> datasetPtr;
+    typedef boost::shared_ptr<Dataset> DatasetPtr;
 }
 
 using boost::lexical_cast;
@@ -58,6 +58,7 @@ using boost::lexical_cast;
 #include "utility/dataset.h"
 #include "trainers/BackPropTrainer.h"
 #include "trainers/RPropTrainer.h"
+#include "trainers/CCTrainer.h"
 
 #endif	/* _JRNN_H */
 

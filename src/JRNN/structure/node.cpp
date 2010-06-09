@@ -9,7 +9,7 @@
 
 using namespace JRNN;
 
-node::node() {
+Node::Node() {
     height = 0;
 //    numIn = 0;
 //    numOut = 0;
@@ -19,15 +19,15 @@ node::node() {
     name = "NONE";
 //    nextIn = 0;
     //nextOut = 0;
-    type = node::sigmoid;
-    setDefaults();
+    type = Node::sigmoid;
+    SetDefaults();
 //    inputs = vector<double>(0);
 //    inputWeights = vector<double>(0);
 //    inConnections = vector<connection>(0);
 //    outConnections = vector<connection>(0);
 }
 
-node::node(int inHeight, nodeType nType, std::string nodeName){
+Node::Node(int inHeight, nodeType nType, std::string nodeName){
     height = inHeight;
 //    numIn = inNumIn;
 //    numOut = inNumOut;
@@ -38,20 +38,20 @@ node::node(int inHeight, nodeType nType, std::string nodeName){
 //    nextIn = 0;
     //nextOut = 0;
     type = nType;
-    setDefaults();
+    SetDefaults();
 //    inputs = vector<double>(numIn);
 //    inputWeights = vector<double>(numOut);
 //    inConnections = vector<connection>(numIn);
 //    outConnections = vector<connection>(numOut);
 }
 
-void node::setDefaults(){
+void Node::SetDefaults(){
     out = 0;
     sumOfIn = 0;
     sigSteepness = 1;
 }
 
-node::node(const node& orig) {
+Node::Node(const Node& orig) {
     height = orig.height;
 //    numIn = orig.numIn;
 //    numOut = orig.numOut;
@@ -67,34 +67,34 @@ node::node(const node& orig) {
     outConnections = orig.outConnections;
 }
 
-node::~node() {
+Node::~Node() {
 //    inConnections.clear();
 //    outConnections.clear();
 //    inputs.clear();
 //    inputWeights.clear();
 }
 
-void node::activate() {
+void Node::Activate() {
     //TODO:standard sigmoid right now will abstract later
 //    int i = 0;
 //    BOOST_FOREACH(node n, inputNodes){
 //        inputs[i] = n.getOut();
 //        i++;
 //    }
-    if(this->type != node::bias){
-        sumOfIn = sumWeightedIn();
+    if(type != Node::bias){
+        sumOfIn = SumWeightedIn();
     }
-    updateOut();
+    UpdateOut();
 }
 
-void node::activate(double input){
+void Node::Activate(double input){
     sumOfIn = input;
-    updateOut();
+    UpdateOut();
 }
 
-void node::updateOut(){
-    switch(this->type){
-        case node::sigmoid:
+void Node::UpdateOut(){
+    switch(type){
+        case Node::sigmoid:
             out = 1 / (1 + exp(-sigSteepness*sumOfIn));
 			if (out == 0){
 				out = 0.0000001;
@@ -103,67 +103,67 @@ void node::updateOut(){
 				out = 0.9999999;
 			}
             break;
-        case node::linear:
+        case Node::linear:
             out = sumOfIn;
             break;
         default:
             out = 1;
             break;
     }
-    BOOST_FOREACH(conPtr con, outConnections){
-        con->update();
+    BOOST_FOREACH(ConPtr con, outConnections){
+        con->Update();
     }
 }
 
-double node::sumWeightedIn(){
+double Node::SumWeightedIn(){
     double tmpSum = 0;
-    BOOST_FOREACH(conPtr con, this->inConnections){
-        tmpSum += con->getWeightedValue();
+    BOOST_FOREACH(ConPtr con, inConnections){
+        tmpSum += con->GetWeightedValue();
     }
     return tmpSum;
 }
 
-void node::setHeight(int newHeight){
+void Node::SetHeight(int newHeight){
     height = newHeight;
 }
 
-double node::getOut(){
+double Node::GetOut(){
     return out;
 }
 
-const std::string& node::getName(){
-    return this->name;
+const std::string& Node::GetName(){
+    return name;
 }
 
-double node::getSigSteepness(){
-    return this->sigSteepness;
+double Node::GetSigSteepness(){
+    return sigSteepness;
 }
 
-void node::setName(std::string newName){
-    this->name = newName;
+void Node::SetName(std::string newName){
+    name = newName;
 }
 
 //void node::setNumIn(int newNumIn){
-//    this->numIn = newNumIn;
-//    this->inputs.resize(newNumIn,true);
-//    this->inputWeights.resize(newNumIn, true);
+//    numIn = newNumIn;
+//    inputs.resize(newNumIn,true);
+//    inputWeights.resize(newNumIn, true);
 //}
 //
 //void node::setNumOut(int newNumOut){
-//    this->numOut = newNumOut;
-//    this->inputs.resize(newNumOut, true);
-//    this->inputWeights.resize(newNumOut, true);
+//    numOut = newNumOut;
+//    inputs.resize(newNumOut, true);
+//    inputWeights.resize(newNumOut, true);
 //}
 
-bool node::addConnection(conType type, conPtr newCon){
+bool Node::AddConnection(conType type, ConPtr newCon){
     bool returnVal = false;
     switch(type){
-        case node::IN:
-            this->inConnections.push_back(newCon);
+        case Node::IN:
+            inConnections.push_back(newCon);
             returnVal = true;
             break;
-        case node::OUT:
-            this->outConnections.push_back(newCon);
+        case Node::OUT:
+            outConnections.push_back(newCon);
             returnVal = true;
             break;
         default:
@@ -172,11 +172,11 @@ bool node::addConnection(conType type, conPtr newCon){
     return returnVal;
 }
 
-void node::removeConnection(std::string name){
-    conList::iterator incons = inConnections.begin();
+void Node::RemoveConnection(std::string name){
+    ConList::iterator incons = inConnections.begin();
     bool found = false;
     while(incons != inConnections.end()){
-        if ((*incons)->getName() == name){
+        if ((*incons)->GetName() == name){
             found = true;
             inConnections.erase(incons);
             break;
@@ -186,9 +186,9 @@ void node::removeConnection(std::string name){
         }
     }
     if (!found) {
-        conList::iterator outcons = outConnections.begin();
+        ConList::iterator outcons = outConnections.begin();
         while(outcons != outConnections.end()){
-            if ((*outcons)->getName() == name){
+            if ((*outcons)->GetName() == name){
                 outConnections.erase(outcons);
                 break;
             }
@@ -199,8 +199,8 @@ void node::removeConnection(std::string name){
     }
 }
 
-conList& node::getConnections(node::conType type){
-    return type == node::IN ? this->inConnections : this->outConnections;
+ConList& Node::GetConnections(Node::conType type){
+    return type == Node::IN ? inConnections : outConnections;
 }
 
 //bool node::addConnection(node* newNodeCon, double conWeight){

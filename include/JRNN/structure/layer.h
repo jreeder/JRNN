@@ -12,7 +12,7 @@
 
 namespace JRNN {
     
-    class layer {
+    class Layer {
     public:
         
         enum layerType {
@@ -22,34 +22,34 @@ namespace JRNN {
             bias
         };
 
-        layer();
-        layer(layerType type, int inLayerSize, int height, std::string name);
-        layer(const layer& orig);
-        virtual ~layer();
-        void activate();
-        void activate(vecDouble inputs);
-        void buildLayer(node::nodeType nType);
+        Layer();
+        Layer(layerType type, int inLayerSize, int height, std::string name);
+        Layer(const Layer& orig);
+        virtual ~Layer();
+        void Activate();
+        void Activate(vecDouble inputs);
+        void BuildLayer(Node::nodeType nType);
 
-        nodeList& getNodes();
-        vecDouble getOutput();
+        NodeList& GetNodes();
+        vecDouble GetOutput();
 
         //getters/setters
-        void setNextLayer(layerPtr nextLayer);
-        layerPtr getNextLayer() const;
+        void SetNextLayer(LayerPtr nextLayer);
+        LayerPtr GetNextLayer() const;
 
-        void setPrevLayer(layerPtr prevLayer);
-        layerPtr getPrevLayer() const;
+        void SetPrevLayer(LayerPtr prevLayer);
+        LayerPtr GetPrevLayer() const;
 
-        void setLayerSize(int layerSize);
-        int getLayerSize() const;
+        void SetLayerSize(int layerSize);
+        int GetLayerSize() const;
 
-        void setType(layerType type);
-        layerType getType() const;
+        void SetType(layerType type);
+        layerType GetType() const;
 
-        void setName(std::string newName);
-        const std::string& getName();
+        void SetName(std::string newName);
+        const std::string& GetName();
 
-        int getSize();
+        int GetSize();
 
     private:
         layerType type;
@@ -57,9 +57,9 @@ namespace JRNN {
         int layerSize;
         int height;
         std::string name;
-        layerPtr prevLayer;
-        layerPtr nextLayer;
-        nodeList nodes;
+        LayerPtr prevLayer;
+        LayerPtr nextLayer;
+        NodeList nodes;
     };
 
 }

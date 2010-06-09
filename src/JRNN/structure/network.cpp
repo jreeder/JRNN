@@ -9,136 +9,136 @@
 
 using namespace JRNN;
 
-network::network() {
-//    this->numIn = numIn;
-//    this->numOut = numOut;
-//    this->numHid = numHid;
+Network::Network() {
+//    numIn = numIn;
+//    numOut = numOut;
+//    numHid = numHid;
 //    layers.insert(std::pair<std::string, layerPtr>("input", layerPtr(new layer(layer::input,numIn,0,"input"))));
 //    layers.insert(std::pair<std::string, layerPtr>("hidden", layerPtr(new layer(layer::hidden, numHid, 1,"hidden"))));
 //    layers.insert(std::pair<std::string, layerPtr>("out", layerPtr(new layer(layer::out,numOut, 2,"out"))));
 //    layers.insert(std::pair<std::string, layerPtr>("bias", layerPtr(new layer(layer::bias, 1, -1, "bias"))));
-//    layers["input"]->buildLayer(node::linear);
-//    layers["hidden"]->buildLayer(node::sigmoid);
-//    layers["out"]->buildLayer(node::sigmoid);
-//    layers["bias"]->buildLayer(node::bias);
+//    layers["input"]->BuildLayer(node::linear);
+//    layers["hidden"]->BuildLayer(node::sigmoid);
+//    layers["out"]->BuildLayer(node::sigmoid);
+//    layers["bias"]->BuildLayer(node::bias);
 //    fullyConnect();
 }
 
-networkPtr network::createFFMLPNetwork(int numIn, int numHid, int numOut){
-    networkPtr np(new network());
+NetworkPtr Network::CreateFFMLPNetwork(int numIn, int numHid, int numOut){
+    NetworkPtr np(new Network());
     np->numIn = numIn;
     np->numOut = numOut;
     np->numHid = numHid;
 	np->numHidLayers = 1;
-    np->layers.insert(std::pair<std::string, layerPtr>("input", layerPtr(new layer(layer::input,numIn,0,"input"))));
-    np->layers.insert(std::pair<std::string, layerPtr>("hidden", layerPtr(new layer(layer::hidden, numHid, 1,"hidden"))));
-    np->layers.insert(std::pair<std::string, layerPtr>("out", layerPtr(new layer(layer::out,numOut, 2,"out"))));
-    np->layers.insert(std::pair<std::string, layerPtr>("bias", layerPtr(new layer(layer::bias, 1, -1, "bias"))));
-    np->layers["input"]->buildLayer(node::linear);
-    np->layers["hidden"]->buildLayer(node::sigmoid);
-    np->layers["out"]->buildLayer(node::sigmoid);
-    np->layers["bias"]->buildLayer(node::bias);
-    np->fullyConnectFFMLP();
+    np->layers.insert(std::pair<std::string, LayerPtr>("input", LayerPtr(new Layer(Layer::input,numIn,0,"input"))));
+    np->layers.insert(std::pair<std::string, LayerPtr>("hidden", LayerPtr(new Layer(Layer::hidden, numHid, 1,"hidden"))));
+    np->layers.insert(std::pair<std::string, LayerPtr>("out", LayerPtr(new Layer(Layer::out,numOut, 2,"out"))));
+    np->layers.insert(std::pair<std::string, LayerPtr>("bias", LayerPtr(new Layer(Layer::bias, 1, -1, "bias"))));
+    np->layers["input"]->BuildLayer(Node::linear);
+    np->layers["hidden"]->BuildLayer(Node::sigmoid);
+    np->layers["out"]->BuildLayer(Node::sigmoid);
+    np->layers["bias"]->BuildLayer(Node::bias);
+    np->FullyConnectFFMLP();
     return np;
 }
 
-networkPtr network::createMinFFNetwork(int numIn, int numOut){
-	networkPtr np(new network());
+NetworkPtr Network::CreateMinFFNetwork(int numIn, int numOut){
+	NetworkPtr np(new Network());
 	np->numIn = numIn;
 	np->numOut = numOut;
 	np->numHidLayers = 0;
-	np->layers.insert(std::pair<std::string, layerPtr>("input", layerPtr(new layer(layer::input,numIn,0,"input"))));
-	np->layers.insert(std::pair<std::string, layerPtr>("out", layerPtr(new layer(layer::out, numOut, 2, "out"))));
-	np->layers.insert(std::pair<std::string, layerPtr>("bias", layerPtr(new layer(layer::bias, 1, -1, "bias"))));
-	np->layers["input"]->buildLayer(node::linear);
-	np->layers["hidden"]->buildLayer(node::sigmoid);
-	np->layers["bias"]->buildLayer(node::bias);
-	np->fullyConnectMinFF();
+	np->layers.insert(std::pair<std::string, LayerPtr>("input", LayerPtr(new Layer(Layer::input,numIn,0,"input"))));
+	np->layers.insert(std::pair<std::string, LayerPtr>("out", LayerPtr(new Layer(Layer::out, numOut, 2, "out"))));
+	np->layers.insert(std::pair<std::string, LayerPtr>("bias", LayerPtr(new Layer(Layer::bias, 1, -1, "bias"))));
+	np->layers["input"]->BuildLayer(Node::linear);
+	np->layers["hidden"]->BuildLayer(Node::sigmoid);
+	np->layers["bias"]->BuildLayer(Node::bias);
+	np->FullyConnectMinFF();
 	return np;
 }
 
 
-void network::fullyConnectFFMLP(){
-    nodeList inputNodes = layers["input"]->getNodes();
-    nodeList hidNodes = layers["hidden"]->getNodes();
-    nodeList outNodes = layers["out"]->getNodes();
-    nodeList biasNodes = layers["bias"]->getNodes();
+void Network::FullyConnectFFMLP(){
+    NodeList inputNodes = layers["input"]->GetNodes();
+    NodeList hidNodes = layers["hidden"]->GetNodes();
+    NodeList outNodes = layers["out"]->GetNodes();
+    NodeList biasNodes = layers["bias"]->GetNodes();
 
-    layers["input"]->setNextLayer(layers["hidden"]);
-    layers["hidden"]->setPrevLayer(layers["input"]);
-    layers["hidden"]->setNextLayer(layers["out"]);
-    layers["out"]->setPrevLayer(layers["hidden"]);
+    layers["input"]->SetNextLayer(layers["hidden"]);
+    layers["hidden"]->SetPrevLayer(layers["input"]);
+    layers["hidden"]->SetNextLayer(layers["out"]);
+    layers["out"]->SetPrevLayer(layers["hidden"]);
 
-    connection::setRandomSeed();
+    Connection::SetRandomSeed();
 
-    BOOST_FOREACH(nodePtr n, inputNodes){
-        BOOST_FOREACH(nodePtr n2, hidNodes){
-            connections.push_back(connection::connect(n,n2));
+    BOOST_FOREACH(NodePtr n, inputNodes){
+        BOOST_FOREACH(NodePtr n2, hidNodes){
+            connections.push_back(Connection::Connect(n,n2));
         }
     }
 
-    BOOST_FOREACH(nodePtr n, hidNodes){
-        BOOST_FOREACH(nodePtr n2, outNodes){
-            connections.push_back(connection::connect(n,n2));
+    BOOST_FOREACH(NodePtr n, hidNodes){
+        BOOST_FOREACH(NodePtr n2, outNodes){
+            connections.push_back(Connection::Connect(n,n2));
         }
     }
 
-    BOOST_FOREACH(nodePtr n, biasNodes){
-        BOOST_FOREACH(nodePtr n2, hidNodes){
-            connections.push_back(connection::connect(n,n2));
+    BOOST_FOREACH(NodePtr n, biasNodes){
+        BOOST_FOREACH(NodePtr n2, hidNodes){
+            connections.push_back(Connection::Connect(n,n2));
         }
-        BOOST_FOREACH(nodePtr n3, outNodes){
-            connections.push_back(connection::connect(n,n3));
+        BOOST_FOREACH(NodePtr n3, outNodes){
+            connections.push_back(Connection::Connect(n,n3));
         }
     }
 }
 
-void network::fullyConnectMinFF(){
-	nodeList inputNodes = layers["input"]->getNodes();
-	nodeList outNodes = layers["out"]->getNodes();
-	nodeList biasNodes = layers["bias"]->getNodes();
+void Network::FullyConnectMinFF(){
+	NodeList inputNodes = layers["input"]->GetNodes();
+	NodeList outNodes = layers["out"]->GetNodes();
+	NodeList biasNodes = layers["bias"]->GetNodes();
 	
-	layers["input"]->setNextLayer(layers["out"]);
-	layers["out"]->setPrevLayer(layers["input"]);
-	connection::setRandomSeed();
+	layers["input"]->SetNextLayer(layers["out"]);
+	layers["out"]->SetPrevLayer(layers["input"]);
+	Connection::SetRandomSeed();
 
-	BOOST_FOREACH(nodePtr n, inputNodes){
-		BOOST_FOREACH(nodePtr n2,outNodes){
-			connections.push_back(connection::connect(n,n2));
+	BOOST_FOREACH(NodePtr n, inputNodes){
+		BOOST_FOREACH(NodePtr n2,outNodes){
+			connections.push_back(Connection::Connect(n,n2));
 		}
 	}
 
-	BOOST_FOREACH(nodePtr n, biasNodes){
-		BOOST_FOREACH(nodePtr n2, outNodes){
-			connections.push_back(connection::connect(n,n2));
+	BOOST_FOREACH(NodePtr n, biasNodes){
+		BOOST_FOREACH(NodePtr n2, outNodes){
+			connections.push_back(Connection::Connect(n,n2));
 		}
 	}
 }
 
-void network::fullyConnectBack(layerPtr layer){
-	nodeList layerNodes = layer->getNodes();
-	layerPtr prevLayer = layer->getPrevLayer();
+void Network::FullyConnectBack(LayerPtr layer){
+	NodeList layerNodes = layer->GetNodes();
+	LayerPtr prevLayer = layer->GetPrevLayer();
 
-	connection::setRandomSeed();
+	Connection::SetRandomSeed();
 	while(prevLayer){
-		nodeList prevNodes = prevLayer->getNodes();
-		BOOST_FOREACH(nodePtr n, prevNodes){
-			BOOST_FOREACH(nodePtr n2, layerNodes){
-				connections.push_back(connection::connect(n,n2));
+		NodeList prevNodes = prevLayer->GetNodes();
+		BOOST_FOREACH(NodePtr n, prevNodes){
+			BOOST_FOREACH(NodePtr n2, layerNodes){
+				connections.push_back(Connection::Connect(n,n2));
 			}
 		}
-		prevLayer = prevLayer->getPrevLayer();
+		prevLayer = prevLayer->GetPrevLayer();
 	}
 }
 
-void network::fullyConnectOut( layerPtr layer ){
-	nodeList layerNodes = layer->getNodes();
-	nodeList outNodes = layers["out"]->getNodes();
+void Network::FullyConnectOut( LayerPtr layer ){
+	NodeList layerNodes = layer->GetNodes();
+	NodeList outNodes = layers["out"]->GetNodes();
 
-	connection::setRandomSeed();
-	BOOST_FOREACH(nodePtr n, layerNodes){
-		BOOST_FOREACH(nodePtr n2, outNodes){
-			connections.push_back(connection::connect(n,n2));
+	Connection::SetRandomSeed();
+	BOOST_FOREACH(NodePtr n, layerNodes){
+		BOOST_FOREACH(NodePtr n2, outNodes){
+			connections.push_back(Connection::Connect(n,n2));
 		}
 	}
 }
@@ -146,70 +146,70 @@ void network::fullyConnectOut( layerPtr layer ){
 //network::network(const network& orig) {
 //}
 
-network::~network() {
+Network::~Network() {
     connections.clear();
     layers.clear();
 }
 
-vecDouble network::getOutputs(){
+vecDouble Network::GetOutputs(){
     return outputs;
 }
 
-layerPtr network::getLayer(std::string layerName){
+LayerPtr Network::GetLayer(std::string layerName){
     return layers[layerName];
 }
 
-void network::activate(vecDouble inputs){
-    setInputs(inputs);
-    layers["input"]->activate(this->inputs);
-    layers["bias"]->activate();
-    /*layers["hidden"]->activate();
-    layers["out"]->activate();*/
-	activate(layers["input"]->getNextLayer());
-    outputs = layers["out"]->getOutput();
+void Network::Activate(vecDouble inputs){
+    SetInputs(inputs);
+    layers["input"]->Activate(inputs);
+    layers["bias"]->Activate();
+    /*layers["hidden"]->Activate();
+    layers["out"]->Activate();*/
+	Activate(layers["input"]->GetNextLayer());
+    outputs = layers["out"]->GetOutput();
 }
 
-void network::activate(layerPtr layer){
-	layer->activate();
-	if (layer->getName() != "out"){
-		activate(layer->getNextLayer());
+void Network::Activate(LayerPtr layer){
+	layer->Activate();
+	if (layer->GetName() != "out"){
+		Activate(layer->GetNextLayer());
 	}
 }
 
-void network::setInputs(vecDouble inputs){
+void Network::SetInputs(vecDouble inputs){
     inputs = inputs;
 }
 
-conList& network::getConnections(){
+ConList& Network::GetConnections(){
     return connections;
 }
 
- void network::reset(){
-     BOOST_FOREACH(conPtr con, this->connections){
-         con->reset();
+ void Network::Reset(){
+     BOOST_FOREACH(ConPtr con, connections){
+         con->Reset();
      }
  }
 
- hashedDoubleMap network::getWeights(){
+ hashedDoubleMap Network::GetWeights(){
      hashedDoubleMap weights;
-     BOOST_FOREACH(conPtr con, this->connections){
-         weights[con->getName()] = con->getWeight();
+     BOOST_FOREACH(ConPtr con, connections){
+         weights[con->GetName()] = con->GetWeight();
      }
      return weights;
  }
 
- void network::setWeights(hashedDoubleMap weights){
+ void Network::SetWeights(hashedDoubleMap weights){
      //TODO: need to do some error handling in here this could potentially be dangerous
-     BOOST_FOREACH(conPtr con, this->connections){
-         double tmp = weights[con->getName()];
+     BOOST_FOREACH(ConPtr con, connections){
+         double tmp = weights[con->GetName()];
          //cout << "setting weight for " << con->getName() << " " << tmp << endl;
-         con->setWeight(weights[con->getName()]);
+         con->SetWeight(weights[con->GetName()]);
      }
  }
 
- void network::printConnections(){
+ void Network::PrintConnections(){
      cout << "Connections:" << endl;
-     BOOST_FOREACH(conPtr con, this->connections){
-         cout << con->getName() << " " << con->getWeight() << endl;
+     BOOST_FOREACH(ConPtr con, connections){
+         cout << con->GetName() << " " << con->GetWeight() << endl;
      }
  }

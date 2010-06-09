@@ -15,7 +15,7 @@
 
 namespace JRNN {
 
-class node {
+class Node {
     public:
 
 //        typedef boost::ptr_list<node> nodeList;
@@ -31,26 +31,26 @@ class node {
             bias
         };
 
-        node();
-        node(int height, nodeType nType, std::string name);
-        node(const node& orig);
-        virtual ~node();
-        virtual void activate();
-        virtual void activate(double input);
-        void setHeight(int newHeight);
-        double getOut();
-        const std::string& getName();
-        double getSigSteepness();
-        conList& getConnections(conType type);
+        Node();
+        Node(int height, nodeType nType, std::string name);
+        Node(const Node& orig);
+        virtual ~Node();
+        virtual void Activate();
+        virtual void Activate(double input);
+        void SetHeight(int newHeight);
+        double GetOut();
+        const std::string& GetName();
+        double GetSigSteepness();
+        ConList& GetConnections(conType type);
         
-        void setName(std::string newName);
+        void SetName(std::string newName);
 //        void setNumIn(int newNumIn);
 //        void setNumOut(int newNumOut);
-        bool addConnection(conType type, conPtr newCon);
-        void removeConnection(std::string name);
+        bool AddConnection(conType type, ConPtr newCon);
+        void RemoveConnection(std::string name);
 //        bool addConnection(node* newNodeCon, double conWeight);
 //        bool addConnections(nodeList inNodes, vector<double> conWeights);
-        void setType(nodeType inType);
+        void SetType(nodeType inType);
 //        static vector<double> vecMul(vector<double> vec1, vector<double> vec2);
 
     private:
@@ -58,12 +58,12 @@ class node {
         double out;
         double sigSteepness;
         std::string name;
-        conList inConnections;
-        conList outConnections;
+        ConList inConnections;
+        ConList outConnections;
 
-        double sumWeightedIn();
-        void updateOut();
-        void setDefaults();
+        double SumWeightedIn();
+        void UpdateOut();
+        void SetDefaults();
 //        vector<double> inputWeights;
 //        vector<double> inputs;
 //        nodeList inputNodes;

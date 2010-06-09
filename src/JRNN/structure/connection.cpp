@@ -9,17 +9,17 @@
 
 using namespace JRNN;
 
-connection::connection() {
-    weight = randomWeight();
+Connection::Connection() {
+    weight = RandomWeight();
     value = 0;
     weightedValue = 0;
     name = "NONE";
     locked = false;
-    inNode = nodePtr();
-    outNode = nodePtr();
+    inNode = NodePtr();
+    outNode = NodePtr();
 }
 
-connection::connection(const connection& orig) {
+Connection::Connection(const Connection& orig) {
     weight = orig.weight;
     value = orig.value;
     weightedValue = orig.weightedValue;
@@ -29,124 +29,124 @@ connection::connection(const connection& orig) {
     outNode = orig.outNode;
 }
 
-connection::connection(double newDouble){
+Connection::Connection(double newDouble){
     weight = newDouble;
     value = 0;
     weightedValue = 0;
     locked = false;
     name = "NONE";
-    inNode = nodePtr();
-    outNode = nodePtr();
+    inNode = NodePtr();
+    outNode = NodePtr();
 }
 
-conPtr connection::connect(nodePtr newInNode, nodePtr newOutNode){
-    conPtr p(new connection());
+ConPtr Connection::Connect(NodePtr newInNode, NodePtr newOutNode){
+    ConPtr p(new Connection());
     p->inNode = newInNode;
     p->outNode = newOutNode;
-    p->inNode->addConnection(node::OUT,p);
-    p->outNode->addConnection(node::IN,p);
-    p->setName();
+    p->inNode->AddConnection(Node::OUT,p);
+    p->outNode->AddConnection(Node::IN,p);
+    p->SetName();
     return p;
 }
 
-conPtr connection::connect(nodePtr newInNode, nodePtr newOutNode, double weight){
-    conPtr p(new connection(weight));
+ConPtr Connection::Connect(NodePtr newInNode, NodePtr newOutNode, double weight){
+    ConPtr p(new Connection(weight));
     p->inNode = newInNode;
     p->outNode = newOutNode;
-    p->inNode->addConnection(node::OUT,p);
-    p->outNode->addConnection(node::IN,p);
-    p->setName();
+    p->inNode->AddConnection(Node::OUT,p);
+    p->outNode->AddConnection(Node::IN,p);
+    p->SetName();
     return p;
 }
 
-void connection::disconnect(){
-    inNode->removeConnection(this->getName());
-    outNode->removeConnection(this->getName());
+void Connection::Disconnect(){
+    inNode->RemoveConnection(name);
+    outNode->RemoveConnection(name);
 }
 
-void connection::setRandomSeed(){
+void Connection::SetRandomSeed(){
     srand( time(NULL));
 }
 
-void connection::setName(){
+void Connection::SetName(){
     std::string tmpName = "";
-    tmpName += inNode->getName();
+    tmpName += inNode->GetName();
     tmpName += "->";
-    tmpName += outNode->getName();
-    this->setName(tmpName);
+    tmpName += outNode->GetName();
+    SetName(tmpName);
 }
 
-connection::~connection() {
+Connection::~Connection() {
 }
 
-double connection::getWeightedValue(){
+double Connection::GetWeightedValue(){
     return weightedValue;
 }
 
-double connection::getValue(){
+double Connection::GetValue(){
     return value;
 }
 
-void connection::setInNode(nodePtr newInNode){
+void Connection::SetInNode(NodePtr newInNode){
     inNode = newInNode;
-    inNode->addConnection(node::OUT,conPtr(this));
+    inNode->AddConnection(Node::OUT,ConPtr(this));
 }
 
-void connection::setOutNode(nodePtr newOutNode){
+void Connection::SetOutNode(NodePtr newOutNode){
     outNode = newOutNode;
-    outNode->addConnection(node::IN, conPtr(this));
+    outNode->AddConnection(Node::IN, ConPtr(this));
 }
 
-void connection::setLocked(bool lock){
+void Connection::SetLocked(bool lock){
     locked = lock;
 }
 
-void connection::update(){
-    value = inNode->getOut();
+void Connection::Update(){
+    value = inNode->GetOut();
     weightedValue = weight * value;
 }
 
-void connection::reset(){
-    weight = this->randomWeight();
+void Connection::Reset(){
+    weight = RandomWeight();
 }
 
-void connection::setWeight(double weight) {
-    this->weight = weight;
+void Connection::SetWeight(double weight) {
+    weight = weight;
 }
-double connection::getWeight() const {
+double Connection::GetWeight() const {
     return weight;
 }
 
-connection connection::operator +(const connection& rhs) {
-    connection tmp;
-    tmp.weight = this->weight + rhs.weight;
+Connection Connection::operator +(const Connection& rhs) {
+    Connection tmp;
+    tmp.weight = weight + rhs.weight;
     return tmp;
 }
 
-connection connection::operator *(const connection& rhs) {
-    connection tmp;
-    tmp.weight = this->weight * rhs.weight;
+Connection Connection::operator *(const Connection& rhs) {
+    Connection tmp;
+    tmp.weight = weight * rhs.weight;
     return tmp;
 }
 
-double connection::randomWeight(){
+double Connection::RandomWeight(){
     double tmpDouble;
     tmpDouble = ((rand() % 10000 + 1)/(double)10000)-0.5;
     return tmpDouble;
 }
 
-const std::string& connection::getName(){
-    return this->name;
+const std::string& Connection::GetName(){
+    return name;
 }
 
-void connection::setName(std::string newName){
-    this->name = newName;
+void Connection::SetName(std::string newName){
+    name = newName;
 }
 
-const std::string& connection::getOutNodeName(){
-    return this->outNode->getName();
+const std::string& Connection::GetOutNodeName(){
+    return outNode->GetName();
 }
 
-const std::string& connection::getInNodeName(){
-    return this->inNode->getName();
+const std::string& Connection::GetInNodeName(){
+    return inNode->GetName();
 }

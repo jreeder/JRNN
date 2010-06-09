@@ -10,138 +10,138 @@
 using namespace JRNN;
 using namespace std;
 
-dataset::dataset() {
+Dataset::Dataset() {
 }
 
-dataset::dataset(const dataset& orig) {
+Dataset::Dataset(const Dataset& orig) {
 }
 
-dataset::~dataset() {
+Dataset::~Dataset() {
 }
 
-const matDouble& dataset::getInputs(datatype type){
+const matDouble& Dataset::GetInputs(datatype type){
     switch(type){
-        case dataset::TRAIN:
-            return this->trainIns;
-        case dataset::VAL:
-            return this->valIns;
-        case dataset::TEST:
-            return this->testIns;
+        case Dataset::TRAIN:
+            return trainIns;
+        case Dataset::VAL:
+            return valIns;
+        case Dataset::TEST:
+            return testIns;
         default:
-            return this->inputs;
+            return inputs;
     }
 
 }
 
-const matDouble& dataset::getOutputs(datatype type){
+const matDouble& Dataset::GetOutputs(datatype type){
     switch(type){
-        case dataset::TRAIN:
-            return this->trainOuts;
-        case dataset::VAL:
-            return this->valOuts;
-        case dataset::TEST:
-            return this->testOuts;
+        case Dataset::TRAIN:
+            return trainOuts;
+        case Dataset::VAL:
+            return valOuts;
+        case Dataset::TEST:
+            return testOuts;
         default:
-            return this->outputs;
+            return outputs;
     }
 }
 
-const int dataset::getSize(){
-    return this->size;
+const int Dataset::GetSize(){
+    return size;
 }
 
-void dataset::setNumInputs(int numInputs){
-    this->numInputs = numInputs;
+void Dataset::SetNumInputs(int numInputs){
+    numInputs = numInputs;
 }
 
-void dataset::setNumOutputs(int numOutputs){
-    this->numOutputs = numOutputs;
+void Dataset::SetNumOutputs(int numOutputs){
+    numOutputs = numOutputs;
 }
 
-void dataset::loadFromFile(std::string filepath, int numInputs, int numOutputs){
+void Dataset::LoadFromFile(std::string filepath, int numInputs, int numOutputs){
     ifstream dataFile(filepath.c_str());
-    this->numInputs = numInputs;
-    this->numOutputs = numOutputs;
+    numInputs = numInputs;
+    numOutputs = numOutputs;
     typedef boost::tokenizer<boost::char_separator<char> > tokenizer;
     boost::char_separator<char> sep("\t");
     std::string line;
     if(dataFile.is_open()){
         while(getline(dataFile,line)){
             tokenizer tok(line,sep);
-            vecDouble in(this->numInputs);
-            vecDouble out(this->numOutputs);
+            vecDouble in(numInputs);
+            vecDouble out(numOutputs);
             int newIns = 0;
             int newOuts = 0;
             BOOST_FOREACH(std::string token, tok){
-                if (newIns < this->numInputs){
+                if (newIns < numInputs){
                     in[newIns] = lexical_cast<double>(token);
                     newIns++;
                 }
-                else if (newOuts < this->numOutputs){
+                else if (newOuts < numOutputs){
                     out[newOuts] = lexical_cast<double>(token);
                     newOuts++;
                 }
             }
-            this->inputs.push_back(in);
-            this->outputs.push_back(out);
+            inputs.push_back(in);
+            outputs.push_back(out);
         }
-        this->size = inputs.size();
+        size = inputs.size();
         dataFile.close();
     }
     else {
-        this->size = 0;
+        size = 0;
     }
-    for (int i = 0; i < this->size; i ++){
-        this->randomRange.push_back(i);
+    for (int i = 0; i < size; i ++){
+        randomRange.push_back(i);
     }
 
 }
 
-void dataset::distData(int numTrain, int numVal, int numTest){
-    this->numTrain = numTrain;
-    this->numVal = numVal;
-    this->numTest = numTest;
-    this->randSeed = 314159;
+void Dataset::DistData(int numTrain, int numVal, int numTest){
+    numTrain = numTrain;
+    numVal = numVal;
+    numTest = numTest;
+    randSeed = 314159;
     //genRandRange();
-    distribute();
+    Distribute();
 }
 
-void dataset::redistData(){
-    this->randSeed++;
-    genRandRange();
-    distribute();
+void Dataset::RedistData(){
+    randSeed++;
+    GenRandRange();
+    Distribute();
 }
 
-void dataset::distribute(){
+void Dataset::Distribute(){
     //TODO: need to place some error checks here ... this is very unsafe.
     int i = 0;
     for (;i < numTrain; i++)
     {
-        this->trainIns.push_back(inputs[randomRange[i]]);
-        this->trainOuts.push_back(outputs[randomRange[i]]);
+        trainIns.push_back(inputs[randomRange[i]]);
+        trainOuts.push_back(outputs[randomRange[i]]);
     }
     for (; i < (numTrain + numVal); i++){
-        this->valIns.push_back(inputs[randomRange[i]]);
-        this->valOuts.push_back(outputs[randomRange[i]]);
+        valIns.push_back(inputs[randomRange[i]]);
+        valOuts.push_back(outputs[randomRange[i]]);
     }
     for(; i < (numTrain + numVal + numTest); i++){
-        this->testIns.push_back(inputs[randomRange[i]]);
-        this->testOuts.push_back(outputs[randomRange[i]]);
+        testIns.push_back(inputs[randomRange[i]]);
+        testOuts.push_back(outputs[randomRange[i]]);
     }
 }
 
-void dataset::genRandRange(){
-    srand(this->randSeed);
+void Dataset::GenRandRange(){
+    srand(randSeed);
     vector<int> source;
-    source.reserve(this->size);
-    this->randomRange.resize(this->size);
-    for (int i = 0; i < this->size; i++){
+    source.reserve(size);
+    randomRange.resize(size);
+    for (int i = 0; i < size; i++){
         source.push_back(i);
     }
-    this->randomRange[0] = source[0];
-    for (int i = 1; i < this->size; i++){
+    randomRange[0] = source[0];
+    for (int i = 1; i < size; i++){
         int j = rand() % (i + 1);
-        this->randomRange[i] = this->randomRange[j];
-        this->randomRange[j] = source[i];
+        randomRange[i] = randomRange[j];
+        randomRange[j] = source[i];
     }
 }

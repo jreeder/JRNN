@@ -9,103 +9,102 @@
 
 using namespace JRNN;
 
-layer::layer(){
-    this->type = layer::hidden;
-    this->layerSize = 0;
-    this->height = 0;
-    this->name = "NONE";
+Layer::Layer(){
+    type = Layer::hidden;
+    layerSize = 0;
+    height = 0;
+    name = "NONE";
 }
 
-layer::layer(layerType type, int inLayerSize, int height, std::string name) {
-    this->type = type;
-    this->layerSize = inLayerSize;
-    this->height = height;
-    this->name = name;
+Layer::Layer(layerType type, int inLayerSize, int height, std::string name) {
+    type = type;
+    layerSize = inLayerSize;
+    height = height;
+    name = name;
 }
 
-layer::layer(const layer& orig) {
+Layer::Layer(const Layer& orig) {
 }
 
-void layer::setNextLayer(layerPtr nextLayer) {
-    this->nextLayer = nextLayer;
+void Layer::SetNextLayer(LayerPtr nextLayer) {
+    nextLayer = nextLayer;
 }
-layerPtr layer::getNextLayer() const {
+LayerPtr Layer::GetNextLayer() const {
     return nextLayer;
 }
-void layer::setPrevLayer(layerPtr prevLayer) {
-    this->prevLayer = prevLayer;
+void Layer::SetPrevLayer(LayerPtr prevLayer) {
+    prevLayer = prevLayer;
 }
-layerPtr layer::getPrevLayer() const {
+LayerPtr Layer::GetPrevLayer() const {
     return prevLayer;
 }
-void layer::setLayerSize(int layerSize) {
-    this->layerSize = layerSize;
+void Layer::SetLayerSize(int layerSize) {
+    layerSize = layerSize;
 }
-int layer::getLayerSize() const {
+int Layer::GetLayerSize() const {
     return layerSize;
 }
-void layer::setType(layerType type) {
-    this->type = type;
+void Layer::SetType(layerType type) {
+    type = type;
 }
-layer::layerType layer::getType() const {
+Layer::layerType Layer::GetType() const {
     return type;
 }
 
-void layer::buildLayer(node::nodeType nType){
-    nodePtr np;
-    node::nodeType nt = nType;
+void Layer::BuildLayer(Node::nodeType nType){
+    NodePtr np;
+    Node::nodeType nt = nType;
     
-//    nt = (this->type != layer::input) ? node::sigmoid : node::linear;
-    std::string baseName = this->name + "_";
-    for (int i = 0; i < this->layerSize; i++){
+//    nt = (type != layer::input) ? node::sigmoid : node::linear;
+    std::string baseName = name + "_";
+    for (int i = 0; i < layerSize; i++){
         std::string num = lexical_cast<std::string>(i);
         std::string name = baseName + num;
-        np.reset(new node(this->height,nt,name));
+        np.reset(new Node(height,nt,name));
         nodes.push_back(np);
     }
 }
 
-nodeList& layer::getNodes(){
+NodeList& Layer::GetNodes(){
     return nodes;
 }
 
-void layer::activate(){
-    BOOST_FOREACH(nodePtr n, nodes){
-        n->activate();
+void Layer::Activate(){
+    BOOST_FOREACH(NodePtr n, nodes){
+        n->Activate();
     }
 }
 
-vecDouble layer::getOutput(){
+vecDouble Layer::GetOutput(){
     vecDouble tmpVec;
     tmpVec.resize(nodes.size());
     int i = 0;
-    BOOST_FOREACH(nodePtr n, nodes){
-        tmpVec[i] = n->getOut();
+    BOOST_FOREACH(NodePtr n, nodes){
+        tmpVec[i] = n->GetOut();
         i++;
     }
     return tmpVec;
 }
 
-void layer::activate(vecDouble inputs){
+void Layer::Activate(vecDouble inputs){
     for(int i = 0; i < inputs.size(); i++){
-        nodes[i]->activate(inputs[i]);
-        std::string tmp = nodes[i]->getName();
+        nodes[i]->Activate(inputs[i]);
+        std::string tmp = nodes[i]->GetName();
     }
 }
 
-const std::string& layer::getName(){
-    return this->name;
+const std::string& Layer::GetName(){
+    return name;
 }
 
-void layer::setName(std::string newName){
-    this->name = newName;
+void Layer::SetName(std::string newName){
+    name = newName;
 }
 
-int layer::getSize(){
-    return this->layerSize;
+int Layer::GetSize(){
+    return layerSize;
 }
 
-layer::~layer() {
+Layer::~Layer() {
     //nodes.clear();
 }
-

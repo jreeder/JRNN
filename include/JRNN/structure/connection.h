@@ -12,52 +12,52 @@
 
 namespace JRNN {
 
-    class connection {
+    class Connection {
     public:
 
         typedef double value_type;
-        typedef connection self_type;
+        typedef Connection self_type;
 
-        connection();
-        static conPtr connect(nodePtr newInNode, nodePtr newOutNode);
-        static conPtr connect(nodePtr newInNode, nodePtr newOutNode, double weight);
-        static void setRandomSeed();
-        connection(const connection& orig);
-        connection(double newDouble);
-        virtual ~connection();
-        void update();
-        void reset();
-        double getWeightedValue();
-        double getValue();
-        void setInNode(nodePtr newInnode);
-        void setOutNode(nodePtr newOutnode);
-        void setLocked(bool lock);
-        void setWeight(double weight);
-        void disconnect();
-        double getWeight() const;
-        const std::string& getName();
-        void setName(std::string newName);
-        void setName();
-        const std::string& getOutNodeName();
-        const std::string& getInNodeName();
-        connection operator+ (const connection &rhs);
-        connection operator* (const connection &rhs);
-        connection& operator= (const connection& rhs){
-            this->inNode = rhs.inNode;
-            this->outNode = rhs.outNode;
-            this->value = rhs.value;
-            this->weightedValue = rhs.weightedValue;
-            this->weight = rhs.weight;
-            this->name = rhs.name;
+        Connection();
+        static ConPtr Connect(NodePtr newInNode, NodePtr newOutNode);
+        static ConPtr Connect(NodePtr newInNode, NodePtr newOutNode, double weight);
+        static void SetRandomSeed();
+        Connection(const Connection& orig);
+        Connection(double newDouble);
+        virtual ~Connection();
+        void Update();
+        void Reset();
+        double GetWeightedValue();
+        double GetValue();
+        void SetInNode(NodePtr newInnode);
+        void SetOutNode(NodePtr newOutnode);
+        void SetLocked(bool lock);
+        void SetWeight(double weight);
+        void Disconnect();
+        double GetWeight() const;
+        const std::string& GetName();
+        void SetName(std::string newName);
+        void SetName();
+        const std::string& GetOutNodeName();
+        const std::string& GetInNodeName();
+        Connection operator+ (const Connection &rhs);
+        Connection operator* (const Connection &rhs);
+        Connection& operator= (const Connection& rhs){
+            inNode = rhs.inNode;
+            outNode = rhs.outNode;
+            value = rhs.value;
+            weightedValue = rhs.weightedValue;
+            weight = rhs.weight;
+            name = rhs.name;
             return *this;
         }
-        connection& operator+= (const connection& rhs){
-            this->weight += rhs.weight;
+        Connection& operator+= (const Connection& rhs){
+            weight += rhs.weight;
             return *this;
         }
 
-        connection& operator+= (const double rhs){
-            this->weight += rhs;
+        Connection& operator+= (const double rhs){
+            weight += rhs;
             return *this;
         }
 
@@ -71,10 +71,10 @@ namespace JRNN {
         double weightedValue;
         bool locked;
         std::string name;
-        nodePtr inNode;
-        nodePtr outNode;
+        NodePtr inNode;
+        NodePtr outNode;
 
-        double randomWeight();
+        double RandomWeight();
 
 
     };

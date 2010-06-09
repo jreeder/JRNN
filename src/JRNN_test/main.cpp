@@ -35,10 +35,10 @@ int main(int argc, char** argv) {
     }
     ofstream myfile;
     myfile.open(outfile.c_str());
-    datasetPtr ds(new dataset());
-    ds->loadFromFile(filename, numIn,numOut);
-    ds->distData(100,100,500);
-    networkPtr net = network::createFFMLPNetwork(numIn,numHid,numOut);
+    DatasetPtr ds(new Dataset());
+    ds->LoadFromFile(filename, numIn,numOut);
+    ds->DistData(100,100,500);
+    NetworkPtr net = Network::CreateFFMLPNetwork(numIn,numHid,numOut);
     //net.printConnections();
 //    BackPropTrainer bp(net, ds, 0.01);
     RPropTrainer bp(net, ds, 1.2, 0.5);
@@ -46,12 +46,12 @@ int main(int argc, char** argv) {
     int skips = 0;
     for (int i = 0; i < 30;){
         //bp.trainToConvergence(0.1, 1000);
-        bp.trainToValConv(1000);
-        int epochs = bp.getEpochs();
+        bp.TrainToValConv(1000);
+        int epochs = bp.GetEpochs();
         //if (epochs > 10000){
             myfile << epochs << "\t";
             cout << epochs << "\t";
-            hashedDoubleMap testresults = bp.testWiClass(dataset::TEST);
+            hashedDoubleMap testresults = bp.TestWiClass(Dataset::TEST);
             std::pair<std::string,double> p;
             BOOST_FOREACH(p, testresults){
                 myfile << p.first << " " << p.second << "\t";
@@ -64,7 +64,7 @@ int main(int argc, char** argv) {
 //        else{
 //            ds->redistData();
 //        }
-        bp.reset();
+        bp.Reset();
     }
     myfile.close();
     return (EXIT_SUCCESS);

@@ -9,81 +9,81 @@
 
 using namespace JRNN;
 
-BackPropTrainer::BackPropTrainer(networkPtr inNetwork, datasetPtr inDataSet, double learningRate) {
-    this->mNetwork = inNetwork;
-    this->data = inDataSet;
+BackPropTrainer::BackPropTrainer(NetworkPtr inNetwork, DatasetPtr inDataSet, double learningRate) {
+    mNetwork = inNetwork;
+    data = inDataSet;
     //TODO: right now I'm assuming the dataset is ready to go. need to add in a flah
     //that says it is ready or not and do something here accordingly. 
-//    this->trainingIns = trainingData;
-//    this->trainingOuts = desiredOuts;
-    this->learningRate = learningRate;
-    this->epochCount = 0;
+//    trainingIns = trainingData;
+//    trainingOuts = desiredOuts;
+    learningRate = learningRate;
+    epochCount = 0;
 }
 
 BackPropTrainer::BackPropTrainer(const BackPropTrainer& orig) {
-    this->mNetwork = orig.mNetwork;
-    this->data = orig.data;
-//    this->trainingIns = orig.trainingIns;
-//    this->trainingOuts = orig.trainingOuts;
-    this->learningRate = orig.learningRate;
-    this->epochCount = orig.epochCount;
+    mNetwork = orig.mNetwork;
+    data = orig.data;
+//    trainingIns = orig.trainingIns;
+//    trainingOuts = orig.trainingOuts;
+    learningRate = orig.learningRate;
+    epochCount = orig.epochCount;
 }
 
 BackPropTrainer::~BackPropTrainer() {
 }
 
-void BackPropTrainer::reset(){
-    this->MSE_Rec.clear();
-    this->bestWeights.clear();
-    this->epochCount = 0;
-    this->localGradients.clear();
-    this->mNetwork->reset();
-    this->taskErrorRate.clear();
-    this->taskErrors.clear();
-    this->weightUpdates.clear();
-    this->vMSE_Rec.clear();
+void BackPropTrainer::Reset(){
+    MSE_Rec.clear();
+    bestWeights.clear();
+    epochCount = 0;
+    localGradients.clear();
+    mNetwork->Reset();
+    taskErrorRate.clear();
+    taskErrors.clear();
+    weightUpdates.clear();
+    vMSE_Rec.clear();
 }
 
-double BackPropTrainer::trainEpoch(){
-    matDouble trainingIns = data->getInputs(dataset::TRAIN);
-    matDouble trainingOuts = data->getOutputs(dataset::TRAIN);
+double BackPropTrainer::TrainEpoch(){
+    matDouble trainingIns = data->GetInputs(Dataset::TRAIN);
+    matDouble trainingOuts = data->GetOutputs(Dataset::TRAIN);
     matDouble::iterator itData;
     matDouble::iterator itOut;
-//    itData = this->trainingIns.begin();
-//    itOut = this->trainingOuts.begin();
+//    itData = trainingIns.begin();
+//    itOut = trainingOuts.begin();
     itData = trainingIns.begin();
     itOut = trainingOuts.begin();
     double SSE = 0;
     while(itData != trainingIns.end()){
         vecDouble input = (*itData);
         vecDouble desiredOut = (*itOut);
-        this->mNetwork->activate(input);
-        vecDouble output = this->mNetwork->getOutputs();
+        mNetwork->Activate(input);
+        vecDouble output = mNetwork->GetOutputs();
        // cout << "network output: " << output << " Desired Out: " << desiredOut << endl;
         vecDouble error = desiredOut - output;
-        vecDouble sqError = squareVec(error);
+        vecDouble sqError = SquareVec(error);
         SSE += ublas::sum(sqError);
-        this->weightUpdates.clear();
-        this->localGradients.clear();
-        calcWeightUpdates(this->mNetwork->getLayer("out"), desiredOut);
-        conList consToUpdate = this->mNetwork->getConnections();
-        BOOST_FOREACH(conPtr con, consToUpdate){
-            double tmp = this->weightUpdates[con->getName()];
+        weightUpdates.clear();
+        localGradients.clear();
+        CalcWeightUpdates(mNetwork->GetLayer("out"), desiredOut);
+        ConList consToUpdate = mNetwork->GetConnections();
+        BOOST_FOREACH(ConPtr con, consToUpdate){
+            double tmp = weightUpdates[con->GetName()];
             //cout << "weight update: " << tmp << endl;
-            (*con.get()) += this->weightUpdates[con->getName()];
+            (*con.get()) += weightUpdates[con->GetName()];
         }
         itData++;
         itOut++;
     }
-    this->epochCount++;
+    epochCount++;
     SSE /= (double)trainingIns.size();
-    this->MSE_Rec.push_back(SSE);
+    MSE_Rec.push_back(SSE);
     return SSE;
 }
 
-double BackPropTrainer::testOnData(dataset::datatype type){
-    matDouble ins = data->getInputs(type);
-    matDouble outs = data->getOutputs(type);
+double BackPropTrainer::TestOnData(Dataset::datatype type){
+    matDouble ins = data->GetInputs(type);
+    matDouble outs = data->GetOutputs(type);
     matDouble::iterator itIns = ins.begin();
     matDouble::iterator itOuts = outs.begin();
 
@@ -91,10 +91,10 @@ double BackPropTrainer::testOnData(dataset::datatype type){
     while(itIns != ins.end()){
         vecDouble input = (*itIns);
         vecDouble desiredOut = (*itOuts);
-        this->mNetwork->activate(input);
-        vecDouble output = this->mNetwork->getOutputs();
+        mNetwork->Activate(input);
+        vecDouble output = mNetwork->GetOutputs();
         vecDouble error = desiredOut - output;
-        vecDouble sqError = squareVec(error);
+        vecDouble sqError = SquareVec(error);
         SSE += ublas::sum(sqError);
         itIns++;
         itOuts++;
@@ -103,10 +103,10 @@ double BackPropTrainer::testOnData(dataset::datatype type){
     return SSE;
 }
 
-hashedDoubleMap BackPropTrainer::testWiClass(dataset::datatype type){
+hashedDoubleMap BackPropTrainer::TestWiClass(Dataset::datatype type){
     //TODO: need to make this more robust so we can have more than one output per task;
-    matDouble ins = data->getInputs(type);
-    matDouble outs = data->getOutputs(type);
+    matDouble ins = data->GetInputs(type);
+    matDouble outs = data->GetOutputs(type);
     matDouble::iterator itIns = ins.begin();
     matDouble::iterator itOuts = outs.begin();
 
@@ -116,9 +116,9 @@ hashedDoubleMap BackPropTrainer::testWiClass(dataset::datatype type){
     while(itIns != ins.end()){
         vecDouble input = (*itIns);
         vecDouble desiredOut = (*itOuts);
-        this->mNetwork->activate(input);
-        vecDouble output = this->mNetwork->getOutputs();
-        vecDouble thresOut = applyThreshold(output);
+        mNetwork->Activate(input);
+        vecDouble output = mNetwork->GetOutputs();
+        vecDouble thresOut = ApplyThreshold(output);
         vecDouble errors = desiredOut - thresOut;
 
         for(int i = 0; i < numTasks; i++){
@@ -127,7 +127,7 @@ hashedDoubleMap BackPropTrainer::testWiClass(dataset::datatype type){
             int tmp = (int)errors[i];
             //cout << tmp << " " << output << " " << desiredOut << endl;
             if (errors[i] != 0){
-                this->taskErrors[name]++;
+                taskErrors[name]++;
             }
         }
         itIns++;
@@ -136,89 +136,89 @@ hashedDoubleMap BackPropTrainer::testWiClass(dataset::datatype type){
     for (int i = 0; i < numTasks; i++){
         std::string name = "task-";
         name += lexical_cast<std::string>(i);
-        this->taskErrorRate[name] = this->taskErrors[name] / (double)totalItems;
+        taskErrorRate[name] = taskErrors[name] / (double)totalItems;
     }
-    return this->taskErrorRate;
+    return taskErrorRate;
 }
 
-void BackPropTrainer::calcWeightUpdates(layerPtr layer, vecDouble desiredOut){
-    if(layer->getType() != layer::input){
-        nodeList& nodes = layer->getNodes();
-        switch(layer->getType()){
-            case layer::out:
-                for(int i = 0; i < layer->getSize(); i++){
-                    std::string name = nodes[i]->getName();
-                    double act = nodes[i]->getOut();
-                    double sigSteep = nodes[i]->getSigSteepness();
+void BackPropTrainer::CalcWeightUpdates(LayerPtr layer, vecDouble desiredOut){
+    if(layer->GetType() != Layer::input){
+        NodeList& nodes = layer->GetNodes();
+        switch(layer->GetType()){
+            case Layer::out:
+                for(int i = 0; i < layer->GetSize(); i++){
+                    std::string name = nodes[i]->GetName();
+                    double act = nodes[i]->GetOut();
+                    double sigSteep = nodes[i]->GetSigSteepness();
                     double error = desiredOut[i] - act;
                     double delta = sigSteep * error * act * (1-act);
-                    this->localGradients[name] = delta;
-                    conList cons = nodes[i]->getConnections(node::IN);
-                    BOOST_FOREACH(conPtr con, cons){
-                        double dw = this->learningRate * con->getValue() * delta;
-                        this->weightUpdates[con->getName()] = dw;
+                    localGradients[name] = delta;
+                    ConList cons = nodes[i]->GetConnections(Node::IN);
+                    BOOST_FOREACH(ConPtr con, cons){
+                        double dw = learningRate * con->GetValue() * delta;
+                        weightUpdates[con->GetName()] = dw;
                     }
                 }
                 break;
-            case layer::hidden:
-                for(int i = 0; i < layer->getSize(); i++){
-                    std::string name = nodes[i]->getName();
-                    double act = nodes[i]->getOut();
-                    double sigSteep = nodes[i]->getSigSteepness();
-                    conList outCons = nodes[i]->getConnections(node::OUT);
+            case Layer::hidden:
+                for(int i = 0; i < layer->GetSize(); i++){
+                    std::string name = nodes[i]->GetName();
+                    double act = nodes[i]->GetOut();
+                    double sigSteep = nodes[i]->GetSigSteepness();
+                    ConList outCons = nodes[i]->GetConnections(Node::OUT);
                     double sumOfChildError = 0;
-                    BOOST_FOREACH(conPtr con, outCons){
-                        sumOfChildError += this->localGradients[con->getOutNodeName()] * con->getWeight();
+                    BOOST_FOREACH(ConPtr con, outCons){
+                        sumOfChildError += localGradients[con->GetOutNodeName()] * con->GetWeight();
                     }
                     double delta = sigSteep * act * (1-act) * sumOfChildError;
-                    this->localGradients[name] = delta;
-                    conList inCons = nodes[i]->getConnections(node::IN);
-                    BOOST_FOREACH(conPtr con, inCons){
-                        double dw = this->learningRate * con->getValue() * delta;
-                        this->weightUpdates[con->getName()] = dw;
+                    localGradients[name] = delta;
+                    ConList inCons = nodes[i]->GetConnections(Node::IN);
+                    BOOST_FOREACH(ConPtr con, inCons){
+                        double dw = learningRate * con->GetValue() * delta;
+                        weightUpdates[con->GetName()] = dw;
                     }
                 }
                 break;
             default:
                 break;
         }
-        calcWeightUpdates(layer->getPrevLayer());
+        CalcWeightUpdates(layer->GetPrevLayer());
     }
 }
 
-doubles& BackPropTrainer::getMSERec(){
-    return this->MSE_Rec;
+doubles& BackPropTrainer::GetMSERec(){
+    return MSE_Rec;
 }
 
-void BackPropTrainer::trainToConvergence(double maxSSE, int maxEpoch){
+void BackPropTrainer::TrainToConvergence(double maxSSE, int maxEpoch){
     double curSSE = 10;
-    while(curSSE > maxSSE && this->epochCount < maxEpoch){
-        curSSE = this->trainEpoch();
+    while(curSSE > maxSSE && epochCount < maxEpoch){
+        curSSE = TrainEpoch();
     }
 }
 
-void BackPropTrainer::trainToValConv(int maxEpoch){
+void BackPropTrainer::TrainToValConv(int maxEpoch){
     double curSSE = 10;
-    double bestVERR = this->testOnData(dataset::VAL);
+    double bestVERR = TestOnData(Dataset::VAL);
     bool proceed = true;
     int epochsSinceImpr = 0;
     while(proceed){
-        curSSE = this->trainEpoch();
-        double curVERR = this->testOnData(dataset::VAL);
-        this->vMSE_Rec.push_back(curVERR);
+        curSSE = TrainEpoch();
+        double curVERR = TestOnData(Dataset::VAL);
+        vMSE_Rec.push_back(curVERR);
         epochsSinceImpr++;
-        if (this->epochCount == 1 || curVERR < bestVERR){
+        if (epochCount == 1 || curVERR < bestVERR){
             bestVERR = curVERR;
-            this->bestWeights = this->mNetwork->getWeights();
+            bestWeights = mNetwork->GetWeights();
             epochsSinceImpr = 0;
         }
-        if (this->epochCount >= maxEpoch){
-            this->mNetwork->setWeights(this->bestWeights);
+        if (epochCount >= maxEpoch){
+            mNetwork->SetWeights(bestWeights);
             proceed = false;
             continue;
         }
-        if (epochsSinceImpr >= this->continueEpochs){
-            this->mNetwork->setWeights(this->bestWeights);
+        if (epochsSinceImpr >= continueEpochs){
+            mNetwork->SetWeights(bestWeights);
             proceed = false;
             continue;
         }
@@ -226,14 +226,14 @@ void BackPropTrainer::trainToValConv(int maxEpoch){
     }
 }
 
-vecDouble BackPropTrainer::squareVec(vecDouble vector){
+vecDouble BackPropTrainer::SquareVec(vecDouble vector){
     vecDouble::iterator it = vector.begin();
     for(;it < vector.end(); it++){
         (*it) = pow((*it),2);
     }
     return vector;
 }
-vecDouble BackPropTrainer::applyThreshold(vecDouble vector){
+vecDouble BackPropTrainer::ApplyThreshold(vecDouble vector){
     vecDouble::iterator it = vector.begin();
     for(;it != vector.end(); it++){
         if ((*it) < 0.5){
@@ -246,11 +246,11 @@ vecDouble BackPropTrainer::applyThreshold(vecDouble vector){
     return vector;
 }
 
-doubles& BackPropTrainer::getVMSERec(){
-    return this->vMSE_Rec;
+doubles& BackPropTrainer::GetVMSERec(){
+    return vMSE_Rec;
 }
 
 
-int BackPropTrainer::getEpochs(){
-    return this->epochCount;
+int BackPropTrainer::GetEpochs(){
+    return epochCount;
 }

@@ -158,6 +158,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\..\..\src\JRNN\trainers\CCTrainer.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\..\..\..\src\JRNN\trainers\RPropTrainer.cpp"
 					>
 				</File>
@@ -233,6 +237,10 @@
 				>
 				<File
 					RelativePath="..\..\..\..\include\JRNN\trainers\BackPropTrainer.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\..\include\JRNN\trainers\CCTrainer.h"
 					>
 				</File>
 				<File

@@ -13,21 +13,21 @@ namespace JRNN {
 	class RPropTrainer {
 		//TODO: need to abstract this class and backproptrainer and use inheritance
 	public:
-		RPropTrainer(networkPtr network, datasetPtr inDataSet, double etaPlus, double etaMinus);
+		RPropTrainer(NetworkPtr network, DatasetPtr inDataSet, double etaPlus, double etaMinus);
 		RPropTrainer(const RPropTrainer& orig);
 		virtual ~RPropTrainer();
-		double trainEpoch();
-		double testOnData(dataset::datatype type);
-		hashedDoubleMap testWiClass(dataset::datatype type);
-		doubles& getMSERec();
-		doubles& getVMSERec();
-		int getEpochs();
-		void trainToConvergence(double maxSSE, int maxEpoch);
-		void trainToValConv(int maxEpoch);
-		void reset();
+		double TrainEpoch();
+		double TestOnData(Dataset::datatype type);
+		hashedDoubleMap TestWiClass(Dataset::datatype type);
+		doubles& GetMSERec();
+		doubles& GetVMSERec();
+		int GetEpochs();
+		void TrainToConvergence(double maxSSE, int maxEpoch);
+		void TrainToValConv(int maxEpoch);
+		void Reset();
 
 	private:
-		networkPtr mNetwork;
+		NetworkPtr mNetwork;
 		int epochCount;
 		double etaPlus;
 		double etaMinus;
@@ -38,7 +38,7 @@ namespace JRNN {
 		double learningRate;
 		doubles MSE_Rec;
 		doubles vMSE_Rec;
-		datasetPtr data;
+		DatasetPtr data;
 		hashedDoubleMap localGradients;
 		hashedDoubleMap weightUpdates;
 		hashedDoubleMap lastUpdate;
@@ -50,11 +50,11 @@ namespace JRNN {
 		hashedIntMap taskErrors;
 		hashedDoubleMap taskErrorRate;
 
-		void RPropUpdate(conPtr con);
-		int sign(double num);
-		vecDouble squareVec(vecDouble vector);
-		vecDouble applyThreshold(vecDouble vector);
-		void calcWeightUpdates(layerPtr layer, vecDouble desiredOut = vecDouble());
+		void RPropUpdate(ConPtr con);
+		int Sign(double num);
+		vecDouble SquareVec(vecDouble vector);
+		vecDouble ApplyThreshold(vecDouble vector);
+		void CalcWeightUpdates(LayerPtr layer, vecDouble desiredOut = vecDouble());
 	};
 
 }

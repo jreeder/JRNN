@@ -15,7 +15,7 @@
 
 namespace JRNN {
 
-    class dataset {
+    class Dataset {
 
     public:
 
@@ -26,17 +26,17 @@ namespace JRNN {
             ALL
         };
 
-        dataset();
-        dataset(const dataset& orig);
-        virtual ~dataset();
-        const matDouble& getInputs(datatype type);
-        const matDouble& getOutputs(datatype type);
-        void loadFromFile(std::string filepath, int numInputs, int numOutputs);
-        const int getSize();
-        void setNumInputs(int numInputs);
-        void setNumOutputs(int numOutputs);
-        void distData(int numTrain, int numVal, int numTest);
-        void redistData();
+        Dataset();
+        Dataset(const Dataset& orig);
+        virtual ~Dataset();
+        const matDouble& GetInputs(datatype type);
+        const matDouble& GetOutputs(datatype type);
+        void LoadFromFile(std::string filepath, int numInputs, int numOutputs);
+        const int GetSize();
+        void SetNumInputs(int numInputs);
+        void SetNumOutputs(int numOutputs);
+        void DistData(int numTrain, int numVal, int numTest);
+        void RedistData();
 
     private:
         int size;
@@ -56,8 +56,8 @@ namespace JRNN {
         matDouble testIns;
         matDouble testOuts;
 
-        void genRandRange();
-        void distribute();
+        void GenRandRange();
+        void Distribute();
 
     };
 
