@@ -47,6 +47,7 @@ class node {
 //        void setNumIn(int newNumIn);
 //        void setNumOut(int newNumOut);
         bool addConnection(conType type, conPtr newCon);
+        void removeConnection(std::string name);
 //        bool addConnection(node* newNodeCon, double conWeight);
 //        bool addConnections(nodeList inNodes, vector<double> conWeights);
         void setType(nodeType inType);

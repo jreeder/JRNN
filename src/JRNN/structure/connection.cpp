@@ -59,6 +59,11 @@ conPtr connection::connect(nodePtr newInNode, nodePtr newOutNode, double weight)
     return p;
 }
 
+void connection::disconnect(){
+    inNode->removeConnection(this->getName());
+    outNode->removeConnection(this->getName());
+}
+
 void connection::setRandomSeed(){
     srand( time(NULL));
 }

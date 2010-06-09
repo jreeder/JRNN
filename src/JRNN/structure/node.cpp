@@ -172,6 +172,33 @@ bool node::addConnection(conType type, conPtr newCon){
     return returnVal;
 }
 
+void node::removeConnection(std::string name){
+    conList::iterator incons = inConnections.begin();
+    bool found = false;
+    while(incons != inConnections.end()){
+        if ((*incons)->getName() == name){
+            found = true;
+            inConnections.erase(incons);
+            break;
+        }
+        else {
+            incons++;
+        }
+    }
+    if (!found) {
+        conList::iterator outcons = outConnections.begin();
+        while(outcons != outConnections.end()){
+            if ((*outcons)->getName() == name){
+                outConnections.erase(outcons);
+                break;
+            }
+            else {
+                outcons++;
+            }
+        }
+    }
+}
+
 conList& node::getConnections(node::conType type){
     return type == node::IN ? this->inConnections : this->outConnections;
 }
