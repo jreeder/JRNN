@@ -96,6 +96,12 @@ void node::updateOut(){
     switch(this->type){
         case node::sigmoid:
             out = 1 / (1 + exp(-sigSteepness*sumOfIn));
+			if (out == 0){
+				out = 0.0000001;
+			}
+			else if (out == 1){
+				out = 0.9999999;
+			}
             break;
         case node::linear:
             out = sumOfIn;

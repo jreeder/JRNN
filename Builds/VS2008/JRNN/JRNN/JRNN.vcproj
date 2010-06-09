@@ -157,6 +157,10 @@
 					RelativePath="..\..\..\..\src\JRNN\trainers\BackPropTrainer.cpp"
 					>
 				</File>
+				<File
+					RelativePath="..\..\..\..\src\JRNN\trainers\RPropTrainer.cpp"
+					>
+				</File>
 			</Filter>
 			<Filter
 				Name="utility"
@@ -229,6 +233,10 @@
 				>
 				<File
 					RelativePath="..\..\..\..\include\JRNN\trainers\BackPropTrainer.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\..\include\JRNN\trainers\RPropTrainer.h"
 					>
 				</File>
 			</Filter>
