@@ -18,6 +18,12 @@ namespace JRNN {
 		NetworkPtr network;
 		DatasetPtr data;
 		int numCandidates;
+		int patienceEpochs;
+		double patienceErrDelta;
+		LayerPtr candidateLayer;
+		ConList candidateCons;
+		matDouble errorBuffer;
+		NodeBuffer nodeBuffer;
 	};
 }
 

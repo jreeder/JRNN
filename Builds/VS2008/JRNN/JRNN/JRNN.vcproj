@@ -173,6 +173,10 @@
 					RelativePath="..\..\..\..\src\JRNN\utility\dataset.cpp"
 					>
 				</File>
+				<File
+					RelativePath="..\..\..\..\src\JRNN\utility\nodebuffer.cpp"
+					>
+				</File>
 			</Filter>
 			<Filter
 				Name="structure"
@@ -229,6 +233,10 @@
 				>
 				<File
 					RelativePath="..\..\..\..\include\JRNN\utility\dataset.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\..\include\JRNN\utility\nodebuffer.h"
 					>
 				</File>
 			</Filter>

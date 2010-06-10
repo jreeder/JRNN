@@ -56,6 +56,7 @@ using boost::lexical_cast;
 #include "structure/layer.h"
 #include "structure/connection.h"
 #include "utility/dataset.h"
+#include "utility/nodebuffer.h"
 #include "trainers/BackPropTrainer.h"
 #include "trainers/RPropTrainer.h"
 #include "trainers/CCTrainer.h"

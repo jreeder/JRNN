@@ -87,7 +87,7 @@ vecDouble Layer::GetOutput(){
 }
 
 void Layer::Activate(vecDouble inputs){
-    for(int i = 0; i < inputs.size(); i++){
+    for(unsigned int i = 0; i < inputs.size(); i++){
         nodes[i]->Activate(inputs[i]);
         std::string tmp = nodes[i]->GetName();
     }
