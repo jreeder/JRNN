@@ -1,0 +1,313 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 42;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		45AABE4311C2F9490042B61E /* JRNN.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45AABE1B11C2F4DD0042B61E /* JRNN.cpp */; };
+		45AABE4411C2F9490042B61E /* connection.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45AABE1D11C2F4DD0042B61E /* connection.cpp */; };
+		45AABE4511C2F9490042B61E /* layer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45AABE1E11C2F4DD0042B61E /* layer.cpp */; };
+		45AABE4611C2F9490042B61E /* network.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45AABE1F11C2F4DD0042B61E /* network.cpp */; };
+		45AABE4711C2F9490042B61E /* node.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45AABE2011C2F4DD0042B61E /* node.cpp */; };
+		45AABE4811C2F9490042B61E /* BackPropTrainer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45AABE2211C2F4DD0042B61E /* BackPropTrainer.cpp */; };
+		45AABE4911C2F9490042B61E /* CCTrainer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45AABE2311C2F4DD0042B61E /* CCTrainer.cpp */; };
+		45AABE4A11C2F9490042B61E /* RPropTrainer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45AABE2411C2F4DD0042B61E /* RPropTrainer.cpp */; };
+		45AABE4B11C2F9490042B61E /* dataset.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45AABE2611C2F4DD0042B61E /* dataset.cpp */; };
+		45AABE4C11C2F9490042B61E /* nodebuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45AABE2711C2F4DD0042B61E /* nodebuffer.cpp */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		45AABE1B11C2F4DD0042B61E /* JRNN.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = JRNN.cpp; path = ../../../src/JRNN/JRNN.cpp; sourceTree = SOURCE_ROOT; };
+		45AABE1D11C2F4DD0042B61E /* connection.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = connection.cpp; path = ../../../src/JRNN/structure/connection.cpp; sourceTree = SOURCE_ROOT; };
+		45AABE1E11C2F4DD0042B61E /* layer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = layer.cpp; path = ../../../src/JRNN/structure/layer.cpp; sourceTree = SOURCE_ROOT; };
+		45AABE1F11C2F4DD0042B61E /* network.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = network.cpp; path = ../../../src/JRNN/structure/network.cpp; sourceTree = SOURCE_ROOT; };
+		45AABE2011C2F4DD0042B61E /* node.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = node.cpp; path = ../../../src/JRNN/structure/node.cpp; sourceTree = SOURCE_ROOT; };
+		45AABE2211C2F4DD0042B61E /* BackPropTrainer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = BackPropTrainer.cpp; path = ../../../src/JRNN/trainers/BackPropTrainer.cpp; sourceTree = SOURCE_ROOT; };
+		45AABE2311C2F4DD0042B61E /* CCTrainer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCTrainer.cpp; path = ../../../src/JRNN/trainers/CCTrainer.cpp; sourceTree = SOURCE_ROOT; };
+		45AABE2411C2F4DD0042B61E /* RPropTrainer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = RPropTrainer.cpp; path = ../../../src/JRNN/trainers/RPropTrainer.cpp; sourceTree = SOURCE_ROOT; };
+		45AABE2611C2F4DD0042B61E /* dataset.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = dataset.cpp; path = ../../../src/JRNN/utility/dataset.cpp; sourceTree = SOURCE_ROOT; };
+		45AABE2711C2F4DD0042B61E /* nodebuffer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nodebuffer.cpp; path = ../../../src/JRNN/utility/nodebuffer.cpp; sourceTree = SOURCE_ROOT; };
+		45AABE2A11C2F53F0042B61E /* JRNN.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JRNN.h; path = ../../../include/JRNN/JRNN.h; sourceTree = SOURCE_ROOT; };
+		45AABE2C11C2F53F0042B61E /* connection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = connection.h; path = ../../../include/JRNN/structure/connection.h; sourceTree = SOURCE_ROOT; };
+		45AABE2D11C2F53F0042B61E /* layer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = layer.h; path = ../../../include/JRNN/structure/layer.h; sourceTree = SOURCE_ROOT; };
+		45AABE2E11C2F53F0042B61E /* network.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = network.h; path = ../../../include/JRNN/structure/network.h; sourceTree = SOURCE_ROOT; };
+		45AABE2F11C2F53F0042B61E /* node.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = node.h; path = ../../../include/JRNN/structure/node.h; sourceTree = SOURCE_ROOT; };
+		45AABE3111C2F53F0042B61E /* BackPropTrainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BackPropTrainer.h; path = ../../../include/JRNN/trainers/BackPropTrainer.h; sourceTree = SOURCE_ROOT; };
+		45AABE3211C2F53F0042B61E /* CCTrainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCTrainer.h; path = ../../../include/JRNN/trainers/CCTrainer.h; sourceTree = SOURCE_ROOT; };
+		45AABE3311C2F53F0042B61E /* RPropTrainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RPropTrainer.h; path = ../../../include/JRNN/trainers/RPropTrainer.h; sourceTree = SOURCE_ROOT; };
+		45AABE3511C2F53F0042B61E /* dataset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = dataset.h; path = ../../../include/JRNN/utility/dataset.h; sourceTree = SOURCE_ROOT; };
+		45AABE3611C2F53F0042B61E /* nodebuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nodebuffer.h; path = ../../../include/JRNN/utility/nodebuffer.h; sourceTree = SOURCE_ROOT; };
+		45AABE3711C2F53F0042B61E /* utility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = utility.h; path = ../../../include/JRNN/utility/utility.h; sourceTree = SOURCE_ROOT; };
+		45AABE3C11C2F6330042B61E /* libJRNN.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libJRNN.a; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		45AABE3A11C2F6330042B61E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		45AABE1111C2F4790042B61E = {
+			isa = PBXGroup;
+			children = (
+				45AABE2911C2F52C0042B61E /* include */,
+				45AABE2811C2F51F0042B61E /* src */,
+				45AABE3D11C2F6330042B61E /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		45AABE1C11C2F4DD0042B61E /* structure */ = {
+			isa = PBXGroup;
+			children = (
+				45AABE1D11C2F4DD0042B61E /* connection.cpp */,
+				45AABE1E11C2F4DD0042B61E /* layer.cpp */,
+				45AABE1F11C2F4DD0042B61E /* network.cpp */,
+				45AABE2011C2F4DD0042B61E /* node.cpp */,
+			);
+			name = structure;
+			path = ../../../src/JRNN/structure;
+			sourceTree = SOURCE_ROOT;
+		};
+		45AABE2111C2F4DD0042B61E /* trainers */ = {
+			isa = PBXGroup;
+			children = (
+				45AABE2211C2F4DD0042B61E /* BackPropTrainer.cpp */,
+				45AABE2311C2F4DD0042B61E /* CCTrainer.cpp */,
+				45AABE2411C2F4DD0042B61E /* RPropTrainer.cpp */,
+			);
+			name = trainers;
+			path = ../../../src/JRNN/trainers;
+			sourceTree = SOURCE_ROOT;
+		};
+		45AABE2511C2F4DD0042B61E /* utility */ = {
+			isa = PBXGroup;
+			children = (
+				45AABE2611C2F4DD0042B61E /* dataset.cpp */,
+				45AABE2711C2F4DD0042B61E /* nodebuffer.cpp */,
+			);
+			name = utility;
+			path = ../../../src/JRNN/utility;
+			sourceTree = SOURCE_ROOT;
+		};
+		45AABE2811C2F51F0042B61E /* src */ = {
+			isa = PBXGroup;
+			children = (
+				45AABE1B11C2F4DD0042B61E /* JRNN.cpp */,
+				45AABE1C11C2F4DD0042B61E /* structure */,
+				45AABE2111C2F4DD0042B61E /* trainers */,
+				45AABE2511C2F4DD0042B61E /* utility */,
+			);
+			name = src;
+			sourceTree = "<group>";
+		};
+		45AABE2911C2F52C0042B61E /* include */ = {
+			isa = PBXGroup;
+			children = (
+				45AABE2A11C2F53F0042B61E /* JRNN.h */,
+				45AABE2B11C2F53F0042B61E /* structure */,
+				45AABE3011C2F53F0042B61E /* trainers */,
+				45AABE3411C2F53F0042B61E /* utility */,
+			);
+			name = include;
+			sourceTree = "<group>";
+		};
+		45AABE2B11C2F53F0042B61E /* structure */ = {
+			isa = PBXGroup;
+			children = (
+				45AABE2C11C2F53F0042B61E /* connection.h */,
+				45AABE2D11C2F53F0042B61E /* layer.h */,
+				45AABE2E11C2F53F0042B61E /* network.h */,
+				45AABE2F11C2F53F0042B61E /* node.h */,
+			);
+			name = structure;
+			path = ../../../include/JRNN/structure;
+			sourceTree = SOURCE_ROOT;
+		};
+		45AABE3011C2F53F0042B61E /* trainers */ = {
+			isa = PBXGroup;
+			children = (
+				45AABE3111C2F53F0042B61E /* BackPropTrainer.h */,
+				45AABE3211C2F53F0042B61E /* CCTrainer.h */,
+				45AABE3311C2F53F0042B61E /* RPropTrainer.h */,
+			);
+			name = trainers;
+			path = ../../../include/JRNN/trainers;
+			sourceTree = SOURCE_ROOT;
+		};
+		45AABE3411C2F53F0042B61E /* utility */ = {
+			isa = PBXGroup;
+			children = (
+				45AABE3511C2F53F0042B61E /* dataset.h */,
+				45AABE3611C2F53F0042B61E /* nodebuffer.h */,
+				45AABE3711C2F53F0042B61E /* utility.h */,
+			);
+			name = utility;
+			path = ../../../include/JRNN/utility;
+			sourceTree = SOURCE_ROOT;
+		};
+		45AABE3D11C2F6330042B61E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				45AABE3C11C2F6330042B61E /* libJRNN.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		45AABE3811C2F6330042B61E /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		45AABE3B11C2F6330042B61E /* JRNN */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 45AABE4011C2F6340042B61E /* Build configuration list for PBXNativeTarget "JRNN" */;
+			buildPhases = (
+				45AABE3811C2F6330042B61E /* Headers */,
+				45AABE3911C2F6330042B61E /* Sources */,
+				45AABE3A11C2F6330042B61E /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = JRNN;
+			productName = JRNN;
+			productReference = 45AABE3C11C2F6330042B61E /* libJRNN.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		45AABE1311C2F4790042B61E /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = 45AABE1611C2F4790042B61E /* Build configuration list for PBXProject "JRNN" */;
+			compatibilityVersion = "Xcode 2.4";
+			hasScannedForEncodings = 0;
+			mainGroup = 45AABE1111C2F4790042B61E;
+			productRefGroup = 45AABE3D11C2F6330042B61E /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				45AABE3B11C2F6330042B61E /* JRNN */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		45AABE3911C2F6330042B61E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				45AABE4311C2F9490042B61E /* JRNN.cpp in Sources */,
+				45AABE4411C2F9490042B61E /* connection.cpp in Sources */,
+				45AABE4511C2F9490042B61E /* layer.cpp in Sources */,
+				45AABE4611C2F9490042B61E /* network.cpp in Sources */,
+				45AABE4711C2F9490042B61E /* node.cpp in Sources */,
+				45AABE4811C2F9490042B61E /* BackPropTrainer.cpp in Sources */,
+				45AABE4911C2F9490042B61E /* CCTrainer.cpp in Sources */,
+				45AABE4A11C2F9490042B61E /* RPropTrainer.cpp in Sources */,
+				45AABE4B11C2F9490042B61E /* dataset.cpp in Sources */,
+				45AABE4C11C2F9490042B61E /* nodebuffer.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		45AABE1411C2F4790042B61E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				GCC_MODEL_TUNING = "";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = ../../../include/JRNN/JRNN.h;
+			};
+			name = Debug;
+		};
+		45AABE1511C2F4790042B61E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				GCC_MODEL_TUNING = "";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = ../../../include/JRNN/JRNN.h;
+			};
+			name = Release;
+		};
+		45AABE3E11C2F6340042B61E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				HEADER_SEARCH_PATHS = ../../../../boost_1_43_0;
+				INSTALL_PATH = /usr/local/lib;
+				PREBINDING = NO;
+				PRODUCT_NAME = JRNN;
+				SKIP_INSTALL = NO;
+				STANDARD_C_PLUS_PLUS_LIBRARY_TYPE = dynamic;
+				USER_HEADER_SEARCH_PATHS = ../../../include/JRNN;
+			};
+			name = Debug;
+		};
+		45AABE3F11C2F6340042B61E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_MODEL_TUNING = G5;
+				HEADER_SEARCH_PATHS = ../../../../boost_1_43_0;
+				INSTALL_PATH = /usr/local/lib;
+				PREBINDING = NO;
+				PRODUCT_NAME = JRNN;
+				USER_HEADER_SEARCH_PATHS = ../../../include/JRNN;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		45AABE1611C2F4790042B61E /* Build configuration list for PBXProject "JRNN" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				45AABE1411C2F4790042B61E /* Debug */,
+				45AABE1511C2F4790042B61E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		45AABE4011C2F6340042B61E /* Build configuration list for PBXNativeTarget "JRNN" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				45AABE3E11C2F6340042B61E /* Debug */,
+				45AABE3F11C2F6340042B61E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 45AABE1311C2F4790042B61E /* Project object */;
+}

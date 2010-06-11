@@ -32,12 +32,15 @@ OBJECTDIR=build/${CND_CONF}/${CND_PLATFORM}
 # Object Files
 OBJECTFILES= \
 	${OBJECTDIR}/_ext/_DOTDOT/_DOTDOT/_DOTDOT/src/JRNN/structure/connection.o \
+	${OBJECTDIR}/_ext/_DOTDOT/_DOTDOT/_DOTDOT/src/JRNN/trainers/CCTrainer.o \
 	${OBJECTDIR}/_ext/_DOTDOT/_DOTDOT/_DOTDOT/src/JRNN/structure/node.o \
+	${OBJECTDIR}/_ext/_DOTDOT/_DOTDOT/_DOTDOT/src/JRNN/utility/nodebuffer.o \
 	${OBJECTDIR}/_ext/_DOTDOT/_DOTDOT/_DOTDOT/src/JRNN/structure/layer.o \
 	${OBJECTDIR}/_ext/_DOTDOT/_DOTDOT/_DOTDOT/src/JRNN/trainers/BackPropTrainer.o \
 	${OBJECTDIR}/_ext/_DOTDOT/_DOTDOT/_DOTDOT/src/JRNN/structure/network.o \
 	${OBJECTDIR}/_ext/_DOTDOT/_DOTDOT/_DOTDOT/src/JRNN/trainers/RPropTrainer.o \
-	${OBJECTDIR}/_ext/_DOTDOT/_DOTDOT/_DOTDOT/src/JRNN/utility/dataset.o
+	${OBJECTDIR}/_ext/_DOTDOT/_DOTDOT/_DOTDOT/src/JRNN/utility/dataset.o \
+	${OBJECTDIR}/_ext/_DOTDOT/_DOTDOT/_DOTDOT/src/JRNN/JRNN.o
 
 # C Compiler Flags
 CFLAGS=
@@ -70,10 +73,20 @@ ${OBJECTDIR}/_ext/_DOTDOT/_DOTDOT/_DOTDOT/src/JRNN/structure/connection.o: nbpro
 	${RM} $@.d
 	$(COMPILE.cc) -g -I../../../../boost_1_43_0 -I../../../include/JRNN -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/_DOTDOT/_DOTDOT/_DOTDOT/src/JRNN/structure/connection.o ../../../src/JRNN/structure/connection.cpp
 
+${OBJECTDIR}/_ext/_DOTDOT/_DOTDOT/_DOTDOT/src/JRNN/trainers/CCTrainer.o: nbproject/Makefile-${CND_CONF}.mk ../../../src/JRNN/trainers/CCTrainer.cpp 
+	${MKDIR} -p ${OBJECTDIR}/_ext/_DOTDOT/_DOTDOT/_DOTDOT/src/JRNN/trainers
+	${RM} $@.d
+	$(COMPILE.cc) -g -I../../../../boost_1_43_0 -I../../../include/JRNN -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/_DOTDOT/_DOTDOT/_DOTDOT/src/JRNN/trainers/CCTrainer.o ../../../src/JRNN/trainers/CCTrainer.cpp
+
 ${OBJECTDIR}/_ext/_DOTDOT/_DOTDOT/_DOTDOT/src/JRNN/structure/node.o: nbproject/Makefile-${CND_CONF}.mk ../../../src/JRNN/structure/node.cpp 
 	${MKDIR} -p ${OBJECTDIR}/_ext/_DOTDOT/_DOTDOT/_DOTDOT/src/JRNN/structure
 	${RM} $@.d
 	$(COMPILE.cc) -g -I../../../../boost_1_43_0 -I../../../include/JRNN -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/_DOTDOT/_DOTDOT/_DOTDOT/src/JRNN/structure/node.o ../../../src/JRNN/structure/node.cpp
+
+${OBJECTDIR}/_ext/_DOTDOT/_DOTDOT/_DOTDOT/src/JRNN/utility/nodebuffer.o: nbproject/Makefile-${CND_CONF}.mk ../../../src/JRNN/utility/nodebuffer.cpp 
+	${MKDIR} -p ${OBJECTDIR}/_ext/_DOTDOT/_DOTDOT/_DOTDOT/src/JRNN/utility
+	${RM} $@.d
+	$(COMPILE.cc) -g -I../../../../boost_1_43_0 -I../../../include/JRNN -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/_DOTDOT/_DOTDOT/_DOTDOT/src/JRNN/utility/nodebuffer.o ../../../src/JRNN/utility/nodebuffer.cpp
 
 ${OBJECTDIR}/_ext/_DOTDOT/_DOTDOT/_DOTDOT/src/JRNN/structure/layer.o: nbproject/Makefile-${CND_CONF}.mk ../../../src/JRNN/structure/layer.cpp 
 	${MKDIR} -p ${OBJECTDIR}/_ext/_DOTDOT/_DOTDOT/_DOTDOT/src/JRNN/structure
@@ -99,6 +112,11 @@ ${OBJECTDIR}/_ext/_DOTDOT/_DOTDOT/_DOTDOT/src/JRNN/utility/dataset.o: nbproject/
 	${MKDIR} -p ${OBJECTDIR}/_ext/_DOTDOT/_DOTDOT/_DOTDOT/src/JRNN/utility
 	${RM} $@.d
 	$(COMPILE.cc) -g -I../../../../boost_1_43_0 -I../../../include/JRNN -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/_DOTDOT/_DOTDOT/_DOTDOT/src/JRNN/utility/dataset.o ../../../src/JRNN/utility/dataset.cpp
+
+${OBJECTDIR}/_ext/_DOTDOT/_DOTDOT/_DOTDOT/src/JRNN/JRNN.o: nbproject/Makefile-${CND_CONF}.mk ../../../src/JRNN/JRNN.cpp 
+	${MKDIR} -p ${OBJECTDIR}/_ext/_DOTDOT/_DOTDOT/_DOTDOT/src/JRNN
+	${RM} $@.d
+	$(COMPILE.cc) -g -I../../../../boost_1_43_0 -I../../../include/JRNN -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/_DOTDOT/_DOTDOT/_DOTDOT/src/JRNN/JRNN.o ../../../src/JRNN/JRNN.cpp
 
 # Subprojects
 .build-subprojects:

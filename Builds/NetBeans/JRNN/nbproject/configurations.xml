@@ -12,10 +12,13 @@
       </logicalFolder>
       <logicalFolder name="trainers" displayName="trainers" projectFiles="true">
         <itemPath>../../../include/JRNN/trainers/BackPropTrainer.h</itemPath>
+        <itemPath>../../../include/JRNN/trainers/CCTrainer.h</itemPath>
         <itemPath>../../../include/JRNN/trainers/RPropTrainer.h</itemPath>
       </logicalFolder>
       <logicalFolder name="utility" displayName="utility" projectFiles="true">
         <itemPath>../../../include/JRNN/utility/dataset.h</itemPath>
+        <itemPath>../../../include/JRNN/utility/nodebuffer.h</itemPath>
+        <itemPath>../../../include/JRNN/utility/utility.h</itemPath>
       </logicalFolder>
       <itemPath>../../../include/JRNN/JRNN.h</itemPath>
     </logicalFolder>
@@ -34,11 +37,14 @@
       </logicalFolder>
       <logicalFolder name="trainers" displayName="trainers" projectFiles="true">
         <itemPath>../../../src/JRNN/trainers/BackPropTrainer.cpp</itemPath>
+        <itemPath>../../../src/JRNN/trainers/CCTrainer.cpp</itemPath>
         <itemPath>../../../src/JRNN/trainers/RPropTrainer.cpp</itemPath>
       </logicalFolder>
       <logicalFolder name="utility" displayName="utility" projectFiles="true">
         <itemPath>../../../src/JRNN/utility/dataset.cpp</itemPath>
+        <itemPath>../../../src/JRNN/utility/nodebuffer.cpp</itemPath>
       </logicalFolder>
+      <itemPath>../../../src/JRNN/JRNN.cpp</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
