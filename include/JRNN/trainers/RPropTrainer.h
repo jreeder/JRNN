@@ -8,6 +8,10 @@
 #ifndef _RPROPTRAINER_H
 #define	_RPROPTRAINER_H
 
+#include "JRNN.h"
+#include "structure/network.h"
+#include "utility/dataset.h"
+
 namespace JRNN {
 
 	class RPropTrainer {
@@ -51,9 +55,6 @@ namespace JRNN {
 		hashedDoubleMap taskErrorRate;
 
 		void RPropUpdate(ConPtr con);
-		int Sign(double num);
-		vecDouble SquareVec(vecDouble vector);
-		vecDouble ApplyThreshold(vecDouble vector);
 		void CalcWeightUpdates(LayerPtr layer, vecDouble desiredOut = vecDouble());
 	};
 

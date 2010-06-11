@@ -4,8 +4,8 @@
  * 
  * Created on May 27, 2010, 4:47 PM
  */
-
 #include "JRNN.h"
+#include "utility/dataset.h"
 
 using namespace JRNN;
 using namespace std;

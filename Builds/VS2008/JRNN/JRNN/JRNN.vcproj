@@ -45,7 +45,8 @@
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
-				UsePrecompiledHeader="0"
+				UsePrecompiledHeader="1"
+				PrecompiledHeaderThrough="JRNN.h"
 				WarningLevel="3"
 				DebugInformationFormat="4"
 				DisableSpecificWarnings="4996"
@@ -108,7 +109,8 @@
 				AdditionalIncludeDirectories="C:\Apps\boost_1_43_0;C:\Users\John\Documents\Source\JRNN\include\JRNN"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
-				UsePrecompiledHeader="0"
+				UsePrecompiledHeader="1"
+				PrecompiledHeaderThrough="JRNN.h"
 				WarningLevel="3"
 				DebugInformationFormat="3"
 				DisableSpecificWarnings="4996"
@@ -150,6 +152,10 @@
 			Filter="cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx"
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
+			<File
+				RelativePath="..\..\..\..\src\JRNN\JRNN.cpp"
+				>
+			</File>
 			<Filter
 				Name="trainers"
 				>
@@ -237,6 +243,10 @@
 				</File>
 				<File
 					RelativePath="..\..\..\..\include\JRNN\utility\nodebuffer.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\..\include\JRNN\utility\utility.h"
 					>
 				</File>
 			</Filter>

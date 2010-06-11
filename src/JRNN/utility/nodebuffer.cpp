@@ -1,4 +1,5 @@
 #include "JRNN.h"
+#include "utility/nodebuffer.h"
 
 namespace JRNN {
 
@@ -10,7 +11,7 @@ namespace JRNN {
 	{
 	}
 
-	vector<double>& NodeBuffer::operator[]( std::string key )
+	std::vector<double>& NodeBuffer::operator[]( std::string key )
 	{
 		return buffer[key];
 	}

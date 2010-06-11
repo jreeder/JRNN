@@ -10,6 +10,7 @@
 
 //#include <boost/numeric/ublas/vector.hpp>
 #include "JRNN.h"
+#include "structure/connection.h"
 
 //using namespace boost::numeric::ublas;
 

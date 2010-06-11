@@ -9,6 +9,7 @@
 #define	_CONNECTION_H
 
 #include "JRNN.h"
+#include "structure/node.h"
 
 namespace JRNN {
 
@@ -74,7 +75,7 @@ namespace JRNN {
         NodePtr inNode;
         NodePtr outNode;
 
-        double RandomWeight();
+        double RandomWeight(double scale = 1, double offset = 0.5);
 
 
     };

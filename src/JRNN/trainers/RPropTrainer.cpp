@@ -4,8 +4,8 @@
  * 
  * Created on June 7, 2010, 11:10 PM
  */
-
 #include "JRNN.h"
+#include "trainers/RPropTrainer.h"
 
 namespace JRNN {
 
@@ -216,18 +216,6 @@ namespace JRNN {
 		}
 	}
 
-	int RPropTrainer::Sign(double num){
-		if (num > 0.0){
-			return 1;
-		}
-		else if (num < 0.0){
-			return -1;
-		}
-		else{
-			return 0;
-		}
-	}
-
 	doubles& RPropTrainer::GetMSERec(){
 		return MSE_Rec;
 	}
@@ -269,26 +257,6 @@ namespace JRNN {
 		}
 	}
 
-	vecDouble RPropTrainer::SquareVec(vecDouble vector){
-		vecDouble::iterator it = vector.begin();
-		for(;it < vector.end(); it++){
-			(*it) = pow((*it),2);
-		}
-		return vector;
-	}
-	vecDouble RPropTrainer::ApplyThreshold(vecDouble vector){
-		vecDouble::iterator it = vector.begin();
-		for(;it != vector.end(); it++){
-			if ((*it) < 0.5){
-				(*it) = 0;
-			}
-			else{
-				(*it) = 1;
-			}
-		}
-		return vector;
-	}
-
 	doubles& RPropTrainer::GetVMSERec(){
 		return vMSE_Rec;
 	}
@@ -297,5 +265,4 @@ namespace JRNN {
 	int RPropTrainer::GetEpochs(){
 		return epochCount;
 	}
-
 }

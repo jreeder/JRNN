@@ -4,8 +4,8 @@
  * 
  * Created on May 16, 2010, 8:35 PM
  */
-
 #include "JRNN.h"
+#include "structure/layer.h"
 
 using namespace JRNN;
 

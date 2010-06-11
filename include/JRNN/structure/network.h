@@ -9,6 +9,9 @@
 #define	_NETWORK_H
 
 #include "JRNN.h"
+#include "structure/node.h"
+#include "structure/connection.h"
+#include "structure/layer.h"
 
 using namespace std;
 

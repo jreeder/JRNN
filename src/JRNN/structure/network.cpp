@@ -4,7 +4,7 @@
  * 
  * Created on May 17, 2010, 5:47 PM
  */
-
+#include "JRNN.h"
 #include "structure/network.h"
 
 using namespace JRNN;

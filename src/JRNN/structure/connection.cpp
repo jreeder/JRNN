@@ -4,8 +4,8 @@
  * 
  * Created on May 14, 2010, 2:32 PM
  */
-
 #include "JRNN.h"
+#include "structure/connection.h"
 
 using namespace JRNN;
 
@@ -129,9 +129,9 @@ Connection Connection::operator *(const Connection& rhs) {
     return tmp;
 }
 
-double Connection::RandomWeight(){
+double Connection::RandomWeight(double scale, double offset){
     double tmpDouble;
-    tmpDouble = ((rand() % 10000 + 1)/(double)10000)-0.5;
+    tmpDouble = (((rand() % 10000 + 1)/(double)10000) * scale) - offset;
     return tmpDouble;
 }
 

@@ -8,13 +8,19 @@
 #ifndef _CCTRAINER_H
 #define _CCTRAINER_H
 
+#include "JRNN.h"
+#include "utility/nodebuffer.h"
+#include "structure/network.h"
+#include "utility/dataset.h"
+
 namespace JRNN {
 	class CCTrainer {
 	public:
-		CCTrainer(NetworkPtr network, DatasetPtr data);
+		CCTrainer(NetworkPtr network, DatasetPtr data, int numCandidates);
 		~CCTrainer();
 		
 	private:
+		//Members
 		NetworkPtr network;
 		DatasetPtr data;
 		int numCandidates;
@@ -24,6 +30,12 @@ namespace JRNN {
 		ConList candidateCons;
 		matDouble errorBuffer;
 		NodeBuffer nodeBuffer;
+
+		//Methods
+		void QuickProp(LayerPtr layer, vecDouble desiredOut);
+		void TrainOuts();
+		void TrainCandidates();
+		double CalcCorrelation();
 	};
 }
 

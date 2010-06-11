@@ -51,15 +51,16 @@ namespace JRNN {
 }
 
 using boost::lexical_cast;
-#include "structure/network.h"
-#include "structure/node.h"
-#include "structure/layer.h"
-#include "structure/connection.h"
-#include "utility/dataset.h"
-#include "utility/nodebuffer.h"
-#include "trainers/BackPropTrainer.h"
-#include "trainers/RPropTrainer.h"
-#include "trainers/CCTrainer.h"
+#include "utility/utility.h"
+//#include "structure/network.h"
+//#include "structure/node.h"
+//#include "structure/layer.h"
+//#include "structure/connection.h"
+//#include "utility/dataset.h"
+//#include "utility/nodebuffer.h"
+//#include "trainers/BackPropTrainer.h"
+//#include "trainers/RPropTrainer.h"
+//#include "trainers/CCTrainer.h"
 
 #endif	/* _JRNN_H */
 

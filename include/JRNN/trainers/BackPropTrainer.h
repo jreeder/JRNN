@@ -9,6 +9,8 @@
 #define	_BACKPROPTRAINER_H
 
 #include "JRNN.h"
+#include "structure/network.h"
+#include "utility/dataset.h"
 
 namespace JRNN {
 
@@ -36,20 +38,12 @@ private:
     doubles MSE_Rec;
     doubles vMSE_Rec;
     DatasetPtr data;
-//    matDouble trainingIns;
-//    matDouble trainingOuts;
-//    matDouble valIns;
-//    matDouble valOuts;
-//    matDouble testIns;
-//    matDouble testOuts;
     hashedDoubleMap localGradients;
     hashedDoubleMap weightUpdates;
     hashedDoubleMap bestWeights;
     hashedIntMap taskErrors;
     hashedDoubleMap taskErrorRate;
 
-    vecDouble SquareVec(vecDouble vector);
-    vecDouble ApplyThreshold(vecDouble vector);
     void CalcWeightUpdates(LayerPtr layer, vecDouble desiredOut = vecDouble());
 };
 

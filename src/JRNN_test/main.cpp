@@ -6,7 +6,9 @@
  */
 
 #include <stdlib.h>
-#include "JRNN.h"
+#include "structure/network.h"
+#include "utility/dataset.h"
+#include "trainers/RPropTrainer.h"
 #include <iostream>
 #include <fstream>
 

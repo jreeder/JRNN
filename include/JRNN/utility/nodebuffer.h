@@ -7,6 +7,9 @@
 
 #ifndef _NODEBUFFER_H
 #define _NODEBUFFER_H
+
+#include "JRNN.h"
+
 namespace JRNN {
 
 	class NodeBuffer

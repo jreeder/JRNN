@@ -10,7 +10,6 @@
 
 #include "JRNN.h"
 #include <boost/tokenizer.hpp>
-#include <iostream>
 #include <fstream>
 
 namespace JRNN {

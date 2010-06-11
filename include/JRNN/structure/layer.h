@@ -9,6 +9,7 @@
 #define	_LAYER_H
 
 #include "JRNN.h"
+#include "structure/node.h"
 
 namespace JRNN {
     

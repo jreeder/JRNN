@@ -4,8 +4,8 @@
  * 
  * Created on May 14, 2010, 3:00 AM
  */
-
 #include "JRNN.h"
+#include "structure/node.h"
 
 using namespace JRNN;
 

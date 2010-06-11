@@ -4,8 +4,8 @@
  * 
  * Created on May 20, 2010, 3:32 PM
  */
-
 #include "JRNN.h"
+#include "trainers/BackPropTrainer.h"
 
 using namespace JRNN;
 
@@ -224,26 +224,6 @@ void BackPropTrainer::TrainToValConv(int maxEpoch){
         }
 
     }
-}
-
-vecDouble BackPropTrainer::SquareVec(vecDouble vector){
-    vecDouble::iterator it = vector.begin();
-    for(;it < vector.end(); it++){
-        (*it) = pow((*it),2);
-    }
-    return vector;
-}
-vecDouble BackPropTrainer::ApplyThreshold(vecDouble vector){
-    vecDouble::iterator it = vector.begin();
-    for(;it != vector.end(); it++){
-        if ((*it) < 0.5){
-            (*it) = 0;
-        }
-        else{
-            (*it) = 1;
-        }
-    }
-    return vector;
 }
 
 doubles& BackPropTrainer::GetVMSERec(){
