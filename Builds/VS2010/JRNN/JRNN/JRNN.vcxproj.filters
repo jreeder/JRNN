@@ -1,0 +1,105 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Source Files\trainers">
+      <UniqueIdentifier>{bfc56f2c-471d-4abd-9b41-363950e8f9c1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\utility">
+      <UniqueIdentifier>{be705554-55e6-4048-a0c5-1c39e2f216b7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\structure">
+      <UniqueIdentifier>{ef1f41b0-1586-426a-8b95-525cc248fbf7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Header Files\structure">
+      <UniqueIdentifier>{9fdde7e5-2344-4c96-98dd-5e641a9d4f99}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\utility">
+      <UniqueIdentifier>{eb877854-ca83-4ad7-b95b-91a6ab0aeaad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\trainers">
+      <UniqueIdentifier>{973ccbd2-1649-487a-a693-0b910f85a4f1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\..\src\JRNN\JRNN.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\JRNN\trainers\BackPropTrainer.cpp">
+      <Filter>Source Files\trainers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\JRNN\trainers\CCTrainer.cpp">
+      <Filter>Source Files\trainers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\JRNN\trainers\RPropTrainer.cpp">
+      <Filter>Source Files\trainers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\JRNN\utility\dataset.cpp">
+      <Filter>Source Files\utility</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\JRNN\utility\nodebuffer.cpp">
+      <Filter>Source Files\utility</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\JRNN\structure\connection.cpp">
+      <Filter>Source Files\structure</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\JRNN\structure\layer.cpp">
+      <Filter>Source Files\structure</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\JRNN\structure\network.cpp">
+      <Filter>Source Files\structure</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\JRNN\structure\node.cpp">
+      <Filter>Source Files\structure</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\..\include\JRNN\JRNN.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\JRNN\structure\connection.h">
+      <Filter>Header Files\structure</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\JRNN\structure\layer.h">
+      <Filter>Header Files\structure</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\JRNN\structure\network.h">
+      <Filter>Header Files\structure</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\JRNN\structure\node.h">
+      <Filter>Header Files\structure</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\JRNN\utility\dataset.h">
+      <Filter>Header Files\utility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\JRNN\utility\nodebuffer.h">
+      <Filter>Header Files\utility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\JRNN\utility\utility.h">
+      <Filter>Header Files\utility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\JRNN\trainers\BackPropTrainer.h">
+      <Filter>Header Files\trainers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\JRNN\trainers\CCTrainer.h">
+      <Filter>Header Files\trainers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\JRNN\trainers\RPropTrainer.h">
+      <Filter>Header Files\trainers</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ReadMe.txt" />
+  </ItemGroup>
+</Project>

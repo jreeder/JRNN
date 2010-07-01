@@ -9,3 +9,5 @@ Release/
 *.suo
 *.user
 *.ncb
+*.sdf
+*.opensdf
