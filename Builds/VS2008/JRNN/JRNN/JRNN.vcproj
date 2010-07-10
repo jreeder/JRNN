@@ -41,7 +41,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="C:\Apps\boost_1_43_0;C:\Users\John\Documents\Source\JRNN\include\JRNN"
+				AdditionalIncludeDirectories="..\..\..\include\JRNN"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
@@ -106,7 +106,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="2"
 				EnableIntrinsicFunctions="true"
-				AdditionalIncludeDirectories="C:\Apps\boost_1_43_0;C:\Users\John\Documents\Source\JRNN\include\JRNN"
+				AdditionalIncludeDirectories="..\..\..\include\JRNN"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
 				UsePrecompiledHeader="1"
