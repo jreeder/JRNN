@@ -51,18 +51,30 @@ Layer::layerType Layer::GetType() const {
     return type;
 }
 
-void Layer::BuildLayer(Node::nodeType nType){
-    NodePtr np;
-    Node::nodeType nt = nType;
-    
-//    nt = (type != layer::input) ? node::sigmoid : node::linear;
-    std::string baseName = name + "_";
-    for (int i = 0; i < layerSize; i++){
-        std::string num = lexical_cast<std::string>(i);
-        std::string name = baseName + num;
-        np.reset(new Node(height,nt,name));
-        nodes.push_back(np);
-    }
+//void Layer::BuildLayer(Node::nodeType nType){
+//    NodePtr np;
+//    Node::nodeType nt = nType;
+//    
+////    nt = (type != layer::input) ? node::sigmoid : node::linear;
+//    std::string baseName = name + "_";
+//    for (int i = 0; i < layerSize; i++){
+//        std::string num = lexical_cast<std::string>(i);
+//        std::string name = baseName + num;
+//        np.reset(new Node(height,nt,name));
+//        nodes.push_back(np);
+//    }
+//}
+
+template<class T>
+void Layer::BuildLayer(){
+	NodePtr np;
+	std::string baseName = name + "_";
+	for (int i = 0; i < layerSize; i++){
+		std::string num = lexical_cast<std::string>(i);
+		std::string name = baseName + num;
+		np->reset(new Node<T>(height, name));
+		nodes.push_back(np);
+	}
 }
 
 NodeList& Layer::GetNodes(){

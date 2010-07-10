@@ -29,7 +29,9 @@ namespace JRNN {
         virtual ~Layer();
         void Activate();
         void Activate(vecDouble inputs);
-        void BuildLayer(Node::nodeType nType);
+        //void BuildLayer(Node::nodeType nType);
+		template<class T>
+		void BuildLayer();
 
         NodeList& GetNodes();
         vecDouble GetOutput();

@@ -6,6 +6,9 @@ private/
 *.swp
 Debug/
 Release/
+ipch/
 *.suo
 *.user
 *.ncb
+*.sdf
+*.opensdf

@@ -9,6 +9,11 @@
 
 namespace JRNN {
 
+	enum conType {
+		IN,
+		OUT
+	};
+
 	inline vecDouble SquareVec(vecDouble vector){
 		vecDouble::iterator it = vector.begin();
 		for(;it < vector.end(); it++){

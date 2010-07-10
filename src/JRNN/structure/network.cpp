@@ -34,10 +34,14 @@ NetworkPtr Network::CreateFFMLPNetwork(int numIn, int numHid, int numOut){
     np->layers.insert(std::pair<std::string, LayerPtr>("hidden", LayerPtr(new Layer(Layer::hidden, numHid, 1,"hidden"))));
     np->layers.insert(std::pair<std::string, LayerPtr>("out", LayerPtr(new Layer(Layer::out,numOut, 2,"out"))));
     np->layers.insert(std::pair<std::string, LayerPtr>("bias", LayerPtr(new Layer(Layer::bias, 1, -1, "bias"))));
-    np->layers["input"]->BuildLayer(Node::linear);
-    np->layers["hidden"]->BuildLayer(Node::sigmoid);
-    np->layers["out"]->BuildLayer(Node::sigmoid);
-    np->layers["bias"]->BuildLayer(Node::bias);
+    //np->layers["input"]->BuildLayer(Node::linear);
+    //np->layers["hidden"]->BuildLayer(Node::sigmoid);
+    //np->layers["out"]->BuildLayer(Node::sigmoid);
+    //np->layers["bias"]->BuildLayer(Node::bias);
+	np->layers["input"]->BuildLayer<ActivationFunctions::Linear>();
+	np->layers["hidden"]->BuildLayer<ActivationFunctions::ASigmoid>();
+	np->layers["out"]->BuildLayer<ActivationFunctions::ASigmoid>();
+	np->layers["bias"]->BuildLayer<ActivationFunctions::Bias>();
     np->FullyConnectFFMLP();
     return np;
 }
@@ -50,9 +54,12 @@ NetworkPtr Network::CreateMinFFNetwork(int numIn, int numOut){
 	np->layers.insert(std::pair<std::string, LayerPtr>("input", LayerPtr(new Layer(Layer::input,numIn,0,"input"))));
 	np->layers.insert(std::pair<std::string, LayerPtr>("out", LayerPtr(new Layer(Layer::out, numOut, 2, "out"))));
 	np->layers.insert(std::pair<std::string, LayerPtr>("bias", LayerPtr(new Layer(Layer::bias, 1, -1, "bias"))));
-	np->layers["input"]->BuildLayer(Node::linear);
-	np->layers["hidden"]->BuildLayer(Node::sigmoid);
-	np->layers["bias"]->BuildLayer(Node::bias);
+	//np->layers["input"]->BuildLayer(Node::linear);
+	//np->layers["hidden"]->BuildLayer(Node::sigmoid);
+	//np->layers["bias"]->BuildLayer(Node::bias);
+	np->layers["input"]->BuildLayer<ActivationFunctions::Linear>();
+	np->layers["out"]->BuildLayer<ActivationFunctions::ASigmoid>();
+	np->layers["bias"]->BuildLayer<ActivationFunctions::Bias>();
 	np->FullyConnectMinFF();
 	return np;
 }
