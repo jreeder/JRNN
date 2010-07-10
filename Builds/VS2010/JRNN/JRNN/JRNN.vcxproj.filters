@@ -63,6 +63,9 @@
     <ClCompile Include="..\..\..\..\src\JRNN\structure\node.cpp">
       <Filter>Source Files\structure</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\src\JRNN\utility\activationfunctions.cpp">
+      <Filter>Source Files\utility</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\include\JRNN\JRNN.h">
@@ -97,6 +100,9 @@
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\JRNN\trainers\RPropTrainer.h">
       <Filter>Header Files\trainers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\JRNN\utility\activationfunctions.h">
+      <Filter>Header Files\utility</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

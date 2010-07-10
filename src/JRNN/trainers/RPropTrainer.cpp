@@ -154,11 +154,13 @@ namespace JRNN {
 					for(int i = 0; i < layer->GetSize(); i++){
 						std::string name = nodes[i]->GetName();
 						double act = nodes[i]->GetOut();
-						double sigSteep = nodes[i]->GetSigSteepness();
+						double nPrime = nodes[i]->GetPrime();
+						//double sigSteep = nodes[i]->GetSigSteepness();
 						double error = desiredOut[i] - act;
-						double delta = sigSteep * error * act * (1-act);
+						//double delta = sigSteep * error * act * (1-act);
+						double delta = error * nPrime;
 						localGradients[name] = delta;
-						ConList cons = nodes[i]->GetConnections(Node::IN);
+						ConList cons = nodes[i]->GetConnections(IN);
 						BOOST_FOREACH(ConPtr con, cons){
 							double dwtmp = con->GetValue() * delta;
 							dw[con->GetName()] += dwtmp;
@@ -169,15 +171,17 @@ namespace JRNN {
 					for(int i = 0; i < layer->GetSize(); i++){
 						std::string name = nodes[i]->GetName();
 						double act = nodes[i]->GetOut();
-						double sigSteep = nodes[i]->GetSigSteepness();
-						ConList outCons = nodes[i]->GetConnections(Node::OUT);
+						double nPrime = nodes[i]->GetPrime();
+						//double sigSteep = nodes[i]->GetSigSteepness();
+						ConList outCons = nodes[i]->GetConnections(OUT);
 						double sumOfChildError = 0;
 						BOOST_FOREACH(ConPtr con, outCons){
 							sumOfChildError += localGradients[con->GetOutNodeName()] * con->GetWeight();
 						}
-						double delta = sigSteep * act * (1-act) * sumOfChildError;
+						//double delta = sigSteep * act * (1-act) * sumOfChildError;
+						double delta = nPrime * sumOfChildError;
 						localGradients[name] = delta;
-						ConList inCons = nodes[i]->GetConnections(Node::IN);
+						ConList inCons = nodes[i]->GetConnections(IN);
 						BOOST_FOREACH(ConPtr con, inCons){
 							double dwtmp = con->GetValue() * delta;
 							dw[con->GetName()] += dwtmp;

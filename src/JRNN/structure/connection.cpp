@@ -43,8 +43,8 @@ ConPtr Connection::Connect(NodePtr newInNode, NodePtr newOutNode){
     ConPtr p(new Connection());
     p->inNode = newInNode;
     p->outNode = newOutNode;
-    p->inNode->AddConnection(Node::OUT,p);
-    p->outNode->AddConnection(Node::IN,p);
+    p->inNode->AddConnection(OUT,p);
+    p->outNode->AddConnection(IN,p);
     p->SetName();
     return p;
 }
@@ -53,8 +53,8 @@ ConPtr Connection::Connect(NodePtr newInNode, NodePtr newOutNode, double weight)
     ConPtr p(new Connection(weight));
     p->inNode = newInNode;
     p->outNode = newOutNode;
-    p->inNode->AddConnection(Node::OUT,p);
-    p->outNode->AddConnection(Node::IN,p);
+    p->inNode->AddConnection(OUT,p);
+    p->outNode->AddConnection(IN,p);
     p->SetName();
     return p;
 }
@@ -89,12 +89,12 @@ double Connection::GetValue(){
 
 void Connection::SetInNode(NodePtr newInNode){
     inNode = newInNode;
-    inNode->AddConnection(Node::OUT,ConPtr(this));
+    inNode->AddConnection(OUT,ConPtr(this));
 }
 
 void Connection::SetOutNode(NodePtr newOutNode){
     outNode = newOutNode;
-    outNode->AddConnection(Node::IN, ConPtr(this));
+    outNode->AddConnection(IN, ConPtr(this));
 }
 
 void Connection::SetLocked(bool lock){
