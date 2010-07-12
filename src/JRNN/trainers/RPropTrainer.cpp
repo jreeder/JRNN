@@ -15,8 +15,8 @@ namespace JRNN {
 	RPropTrainer::RPropTrainer(NetworkPtr network, DatasetPtr inDataSet, double etaPlus, double etaMinus) {
 		mNetwork = network;
 		data = inDataSet;
-		etaPlus = etaPlus;
-		etaMinus = etaMinus;
+		this->etaPlus = etaPlus;
+		this->etaMinus = etaMinus;
 		epochCount = 0;
 	}
 

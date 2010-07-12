@@ -16,7 +16,7 @@ BackPropTrainer::BackPropTrainer(NetworkPtr inNetwork, DatasetPtr inDataSet, dou
     //that says it is ready or not and do something here accordingly. 
 //    trainingIns = trainingData;
 //    trainingOuts = desiredOuts;
-    learningRate = learningRate;
+    this->learningRate = learningRate;
     epochCount = 0;
 }
 

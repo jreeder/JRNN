@@ -51,11 +51,11 @@ const int Dataset::GetSize(){
 }
 
 void Dataset::SetNumInputs(int numInputs){
-    numInputs = numInputs;
+    this->numInputs = numInputs;
 }
 
 void Dataset::SetNumOutputs(int numOutputs){
-    numOutputs = numOutputs;
+    this->numOutputs = numOutputs;
 }
 
 void Dataset::LoadFromFile(std::string filepath, int numInputs, int numOutputs){
@@ -98,9 +98,9 @@ void Dataset::LoadFromFile(std::string filepath, int numInputs, int numOutputs){
 }
 
 void Dataset::DistData(int numTrain, int numVal, int numTest){
-    numTrain = numTrain;
-    numVal = numVal;
-    numTest = numTest;
+    this->numTrain = numTrain;
+    this->numVal = numVal;
+    this->numTest = numTest;
     randSeed = 314159;
     //genRandRange();
     Distribute();

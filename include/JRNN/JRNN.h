@@ -14,6 +14,7 @@
 #include <boost/numeric/ublas/vector.hpp>
 #include <boost/numeric/ublas/io.hpp>
 #include <boost/shared_ptr.hpp>
+#include <boost/scoped_ptr.hpp>
 #include <boost/foreach.hpp>
 #include <boost/unordered_map.hpp>
 #include <boost/lexical_cast.hpp>
@@ -25,20 +26,20 @@
 #include <algorithm>
 
 
-
 namespace ublas = boost::numeric::ublas;
 
+
 namespace JRNN {
-    template<class T>
 	class Node;
     class Network;
     class Connection;
     class Layer;
     class Dataset;
-	class BaseActivationFunction;
+	class ActivationFunction;
     typedef boost::unordered_map<std::string, double> hashedDoubleMap;
     typedef boost::unordered_map<std::string, int> hashedIntMap;
-    typedef boost::shared_ptr<Node<BaseActivationFunction> > NodePtr;
+    typedef boost::shared_ptr<Node> NodePtr;
+	typedef boost::scoped_ptr<ActivationFunction> ActFuncPtr;
     typedef std::vector<NodePtr> NodeList;
     typedef ublas::vector<double> vecDouble;
     typedef boost::shared_ptr<Network> NetworkPtr;

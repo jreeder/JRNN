@@ -111,7 +111,7 @@ void Connection::Reset(){
 }
 
 void Connection::SetWeight(double weight) {
-    weight = weight;
+    this->weight = weight;
 }
 double Connection::GetWeight() const {
     return weight;

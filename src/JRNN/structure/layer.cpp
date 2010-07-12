@@ -17,35 +17,40 @@ Layer::Layer(){
 }
 
 Layer::Layer(layerType type, int inLayerSize, int height, std::string name) {
-    type = type;
-    layerSize = inLayerSize;
-    height = height;
-    name = name;
+    this->type = type;
+    this->layerSize = inLayerSize;
+    this->height = height;
+    this->name = name;
+}
+
+LayerPtr Layer::CreateLayer(layerType type, int inLayerSize, int height, std::string name){
+	LayerPtr lp(new Layer(type,inLayerSize,height, name));
+	return lp;
 }
 
 Layer::Layer(const Layer& orig) {
 }
 
 void Layer::SetNextLayer(LayerPtr nextLayer) {
-    nextLayer = nextLayer;
+    this->nextLayer = nextLayer;
 }
 LayerPtr Layer::GetNextLayer() const {
     return nextLayer;
 }
 void Layer::SetPrevLayer(LayerPtr prevLayer) {
-    prevLayer = prevLayer;
+    this->prevLayer = prevLayer;
 }
 LayerPtr Layer::GetPrevLayer() const {
     return prevLayer;
 }
 void Layer::SetLayerSize(int layerSize) {
-    layerSize = layerSize;
+    this->layerSize = layerSize;
 }
 int Layer::GetLayerSize() const {
     return layerSize;
 }
 void Layer::SetType(layerType type) {
-    type = type;
+    this->type = type;
 }
 Layer::layerType Layer::GetType() const {
     return type;
@@ -64,18 +69,6 @@ Layer::layerType Layer::GetType() const {
 //        nodes.push_back(np);
 //    }
 //}
-
-template<class T>
-void Layer::BuildLayer(){
-	NodePtr np;
-	std::string baseName = name + "_";
-	for (int i = 0; i < layerSize; i++){
-		std::string num = lexical_cast<std::string>(i);
-		std::string name = baseName + num;
-		np->reset(new Node<T>(height, name));
-		nodes.push_back(np);
-	}
-}
 
 NodeList& Layer::GetNodes(){
     return nodes;

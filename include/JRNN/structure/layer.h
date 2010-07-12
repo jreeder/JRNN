@@ -30,6 +30,7 @@ namespace JRNN {
         void Activate();
         void Activate(vecDouble inputs);
         //void BuildLayer(Node::nodeType nType);
+		static LayerPtr CreateLayer(layerType type, int inLayerSize, int height, std::string name);
 		template<class T>
 		void BuildLayer();
 
@@ -65,6 +66,17 @@ namespace JRNN {
         NodeList nodes;
     };
 
+	template<class T>
+	void Layer::BuildLayer(){
+		//NodePtr np;
+		std::string baseName = name + "_";
+		for (int i = 0; i < layerSize; i++){
+			std::string num = lexical_cast<std::string>(i);
+			std::string name = baseName + num;
+			//np.reset(new Node<T>(height, name));
+			nodes.push_back(Node::CreateNode<T>(height,name));
+		}
+	}
 }
 #endif	/* _LAYER_H */
 

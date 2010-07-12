@@ -13,10 +13,10 @@ Network::Network() {
 //    numIn = numIn;
 //    numOut = numOut;
 //    numHid = numHid;
-//    layers.insert(std::pair<std::string, layerPtr>("input", layerPtr(new layer(layer::input,numIn,0,"input"))));
-//    layers.insert(std::pair<std::string, layerPtr>("hidden", layerPtr(new layer(layer::hidden, numHid, 1,"hidden"))));
-//    layers.insert(std::pair<std::string, layerPtr>("out", layerPtr(new layer(layer::out,numOut, 2,"out"))));
-//    layers.insert(std::pair<std::string, layerPtr>("bias", layerPtr(new layer(layer::bias, 1, -1, "bias"))));
+//    layers.insert(std::pair<std::string, layerPtr>("input", Layer::CreateLayer(layer::input,numIn,0,"input")));
+//    layers.insert(std::pair<std::string, layerPtr>("hidden", Layer::CreateLayer(layer::hidden, numHid, 1,"hidden")));
+//    layers.insert(std::pair<std::string, layerPtr>("out", Layer::CreateLayer(layer::out,numOut, 2,"out")));
+//    layers.insert(std::pair<std::string, layerPtr>("bias", Layer::CreateLayer(layer::bias, 1, -1, "bias")));
 //    layers["input"]->BuildLayer(node::linear);
 //    layers["hidden"]->BuildLayer(node::sigmoid);
 //    layers["out"]->BuildLayer(node::sigmoid);
@@ -30,18 +30,18 @@ NetworkPtr Network::CreateFFMLPNetwork(int numIn, int numHid, int numOut){
     np->numOut = numOut;
     np->numHid = numHid;
 	np->numHidLayers = 1;
-    np->layers.insert(std::pair<std::string, LayerPtr>("input", LayerPtr(new Layer(Layer::input,numIn,0,"input"))));
-    np->layers.insert(std::pair<std::string, LayerPtr>("hidden", LayerPtr(new Layer(Layer::hidden, numHid, 1,"hidden"))));
-    np->layers.insert(std::pair<std::string, LayerPtr>("out", LayerPtr(new Layer(Layer::out,numOut, 2,"out"))));
-    np->layers.insert(std::pair<std::string, LayerPtr>("bias", LayerPtr(new Layer(Layer::bias, 1, -1, "bias"))));
+    np->layers.insert(std::pair<std::string, LayerPtr>("input", Layer::CreateLayer(Layer::input,numIn,0,"input")));
+    np->layers.insert(std::pair<std::string, LayerPtr>("hidden", Layer::CreateLayer(Layer::hidden, numHid, 1,"hidden")));
+    np->layers.insert(std::pair<std::string, LayerPtr>("out", Layer::CreateLayer(Layer::out,numOut, 2,"out")));
+    np->layers.insert(std::pair<std::string, LayerPtr>("bias", Layer::CreateLayer(Layer::bias, 1, -1, "bias")));
     //np->layers["input"]->BuildLayer(Node::linear);
     //np->layers["hidden"]->BuildLayer(Node::sigmoid);
     //np->layers["out"]->BuildLayer(Node::sigmoid);
     //np->layers["bias"]->BuildLayer(Node::bias);
-	np->layers["input"]->BuildLayer<ActivationFunctions::Linear>();
-	np->layers["hidden"]->BuildLayer<ActivationFunctions::ASigmoid>();
-	np->layers["out"]->BuildLayer<ActivationFunctions::ASigmoid>();
-	np->layers["bias"]->BuildLayer<ActivationFunctions::Bias>();
+	np->layers["input"]->BuildLayer<Linear>();
+	np->layers["hidden"]->BuildLayer<Sigmoid>();
+	np->layers["out"]->BuildLayer<ASigmoid>();
+	np->layers["bias"]->BuildLayer<Bias>();
     np->FullyConnectFFMLP();
     return np;
 }
@@ -51,15 +51,15 @@ NetworkPtr Network::CreateMinFFNetwork(int numIn, int numOut){
 	np->numIn = numIn;
 	np->numOut = numOut;
 	np->numHidLayers = 0;
-	np->layers.insert(std::pair<std::string, LayerPtr>("input", LayerPtr(new Layer(Layer::input,numIn,0,"input"))));
-	np->layers.insert(std::pair<std::string, LayerPtr>("out", LayerPtr(new Layer(Layer::out, numOut, 2, "out"))));
-	np->layers.insert(std::pair<std::string, LayerPtr>("bias", LayerPtr(new Layer(Layer::bias, 1, -1, "bias"))));
+	np->layers.insert(std::pair<std::string, LayerPtr>("input", Layer::CreateLayer(Layer::input,numIn,0,"input")));
+	np->layers.insert(std::pair<std::string, LayerPtr>("out", Layer::CreateLayer(Layer::out, numOut, 2, "out")));
+	np->layers.insert(std::pair<std::string, LayerPtr>("bias", Layer::CreateLayer(Layer::bias, 1, -1, "bias")));
 	//np->layers["input"]->BuildLayer(Node::linear);
 	//np->layers["hidden"]->BuildLayer(Node::sigmoid);
 	//np->layers["bias"]->BuildLayer(Node::bias);
-	np->layers["input"]->BuildLayer<ActivationFunctions::Linear>();
-	np->layers["out"]->BuildLayer<ActivationFunctions::ASigmoid>();
-	np->layers["bias"]->BuildLayer<ActivationFunctions::Bias>();
+	np->layers["input"]->BuildLayer<Linear>();
+	np->layers["out"]->BuildLayer<ASigmoid>();
+	np->layers["bias"]->BuildLayer<Bias>();
 	np->FullyConnectMinFF();
 	return np;
 }
@@ -184,7 +184,7 @@ void Network::Activate(LayerPtr layer){
 }
 
 void Network::SetInputs(vecDouble inputs){
-    inputs = inputs;
+    this->inputs = inputs;
 }
 
 ConList& Network::GetConnections(){

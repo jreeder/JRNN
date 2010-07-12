@@ -33,7 +33,7 @@ int main(int argc, char** argv) {
         numHid = lexical_cast<int>(argv[3]);
         numOut = lexical_cast<int>(argv[4]);
         outfile += filename;
-        outfile += "results.txt";
+        outfile += " results.txt";
     }
     ofstream myfile;
     myfile.open(outfile.c_str());
