@@ -176,6 +176,10 @@
 				Name="utility"
 				>
 				<File
+					RelativePath="..\..\..\..\src\JRNN\utility\activationfunctions.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\..\..\..\src\JRNN\utility\dataset.cpp"
 					>
 				</File>
@@ -237,6 +241,10 @@
 			<Filter
 				Name="utility"
 				>
+				<File
+					RelativePath="..\..\..\..\include\JRNN\utility\activationfunctions.h"
+					>
+				</File>
 				<File
 					RelativePath="..\..\..\..\include\JRNN\utility\dataset.h"
 					>

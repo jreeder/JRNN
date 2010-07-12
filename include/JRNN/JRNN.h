@@ -35,9 +35,10 @@ namespace JRNN {
     class Connection;
     class Layer;
     class Dataset;
+	class BaseActivationFunction;
     typedef boost::unordered_map<std::string, double> hashedDoubleMap;
     typedef boost::unordered_map<std::string, int> hashedIntMap;
-    typedef boost::shared_ptr<Node<class J> > NodePtr;
+    typedef boost::shared_ptr<Node<BaseActivationFunction> > NodePtr;
     typedef std::vector<NodePtr> NodeList;
     typedef ublas::vector<double> vecDouble;
     typedef boost::shared_ptr<Network> NetworkPtr;
