@@ -80,6 +80,7 @@ Connection::~Connection() {
 }
 
 double Connection::GetWeightedValue(){
+	Update();
     return weightedValue;
 }
 

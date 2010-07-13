@@ -122,9 +122,11 @@ void Node::UpdateOut(){
             break;
     }*/
 	out = actFunction->activate(sumOfIn);
-    BOOST_FOREACH(ConPtr con, outConnections){
+	//this was a redundant loop. I'm already looping through them on the other side. 
+	//I just do the update there now. 
+    /*BOOST_FOREACH(ConPtr con, outConnections){
         con->Update();
-    }
+    }*/
 }
 
 
