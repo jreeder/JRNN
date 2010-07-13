@@ -19,23 +19,71 @@ namespace JRNN {
 		CCTrainer(NetworkPtr network, DatasetPtr data, int numCandidates);
 		~CCTrainer();
 		
+		struct  
+		{
+			int nTrials;
+			int maxNewUnites;
+			int valPatience;
+
+			struct  
+			{
+				int epochs;
+				int patience;
+				double epsilon;
+				double decay;
+				double mu;
+				double changeThreshold;
+			} out;
+
+			struct  
+			{
+				int epochs;
+				int patience;
+				double epsilon;
+				double decay;
+				double mu;
+				double changeThreshold;
+			} cand;
+
+			int nCand;
+		} parms;
+		
 	private:
 		//Members
 		NetworkPtr network;
 		DatasetPtr data;
-		int numCandidates;
-		int patienceEpochs;
-		double patienceErrDelta;
 		LayerPtr candidateLayer;
 		ConList candidateCons;
-		matDouble errorBuffer;
-		NodeBuffer nodeBuffer;
+		//TODO Implement Network caching
+		//matDouble errorBuffer; 
+		//NodeBuffer nodeBuffer; //buffer of each nodes output
+		double sumSqErr; //Sum Squared Error Primes
+		hashedDoubleMap outSumErrs; //sum of errors for each output node
+		hashedDoubleMap conDeltas; //deltas for each weight
+		hashedDoubleMap conSlopes; //current slopes for each weight
+		hashedDoubleMap conPSlopes; //previous slopes for each weight
+		hashedDoubleMap candSumVals; //Sum of candidate activations over training. 
+		hashedDoubleMap candCorr; //Correlation of each candidate node
+		hashedDoubleMap candPCore; //Previous correlation of each candidate node
 
 		//Methods
-		void QuickProp(LayerPtr layer, vecDouble desiredOut);
+		void QuickProp(ConPtr con, double epsilon, double decay, double mu, double shrinkFactor);
+		//Output training methods
+		void resetError();
 		void TrainOuts();
+		void OutputEpoch();
+		void ComputerOutError();
+		void UpdateOutWeights(); //Adjust output weights.
+
+		//Candidate training methods
 		void TrainCandidates();
-		double CalcCorrelation();
+		void CorrelationEpoch();
+		void CandEpoch();
+		void UpdateCandWeights();
+		void UpdateCorrelations();
+		void ComputeCorrelations();
+		void ComputeCandSlopes();
+
 	};
 }
 
