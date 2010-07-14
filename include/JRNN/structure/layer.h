@@ -53,8 +53,12 @@ namespace JRNN {
         void SetName(std::string newName);
         const std::string& GetName();
 
-        int GetSize();
+		void AddNode(NodePtr node);
+		void RemoveNode(NodePtr node);
 
+        int GetSize();
+		int GetHeight();
+		void SetHeight(int newHeight);
     private:
         layerType type;
         //vector<double> outBuffer;

@@ -113,3 +113,13 @@ int Layer::GetSize(){
 Layer::~Layer() {
     //nodes.clear();
 }
+
+int JRNN::Layer::GetHeight()
+{
+	return height;
+}
+
+void JRNN::Layer::SetHeight( int newHeight )
+{
+	height = newHeight;
+}
