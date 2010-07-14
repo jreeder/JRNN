@@ -42,7 +42,10 @@ namespace JRNN {
 	typedef boost::scoped_ptr<ActivationFunction> ActFuncPtr;
     typedef std::vector<NodePtr> NodeList;
     typedef ublas::vector<double> vecDouble;
-    typedef boost::shared_ptr<Network> NetworkPtr;
+	template<typename T = Network>
+	struct NetworkPtrHelper {
+		    typedef boost::shared_ptr<T> Ptr;
+	};
     typedef boost::shared_ptr<Connection> ConPtr;
     typedef boost::shared_ptr<Layer> LayerPtr;
     typedef std::vector<ConPtr> ConList;

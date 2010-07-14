@@ -10,32 +10,36 @@
 #define _CCBUILDER_H
 
 #include "JRNN.h"
-#include "utility/NetworkBuilder.h"
+#include "structure/network.h"
 
 namespace JRNN {
-	
-	class CCBuilder : public NetworkBuilder {
+	class CCNetwork;
+	typedef NetworkPtrHelper<CCNetwork>::Ptr CCNetworkPtr;
+
+	class CCNetwork : public Network{
 	//This might be slightly inconsistent with my other use of builder
 	public: 
-		CCBuilder(int numIn, int numOut);
-		CCBuilder(NetworkPtr network);
-		~CCBuilder();
-		NetworkPtr Create();
-		NetworkPtr GetNetwork();
-		void SetNetwork(NetworkPtr net);
+		CCNetwork();
+		CCNetwork(int numIn, int numOut);
+		//CCNetwork(NetworkPtr network);
+		~CCNetwork();
+		static CCNetworkPtr Create();
+		//NetworkPtr GetNetwork();
+		//void SetNetwork(NetworkPtr net);
 		void CreateCandLayer(int numCand);
 		void InstallCandidate(NodePtr node);
+		void Build(int numIn, int numOut);
 
 	private:
-		int numIn;
-		int numOut;
+		//int numIn;
+		//int numOut;
 		ConList tmpConnections;
 		LayerPtr candLayer;
-		NetworkPtr np;
 		void CandFullyConnectBack(LayerPtr layer);
 		void AddHiddenLayer();
 		void FullyConnectOut(LayerPtr layer);
 		void FullyConnect();
+		
 	};
 }
 

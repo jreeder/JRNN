@@ -66,10 +66,10 @@
     <ClCompile Include="..\..\..\..\src\JRNN\utility\activationfunctions.cpp">
       <Filter>Source Files\utility</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\JRNN\utility\FFMLPBuilder.cpp">
+    <ClCompile Include="..\..\..\..\src\JRNN\utility\CCNetwork.cpp">
       <Filter>Source Files\utility</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\JRNN\utility\CCBuilder.cpp">
+    <ClCompile Include="..\..\..\..\src\JRNN\utility\FFMLPNetwork.cpp">
       <Filter>Source Files\utility</Filter>
     </ClCompile>
   </ItemGroup>
@@ -110,13 +110,10 @@
     <ClInclude Include="..\..\..\..\include\JRNN\utility\activationfunctions.h">
       <Filter>Header Files\utility</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\include\JRNN\utility\NetworkBuilder.h">
+    <ClInclude Include="..\..\..\..\include\JRNN\utility\CCNetwork.h">
       <Filter>Header Files\utility</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\include\JRNN\utility\FFMLPBuilder.h">
-      <Filter>Header Files\utility</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\include\JRNN\utility\CCBuilder.h">
+    <ClInclude Include="..\..\..\..\include\JRNN\utility\FFMLPNetwork.h">
       <Filter>Header Files\utility</Filter>
     </ClInclude>
   </ItemGroup>

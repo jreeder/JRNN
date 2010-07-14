@@ -9,7 +9,7 @@
 
 namespace JRNN {
 	
-	CCTrainer::CCTrainer(NetworkPtr network, DatasetPtr data, int numCandidates){
+	CCTrainer::CCTrainer(CCNetworkPtr network, DatasetPtr data, int numCandidates){
 		parms.nTrials = 1;
 		parms.maxNewUnits = 25;
 		parms.valPatience = 12;

@@ -12,7 +12,7 @@ namespace JRNN {
 	const double RPropTrainer::deltaMax = 50;
 	const double RPropTrainer::deltaMin = 0.000001;
 
-	RPropTrainer::RPropTrainer(NetworkPtr network, DatasetPtr inDataSet, double etaPlus, double etaMinus) {
+	RPropTrainer::RPropTrainer(FFMLPNetPtr network, DatasetPtr inDataSet, double etaPlus, double etaMinus) {
 		mNetwork = network;
 		data = inDataSet;
 		this->etaPlus = etaPlus;

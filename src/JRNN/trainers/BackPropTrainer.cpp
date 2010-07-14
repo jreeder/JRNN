@@ -9,7 +9,7 @@
 
 using namespace JRNN;
 
-BackPropTrainer::BackPropTrainer(NetworkPtr inNetwork, DatasetPtr inDataSet, double learningRate) {
+BackPropTrainer::BackPropTrainer(FFMLPNetPtr inNetwork, DatasetPtr inDataSet, double learningRate) {
     mNetwork = inNetwork;
     data = inDataSet;
     //TODO: right now I'm assuming the dataset is ready to go. need to add in a flah

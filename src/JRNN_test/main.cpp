@@ -9,7 +9,8 @@
 #include "structure/network.h"
 #include "utility/dataset.h"
 #include "trainers/RPropTrainer.h"
-#include "utility/FFMLPBuilder.h"
+#include "utility/FFMLPNetwork.h"
+//#include "utility/NetworkBuilder.h" Stupid Idea and not necessary
 #include <iostream>
 #include <fstream>
 
@@ -25,7 +26,7 @@ int main(int argc, char** argv) {
     int numIn,numHid,numOut;
 
     if (argc != 5){
-        cout << "Wrong Number of imputs" << endl;
+        cout << "Wrong Number of inputs" << endl;
         return -1;
     }
     else {
@@ -39,11 +40,12 @@ int main(int argc, char** argv) {
     ofstream myfile;
     myfile.open(outfile.c_str());
     DatasetPtr ds(new Dataset());
-	FFMLPBuilder netBuilder(numIn, numHid, numOut);
+	//FFMLPNetwork netBuilder(numIn, numHid, numOut);
     ds->LoadFromFile(filename, numIn,numOut);
     ds->DistData(100,100,500);
     //NetworkPtr net = Network::CreateFFMLPNetwork(numIn,numHid,numOut);
-	NetworkPtr net = netBuilder.Create();
+	FFMLPNetPtr net = FFMLPNetwork::Create();
+	net->Build(numIn,numHid,numOut);
     //net.printConnections();
 //    BackPropTrainer bp(net, ds, 0.01);
     RPropTrainer bp(net, ds, 1.2, 0.5);

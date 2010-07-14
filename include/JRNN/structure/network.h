@@ -16,18 +16,22 @@
 using namespace std;
 
 namespace JRNN{
-	class NetworkBuilder;
+
+	typedef NetworkPtrHelper<>::Ptr NetworkPtr;
+
     class Network {
     public:
 		//TODO: need to add methods for removing connections. 
 		//This means making methods to remove them in nodes, 
 		//and having the destructor of connections take care of it. 
-        Network();
+        
 //        network(const network& orig);
         virtual ~Network();
 
-		LayerMap layers;
-		ConList connections;
+		static NetworkPtr Create(){
+			NetworkPtr np(new Network());
+			return np;
+		}
 
         void Activate(vecDouble inputs);
 		void Activate(LayerPtr layer);
@@ -56,9 +60,13 @@ namespace JRNN{
         //static NetworkPtr CreateFFMLPNetwork(int numIn, int numHid, int numOut);
 		//static NetworkPtr CreateMinFFNetwork(int numIn, int numOut);
         
-    private:
+    protected:
+		Network();
+
         int numIn;
         int numOut;
+		LayerMap layers;
+		ConList connections;
         //int numHid; //TODO: need to abstract this out. 
 		int numHidLayers;
 		bool locked;

@@ -9,14 +9,15 @@
 #define	_BACKPROPTRAINER_H
 
 #include "JRNN.h"
-#include "structure/network.h"
+//#include "structure/network.h"
+#include "utility/FFMLPNetwork.h"
 #include "utility/dataset.h"
 
 namespace JRNN {
 
 class BackPropTrainer {
 public:
-    BackPropTrainer(NetworkPtr network, DatasetPtr inDataSet, double learningRate);
+    BackPropTrainer(FFMLPNetPtr network, DatasetPtr inDataSet, double learningRate);
     BackPropTrainer(const BackPropTrainer& orig);
     virtual ~BackPropTrainer();
     double TrainEpoch();
@@ -30,7 +31,7 @@ public:
     void Reset();
 
 private:
-    NetworkPtr mNetwork;
+    FFMLPNetPtr mNetwork;
     int epochCount;
     static const int continueEpochs = 50; //Number of epochs to continue looking for improvement on validation set.
     int trainingIndex;

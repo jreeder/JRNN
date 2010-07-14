@@ -9,7 +9,8 @@
 #define	_RPROPTRAINER_H
 
 #include "JRNN.h"
-#include "structure/network.h"
+//#include "structure/network.h"
+#include "utility/FFMLPNetwork.h"
 #include "utility/dataset.h"
 
 namespace JRNN {
@@ -17,7 +18,7 @@ namespace JRNN {
 	class RPropTrainer {
 		//TODO: need to abstract this class and backproptrainer and use inheritance
 	public:
-		RPropTrainer(NetworkPtr network, DatasetPtr inDataSet, double etaPlus, double etaMinus);
+		RPropTrainer(FFMLPNetPtr network, DatasetPtr inDataSet, double etaPlus, double etaMinus);
 		RPropTrainer(const RPropTrainer& orig);
 		virtual ~RPropTrainer();
 		double TrainEpoch();
@@ -31,7 +32,7 @@ namespace JRNN {
 		void Reset();
 
 	private:
-		NetworkPtr mNetwork;
+		FFMLPNetPtr mNetwork;
 		int epochCount;
 		double etaPlus;
 		double etaMinus;

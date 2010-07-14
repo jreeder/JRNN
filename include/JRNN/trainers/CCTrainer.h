@@ -10,13 +10,13 @@
 
 #include "JRNN.h"
 #include "utility/nodebuffer.h"
-#include "structure/network.h"
+#include "utility/CCNetwork.h"
 #include "utility/dataset.h"
 
 namespace JRNN {
 	class CCTrainer {
 	public:
-		CCTrainer(NetworkPtr network, DatasetPtr data, int numCandidates);
+		CCTrainer(CCNetworkPtr network, DatasetPtr data, int numCandidates);
 		~CCTrainer();
 
 		void ResetVars();
@@ -56,7 +56,7 @@ namespace JRNN {
 		
 	private:
 		//Members
-		NetworkPtr network;
+		CCNetworkPtr network;
 		DatasetPtr data;
 		LayerPtr candidateLayer;
 		ConList candidateCons;
