@@ -31,6 +31,12 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav</Extensions>
     </Filter>
+    <Filter Include="Header Files\networks">
+      <UniqueIdentifier>{87afc402-f2b5-461e-9de6-a54e6ea8226a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\networks">
+      <UniqueIdentifier>{f6645b38-95db-4e45-9e53-257bfab895d6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\..\src\JRNN\JRNN.cpp">
@@ -66,11 +72,11 @@
     <ClCompile Include="..\..\..\..\src\JRNN\utility\activationfunctions.cpp">
       <Filter>Source Files\utility</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\JRNN\utility\CCNetwork.cpp">
-      <Filter>Source Files\utility</Filter>
+    <ClCompile Include="..\..\..\..\src\JRNN\networks\CCNetwork.cpp">
+      <Filter>Source Files\networks</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\JRNN\utility\FFMLPNetwork.cpp">
-      <Filter>Source Files\utility</Filter>
+    <ClCompile Include="..\..\..\..\src\JRNN\networks\FFMLPNetwork.cpp">
+      <Filter>Source Files\networks</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -110,11 +116,11 @@
     <ClInclude Include="..\..\..\..\include\JRNN\utility\activationfunctions.h">
       <Filter>Header Files\utility</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\include\JRNN\utility\CCNetwork.h">
-      <Filter>Header Files\utility</Filter>
+    <ClInclude Include="..\..\..\..\include\JRNN\networks\CCNetwork.h">
+      <Filter>Header Files\networks</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\include\JRNN\utility\FFMLPNetwork.h">
-      <Filter>Header Files\utility</Filter>
+    <ClInclude Include="..\..\..\..\include\JRNN\networks\FFMLPNetwork.h">
+      <Filter>Header Files\networks</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

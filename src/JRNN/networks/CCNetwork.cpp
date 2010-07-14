@@ -6,7 +6,7 @@
  */
 
 #include "JRNN.h"
-#include "utility/CCNetwork.h"
+#include "networks/CCNetwork.h"
 
 namespace JRNN {
 

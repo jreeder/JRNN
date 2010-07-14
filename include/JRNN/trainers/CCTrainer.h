@@ -10,7 +10,7 @@
 
 #include "JRNN.h"
 #include "utility/nodebuffer.h"
-#include "utility/CCNetwork.h"
+#include "networks/CCNetwork.h"
 #include "utility/dataset.h"
 
 namespace JRNN {

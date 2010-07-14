@@ -57,7 +57,7 @@
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
-      <PrecompiledHeader>Create</PrecompiledHeader>
+      <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>JRNN.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
@@ -81,14 +81,15 @@
   <ItemGroup>
     <ClCompile Include="..\..\..\..\src\JRNN\JRNN.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\src\JRNN\networks\CCNetwork.cpp" />
+    <ClCompile Include="..\..\..\..\src\JRNN\networks\FFMLPNetwork.cpp" />
     <ClCompile Include="..\..\..\..\src\JRNN\trainers\BackPropTrainer.cpp" />
     <ClCompile Include="..\..\..\..\src\JRNN\trainers\CCTrainer.cpp" />
     <ClCompile Include="..\..\..\..\src\JRNN\trainers\RPropTrainer.cpp" />
     <ClCompile Include="..\..\..\..\src\JRNN\utility\activationfunctions.cpp" />
-    <ClCompile Include="..\..\..\..\src\JRNN\utility\CCNetwork.cpp" />
     <ClCompile Include="..\..\..\..\src\JRNN\utility\dataset.cpp" />
-    <ClCompile Include="..\..\..\..\src\JRNN\utility\FFMLPNetwork.cpp" />
     <ClCompile Include="..\..\..\..\src\JRNN\utility\nodebuffer.cpp" />
     <ClCompile Include="..\..\..\..\src\JRNN\structure\connection.cpp" />
     <ClCompile Include="..\..\..\..\src\JRNN\structure\layer.cpp" />
@@ -97,14 +98,14 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\include\JRNN\JRNN.h" />
+    <ClInclude Include="..\..\..\..\include\JRNN\networks\CCNetwork.h" />
+    <ClInclude Include="..\..\..\..\include\JRNN\networks\FFMLPNetwork.h" />
     <ClInclude Include="..\..\..\..\include\JRNN\structure\connection.h" />
     <ClInclude Include="..\..\..\..\include\JRNN\structure\layer.h" />
     <ClInclude Include="..\..\..\..\include\JRNN\structure\network.h" />
     <ClInclude Include="..\..\..\..\include\JRNN\structure\node.h" />
     <ClInclude Include="..\..\..\..\include\JRNN\utility\activationfunctions.h" />
-    <ClInclude Include="..\..\..\..\include\JRNN\utility\CCNetwork.h" />
     <ClInclude Include="..\..\..\..\include\JRNN\utility\dataset.h" />
-    <ClInclude Include="..\..\..\..\include\JRNN\utility\FFMLPNetwork.h" />
     <ClInclude Include="..\..\..\..\include\JRNN\utility\nodebuffer.h" />
     <ClInclude Include="..\..\..\..\include\JRNN\utility\utility.h" />
     <ClInclude Include="..\..\..\..\include\JRNN\trainers\BackPropTrainer.h" />

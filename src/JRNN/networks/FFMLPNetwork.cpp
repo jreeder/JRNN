@@ -5,7 +5,7 @@
  * Created on July 13, 2010
  */
 #include "JRNN.h"
-#include "utility/FFMLPNetwork.h"
+#include "networks/FFMLPNetwork.h"
 
 namespace JRNN {
 	//FFMLPBuilder::FFMLPBuilder( int numIn, int numHid, int numOut )

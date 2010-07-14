@@ -10,7 +10,7 @@
 
 #include "JRNN.h"
 //#include "structure/network.h"
-#include "utility/FFMLPNetwork.h"
+#include "networks/FFMLPNetwork.h"
 #include "utility/dataset.h"
 
 namespace JRNN {
