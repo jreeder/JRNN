@@ -16,7 +16,7 @@
 using namespace std;
 
 namespace JRNN{
-
+	class NetworkBuilder;
     class Network {
     public:
 		//TODO: need to add methods for removing connections. 
@@ -25,37 +25,53 @@ namespace JRNN{
         Network();
 //        network(const network& orig);
         virtual ~Network();
+
+		LayerMap layers;
+		ConList connections;
+
         void Activate(vecDouble inputs);
 		void Activate(LayerPtr layer);
 		void SetInputs(vecDouble inputs);
+		void SetLocked(bool lock);
+		bool GetLocked();
+
+		void SetNumIn(int numIn);
+		int GetNumIn();
+		void SetNumOut(int numOut);
+		int GetNumOut();
+		void SetNumHidLayers(int numHidLayers);
+		int GetNumHidLayers();
+
         vecDouble GetOutputs();
         void SetDesiredOut(vecDouble desiredOut);
         LayerPtr GetLayer(std::string layerName);
         ConList& GetConnections();
         hashedDoubleMap GetWeights();
+		int GetNumNidLayers();
         void SetWeights(hashedDoubleMap weights);
         void Reset();
         void PrintConnections();
-        static NetworkPtr CreateFFMLPNetwork(int numIn, int numHid, int numOut);
-		static NetworkPtr CreateMinFFNetwork(int numIn, int numOut);
+		//bool AddHiddenLayer(LayerPtr newLayer);
+		//bool AddCascadedLayer(LayerPtr newLayer);
+        //static NetworkPtr CreateFFMLPNetwork(int numIn, int numHid, int numOut);
+		//static NetworkPtr CreateMinFFNetwork(int numIn, int numOut);
         
     private:
         int numIn;
         int numOut;
-        int numHid; //TODO: need to abstract this out. 
+        //int numHid; //TODO: need to abstract this out. 
 		int numHidLayers;
-        LayerMap layers;
-        ConList inToHid;
-        ConList hidToOut;
-        ConList connections;
+		bool locked;
+        /*ConList inToHid;
+        ConList hidToOut;*/
         vecDouble inputs;
         vecDouble outputs;
         vecDouble desiredOut;
 
-        void FullyConnectFFMLP();
-		void FullyConnectMinFF();
-		void FullyConnectBack(LayerPtr layer);
-		void FullyConnectOut(LayerPtr Layer);
+  //      void FullyConnectFFMLP();
+		//void FullyConnectMinFF();
+		//void FullyConnectBack(LayerPtr layer);
+		//void FullyConnectOut(LayerPtr Layer);
 
     };
 
