@@ -18,11 +18,13 @@ namespace JRNN {
 	public:
 		CCTrainer(NetworkPtr network, DatasetPtr data, int numCandidates);
 		~CCTrainer();
+
+		void ResetVars();
 		
 		struct  
 		{
 			int nTrials;
-			int maxNewUnites;
+			int maxNewUnits;
 			int valPatience;
 
 			struct  
@@ -30,6 +32,8 @@ namespace JRNN {
 				int epochs;
 				int patience;
 				double epsilon;
+				double scaledEpsilon;
+				double shrinkFactor;
 				double decay;
 				double mu;
 				double changeThreshold;
@@ -39,7 +43,9 @@ namespace JRNN {
 			{
 				int epochs;
 				int patience;
+
 				double epsilon;
+				double shrinkFactor;
 				double decay;
 				double mu;
 				double changeThreshold;
@@ -59,24 +65,30 @@ namespace JRNN {
 		//NodeBuffer nodeBuffer; //buffer of each nodes output
 		double sumSqErr; //Sum Squared Error Primes
 		hashedDoubleMap outSumErrs; //sum of errors for each output node
-		hashedDoubleMap conDeltas; //deltas for each weight
-		hashedDoubleMap conSlopes; //current slopes for each weight
-		hashedDoubleMap conPSlopes; //previous slopes for each weight
+		struct conVars
+		{
+			hashedDoubleMap conDeltas; //deltas for each weight
+			hashedDoubleMap conPSlopes; //current slopes for each weight
+			hashedDoubleMap conSlopes; //previous slopes for each weight
+		} out, cand;
 		hashedDoubleMap candSumVals; //Sum of candidate activations over training. 
 		hashedDoubleMap candCorr; //Correlation of each candidate node
 		hashedDoubleMap candPCore; //Previous correlation of each candidate node
 
 		//Methods
-		void QuickProp(ConPtr con, double epsilon, double decay, double mu, double shrinkFactor);
+		void QuickProp(ConPtr con, conVars& vars, double epsilon, double decay, double mu, double shrinkFactor);
 		//Output training methods
 		void resetError();
+		void resetOutValues();
 		void TrainOuts();
 		void OutputEpoch();
 		void ComputerOutError();
 		void UpdateOutWeights(); //Adjust output weights.
 
 		//Candidate training methods
+		void CreateCandidates();
 		void TrainCandidates();
+		void resetCandValues();
 		void CorrelationEpoch();
 		void CandEpoch();
 		void UpdateCandWeights();
