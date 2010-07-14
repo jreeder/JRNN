@@ -46,8 +46,18 @@ const matDouble& Dataset::GetOutputs(datatype type){
     }
 }
 
-const int Dataset::GetSize(){
-    return size;
+const int Dataset::GetSize(datatype type){
+	switch (type)
+	{
+	case Dataset::TRAIN:
+		return numTrain;
+	case Dataset::VAL:
+		return numVal;
+	case Dataset::TEST:
+		return numTest;
+	default:
+		return size;
+	}
 }
 
 void Dataset::SetNumInputs(int numInputs){

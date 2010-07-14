@@ -31,7 +31,7 @@ namespace JRNN {
         const matDouble& GetInputs(datatype type);
         const matDouble& GetOutputs(datatype type);
         void LoadFromFile(std::string filepath, int numInputs, int numOutputs);
-        const int GetSize();
+		const int GetSize(datatype type);
         void SetNumInputs(int numInputs);
         void SetNumOutputs(int numOutputs);
         void DistData(int numTrain, int numVal, int numTest);
