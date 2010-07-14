@@ -86,7 +86,9 @@
     <ClCompile Include="..\..\..\..\src\JRNN\trainers\CCTrainer.cpp" />
     <ClCompile Include="..\..\..\..\src\JRNN\trainers\RPropTrainer.cpp" />
     <ClCompile Include="..\..\..\..\src\JRNN\utility\activationfunctions.cpp" />
+    <ClCompile Include="..\..\..\..\src\JRNN\utility\CCBuilder.cpp" />
     <ClCompile Include="..\..\..\..\src\JRNN\utility\dataset.cpp" />
+    <ClCompile Include="..\..\..\..\src\JRNN\utility\FFMLPBuilder.cpp" />
     <ClCompile Include="..\..\..\..\src\JRNN\utility\nodebuffer.cpp" />
     <ClCompile Include="..\..\..\..\src\JRNN\structure\connection.cpp" />
     <ClCompile Include="..\..\..\..\src\JRNN\structure\layer.cpp" />
@@ -100,7 +102,10 @@
     <ClInclude Include="..\..\..\..\include\JRNN\structure\network.h" />
     <ClInclude Include="..\..\..\..\include\JRNN\structure\node.h" />
     <ClInclude Include="..\..\..\..\include\JRNN\utility\activationfunctions.h" />
+    <ClInclude Include="..\..\..\..\include\JRNN\utility\CCBuilder.h" />
     <ClInclude Include="..\..\..\..\include\JRNN\utility\dataset.h" />
+    <ClInclude Include="..\..\..\..\include\JRNN\utility\FFMLPBuilder.h" />
+    <ClInclude Include="..\..\..\..\include\JRNN\utility\NetworkBuilder.h" />
     <ClInclude Include="..\..\..\..\include\JRNN\utility\nodebuffer.h" />
     <ClInclude Include="..\..\..\..\include\JRNN\utility\utility.h" />
     <ClInclude Include="..\..\..\..\include\JRNN\trainers\BackPropTrainer.h" />

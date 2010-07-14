@@ -9,6 +9,7 @@
 #include "structure/network.h"
 #include "utility/dataset.h"
 #include "trainers/RPropTrainer.h"
+#include "utility/FFMLPBuilder.h"
 #include <iostream>
 #include <fstream>
 
@@ -38,9 +39,11 @@ int main(int argc, char** argv) {
     ofstream myfile;
     myfile.open(outfile.c_str());
     DatasetPtr ds(new Dataset());
+	FFMLPBuilder netBuilder(numIn, numHid, numOut);
     ds->LoadFromFile(filename, numIn,numOut);
     ds->DistData(100,100,500);
-    NetworkPtr net = Network::CreateFFMLPNetwork(numIn,numHid,numOut);
+    //NetworkPtr net = Network::CreateFFMLPNetwork(numIn,numHid,numOut);
+	NetworkPtr net = netBuilder.Create();
     //net.printConnections();
 //    BackPropTrainer bp(net, ds, 0.01);
     RPropTrainer bp(net, ds, 1.2, 0.5);
