@@ -33,10 +33,10 @@ namespace JRNN {
 	private:
 		//int numIn;
 		//int numOut;
-		ConList tmpConnections;
+		ConList candConnections;
 		LayerPtr candLayer;
 		void CandFullyConnectBack(LayerPtr layer);
-		void AddHiddenLayer();
+		LayerPtr AddHiddenLayer();
 		void FullyConnectOut(LayerPtr layer);
 		void FullyConnect();
 		

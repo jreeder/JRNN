@@ -56,6 +56,8 @@ namespace JRNN {
 		void AddNode(NodePtr node);
 		void RemoveNode(NodePtr node);
 
+		void Clear();
+
         int GetSize();
 		int GetHeight();
 		void SetHeight(int newHeight);

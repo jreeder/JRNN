@@ -46,6 +46,7 @@ namespace JRNN {
 //        void setNumOut(int newNumOut);
 		bool AddConnection(conType type, ConPtr newCon);
 		void RemoveConnection(std::string name);
+		void Disconnect();
 //        bool addConnection(node* newNodeCon, double conWeight);
 //        bool addConnections(nodeList inNodes, vector<double> conWeights);
 		//void SetType(nodeType inType);
@@ -63,6 +64,7 @@ namespace JRNN {
 		double SumWeightedIn();
 		void UpdateOut();
 		void SetDefaults();
+		void RenameConnections();
 //        vector<double> inputWeights;
 //        vector<double> inputs;
 //        nodeList inputNodes;

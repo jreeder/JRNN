@@ -92,6 +92,7 @@ vecDouble Layer::GetOutput(){
 }
 
 void Layer::Activate(vecDouble inputs){
+	assert(inputs.size() == layerSize);
     for(unsigned int i = 0; i < inputs.size(); i++){
         nodes[i]->Activate(inputs[i]);
         std::string tmp = nodes[i]->GetName();
@@ -114,12 +115,39 @@ Layer::~Layer() {
     //nodes.clear();
 }
 
-int JRNN::Layer::GetHeight()
-{
+int Layer::GetHeight(){
 	return height;
 }
 
-void JRNN::Layer::SetHeight( int newHeight )
-{
+void Layer::SetHeight( int newHeight ){
 	height = newHeight;
+}
+
+void Layer::AddNode( NodePtr node ){
+	std::string tmpName = name + "_";
+	tmpName += lexical_cast<std::string>(layerSize + 1);
+	node->SetName(tmpName);
+	nodes.push_back(node);
+	layerSize++;
+}
+
+void Layer::RemoveNode(NodePtr node){
+	NodeList::iterator it = nodes.begin();
+	while (it != nodes.end()){
+		if ((*it)->GetName() == node->GetName()){
+			nodes.erase(it);
+			layerSize--;
+			break;
+		}
+		it++;
+	}
+}
+
+void Layer::Clear()
+{
+	BOOST_FOREACH(NodePtr node, nodes){
+		node->Disconnect();
+	}
+	nodes.clear();
+	layerSize = 0;
 }

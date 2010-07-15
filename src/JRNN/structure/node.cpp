@@ -163,8 +163,19 @@ const std::string& Node::GetName(){
 //}
 
 
+void Node::RenameConnections() 
+{
+	BOOST_FOREACH(ConPtr con, inConnections){
+		con->SetName();
+	}
+	BOOST_FOREACH(ConPtr con, outConnections){
+		con->SetName();
+	}
+}
+
 void Node::SetName(std::string newName){
     name = newName;
+	RenameConnections();
 }
 
 //void Node::setNumIn(int newNumIn){
@@ -225,31 +236,19 @@ void Node::RemoveConnection(std::string name){
     }
 }
 
+void Node::Disconnect()
+{
+	NodePtr np(this);
+	BOOST_FOREACH(ConPtr con, inConnections){
+		con->Disconnect(np);
+	}
+	BOOST_FOREACH(ConPtr con, outConnections){
+		con->Disconnect(np);
+	}
+	inConnections.clear();
+	outConnections.clear();
+}
 
 ConList& Node::GetConnections(conType type){
     return type == IN ? inConnections : outConnections;
 }
-
-//bool Node::addConnection(node* newNodeCon, double conWeight){
-//    //TODO: add tests to make sure size constraints are met.
-//    bool returnVal = true;
-//    inputNodes.push_back(newNodeCon);
-//    inputWeights[nextIn] = conWeight;
-//    nextIn++;
-//    return returnVal;
-//}
-//
-//bool Node::addConnections(nodeList inNodes, vector<double> conWeights){
-//    //TODO: add tests to make sure size constraints are met.
-//    inputNodes = inNodes;
-//    inputWeights = conWeights;
-//    return true;
-//}
-
-//vector<double> Node::vecMul(vector<double> vec1, vector<double> vec2){
-//    vector<double> tmp(vec1.size());
-//    for (int i = 0; i < vec1.size(); i++){
-//        tmp[i] = vec1[i] * vec2[i];
-//    }
-//    return tmp;
-//}

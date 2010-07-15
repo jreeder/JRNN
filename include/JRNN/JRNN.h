@@ -24,6 +24,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <algorithm>
+#include <assert.h>
 
 
 namespace ublas = boost::numeric::ublas;
@@ -51,6 +52,7 @@ namespace JRNN {
     typedef std::vector<ConPtr> ConList;
     typedef boost::shared_ptr<Layer> LayerPtr;
     typedef std::map<std::string,LayerPtr> LayerMap;
+	typedef std::pair<std::string, LayerPtr> LayerPair;
     typedef std::vector<ublas::vector<double> > matDouble;
     typedef std::vector<double> doubles;
     typedef boost::shared_ptr<Dataset> DatasetPtr;

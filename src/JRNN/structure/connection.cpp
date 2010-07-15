@@ -64,6 +64,15 @@ void Connection::Disconnect(){
     outNode->RemoveConnection(name);
 }
 
+void Connection::Disconnect(NodePtr node){
+	if (inNode == node){
+		outNode->RemoveConnection(name);
+	}
+	else{
+		inNode->RemoveConnection(name);
+	}
+}
+
 void Connection::SetRandomSeed(){
     srand( time(NULL));
 }

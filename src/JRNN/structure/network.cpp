@@ -13,10 +13,10 @@ Network::Network() {
 //    numIn = numIn;
 //    numOut = numOut;
 //    numHid = numHid;
-//    layers.insert(std::pair<std::string, layerPtr>("input", Layer::CreateLayer(layer::input,numIn,0,"input")));
-//    layers.insert(std::pair<std::string, layerPtr>("hidden", Layer::CreateLayer(layer::hidden, numHid, 1,"hidden")));
-//    layers.insert(std::pair<std::string, layerPtr>("out", Layer::CreateLayer(layer::out,numOut, 2,"out")));
-//    layers.insert(std::pair<std::string, layerPtr>("bias", Layer::CreateLayer(layer::bias, 1, -1, "bias")));
+//    layers.insert(LayerPair("input", Layer::CreateLayer(layer::input,numIn,0,"input")));
+//    layers.insert(LayerPair("hidden", Layer::CreateLayer(layer::hidden, numHid, 1,"hidden")));
+//    layers.insert(LayerPair("out", Layer::CreateLayer(layer::out,numOut, 2,"out")));
+//    layers.insert(LayerPair("bias", Layer::CreateLayer(layer::bias, 1, -1, "bias")));
 //    layers["input"]->BuildLayer(node::linear);
 //    layers["hidden"]->BuildLayer(node::sigmoid);
 //    layers["out"]->BuildLayer(node::sigmoid);
@@ -30,10 +30,10 @@ Network::Network() {
 //    np->numOut = numOut;
 //    //np->numHid = numHid;
 //	np->numHidLayers = 1;
-//    np->layers.insert(std::pair<std::string, LayerPtr>("input", Layer::CreateLayer(Layer::input,numIn,0,"input")));
-//    np->layers.insert(std::pair<std::string, LayerPtr>("hidden", Layer::CreateLayer(Layer::hidden, numHid, 1,"hidden")));
-//    np->layers.insert(std::pair<std::string, LayerPtr>("out", Layer::CreateLayer(Layer::out,numOut, 2,"out")));
-//    np->layers.insert(std::pair<std::string, LayerPtr>("bias", Layer::CreateLayer(Layer::bias, 1, -1, "bias")));
+//    np->layers.insert(LayerPair("input", Layer::CreateLayer(Layer::input,numIn,0,"input")));
+//    np->layers.insert(LayerPair("hidden", Layer::CreateLayer(Layer::hidden, numHid, 1,"hidden")));
+//    np->layers.insert(LayerPair("out", Layer::CreateLayer(Layer::out,numOut, 2,"out")));
+//    np->layers.insert(LayerPair("bias", Layer::CreateLayer(Layer::bias, 1, -1, "bias")));
 //    //np->layers["input"]->BuildLayer(Node::linear);
 //    //np->layers["hidden"]->BuildLayer(Node::sigmoid);
 //    //np->layers["out"]->BuildLayer(Node::sigmoid);
@@ -51,9 +51,9 @@ Network::Network() {
 //	np->numIn = numIn;
 //	np->numOut = numOut;
 //	np->numHidLayers = 0;
-//	np->layers.insert(std::pair<std::string, LayerPtr>("input", Layer::CreateLayer(Layer::input,numIn,0,"input")));
-//	np->layers.insert(std::pair<std::string, LayerPtr>("out", Layer::CreateLayer(Layer::out, numOut, 1, "out")));
-//	np->layers.insert(std::pair<std::string, LayerPtr>("bias", Layer::CreateLayer(Layer::bias, 1, -1, "bias")));
+//	np->layers.insert(LayerPair("input", Layer::CreateLayer(Layer::input,numIn,0,"input")));
+//	np->layers.insert(LayerPair("out", Layer::CreateLayer(Layer::out, numOut, 1, "out")));
+//	np->layers.insert(LayerPair("bias", Layer::CreateLayer(Layer::bias, 1, -1, "bias")));
 //	//np->layers["input"]->BuildLayer(Node::linear);
 //	//np->layers["hidden"]->BuildLayer(Node::sigmoid);
 //	//np->layers["bias"]->BuildLayer(Node::bias);
@@ -267,7 +267,7 @@ ConList& Network::GetConnections(){
 		std::string tmpName = "hidden-";
 		numHidLayers += 1;
 		tmpName += lexical_cast<std::string>(numHidLayers);
-		layers.insert(std::pair<std::string, LayerPtr>(tmpName,newLayer));
+		layers.insert(LayerPair(tmpName,newLayer));
 		return true;
 	} 
 	else

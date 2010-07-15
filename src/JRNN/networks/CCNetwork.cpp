@@ -27,7 +27,7 @@ namespace JRNN {
 
 	CCNetwork::~CCNetwork()
 	{
-		tmpConnections.clear();
+		candConnections.clear();
 	}
 
 	CCNetworkPtr CCNetwork::Create()
@@ -40,16 +40,19 @@ namespace JRNN {
 		this->numIn	= numIn;
 		this->numOut = numOut;
 		this->numHidLayers = 0;
-		layers.insert(std::pair<std::string, LayerPtr>("input", Layer::CreateLayer(Layer::input, numIn,0,"input")));
-		layers.insert(std::pair<std::string, LayerPtr>("out", Layer::CreateLayer(Layer::out, numOut, 1, "out")));
-		layers.insert(std::pair<std::string, LayerPtr>("bias", Layer::CreateLayer(Layer::bias, 1, -1, "bias")));
-		layers.insert(std::pair<std::string, LayerPtr>("cand", LayerPtr()));
+		//TODO Added some static strings for input output and bias layers so I don't have
+		//to worry about mistyping errors. 
+		layers.insert(LayerPair("input", Layer::CreateLayer(Layer::input, numIn,0,"input")));
+		layers.insert(LayerPair("out", Layer::CreateLayer(Layer::out, numOut, 1, "out")));
+		layers.insert(LayerPair("bias", Layer::CreateLayer(Layer::bias, 1, -1, "bias")));
+		layers.insert(LayerPair("cand", Layer::CreateLayer(Layer::hidden,0,0,"cand")));
 		//layers["input"]->BuildLayer(Node::linear);
 		//layers["hidden"]->BuildLayer(Node::sigmoid);
 		//layers["bias"]->BuildLayer(Node::bias);
 		layers["input"]->BuildLayer<Linear>();
 		layers["out"]->BuildLayer<ASigmoid>();
 		layers["bias"]->BuildLayer<Bias>();
+		candLayer = layers["cand"];
 		FullyConnect();
 	}
 
@@ -91,16 +94,22 @@ namespace JRNN {
 		//TODO allow for varied node types-- for now it's homogeneous
 		LayerPtr out = layers["out"];
 		int tmpHeight = out->GetHeight();
-		candLayer = Layer::CreateLayer(Layer::hidden,numCand,tmpHeight,"cand");
+		candLayer->Clear();
+		candLayer->SetLayerSize(numCand);
+		candLayer->SetHeight(tmpHeight);
 		candLayer->BuildLayer<ASigmoid>();
-		layers["cand"] = candLayer;
 		candLayer->SetPrevLayer(out->GetPrevLayer());
 		CandFullyConnectBack(candLayer);
 	}
 
 	void CCNetwork::InstallCandidate(NodePtr node)
 	{
-
+		LayerPtr lp = AddHiddenLayer();
+		lp->AddNode(node);
+		BOOST_FOREACH(ConPtr con, node->GetConnections(conType::IN)){
+			connections.push_back(con);
+		}
+		FullyConnectOut(lp);
 	}
 
 	void CCNetwork::CandFullyConnectBack( LayerPtr layer )
@@ -113,7 +122,7 @@ namespace JRNN {
 			NodeList prevNodes = prevLayer->GetNodes();
 			BOOST_FOREACH(NodePtr n, prevNodes){
 				BOOST_FOREACH(NodePtr n2, layerNodes){
-					tmpConnections.push_back(Connection::Connect(n,n2));
+					candConnections.push_back(Connection::Connect(n,n2));
 				}
 			}
 			prevLayer = prevLayer->GetPrevLayer();
@@ -122,15 +131,26 @@ namespace JRNN {
 		NodeList biasNodes = layers["bias"]->GetNodes();
 		BOOST_FOREACH(NodePtr n, biasNodes){
 			BOOST_FOREACH(NodePtr n2, layerNodes){
-				tmpConnections.push_back(Connection::Connect(n,n2));
+				candConnections.push_back(Connection::Connect(n,n2));
 			}
 		}
 
 	}
 
-	void CCNetwork::AddHiddenLayer()
+	LayerPtr CCNetwork::AddHiddenLayer()
 	{
-
+		std::string name = "hidden-";
+		name += lexical_cast<std::string>(numHidLayers);
+		LayerPtr lp = Layer::CreateLayer(Layer::hidden,0,numHidLayers + 1,name);
+		layers.insert(LayerPair(name,lp));
+		LayerPtr out = layers["out"];
+		LayerPtr prevLayer = out->GetPrevLayer();
+		lp->SetPrevLayer(prevLayer);
+		out->SetPrevLayer(lp);
+		lp->SetNextLayer(out);
+		prevLayer->SetNextLayer(lp);
+		numHidLayers++;
+		return lp;
 	}
 
 	void CCNetwork::FullyConnectOut( LayerPtr layer )

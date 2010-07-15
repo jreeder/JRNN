@@ -28,10 +28,10 @@ namespace JRNN {
 		this->numOut = numOut;
 		this->numHid = numHid;
 		this->numHidLayers = 1;
-		layers.insert(std::pair<std::string, LayerPtr>("input", Layer::CreateLayer(Layer::input,numIn,0,"input")));
-		layers.insert(std::pair<std::string, LayerPtr>("hidden", Layer::CreateLayer(Layer::hidden, numHid, 1,"hidden")));
-		layers.insert(std::pair<std::string, LayerPtr>("out", Layer::CreateLayer(Layer::out,numOut, 2,"out")));
-		layers.insert(std::pair<std::string, LayerPtr>("bias", Layer::CreateLayer(Layer::bias, 1, -1, "bias")));
+		layers.insert(LayerPair("input", Layer::CreateLayer(Layer::input,numIn,0,"input")));
+		layers.insert(LayerPair("hidden", Layer::CreateLayer(Layer::hidden, numHid, 1,"hidden")));
+		layers.insert(LayerPair("out", Layer::CreateLayer(Layer::out,numOut, 2,"out")));
+		layers.insert(LayerPair("bias", Layer::CreateLayer(Layer::bias, 1, -1, "bias")));
 		//np->layers["input"]->BuildLayer(Node::linear);
 		//np->layers["hidden"]->BuildLayer(Node::sigmoid);
 		//np->layers["out"]->BuildLayer(Node::sigmoid);
