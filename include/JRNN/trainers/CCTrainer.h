@@ -14,6 +14,7 @@
 #include "utility/dataset.h"
 
 namespace JRNN {
+	typedef boost::unordered_map<std::string, vecDouble> hashedVecDoubleMap;
 	class CCTrainer {
 	public:
 		CCTrainer(CCNetworkPtr network, DatasetPtr data, int numCandidates);
@@ -51,6 +52,9 @@ namespace JRNN {
 				double changeThreshold;
 			} cand;
 
+			double sseThreshold;
+			double candScoreThreshold;
+
 			int nCand;
 		} parms;
 		
@@ -58,13 +62,20 @@ namespace JRNN {
 		//Members
 		CCNetworkPtr network;
 		DatasetPtr data;
-		LayerPtr candidateLayer;
-		ConList candidateCons;
+		//LayerPtr candidateLayer;
+		//ConList candidateCons;
 		//TODO Implement Network caching
 		//matDouble errorBuffer; 
 		//NodeBuffer nodeBuffer; //buffer of each nodes output
 		double sumSqErr; //Sum Squared Error Primes
-		hashedDoubleMap outSumErrs; //sum of errors for each output node
+		double trueErr;
+		double candBestScore;
+		NodePtr bestCand;
+		vecDouble errors;
+		vecDouble sumErrs;
+		int epoch;
+
+		//hashedDoubleMap outSumErrs; //sum of errors for each output node
 		struct conVars
 		{
 			hashedDoubleMap conDeltas; //deltas for each weight
@@ -72,22 +83,33 @@ namespace JRNN {
 			hashedDoubleMap conSlopes; //previous slopes for each weight
 		} out, cand;
 		hashedDoubleMap candSumVals; //Sum of candidate activations over training. 
-		hashedDoubleMap candCorr; //Correlation of each candidate node
-		hashedDoubleMap candPCore; //Previous correlation of each candidate node
+		hashedVecDoubleMap candCorr; //Correlation of each candidate node
+		hashedVecDoubleMap candPCorr; //Previous correlation of each candidate node
+		
+		enum status {
+			TRAINING,
+			TIMEOUT,
+			STAGNANT,
+			WIN
+		};
 
 		//Methods
 		void QuickProp(ConPtr con, conVars& vars, double epsilon, double decay, double mu, double shrinkFactor);
+		
 		//Output training methods
 		void resetError();
 		void resetOutValues();
-		void TrainOuts();
-		void OutputEpoch();
-		void ComputerOutError();
+		status TrainOuts();
+		void OutputEpoch(); 
+
+		void ComputeError( vecDouble desiredOut, NodeList &outNodes, bool alterStats, bool updateSlopes);
+
+		//void ComputeOutError();
 		void UpdateOutWeights(); //Adjust output weights.
 
 		//Candidate training methods
 		void CreateCandidates();
-		void TrainCandidates();
+		status TrainCandidates();
 		void resetCandValues();
 		void CorrelationEpoch();
 		void CandEpoch();

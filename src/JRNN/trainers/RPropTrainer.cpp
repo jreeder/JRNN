@@ -72,8 +72,9 @@ namespace JRNN {
 			itData++;
 			itOut++;
 		}
-		ConList consToUpdate = mNetwork->GetConnections();
-		BOOST_FOREACH(ConPtr con, consToUpdate){
+		ConMap consToUpdate = mNetwork->GetConnections();
+		BOOST_FOREACH(ConPair conp, consToUpdate){
+			ConPtr con = conp.second;
 			RPropUpdate(con);
 			double tmp = weightUpdates[con->GetName()];
 			//cout << "weight update: " << tmp << endl;

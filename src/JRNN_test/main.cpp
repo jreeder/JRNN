@@ -9,7 +9,7 @@
 #include "structure/network.h"
 #include "utility/dataset.h"
 #include "trainers/RPropTrainer.h"
-#include "utility/FFMLPNetwork.h"
+#include "networks/FFMLPNetwork.h"
 //#include "utility/NetworkBuilder.h" Stupid Idea and not necessary
 #include <iostream>
 #include <fstream>

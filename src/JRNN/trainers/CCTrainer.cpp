@@ -28,6 +28,8 @@ namespace JRNN {
 		parms.cand.mu = 2.0;
 		parms.cand.changeThreshold = 0.03;
 		parms.nCand = 8;
+		parms.sseThreshold = 0.2;
+		parms.candScoreThreshold = 0.4;
 		out.conDeltas.clear();
 		out.conPSlopes.clear();
 		out.conSlopes.clear();
@@ -39,9 +41,13 @@ namespace JRNN {
 
 	void CCTrainer::ResetVars()
 	{
+		epoch = 0;
 		parms.out.shrinkFactor = parms.out.mu / (1.0 + parms.out.mu);
 		parms.out.scaledEpsilon = parms.out.epsilon / data->GetSize(Dataset::TRAIN);
 		parms.cand.shrinkFactor = parms.cand.mu / (1.0 + parms.out.mu);
+		resetCandValues();
+		resetOutValues();
+		resetError();
 	}
 
 	CCTrainer::~CCTrainer(){}
@@ -89,8 +95,11 @@ namespace JRNN {
 	}
 
 	void CCTrainer::resetError(){
+		trueErr = 0.0;
 		sumSqErr = 0.0;
-		outSumErrs.clear();
+		sumErrs.clear();
+		errors.clear();
+		//outSumErrs.clear();
 	}
 
 	void CCTrainer::resetOutValues(){
@@ -103,6 +112,298 @@ namespace JRNN {
 		cand.conDeltas.clear();
 		cand.conPSlopes.clear();
 		cand.conSlopes.clear();
+		candSumVals.clear();
+		candCorr.clear();
+		candPCorr.clear();
+		candBestScore = 0.0;
+	}
+
+	void CCTrainer::CreateCandidates()
+	{
+		network->CreateCandLayer(parms.nCand);
+		resetCandValues();
+	}
+
+	CCTrainer::status CCTrainer::TrainOuts()
+	{
+		int quitEpoch = 0;
+		double lastError = 0.0;
+		for (int i = 0; i < parms.out.epochs; i++){
+			resetError();
+			OutputEpoch();
+			if (trueErr < parms.sseThreshold){
+				return CCTrainer::WIN;
+			}
+			UpdateOutWeights();
+			epoch++;
+
+			if (i == 0){
+				lastError = trueErr;
+			}
+			else if (fabs(trueErr - lastError) > lastError * parms.out.changeThreshold){
+				lastError = trueErr;
+				quitEpoch = epoch + parms.out.patience;
+			}
+			else if (epoch == quitEpoch){
+				return CCTrainer::STAGNANT;
+			}
+		}
+		return CCTrainer::TIMEOUT;
+	}
+
+	void CCTrainer::OutputEpoch()
+	{
+		matDouble ins = data->GetInputs(Dataset::TRAIN);
+		matDouble outs = data->GetOutputs(Dataset::TRAIN);
+		matDouble::iterator itIns = ins.begin();
+		matDouble::iterator itOuts = outs.begin();
+		NodeList outNodes = network->GetLayer("out")->GetNodes();
+		//double SSE = 0;
+		while(itIns != ins.end()){
+			vecDouble input = (*itIns);
+			vecDouble desiredOut = (*itOuts);
+			network->Activate(input);
+			ComputeError(desiredOut, outNodes, true, true);
+
+
+			itIns++;
+			itOuts++;
+		}
+		//trueErr /= (double)ins.size(); //Might need this later
+		//return SSE;
+	}
+
+	void CCTrainer::UpdateOutWeights()
+	{
+		NodeList outNodes = network->GetLayer("out")->GetNodes();
+		BOOST_FOREACH(NodePtr node, outNodes){
+			ConList cons = node->GetConnections(IN);
+			BOOST_FOREACH(ConPtr con, cons){
+				QuickProp(con,out,parms.out.scaledEpsilon,parms.out.decay,
+							parms.out.mu,parms.out.shrinkFactor);
+			}
+		}
+	}
+
+	CCTrainer::status CCTrainer::TrainCandidates()
+	{
+		double lastScore = 0.0;
+		int quitEpoch = 0;
+		sumErrs /= data->GetSize(Dataset::TRAIN);
+
+		CorrelationEpoch();
+
+		for (int i = 0; i < parms.cand.epochs; i ++){
+			CandEpoch();
+
+			UpdateCandWeights();
+
+			UpdateCorrelations();
+
+			epoch++;
+
+			if ( i == 0 ){
+				lastScore = candBestScore;
+			}
+			else if (fabs(candBestScore - lastScore) > (lastScore * parms.cand.changeThreshold)){
+				quitEpoch = epoch + parms.cand.patience;
+				lastScore = candBestScore;
+			}
+			else if (epoch == quitEpoch){
+				return STAGNANT;
+			}
+		}
+		return TIMEOUT;
+	}
+
+	void CCTrainer::CorrelationEpoch()
+	{
+		matDouble ins = data->GetInputs(Dataset::TRAIN);
+		matDouble outs = data->GetOutputs(Dataset::TRAIN);
+		matDouble::iterator itIns = ins.begin();
+		matDouble::iterator itOuts = outs.begin();
+		NodeList outNodes = network->GetLayer("out")->GetNodes();
+		//double SSE = 0;
+		while(itIns != ins.end()){
+			vecDouble input = (*itIns);
+			vecDouble desiredOut = (*itOuts);
+			network->Activate(input);
+			ComputeError(desiredOut, outNodes, false, false);
+
+			ComputeCorrelations();
+
+			itIns++;
+			itOuts++;
+		}
+
+		UpdateCorrelations();
+		epoch++;
+	}
+
+	void CCTrainer::ComputeError( vecDouble desiredOut, NodeList &outNodes, bool alterStats, bool updateSlopes)
+	{
+		//Compute Errors
+		vecDouble output = network->GetOutputs();
+		vecDouble error = desiredOut - output;
+		vecDouble outPrimes = network->GetPrimes(std::string("out"));
+		vecDouble errPrimes = VecMultiply(error, outPrimes);
+		vecDouble sqError = SquareVec(error);
+		errors = errPrimes;
+
+		//Alter Stats
+		if (alterStats){
+			sumErrs += errPrimes;
+			sumSqErr += ublas::sum(SquareVec(errPrimes));
+			trueErr += ublas::sum(sqError);
+		}
+		//Update Slopes
+		if (updateSlopes){
+			assert(outNodes.size() == errPrimes.size());
+			for (unsigned int i = 0; i < outNodes.size(); i++){
+				ConList cons = outNodes[i]->GetConnections(IN);
+				BOOST_FOREACH(ConPtr con, cons){
+					out.conSlopes[con->GetName()] += errPrimes[i] * con->GetValue();
+				}
+			}
+		}
+	}
+
+	void CCTrainer::ComputeCorrelations()
+	{
+		double sum,val;
+		vecDouble* cCorr;
+		NodeList candNodes = network->GetCandLayer()->GetNodes();
+		network->GetCandLayer()->Activate();
+		BOOST_FOREACH(NodePtr node, candNodes){
+			sum = 0.0;
+			std::string name = node->GetName();
+			cCorr = &candCorr[name];
+			val = node->GetOut();
+			candSumVals[name] += val;
+
+			//computer correlation for this unit
+			for (int j = 0; j < errors.size(); j++ ){
+				(*cCorr)[j] += val * errors[j];
+			}
+		}
+	}
+
+	void CCTrainer::UpdateCorrelations()
+	{
+		double avgValue;
+		double score;
+		double cor;
+		vecDouble *curCorr;
+		vecDouble *prevCorr;
+
+		candBestScore = 0.0;
+		bestCand.reset();
+		int nTrainPts = data->GetSize(Dataset::TRAIN);
+		int nOuts = network->GetNumOut();
+		NodeList candNodes = network->GetCandLayer()->GetNodes();
+		BOOST_FOREACH(NodePtr node, candNodes){
+			std::string name = node->GetName();
+			avgValue = candSumVals[name] / nTrainPts;
+			score = 0.0;
+			curCorr = &candCorr[name];
+			prevCorr = &candPCorr[name];
+
+			assert((*curCorr).size() == nOuts);
+			for (int j = 0; j < nOuts; j++){
+				cor = ((*curCorr)[j] - avgValue * sumErrs[j]) / sumSqErr;
+				(*prevCorr)[j] = cor;
+				(*curCorr)[j] = 0.0;
+				score += fabs (cor);
+			}
+
+			candSumVals[name] = 0.0;
+
+			//check for best candidate
+
+			if ( score > candBestScore ){
+				candBestScore = score;
+				bestCand = node;
+			}
+		}
+	}
+
+	void CCTrainer::CandEpoch()
+	{
+		matDouble ins = data->GetInputs(Dataset::TRAIN);
+		matDouble outs = data->GetOutputs(Dataset::TRAIN);
+		matDouble::iterator itIns = ins.begin();
+		matDouble::iterator itOuts = outs.begin();
+		NodeList outNodes = network->GetLayer("out")->GetNodes();
+		//double SSE = 0;
+		while(itIns != ins.end()){
+			vecDouble input = (*itIns);
+			vecDouble desiredOut = (*itOuts);
+			network->Activate(input);
+			ComputeError(desiredOut, outNodes, false, false);
+
+			ComputeCandSlopes();
+
+			itIns++;
+			itOuts++;
+		}
+	}
+
+	void CCTrainer::ComputeCandSlopes()
+	{
+		double	change,
+				actPrime,
+				err,
+				value,
+				direction;
+
+		vecDouble	*cCorr,
+					*cPCorr;
+
+		NodeList candNodes = network->GetCandLayer()->GetNodes();
+		network->GetCandLayer()->Activate();
+		int nOuts = network->GetNumOut();
+		BOOST_FOREACH(NodePtr candidate, candNodes){
+			std::string name = candidate->GetName();
+			value = candidate->GetOut();
+			actPrime = candidate->GetPrime();
+			change = 0.0;
+			cCorr = &candCorr[name];
+			cPCorr = &candPCorr[name];
+
+			candSumVals[name] += value;
+			actPrime /= sumSqErr;
+
+			//compute correlations to each output
+			for (int j = 0; j < nOuts; j++){
+				err = errors[j];
+				direction = ((*cPCorr)[j] < 0.0) ? -1.0 : 1.0;
+				change -= direction * actPrime * (err - sumErrs[j]);
+				(*cCorr)[j] += err * value;
+			}
+
+			//use change to compute new slopes
+
+			ConList cons = candidate->GetConnections(IN);
+			BOOST_FOREACH(ConPtr con, cons){
+				cand.conSlopes[con->GetName()] += change * con->GetValue();
+			}
+		}
+
+	}
+
+	void CCTrainer::UpdateCandWeights()
+	{
+		double scaledEpsilon;
+		
+		scaledEpsilon = parms.cand.epsilon / (double) (data->GetSize(Dataset::TRAIN) * network->GetNumUnits());
+		NodeList candNodes = network->GetCandLayer()->GetNodes();
+		BOOST_FOREACH(NodePtr node, candNodes){
+			ConList cons = node->GetConnections(IN);
+			BOOST_FOREACH(ConPtr con, cons){
+				QuickProp(con,cand,scaledEpsilon,parms.cand.decay,
+							parms.cand.mu,parms.cand.shrinkFactor);
+			}
+		}
 	}
 
 	//void CCTrainer::CreateCandidates(){

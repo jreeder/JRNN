@@ -162,11 +162,16 @@ vecDouble Network::GetOutputs(){
     return outputs;
 }
 
+vecDouble Network::GetPrimes( std::string layerName )
+{
+	return layers[layerName]->GetPrimes();
+}
+
 LayerPtr Network::GetLayer(std::string layerName){
     return layers[layerName];
 }
 
-int Network::GetNumNidLayers(){
+int Network::GetNumHidLayers(){
 	return numHidLayers;
 }
 
@@ -223,41 +228,38 @@ void Network::SetNumHidLayers( int numHidLayers )
 	this->numHidLayers = numHidLayers;
 }
 
-int Network::GetNumHidLayers(){
-	return numHidLayers;
-}
 
-ConList& Network::GetConnections(){
+ConMap& Network::GetConnections(){
     return connections;
 }
 
  void Network::Reset(){
-     BOOST_FOREACH(ConPtr con, connections){
-         con->Reset();
+     BOOST_FOREACH(ConPair con, connections){
+         con.second->Reset();
      }
  }
 
  hashedDoubleMap Network::GetWeights(){
      hashedDoubleMap weights;
-     BOOST_FOREACH(ConPtr con, connections){
-         weights[con->GetName()] = con->GetWeight();
+     BOOST_FOREACH(ConPair con, connections){
+         weights[con.second->GetName()] = con.second->GetWeight();
      }
      return weights;
  }
 
  void Network::SetWeights(hashedDoubleMap weights){
      //TODO: need to do some error handling in here this could potentially be dangerous
-     BOOST_FOREACH(ConPtr con, connections){
-         double tmp = weights[con->GetName()];
+     BOOST_FOREACH(ConPair con, connections){
+         //double tmp = weights[con->GetName()];
          //cout << "setting weight for " << con->getName() << " " << tmp << endl;
-         con->SetWeight(weights[con->GetName()]);
+         con.second->SetWeight(weights[con.second->GetName()]);
      }
  }
 
  void Network::PrintConnections(){
      cout << "Connections:" << endl;
-     BOOST_FOREACH(ConPtr con, connections){
-         cout << con->GetName() << " " << con->GetWeight() << endl;
+     BOOST_FOREACH(ConPair con, connections){
+         cout << con.second->GetName() << " " << con.second->GetWeight() << endl;
      }
  }
 
@@ -275,3 +277,49 @@ ConList& Network::GetConnections(){
 		return false;
 	}
  }*/
+
+ void Network::AddConnection( ConPtr con )
+ {
+	 connections.insert(ConPair(con->GetName(),con));
+ }
+
+ void Network::RemoveConnection( ConPtr con )
+ {
+	 connections.erase(con->GetName());
+ }
+
+ void Network::RemoveConnections( ConList cons )
+ {
+	 BOOST_FOREACH(ConPtr con, cons){
+		connections.erase(con->GetName());
+	 }
+ }
+
+ LayerPtr Network::AddHiddenLayer()
+ {
+	 std::string name = "hidden-";
+	 name += lexical_cast<std::string>(numHidLayers);
+	 LayerPtr lp = Layer::CreateLayer(Layer::hidden,0,numHidLayers + 1,name);
+	 layers.insert(LayerPair(name,lp));
+	 LayerPtr out = layers["out"];
+	 LayerPtr prevLayer = out->GetPrevLayer();
+	 lp->SetPrevLayer(prevLayer);
+	 out->SetPrevLayer(lp);
+	 lp->SetNextLayer(out);
+	 prevLayer->SetNextLayer(lp);
+	 numHidLayers++;
+	 return lp;
+ }
+
+ void Network::RemoveHiddenLayer( LayerPtr layer )
+ {
+	 if (layer->GetType() == Layer::hidden){
+		 RemoveConnections(layer->GetConnections());
+		 LayerPtr next = layer->GetNextLayer();
+		 LayerPtr prev = layer->GetPrevLayer();
+		 prev->SetNextLayer(next);
+		 next->SetPrevLayer(prev);
+		 numHidLayers--;
+		 layers.erase(layer->GetName());
+	 }
+ }

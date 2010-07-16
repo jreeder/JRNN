@@ -34,6 +34,18 @@ namespace JRNN {
 		return vector;
 	}
 
+	inline vecDouble VecMultiply(vecDouble v1, vecDouble v2){
+		assert(v1.size() == v2.size());
+		vecDouble result(v1.size());
+		vecDouble::iterator it1 = v1.begin();
+		vecDouble::iterator it2 = v2.begin();
+		vecDouble::iterator res = result.begin();
+		for (; it1 != v1.end(); it1++, it2++, res++){
+			(*res) = (*it1) * (*it2);
+		}
+		return result;
+	}
+
 	inline int Sign(double num){
 		if (num > 0.0){
 			return 1;

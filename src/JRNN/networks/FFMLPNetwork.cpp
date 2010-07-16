@@ -60,22 +60,22 @@ namespace JRNN {
 
 		BOOST_FOREACH(NodePtr n, inputNodes){
 			BOOST_FOREACH(NodePtr n2, hidNodes){
-				connections.push_back(Connection::Connect(n,n2));
+				AddConnection(Connection::Connect(n,n2));
 			}
 		}
 
 		BOOST_FOREACH(NodePtr n, hidNodes){
 			BOOST_FOREACH(NodePtr n2, outNodes){
-				connections.push_back(Connection::Connect(n,n2));
+				AddConnection(Connection::Connect(n,n2));
 			}
 		}
 
 		BOOST_FOREACH(NodePtr n, biasNodes){
 			BOOST_FOREACH(NodePtr n2, hidNodes){
-				connections.push_back(Connection::Connect(n,n2));
+				AddConnection(Connection::Connect(n,n2));
 			}
 			BOOST_FOREACH(NodePtr n3, outNodes){
-				connections.push_back(Connection::Connect(n,n3));
+				AddConnection(Connection::Connect(n,n3));
 			}
 		}
 	}

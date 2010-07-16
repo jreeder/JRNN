@@ -32,6 +32,7 @@ namespace JRNN {
         const matDouble& GetOutputs(datatype type);
         void LoadFromFile(std::string filepath, int numInputs, int numOutputs);
 		const int GetSize(datatype type);
+		double GetStdDev(datatype type);
         void SetNumInputs(int numInputs);
         void SetNumOutputs(int numOutputs);
         void DistData(int numTrain, int numVal, int numTest);
@@ -46,6 +47,10 @@ namespace JRNN {
         int numTest;
         int randSeed;
         std::vector<int> randomRange;
+		double trainStdDev;
+		double testStdDev;
+		double valStdDev;
+		double stdDev;
         matDouble inputs;
         matDouble outputs;
         matDouble trainIns;
@@ -57,6 +62,8 @@ namespace JRNN {
 
         void GenRandRange();
         void Distribute();
+		void CalcStdDevs();
+		double CalcStdDev(datatype type);
 
     };
 

@@ -47,13 +47,16 @@ namespace JRNN{
 		int GetNumHidLayers();
 
         vecDouble GetOutputs();
+		vecDouble GetPrimes(std::string layerName);
         void SetDesiredOut(vecDouble desiredOut);
         LayerPtr GetLayer(std::string layerName);
-        ConList& GetConnections();
+        ConMap& GetConnections();
+		void AddConnection(ConPtr con);
+		void RemoveConnection(ConPtr con);
+		void RemoveConnections(ConList cons);
         hashedDoubleMap GetWeights();
-		int GetNumNidLayers();
         void SetWeights(hashedDoubleMap weights);
-        void Reset();
+        virtual void Reset();
         void PrintConnections();
 		//bool AddHiddenLayer(LayerPtr newLayer);
 		//bool AddCascadedLayer(LayerPtr newLayer);
@@ -66,7 +69,7 @@ namespace JRNN{
         int numIn;
         int numOut;
 		LayerMap layers;
-		ConList connections;
+		ConMap connections;
         //int numHid; //TODO: need to abstract this out. 
 		int numHidLayers;
 		bool locked;
@@ -76,6 +79,8 @@ namespace JRNN{
         vecDouble outputs;
         vecDouble desiredOut;
 
+		LayerPtr AddHiddenLayer();
+		void RemoveHiddenLayer(LayerPtr layer);
   //      void FullyConnectFFMLP();
 		//void FullyConnectMinFF();
 		//void FullyConnectBack(LayerPtr layer);

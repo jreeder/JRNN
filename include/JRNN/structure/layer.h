@@ -37,6 +37,8 @@ namespace JRNN {
         NodeList& GetNodes();
         vecDouble GetOutput();
 
+		ConList GetConnections();
+
         //getters/setters
         void SetNextLayer(LayerPtr nextLayer);
         LayerPtr GetNextLayer() const;
@@ -61,7 +63,9 @@ namespace JRNN {
         int GetSize();
 		int GetHeight();
 		void SetHeight(int newHeight);
-    private:
+		vecDouble GetPrimes();
+
+	private:
         layerType type;
         //vector<double> outBuffer;
         int layerSize;

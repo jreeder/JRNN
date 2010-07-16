@@ -26,20 +26,25 @@ namespace JRNN {
 		static CCNetworkPtr Create();
 		//NetworkPtr GetNetwork();
 		//void SetNetwork(NetworkPtr net);
+		const LayerPtr GetCandLayer();
 		void CreateCandLayer(int numCand);
 		void InstallCandidate(NodePtr node);
 		void Build(int numIn, int numOut);
+		virtual void Reset();
+		int GetNumUnits();
 
 	private:
 		//int numIn;
 		//int numOut;
+		int numUnits;
 		ConList candConnections;
 		LayerPtr candLayer;
 		void CandFullyConnectBack(LayerPtr layer);
-		LayerPtr AddHiddenLayer();
+		//LayerPtr AddHiddenLayer(); Moved to parent
 		void FullyConnectOut(LayerPtr layer);
 		void FullyConnect();
 		
+
 	};
 }
 

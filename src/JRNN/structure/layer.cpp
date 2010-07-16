@@ -91,6 +91,18 @@ vecDouble Layer::GetOutput(){
     return tmpVec;
 }
 
+vecDouble Layer::GetPrimes()
+{
+	vecDouble tmpVec;
+	tmpVec.resize(nodes.size());
+	int i = 0;
+	BOOST_FOREACH(NodePtr n, nodes){
+		tmpVec[i] = n->GetPrime();
+		i++;
+	}
+	return tmpVec;
+}
+
 void Layer::Activate(vecDouble inputs){
 	assert(inputs.size() == layerSize);
     for(unsigned int i = 0; i < inputs.size(); i++){
@@ -112,7 +124,7 @@ int Layer::GetSize(){
 }
 
 Layer::~Layer() {
-    //nodes.clear();
+    Clear();
 }
 
 int Layer::GetHeight(){
@@ -150,4 +162,16 @@ void Layer::Clear()
 	}
 	nodes.clear();
 	layerSize = 0;
+}
+
+ConList Layer::GetConnections()
+{
+	ConList layerCons; 
+	BOOST_FOREACH(NodePtr node, nodes){
+		ConList inCons = node->GetConnections(IN);
+		ConList outCons = node->GetConnections(OUT);
+		layerCons.insert(layerCons.end(),inCons.begin(),inCons.end());
+		layerCons.insert(layerCons.end(),outCons.begin(),outCons.end());
+	}
+	return layerCons;
 }

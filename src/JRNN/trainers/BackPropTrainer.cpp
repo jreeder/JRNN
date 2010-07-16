@@ -66,8 +66,9 @@ double BackPropTrainer::TrainEpoch(){
         weightUpdates.clear();
         localGradients.clear();
         CalcWeightUpdates(mNetwork->GetLayer("out"), desiredOut);
-        ConList consToUpdate = mNetwork->GetConnections();
-        BOOST_FOREACH(ConPtr con, consToUpdate){
+        ConMap consToUpdate = mNetwork->GetConnections();
+        BOOST_FOREACH(ConPair conp, consToUpdate){
+			ConPtr con = conp.second;
             double tmp = weightUpdates[con->GetName()];
             //cout << "weight update: " << tmp << endl;
             (*con.get()) += weightUpdates[con->GetName()];

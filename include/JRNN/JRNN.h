@@ -50,6 +50,8 @@ namespace JRNN {
     typedef boost::shared_ptr<Connection> ConPtr;
     typedef boost::shared_ptr<Layer> LayerPtr;
     typedef std::vector<ConPtr> ConList;
+	typedef std::map<std::string, ConPtr> ConMap;
+	typedef std::pair<std::string, ConPtr> ConPair;
     typedef boost::shared_ptr<Layer> LayerPtr;
     typedef std::map<std::string,LayerPtr> LayerMap;
 	typedef std::pair<std::string, LayerPtr> LayerPair;

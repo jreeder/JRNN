@@ -125,6 +125,7 @@ void Dataset::RedistData(){
 void Dataset::Distribute(){
     //TODO: need to place some error checks here ... this is very unsafe.
     int i = 0;
+	assert(size);
     for (;i < numTrain; i++)
     {
         trainIns.push_back(inputs[randomRange[i]]);
@@ -138,6 +139,7 @@ void Dataset::Distribute(){
         testIns.push_back(inputs[randomRange[i]]);
         testOuts.push_back(outputs[randomRange[i]]);
     }
+	CalcStdDevs();
 }
 
 void Dataset::GenRandRange(){
@@ -154,4 +156,60 @@ void Dataset::GenRandRange(){
         randomRange[i] = randomRange[j];
         randomRange[j] = source[i];
     }
+}
+
+double Dataset::GetStdDev( datatype type )
+{
+	switch(type){
+	case Dataset::TRAIN:
+		return trainStdDev;
+	case Dataset::TEST:
+		return testStdDev;
+	case Dataset::VAL:
+		return valStdDev;
+	default:
+		return stdDev;
+	}
+}
+
+void Dataset::CalcStdDevs()
+{
+	trainStdDev = CalcStdDev(Dataset::TRAIN);
+	testStdDev = CalcStdDev(Dataset::TEST);
+	valStdDev = CalcStdDev(Dataset::VAL);
+	stdDev = CalcStdDev(Dataset::ALL);
+}
+
+double Dataset::CalcStdDev( datatype type )
+{
+	double sum = 0.0;
+	double sumSq = 0.0;
+	matDouble outs;
+	int nPoints;
+	int nVals;
+	switch (type){
+	case Dataset::TRAIN:
+		outs = trainOuts;
+		nPoints = numTrain;
+		break;
+	case Dataset::TEST:
+		outs = testOuts;
+		nPoints = numTest;
+		break;
+	case Dataset::VAL:
+		outs = valOuts;
+		nPoints = numVal;
+		break;
+	default:
+		outs = outputs;
+		nPoints = size;
+	}
+	nVals = nPoints * numOutputs;
+
+	BOOST_FOREACH(vecDouble curOut, outs){
+		sum += ublas::sum(curOut);
+		sumSq += ublas::sum(SquareVec(curOut));
+	}
+
+	return sqrt((nVals * sumSq - sum * sum) / (double)(nVals * (nVals - 1.0)));
 }
