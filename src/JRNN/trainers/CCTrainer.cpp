@@ -97,8 +97,8 @@ namespace JRNN {
 	void CCTrainer::resetError(){
 		trueErr = 0.0;
 		sumSqErr = 0.0;
-		sumErrs.clear();
-		errors.clear();
+		err.sumErrs.clear();
+		err.errors.clear();
 		//outSumErrs.clear();
 	}
 
@@ -163,7 +163,7 @@ namespace JRNN {
 			vecDouble input = (*itIns);
 			vecDouble desiredOut = (*itOuts);
 			network->Activate(input);
-			ComputeError(desiredOut, outNodes, true, true);
+			ComputeError(desiredOut, err, outNodes, true, true);
 
 
 			itIns++;
@@ -189,7 +189,7 @@ namespace JRNN {
 	{
 		double lastScore = 0.0;
 		int quitEpoch = 0;
-		sumErrs /= data->GetSize(Dataset::TRAIN);
+		err.sumErrs /= data->GetSize(Dataset::TRAIN);
 
 		CorrelationEpoch();
 
@@ -228,7 +228,7 @@ namespace JRNN {
 			vecDouble input = (*itIns);
 			vecDouble desiredOut = (*itOuts);
 			network->Activate(input);
-			ComputeError(desiredOut, outNodes, false, false);
+			ComputeError(desiredOut, err, outNodes, false, false);
 
 			ComputeCorrelations();
 
@@ -240,7 +240,7 @@ namespace JRNN {
 		epoch++;
 	}
 
-	void CCTrainer::ComputeError( vecDouble desiredOut, NodeList &outNodes, bool alterStats, bool updateSlopes)
+	void CCTrainer::ComputeError( vecDouble desiredOut, errVars& errs, NodeList &outNodes, bool alterStats, bool updateSlopes)
 	{
 		//Compute Errors
 		vecDouble output = network->GetOutputs();
@@ -248,11 +248,11 @@ namespace JRNN {
 		vecDouble outPrimes = network->GetPrimes(std::string("out"));
 		vecDouble errPrimes = VecMultiply(error, outPrimes);
 		vecDouble sqError = SquareVec(error);
-		errors = errPrimes;
+		errs.errors = errPrimes;
 
 		//Alter Stats
 		if (alterStats){
-			sumErrs += errPrimes;
+			errs.sumErrs += errPrimes;
 			sumSqErr += ublas::sum(SquareVec(errPrimes));
 			trueErr += ublas::sum(sqError);
 		}
@@ -282,8 +282,8 @@ namespace JRNN {
 			candSumVals[name] += val;
 
 			//computer correlation for this unit
-			for (int j = 0; j < errors.size(); j++ ){
-				(*cCorr)[j] += val * errors[j];
+			for (unsigned int j = 0; j < err.errors.size(); j++ ){
+				(*cCorr)[j] += val * err.errors[j];
 			}
 		}
 	}
@@ -310,7 +310,7 @@ namespace JRNN {
 
 			assert((*curCorr).size() == nOuts);
 			for (int j = 0; j < nOuts; j++){
-				cor = ((*curCorr)[j] - avgValue * sumErrs[j]) / sumSqErr;
+				cor = ((*curCorr)[j] - avgValue * err.sumErrs[j]) / sumSqErr;
 				(*prevCorr)[j] = cor;
 				(*curCorr)[j] = 0.0;
 				score += fabs (cor);
@@ -339,7 +339,7 @@ namespace JRNN {
 			vecDouble input = (*itIns);
 			vecDouble desiredOut = (*itOuts);
 			network->Activate(input);
-			ComputeError(desiredOut, outNodes, false, false);
+			ComputeError(desiredOut, err, outNodes, false, false);
 
 			ComputeCandSlopes();
 
@@ -352,7 +352,7 @@ namespace JRNN {
 	{
 		double	change,
 				actPrime,
-				err,
+				error,
 				value,
 				direction;
 
@@ -375,10 +375,10 @@ namespace JRNN {
 
 			//compute correlations to each output
 			for (int j = 0; j < nOuts; j++){
-				err = errors[j];
+				error = err.errors[j];
 				direction = ((*cPCorr)[j] < 0.0) ? -1.0 : 1.0;
-				change -= direction * actPrime * (err - sumErrs[j]);
-				(*cCorr)[j] += err * value;
+				change -= direction * actPrime * (error - err.sumErrs[j]);
+				(*cCorr)[j] += error * value;
 			}
 
 			//use change to compute new slopes

@@ -82,6 +82,13 @@ namespace JRNN {
 			hashedDoubleMap conPSlopes; //current slopes for each weight
 			hashedDoubleMap conSlopes; //previous slopes for each weight
 		} out, cand;
+
+		struct errVars 
+		{
+			vecDouble errors;
+			vecDouble sumErrs;
+		}valErr, err;
+
 		hashedDoubleMap candSumVals; //Sum of candidate activations over training. 
 		hashedVecDoubleMap candCorr; //Correlation of each candidate node
 		hashedVecDoubleMap candPCorr; //Previous correlation of each candidate node
@@ -102,7 +109,7 @@ namespace JRNN {
 		status TrainOuts();
 		void OutputEpoch(); 
 
-		void ComputeError( vecDouble desiredOut, NodeList &outNodes, bool alterStats, bool updateSlopes);
+		void ComputeError( vecDouble desiredOut, errVars& errs, NodeList &outNodes, bool alterStats, bool updateSlopes);
 
 		//void ComputeOutError();
 		void UpdateOutWeights(); //Adjust output weights.
