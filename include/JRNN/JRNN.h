@@ -55,6 +55,7 @@ namespace JRNN {
     typedef boost::shared_ptr<Layer> LayerPtr;
     typedef std::map<std::string,LayerPtr> LayerMap;
 	typedef std::pair<std::string, LayerPtr> LayerPair;
+	typedef std::vector<LayerPtr> LayerList;
     typedef std::vector<ublas::vector<double> > matDouble;
     typedef std::vector<double> doubles;
     typedef boost::shared_ptr<Dataset> DatasetPtr;

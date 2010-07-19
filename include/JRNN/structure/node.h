@@ -37,6 +37,7 @@ namespace JRNN {
 		void SetHeight(int newHeight);
 		double GetOut();
 		double GetPrime();
+		int GetNumConnections();
 		const std::string& GetName();
 		//double GetSigSteepness();
 		ConList& GetConnections(conType type);
@@ -71,6 +72,7 @@ namespace JRNN {
 
 		//nodeType type;
 		int height;
+		int numConnections;
 //        int numIn;
 //        int numOut;
 //        int nextIn;

@@ -57,6 +57,7 @@ namespace JRNN {
 
 		void AddNode(NodePtr node);
 		void RemoveNode(NodePtr node);
+		int RemoveUnconnectedNodes();
 
 		void Clear();
 

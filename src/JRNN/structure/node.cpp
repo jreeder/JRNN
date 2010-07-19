@@ -53,6 +53,7 @@ void Node::SetDefaults(){
     out = 0;
     sumOfIn = 0;
     sigSteepness = 1;
+	numConnections = 0;
 }
 
 
@@ -63,6 +64,7 @@ Node::Node(const Node& orig) {
     out = orig.out;
     sumOfIn = orig.sumOfIn;
     sigSteepness = orig.sigSteepness;
+	numConnections = orig.numConnections;
     name = orig.name;
 //    nextIn = orig.nextIn;
 //    nextOut = orig.nextOut;
@@ -197,10 +199,12 @@ bool Node::AddConnection(conType type, ConPtr newCon){
         case IN:
             inConnections.push_back(newCon);
             returnVal = true;
+			numConnections++;
             break;
         case OUT:
             outConnections.push_back(newCon);
             returnVal = true;
+			numConnections++;
             break;
         default:
             returnVal = false;
@@ -216,6 +220,7 @@ void Node::RemoveConnection(std::string name){
         if ((*incons)->GetName() == name){
             found = true;
             inConnections.erase(incons);
+			numConnections--;
             break;
         }
         else {
@@ -227,6 +232,7 @@ void Node::RemoveConnection(std::string name){
         while(outcons != outConnections.end()){
             if ((*outcons)->GetName() == name){
                 outConnections.erase(outcons);
+				numConnections--;
                 break;
             }
             else {
@@ -251,4 +257,9 @@ void Node::Disconnect()
 
 ConList& Node::GetConnections(conType type){
     return type == IN ? inConnections : outConnections;
+}
+
+int JRNN::Node::GetNumConnections()
+{
+	return numConnections;
 }

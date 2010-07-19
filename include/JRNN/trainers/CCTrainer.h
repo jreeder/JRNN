@@ -21,16 +21,18 @@ namespace JRNN {
 		~CCTrainer();
 
 		void ResetVars();
+		void Reset();
 		void TrainToValConv(int maxEpochs);
-		void TrainToConvergence(int maxEpochs, double convThreshold);
+		void TrainToConvergence(int maxEpochs, bool validate = false);
 		double TestOnData(Dataset::datatype type);
 		hashedDoubleMap TestWiClass(Dataset::datatype type);
 		
-		struct  
+		struct parameters
 		{
 			int nTrials;
 			int maxNewUnits;
 			int valPatience;
+			double weightMult;
 
 			struct  
 			{
@@ -71,14 +73,19 @@ namespace JRNN {
 		//TODO Implement Network caching
 		//matDouble errorBuffer; 
 		//NodeBuffer nodeBuffer; //buffer of each nodes output
-		double sumSqErr; //Sum Squared Error Primes
-		double trueErr;
+		//double sumSqErr; //Sum Squared Error Primes
+		//double trueErr;
 		double candBestScore;
 		NodePtr bestCand;
 		vecDouble errors;
 		vecDouble sumErrs;
 		hashedDoubleMap taskErrorRate;
 		hashedIntMap taskErrors;
+		struct valVars{
+			hashedDoubleMap bestWeights;
+			double bestErr;
+			int bestPass;
+		} val;
 		int epoch;
 
 		//hashedDoubleMap outSumErrs; //sum of errors for each output node
@@ -91,6 +98,9 @@ namespace JRNN {
 
 		struct errVars 
 		{
+			int bits;
+			double trueErr;
+			double sumSqErr;
 			vecDouble errors;
 			vecDouble sumErrs;
 		}valErr, err;
@@ -110,7 +120,7 @@ namespace JRNN {
 		void QuickProp(ConPtr con, conVars& vars, double epsilon, double decay, double mu, double shrinkFactor);
 		
 		//Output training methods
-		void resetError();
+		void resetError(errVars& errorVars);
 		void resetOutValues();
 		status TrainOuts();
 		void OutputEpoch(); 
@@ -134,7 +144,7 @@ namespace JRNN {
 
 		//Validation Methods
 
-		status ValidationEpoch(double valThreshold, int maxUnits);
+		status ValidationEpoch();
 
 
 

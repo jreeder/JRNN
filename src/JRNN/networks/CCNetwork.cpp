@@ -117,7 +117,7 @@ namespace JRNN {
 		else {
 			FullyConnectOut(lp, outWeights);
 		}
-		
+		hiddenLayers.push_back(lp);
 		numUnits++;
 	}
 
@@ -195,19 +195,55 @@ namespace JRNN {
 
 	void CCNetwork::Reset()
 	{
-		BOOST_FOREACH(LayerPair layer, layers){
-			if (layer.second->GetType() == Layer::hidden){
-				RemoveHiddenLayer(layer.second);
-			}
+		BOOST_FOREACH(LayerPtr layer, hiddenLayers){
+			RemoveHiddenLayer(layer);
 		}
 		candConnections.clear();
 		candLayer->Clear();
+		hiddenLayers.clear();
 		Network::Reset();
 	}
 
 	int CCNetwork::GetNumUnits()
 	{
 		return numUnits;
+	}
+
+	void CCNetwork::SetWeights( hashedDoubleMap weights )
+	{
+		hashedDoubleMap::iterator weightIT;
+		ConMap::iterator conIT = connections.begin();
+		bool consremoved = false;
+		while(conIT != connections.end()){
+			ConPair con = (*conIT);
+			std::string name = con.first;
+			weightIT = weights.find(name);
+			if(weightIT != weights.end()){
+				con.second->SetWeight((*weightIT).second);
+			}
+			else {
+				con.second->Disconnect();
+				connections.erase(conIT);
+				consremoved = true;
+			}
+			conIT++;
+		}
+		if(consremoved){
+			RemoveUnConnectedNodes();
+		}
+		
+	}
+
+	void CCNetwork::RemoveUnConnectedNodes()
+	{
+		int numNodesRemoved = 0;
+		BOOST_FOREACH(LayerPtr layer, hiddenLayers){
+			numNodesRemoved += layer->RemoveUnconnectedNodes();
+			if(layer->GetSize() == 0){
+				RemoveHiddenLayer(layer);
+			}
+		}
+		numUnits -= numNodesRemoved;
 	}
 
 }

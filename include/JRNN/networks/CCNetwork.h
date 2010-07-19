@@ -31,6 +31,7 @@ namespace JRNN {
 		void InstallCandidate(NodePtr node, vecDouble outWeights = vecDouble(0));
 		void Build(int numIn, int numOut);
 		virtual void Reset();
+		virtual void SetWeights(hashedDoubleMap weights);
 		int GetNumUnits();
 
 	private:
@@ -39,11 +40,13 @@ namespace JRNN {
 		int numUnits;
 		ConList candConnections;
 		LayerPtr candLayer;
+		LayerList hiddenLayers;
 		void CandFullyConnectBack(LayerPtr layer);
 		//LayerPtr AddHiddenLayer(); Moved to parent
 		void FullyConnectOut(LayerPtr layer);
 		void FullyConnectOut(LayerPtr layer, vecDouble outWeights);
 		void FullyConnect();
+		void RemoveUnConnectedNodes();
 		
 
 	};

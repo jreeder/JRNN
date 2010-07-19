@@ -55,7 +55,7 @@ namespace JRNN{
 		void RemoveConnection(ConPtr con);
 		void RemoveConnections(ConList cons);
         hashedDoubleMap GetWeights();
-        void SetWeights(hashedDoubleMap weights);
+        virtual void SetWeights(hashedDoubleMap weights);
         virtual void Reset();
         void PrintConnections();
 		//bool AddHiddenLayer(LayerPtr newLayer);

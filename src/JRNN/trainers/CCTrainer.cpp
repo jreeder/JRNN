@@ -10,9 +10,13 @@
 namespace JRNN {
 	
 	CCTrainer::CCTrainer(CCNetworkPtr network, DatasetPtr data, int numCandidates){
+		this->network = network;
+		this->data = data;
+
 		parms.nTrials = 1;
 		parms.maxNewUnits = 25;
 		parms.valPatience = 12;
+		parms.weightMult = 1.0;
 
 		parms.out.epochs = 200;
 		parms.out.patience = 12;
@@ -27,8 +31,8 @@ namespace JRNN {
 		parms.cand.decay = 0.0;
 		parms.cand.mu = 2.0;
 		parms.cand.changeThreshold = 0.03;
-		parms.nCand = 8;
-		parms.sseThreshold = 0.2;
+		parms.nCand = numCandidates;
+		parms.sseThreshold = 0.02;
 		parms.candScoreThreshold = 0.4;
 		out.conDeltas.clear();
 		out.conPSlopes.clear();
@@ -47,9 +51,13 @@ namespace JRNN {
 		parms.cand.shrinkFactor = parms.cand.mu / (1.0 + parms.out.mu);
 		resetCandValues();
 		resetOutValues();
-		resetError();
+		resetError(err);
+		resetError(valErr);
 		taskErrors.clear();
 		taskErrorRate.clear();
+		val.bestErr = -1.0;
+		val.bestWeights.clear();
+		val.bestPass = network->GetNumUnits();
 	}
 
 	CCTrainer::~CCTrainer(){}
@@ -96,11 +104,12 @@ namespace JRNN {
 		vars.conSlopes[conName] = 0.0;
 	}
 
-	void CCTrainer::resetError(){
-		trueErr = 0.0;
-		sumSqErr = 0.0;
-		err.sumErrs.clear();
-		err.errors.clear();
+	void CCTrainer::resetError(errVars& errorVars){
+		errorVars.bits = 0;
+		errorVars.trueErr = 0.0;
+		errorVars.sumSqErr = 0.0;
+		errorVars.sumErrs.clear();
+		errorVars.errors.clear();
 		//outSumErrs.clear();
 	}
 
@@ -131,19 +140,19 @@ namespace JRNN {
 		int quitEpoch = 0;
 		double lastError = 0.0;
 		for (int i = 0; i < parms.out.epochs; i++){
-			resetError();
+			resetError(err);
 			OutputEpoch();
-			if (trueErr < parms.sseThreshold){
+			if (err.trueErr < parms.sseThreshold){
 				return CCTrainer::WIN;
 			}
 			UpdateOutWeights();
 			epoch++;
 
 			if (i == 0){
-				lastError = trueErr;
+				lastError = err.trueErr;
 			}
-			else if (fabs(trueErr - lastError) > lastError * parms.out.changeThreshold){
-				lastError = trueErr;
+			else if (fabs(err.trueErr - lastError) > lastError * parms.out.changeThreshold){
+				lastError = err.trueErr;
 				quitEpoch = epoch + parms.out.patience;
 			}
 			else if (epoch == quitEpoch){
@@ -171,7 +180,7 @@ namespace JRNN {
 			itIns++;
 			itOuts++;
 		}
-		//trueErr /= (double)ins.size(); //Might need this later
+		err.trueErr /= (double)ins.size(); //Might need this later
 		//return SSE;
 	}
 
@@ -255,8 +264,8 @@ namespace JRNN {
 		//Alter Stats
 		if (alterStats){
 			errs.sumErrs += errPrimes;
-			sumSqErr += ublas::sum(SquareVec(errPrimes));
-			trueErr += ublas::sum(sqError);
+			errs.sumSqErr += ublas::sum(SquareVec(errPrimes));
+			errs.trueErr += ublas::sum(sqError);
 		}
 		//Update Slopes
 		if (updateSlopes){
@@ -312,7 +321,7 @@ namespace JRNN {
 
 			assert((*curCorr).size() == nOuts);
 			for (int j = 0; j < nOuts; j++){
-				cor = ((*curCorr)[j] - avgValue * err.sumErrs[j]) / sumSqErr;
+				cor = ((*curCorr)[j] - avgValue * err.sumErrs[j]) / err.sumSqErr;
 				(*prevCorr)[j] = cor;
 				(*curCorr)[j] = 0.0;
 				score += fabs (cor);
@@ -373,7 +382,7 @@ namespace JRNN {
 			cPCorr = &candPCorr[name];
 
 			candSumVals[name] += value;
-			actPrime /= sumSqErr;
+			actPrime /= err.sumSqErr;
 
 			//compute correlations to each output
 			for (int j = 0; j < nOuts; j++){
@@ -471,6 +480,97 @@ namespace JRNN {
 		}
 		SSE /= (double)ins.size();
 		return SSE;
+	}
+
+	void CCTrainer::InsertCandidate()
+	{
+		int numOuts = network->GetNumOut();
+		vecDouble outWeights(numOuts);
+		double weightMod;
+		weightMod = parms.weightMult / network->GetNumUnits();
+		for (int i = 0; i < numOuts; i++){
+			outWeights[i] = -candPCorr[bestCand->GetName()][i] * weightMod;
+		}
+		network->InstallCandidate(bestCand,outWeights);
+	}
+
+	void CCTrainer::Reset()
+	{
+		ResetVars();
+		network->Reset();
+	}
+
+	CCTrainer::status CCTrainer::ValidationEpoch()
+	{
+		matDouble ins = data->GetInputs(Dataset::VAL);
+		matDouble outs = data->GetOutputs(Dataset::VAL);
+		matDouble::iterator itIns = ins.begin();
+		matDouble::iterator itOuts = outs.begin();
+		NodeList outNodes = network->GetLayer("out")->GetNodes();
+		status returnStatus = CCTrainer::TRAINING;
+		//double SSE = 0;
+		resetError(valErr);
+		while(itIns != ins.end()){
+			vecDouble input = (*itIns);
+			vecDouble desiredOut = (*itOuts);
+			network->Activate(input);
+			ComputeError(desiredOut, valErr, outNodes, true, false);
+
+
+			itIns++;
+			itOuts++;
+		}
+		valErr.trueErr /= (double)ins.size(); //Might need this later
+		
+		if(val.bestErr == -1.0){
+			val.bestErr = valErr.trueErr;
+			val.bestPass = network->GetNumUnits();
+			val.bestWeights = network->GetWeights();
+		}
+		else if(valErr.trueErr < val.bestErr){
+			val.bestErr = valErr.trueErr;
+			val.bestPass = network->GetNumUnits();
+			val.bestWeights = network->GetWeights();
+		}
+		else if ((network->GetNumUnits() - val.bestPass) > parms.valPatience){
+			network->SetWeights(val.bestWeights);
+			returnStatus = CCTrainer::STAGNANT;
+			val.bestErr = -1.0;
+		}
+
+		return returnStatus;
+	}
+
+	void CCTrainer::TrainToValConv( int maxEpochs )
+	{
+		TrainToConvergence(maxEpochs, true);
+	}
+
+	void CCTrainer::TrainToConvergence( int maxEpochs, bool validate )
+	{
+		ResetVars();
+		status valStatus = TRAINING;
+		status outStatus;
+		while(epoch < maxEpochs){
+			outStatus = TrainOuts();
+			if (outStatus == WIN)
+				break;
+
+			//do validation? 
+			if (validate) {
+				valStatus = ValidationEpoch();
+				if (valStatus != TRAINING)
+					break;
+			}
+
+			//train candidates
+
+			CreateCandidates();
+			TrainCandidates();
+			InsertCandidate();
+		}
+		if(outStatus != WIN && valStatus == TRAINING)
+			TrainOuts();
 	}
 
 }

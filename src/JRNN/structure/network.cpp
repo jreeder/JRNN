@@ -320,6 +320,7 @@ ConMap& Network::GetConnections(){
 		 prev->SetNextLayer(next);
 		 next->SetPrevLayer(prev);
 		 numHidLayers--;
+		 layer->Clear();
 		 layers.erase(layer->GetName());
 	 }
  }

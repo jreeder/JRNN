@@ -175,3 +175,20 @@ ConList Layer::GetConnections()
 	}
 	return layerCons;
 }
+
+int Layer::RemoveUnconnectedNodes()
+{
+	NodeList nodesToRemove;
+	int nodesRemoved = 0;
+	BOOST_FOREACH(NodePtr node, nodes){
+		if (node->GetNumConnections() == 0){
+			nodesToRemove.push_back(node);
+		}
+	}
+	BOOST_FOREACH(NodePtr node, nodesToRemove){
+		RemoveNode(node);
+		nodesRemoved++;
+	}
+	nodesToRemove.clear();
+	return nodesRemoved;
+}
