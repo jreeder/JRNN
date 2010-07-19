@@ -21,6 +21,10 @@ namespace JRNN {
 		~CCTrainer();
 
 		void ResetVars();
+		void TrainToValConv(int maxEpochs);
+		void TrainToConvergence(int maxEpochs, double convThreshold);
+		double TestOnData(Dataset::datatype type);
+		hashedDoubleMap TestWiClass(Dataset::datatype type);
 		
 		struct  
 		{
@@ -73,6 +77,8 @@ namespace JRNN {
 		NodePtr bestCand;
 		vecDouble errors;
 		vecDouble sumErrs;
+		hashedDoubleMap taskErrorRate;
+		hashedIntMap taskErrors;
 		int epoch;
 
 		//hashedDoubleMap outSumErrs; //sum of errors for each output node
@@ -124,6 +130,13 @@ namespace JRNN {
 		void UpdateCorrelations();
 		void ComputeCorrelations();
 		void ComputeCandSlopes();
+		void InsertCandidate();
+
+		//Validation Methods
+
+		status ValidationEpoch(double valThreshold, int maxUnits);
+
+
 
 	};
 }

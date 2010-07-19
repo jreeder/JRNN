@@ -104,14 +104,20 @@ namespace JRNN {
 		CandFullyConnectBack(candLayer);
 	}
 
-	void CCNetwork::InstallCandidate(NodePtr node)
+	void CCNetwork::InstallCandidate(NodePtr node, vecDouble outWeights)
 	{
 		LayerPtr lp = AddHiddenLayer();
 		lp->AddNode(node);
 		BOOST_FOREACH(ConPtr con, node->GetConnections(IN)){
 			AddConnection(con);
 		}
-		FullyConnectOut(lp);
+		if (outWeights.size() == 0){
+			FullyConnectOut(lp);
+		}
+		else {
+			FullyConnectOut(lp, outWeights);
+		}
+		
 		numUnits++;
 	}
 
@@ -165,6 +171,19 @@ namespace JRNN {
 		BOOST_FOREACH(NodePtr n, layerNodes){
 			BOOST_FOREACH(NodePtr n2, outNodes){
 				AddConnection(Connection::Connect(n,n2));
+			}
+		}
+	}
+
+	void CCNetwork::FullyConnectOut( LayerPtr layer, vecDouble outWeights)
+	{
+		NodeList layerNodes = layer->GetNodes();
+		NodeList outNodes = layers["out"]->GetNodes();
+
+		Connection::SetRandomSeed();
+		BOOST_FOREACH(NodePtr n, layerNodes){
+			for ( int i = 0; i < outNodes.size(); i++){
+				AddConnection(Connection::Connect(n,outNodes[i], outWeights[i]));
 			}
 		}
 	}

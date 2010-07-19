@@ -28,7 +28,7 @@ namespace JRNN {
 		//void SetNetwork(NetworkPtr net);
 		const LayerPtr GetCandLayer();
 		void CreateCandLayer(int numCand);
-		void InstallCandidate(NodePtr node);
+		void InstallCandidate(NodePtr node, vecDouble outWeights = vecDouble(0));
 		void Build(int numIn, int numOut);
 		virtual void Reset();
 		int GetNumUnits();
@@ -42,6 +42,7 @@ namespace JRNN {
 		void CandFullyConnectBack(LayerPtr layer);
 		//LayerPtr AddHiddenLayer(); Moved to parent
 		void FullyConnectOut(LayerPtr layer);
+		void FullyConnectOut(LayerPtr layer, vecDouble outWeights);
 		void FullyConnect();
 		
 

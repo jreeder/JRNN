@@ -48,6 +48,8 @@ namespace JRNN {
 		resetCandValues();
 		resetOutValues();
 		resetError();
+		taskErrors.clear();
+		taskErrorRate.clear();
 	}
 
 	CCTrainer::~CCTrainer(){}
@@ -409,5 +411,66 @@ namespace JRNN {
 	//void CCTrainer::CreateCandidates(){
 	//	candidateLayer = Layer::CreateLayer(Layer::hidden, parms.nCand, )
 	//}
+
+	hashedDoubleMap CCTrainer::TestWiClass(Dataset::datatype type){
+		//TODO: need to make this more robust so we can have more than one output per task;
+		matDouble ins = data->GetInputs(type);
+		matDouble outs = data->GetOutputs(type);
+		matDouble::iterator itIns = ins.begin();
+		matDouble::iterator itOuts = outs.begin();
+
+		int numInCorrect = 0;
+		int totalItems = ins.size();
+		int numTasks = (*itOuts).size();
+		while(itIns != ins.end()){
+			vecDouble input = (*itIns);
+			vecDouble desiredOut = (*itOuts);
+			network->Activate(input);
+			vecDouble output = network->GetOutputs();
+			vecDouble thresOut = ApplyThreshold(output);
+			vecDouble errors = desiredOut - thresOut;
+
+			for(int i = 0; i < numTasks; i++){
+				std::string name = "task-";
+				name += lexical_cast<std::string>(i);
+				int tmp = (int)errors[i];
+				//cout << tmp << " " << output << " " << desiredOut << endl;
+				if (errors[i] != 0){
+					taskErrors[name]++;
+				}
+			}
+			itIns++;
+			itOuts++;
+		}
+		for (int i = 0; i < numTasks; i++){
+			std::string name = "task-";
+			name += lexical_cast<std::string>(i);
+			taskErrorRate[name] = taskErrors[name] / (double)totalItems;
+		}
+		return taskErrorRate;
+	}
+
+	double CCTrainer::TestOnData( Dataset::datatype type )
+	{
+		matDouble ins = data->GetInputs(type);
+		matDouble outs = data->GetOutputs(type);
+		matDouble::iterator itIns = ins.begin();
+		matDouble::iterator itOuts = outs.begin();
+
+		double SSE = 0;
+		while(itIns != ins.end()){
+			vecDouble input = (*itIns);
+			vecDouble desiredOut = (*itOuts);
+			network->Activate(input);
+			vecDouble output = network->GetOutputs();
+			vecDouble error = desiredOut - output;
+			vecDouble sqError = SquareVec(error);
+			SSE += ublas::sum(sqError);
+			itIns++;
+			itOuts++;
+		}
+		SSE /= (double)ins.size();
+		return SSE;
+	}
 
 }
