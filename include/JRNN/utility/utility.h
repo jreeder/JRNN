@@ -46,6 +46,13 @@ namespace JRNN {
 		return result;
 	}
 
+	inline void FillVec(vecDouble& vector, double value){
+		vecDouble::iterator it = vector.begin();
+		for (; it != vector.end(); it++){
+			(*it) = value;
+		}
+	}
+
 	inline int Sign(double num){
 		if (num > 0.0){
 			return 1;
@@ -57,6 +64,38 @@ namespace JRNN {
 			return 0;
 		}
 	}
+
+	class hashedVecDoubleMap {
+	public:
+		hashedVecDoubleMap(){
+			vecSize = 0;
+		}
+		hashedVecDoubleMap(int size){
+			vecSize = size;
+		}
+
+		hashedVecDoubleMap(const hashedVecDoubleMap& orig){
+			storage = orig.storage;
+			vecSize = orig.vecSize;
+		}
+
+		vecDouble& operator	[] (std::string name) {
+			if(storage.find(name) != storage.end()){
+				return storage[name];
+			}
+			else{
+				storage[name] = vecDouble(vecSize);
+				return storage[name];
+			}
+			
+		}
+		void clear() {
+			storage.clear();
+		}
+	private:
+		int vecSize;
+		boost::unordered_map<std::string, vecDouble> storage;
+	};
 }
 
 #endif

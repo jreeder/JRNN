@@ -14,7 +14,7 @@
 #include "utility/dataset.h"
 
 namespace JRNN {
-	typedef boost::unordered_map<std::string, vecDouble> hashedVecDoubleMap;
+	//typedef boost::unordered_map<std::string, vecDouble> hashedVecDoubleMap;
 	class CCTrainer {
 	public:
 		CCTrainer(CCNetworkPtr network, DatasetPtr data, int numCandidates);
@@ -26,6 +26,7 @@ namespace JRNN {
 		void TrainToConvergence(int maxEpochs, bool validate = false);
 		double TestOnData(Dataset::datatype type);
 		hashedDoubleMap TestWiClass(Dataset::datatype type);
+		int GetEpochs();
 		
 		struct parameters
 		{
@@ -77,8 +78,8 @@ namespace JRNN {
 		//double trueErr;
 		double candBestScore;
 		NodePtr bestCand;
-		vecDouble errors;
-		vecDouble sumErrs;
+		//vecDouble errors;
+		//vecDouble sumErrs;
 		hashedDoubleMap taskErrorRate;
 		hashedIntMap taskErrors;
 		struct valVars{

@@ -308,6 +308,7 @@ ConMap& Network::GetConnections(){
 	 lp->SetNextLayer(out);
 	 prevLayer->SetNextLayer(lp);
 	 numHidLayers++;
+	 out->SetHeight(numHidLayers + 1);
 	 return lp;
  }
 

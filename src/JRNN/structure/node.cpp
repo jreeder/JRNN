@@ -244,12 +244,11 @@ void Node::RemoveConnection(std::string name){
 
 void Node::Disconnect()
 {
-	NodePtr np(this);
 	BOOST_FOREACH(ConPtr con, inConnections){
-		con->Disconnect(np);
+		con->Disconnect(name);
 	}
 	BOOST_FOREACH(ConPtr con, outConnections){
-		con->Disconnect(np);
+		con->Disconnect(name);
 	}
 	inConnections.clear();
 	outConnections.clear();

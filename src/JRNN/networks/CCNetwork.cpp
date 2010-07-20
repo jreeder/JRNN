@@ -108,6 +108,7 @@ namespace JRNN {
 	{
 		LayerPtr lp = AddHiddenLayer();
 		lp->AddNode(node);
+		candLayer->RemoveNode(node);
 		BOOST_FOREACH(ConPtr con, node->GetConnections(IN)){
 			AddConnection(con);
 		}
@@ -182,7 +183,7 @@ namespace JRNN {
 
 		Connection::SetRandomSeed();
 		BOOST_FOREACH(NodePtr n, layerNodes){
-			for ( int i = 0; i < outNodes.size(); i++){
+			for (unsigned int i = 0; i < outNodes.size(); i++){
 				AddConnection(Connection::Connect(n,outNodes[i], outWeights[i]));
 			}
 		}

@@ -61,16 +61,20 @@ ConPtr Connection::Connect(NodePtr newInNode, NodePtr newOutNode, double weight)
 
 void Connection::Disconnect(){
     inNode->RemoveConnection(name);
+	inNode.reset();
     outNode->RemoveConnection(name);
+	outNode.reset();
 }
 
-void Connection::Disconnect(NodePtr node){
-	if (inNode == node){
+void Connection::Disconnect(std::string nodeName){
+	if (inNode->GetName() == nodeName){
 		outNode->RemoveConnection(name);
 	}
 	else{
 		inNode->RemoveConnection(name);
 	}
+	inNode.reset();
+	outNode.reset();
 }
 
 void Connection::SetRandomSeed(){

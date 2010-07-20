@@ -40,6 +40,14 @@ namespace JRNN {
 		cand.conDeltas.clear();
 		cand.conPSlopes.clear();
 		cand.conSlopes.clear();
+
+		int numOut = network->GetNumOut();
+		err.errors = vecDouble(numOut);
+		err.sumErrs = vecDouble(numOut);
+		valErr.errors = vecDouble(numOut);
+		valErr.sumErrs = vecDouble(numOut);
+		candCorr = hashedVecDoubleMap(numOut);
+		candPCorr = hashedVecDoubleMap(numOut);
 		ResetVars();
 	}
 
@@ -108,8 +116,8 @@ namespace JRNN {
 		errorVars.bits = 0;
 		errorVars.trueErr = 0.0;
 		errorVars.sumSqErr = 0.0;
-		errorVars.sumErrs.clear();
-		errorVars.errors.clear();
+		FillVec(errorVars.sumErrs,0);
+		FillVec(errorVars.errors,0);
 		//outSumErrs.clear();
 	}
 
@@ -264,7 +272,8 @@ namespace JRNN {
 		//Alter Stats
 		if (alterStats){
 			errs.sumErrs += errPrimes;
-			errs.sumSqErr += ublas::sum(SquareVec(errPrimes));
+			vecDouble sqErrPrime = SquareVec(errPrimes);
+			errs.sumSqErr += ublas::sum(sqErrPrime);
 			errs.trueErr += ublas::sum(sqError);
 		}
 		//Update Slopes
@@ -571,6 +580,11 @@ namespace JRNN {
 		}
 		if(outStatus != WIN && valStatus == TRAINING)
 			TrainOuts();
+	}
+
+	int CCTrainer::GetEpochs()
+	{
+		return epoch;
 	}
 
 }

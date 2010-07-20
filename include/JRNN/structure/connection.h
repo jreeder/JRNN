@@ -35,7 +35,7 @@ namespace JRNN {
         void SetLocked(bool lock);
         void SetWeight(double weight);
         void Disconnect();
-		void Disconnect(NodePtr node);
+		void Disconnect(std::string nodeName);
 		double GetWeight() const;
         const std::string& GetName();
         void SetName(std::string newName);
