@@ -93,7 +93,7 @@ int main(int argc, char** argv) {
 
 		CCTrainer cc = CCTrainer(net,ds,8);
 
-		for (int i = 0; i < 1; i++){
+		for (int i = 0; i < 30;){
 			cc.TrainToValConv(1000);
 			int epochs = cc.GetEpochs();
 			myfile << epochs << "\t";

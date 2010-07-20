@@ -188,7 +188,7 @@ namespace JRNN {
 			itIns++;
 			itOuts++;
 		}
-		err.trueErr /= (double)ins.size(); //Might need this later
+		//err.trueErr /= (double)ins.size(); //Might need this later
 		//return SSE;
 	}
 
@@ -263,7 +263,8 @@ namespace JRNN {
 	{
 		//Compute Errors
 		vecDouble output = network->GetOutputs();
-		vecDouble error = desiredOut - output;
+		//vecDouble error = desiredOut - output;
+		vecDouble error = output - desiredOut;
 		vecDouble outPrimes = network->GetPrimes(std::string("out"));
 		vecDouble errPrimes = VecMultiply(error, outPrimes);
 		vecDouble sqError = SquareVec(error);
