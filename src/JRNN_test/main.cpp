@@ -42,13 +42,19 @@ int main(int argc, char** argv) {
 			cout << "Type must be 'CC' or 'BP'" << endl;
 			return -1;
 		}
+		
+		
+        outfile = filename;
+		outfile.replace(outfile.end()-4,outfile.end()," ");
 		outfile += type;
-		outfile += " ";
-        outfile += filename;
         outfile += " results.txt";
     }
     ofstream myfile;
     myfile.open(outfile.c_str());
+	if (myfile.is_open() == false){
+		cout << "Output file Not open: " << outfile.c_str() << endl;
+		return -1;
+	}
     DatasetPtr ds(new Dataset());
 	//FFMLPNetwork netBuilder(numIn, numHid, numOut);
     ds->LoadFromFile(filename, numIn,numOut);
@@ -63,26 +69,23 @@ int main(int argc, char** argv) {
 		RPropTrainer bp(net, ds, 1.2, 0.5);
 	//    cout << bp.trainEpoch() << endl;
 		int skips = 0;
-		for (int i = 0; i < 30;){
+		for (int i = 0; i < 60;){
 			//bp.trainToConvergence(0.1, 1000);
-			bp.TrainToValConv(1000);
+			bp.TrainToValConv(3000);
 			int epochs = bp.GetEpochs();
-			//if (epochs > 10000){
-				myfile << epochs << "\t";
-				cout << epochs << "\t";
-				hashedDoubleMap testresults = bp.TestWiClass(Dataset::TEST);
-				std::pair<std::string,double> p;
-				BOOST_FOREACH(p, testresults){
-					myfile << p.first << " " << p.second << "\t";
-					cout << p.first << " " << p.second << "\t";
-				}
-				myfile << endl;
-				cout << endl;
-				i++;
-	//        }
-	//        else{
-	//            ds->redistData();
-	//        }
+			myfile << epochs << "\t";
+			cout << epochs << "\t";
+			myfile << numHid << "\t";
+			cout << numHid << "\t";
+			hashedDoubleMap testresults = bp.TestWiClass(Dataset::TEST);
+			std::pair<std::string,double> p;
+			BOOST_FOREACH(p, testresults){
+				myfile << p.first << " " << p.second << "\t";
+				cout << p.first << " " << p.second << "\t";
+			}
+			myfile << endl;
+			cout << endl;
+			i++;
 			bp.Reset();
 		}
 	} 
@@ -93,11 +96,14 @@ int main(int argc, char** argv) {
 
 		CCTrainer cc = CCTrainer(net,ds,8);
 
-		for (int i = 0; i < 30;){
-			cc.TrainToValConv(1000);
+		for (int i = 0; i < 60;){
+			cc.TrainToValConv(3000);
 			int epochs = cc.GetEpochs();
+			int hiddenLayers = cc.GetNumHidLayers();
 			myfile << epochs << "\t";
 			cout << epochs << "\t";
+			myfile << hiddenLayers << "\t";
+			cout << hiddenLayers << "\t";
 			hashedDoubleMap testresults = cc.TestWiClass(Dataset::TEST);
 			std::pair<std::string,double> p;
 			BOOST_FOREACH(p, testresults){

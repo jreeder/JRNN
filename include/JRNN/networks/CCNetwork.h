@@ -47,6 +47,7 @@ namespace JRNN {
 		void FullyConnectOut(LayerPtr layer, vecDouble outWeights);
 		void FullyConnect();
 		void RemoveUnConnectedNodes();
+		virtual void RemoveHiddenLayer(LayerPtr layer);
 		
 
 	};

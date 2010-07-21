@@ -1,0 +1,7 @@
+This is a Neural Networks library in C++. 
+
+It makes extensive use of boost shared pointers and some containers, so Boost version 1.43 is needed to compile against. 
+
+Currently there are trainers for Standard Backprop, RProp, and Cascade Correlation. 
+
+There is NO WARRANTY or support provided. 

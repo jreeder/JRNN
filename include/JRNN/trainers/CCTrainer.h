@@ -27,6 +27,7 @@ namespace JRNN {
 		double TestOnData(Dataset::datatype type);
 		hashedDoubleMap TestWiClass(Dataset::datatype type);
 		int GetEpochs();
+		int GetNumHidLayers();
 		
 		struct parameters
 		{

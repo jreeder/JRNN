@@ -80,7 +80,7 @@ namespace JRNN{
         vecDouble desiredOut;
 
 		LayerPtr AddHiddenLayer();
-		void RemoveHiddenLayer(LayerPtr layer);
+		virtual void RemoveHiddenLayer(LayerPtr layer);
   //      void FullyConnectFFMLP();
 		//void FullyConnectMinFF();
 		//void FullyConnectBack(LayerPtr layer);
