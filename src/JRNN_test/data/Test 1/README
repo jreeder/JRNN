@@ -1,0 +1,7 @@
+This folder contains the first experiment. 
+
+It has results for Rprop with 4 hidden nodes for single tasks and 16 hidden nodes for 4 tasks. 
+
+CC develops it's own hidden nodes. 
+
+tasks 1-4 are related tasks 3-6 are related in pairs. 3-4 & 5-6. 

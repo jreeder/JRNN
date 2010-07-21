@@ -15,18 +15,18 @@ namespace JRNN {
 
 		parms.nTrials = 1;
 		parms.maxNewUnits = 25;
-		parms.valPatience = 12;
+		parms.valPatience = 3;
 		parms.weightMult = 1.0;
 
-		parms.out.epochs = 200;
-		parms.out.patience = 12;
+		parms.out.epochs = 200; //200
+		parms.out.patience = 12;//12
 		parms.out.epsilon = 1.0;
 		parms.out.decay = 0.0;
 		parms.out.mu = 2.0;
 		parms.out.changeThreshold = 0.01;
 
-		parms.cand.epochs = 200;
-		parms.cand.patience = 12;
+		parms.cand.epochs = 200; //200
+		parms.cand.patience = 12; //12
 		parms.cand.epsilon = 100;
 		parms.cand.decay = 0.0;
 		parms.cand.mu = 2.0;
@@ -147,8 +147,10 @@ namespace JRNN {
 	{
 		int quitEpoch = 0;
 		double lastError = 0.0;
+		//resetOutValues();
 		for (int i = 0; i < parms.out.epochs; i++){
 			resetError(err);
+			
 			OutputEpoch();
 			if (err.trueErr < parms.sseThreshold){
 				return CCTrainer::WIN;
@@ -158,6 +160,7 @@ namespace JRNN {
 
 			if (i == 0){
 				lastError = err.trueErr;
+				quitEpoch = epoch + parms.out.patience;
 			}
 			else if (fabs(err.trueErr - lastError) > lastError * parms.out.changeThreshold){
 				lastError = err.trueErr;
@@ -209,10 +212,9 @@ namespace JRNN {
 		double lastScore = 0.0;
 		int quitEpoch = 0;
 		err.sumErrs /= data->GetSize(Dataset::TRAIN);
-
 		CorrelationEpoch();
-
 		for (int i = 0; i < parms.cand.epochs; i ++){
+			
 			CandEpoch();
 
 			UpdateCandWeights();
@@ -223,6 +225,7 @@ namespace JRNN {
 
 			if ( i == 0 ){
 				lastScore = candBestScore;
+				quitEpoch = epoch + parms.cand.patience;
 			}
 			else if (fabs(candBestScore - lastScore) > (lastScore * parms.cand.changeThreshold)){
 				quitEpoch = epoch + parms.cand.patience;
@@ -586,6 +589,11 @@ namespace JRNN {
 	int CCTrainer::GetEpochs()
 	{
 		return epoch;
+	}
+
+	int CCTrainer::GetNumHidLayers()
+	{
+		return network->GetNumHidLayers();
 	}
 
 }
