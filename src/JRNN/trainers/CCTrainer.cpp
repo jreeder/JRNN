@@ -13,6 +13,8 @@ namespace JRNN {
 		this->network = network;
 		this->data = data;
 
+		nTrainOutVals = data->GetSize(Dataset::TRAIN) * network->GetNumOut();
+
 		parms.nTrials = 1;
 		parms.maxNewUnits = 25;
 		parms.valPatience = 3;
@@ -31,9 +33,10 @@ namespace JRNN {
 		parms.cand.decay = 0.0;
 		parms.cand.mu = 2.0;
 		parms.cand.changeThreshold = 0.03;
+		
 		parms.nCand = numCandidates;
-		parms.sseThreshold = 0.02;
-		parms.candScoreThreshold = 0.4;
+		parms.indexThreshold = 0.2;
+		parms.scoreThreshold = 0.4;
 		out.conDeltas.clear();
 		out.conPSlopes.clear();
 		out.conSlopes.clear();
@@ -66,6 +69,8 @@ namespace JRNN {
 		val.bestErr = -1.0;
 		val.bestWeights.clear();
 		val.bestPass = network->GetNumUnits();
+		vMSE_Rec.clear();
+		MSE_Rec.clear();
 	}
 
 	CCTrainer::~CCTrainer(){}
@@ -152,7 +157,8 @@ namespace JRNN {
 			resetError(err);
 			
 			OutputEpoch();
-			if (err.trueErr < parms.sseThreshold){
+			double index = ErrorIndex(err.trueErr,1,nTrainOutVals);
+			if (index < parms.indexThreshold){
 				return CCTrainer::WIN;
 			}
 			UpdateOutWeights();
@@ -180,7 +186,7 @@ namespace JRNN {
 		matDouble::iterator itIns = ins.begin();
 		matDouble::iterator itOuts = outs.begin();
 		NodeList outNodes = network->GetLayer("out")->GetNodes();
-		//double SSE = 0;
+		
 		while(itIns != ins.end()){
 			vecDouble input = (*itIns);
 			vecDouble desiredOut = (*itOuts);
@@ -191,8 +197,8 @@ namespace JRNN {
 			itIns++;
 			itOuts++;
 		}
-		//err.trueErr /= (double)ins.size(); //Might need this later
-		//return SSE;
+		double MSE = err.trueErr / (double)nTrainOutVals;
+		MSE_Rec.push_back(MSE);
 	}
 
 	void CCTrainer::UpdateOutWeights()
@@ -533,8 +539,9 @@ namespace JRNN {
 			itIns++;
 			itOuts++;
 		}
-		valErr.trueErr /= (double)ins.size(); //Might need this later
-		
+		valErr.trueErr /= (double)nTrainOutVals; //Might need this later
+		vMSE_Rec.push_back(valErr.trueErr);
+
 		if(val.bestErr == -1.0){
 			val.bestErr = valErr.trueErr;
 			val.bestPass = network->GetNumUnits();
@@ -596,4 +603,16 @@ namespace JRNN {
 		return network->GetNumHidLayers();
 	}
 
+	double CCTrainer::ErrorIndex( double trueError, double stdDev, int nTrainOutVals )
+	{
+		return (sqrt( trueError/ (double)nTrainOutVals) / stdDev);
+	}
+
+	doubles& CCTrainer::GetMSERec(){
+		return MSE_Rec;
+	}
+
+	doubles& CCTrainer::GetVMSERec(){
+		return vMSE_Rec;
+	}
 }

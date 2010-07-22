@@ -26,28 +26,34 @@ int main(int argc, char** argv) {
     std::string filename;
     std::string outfile = "";
 	std::string type = "";
-    int numIn,numHid,numOut;
+    int numIn,numHid,numOut, numTrain, numVal, numTest;
 
-    if (argc != 6){
-        cout << "Wrong Number of inputs" << endl;
+    if (argc != 10){
+        cout << "Incorrect Arguments" << endl;
+		cout << "Proper Syntax: JRNN_test <filename> <numTrain> <numVal> <numTest> <numIn> <numHid> <numOut> <type = 'BP' or 'CC'> <outfilename>" << endl;
+		cout << "The number of training, validation, and testing points must be less than the number of points in the test set." << endl;
         return -1;
     }
     else {
         filename = argv[1];
-        numIn = lexical_cast<int>(argv[2]);
-        numHid = lexical_cast<int>(argv[3]);
-        numOut = lexical_cast<int>(argv[4]);
-		type = std::string(argv[5]);
+        numTrain = lexical_cast<int>(argv[2]);
+        numVal = lexical_cast<int>(argv[3]);
+        numTest = lexical_cast<int>(argv[4]);
+		numIn = lexical_cast<int>(argv[5]);
+		numHid = lexical_cast<int>(argv[6]);
+		numOut = lexical_cast<int>(argv[7]);
+		type = std::string(argv[8]);
 		if (type != "CC" && type != "BP"){
 			cout << "Type must be 'CC' or 'BP'" << endl;
 			return -1;
 		}
+		outfile = std::string(argv[9]);
 		
 		
-        outfile = filename;
+        /*outfile = filename;
 		outfile.replace(outfile.end()-4,outfile.end()," ");
 		outfile += type;
-        outfile += " results.txt";
+        outfile += " results.txt";*/
     }
     ofstream myfile;
     myfile.open(outfile.c_str());

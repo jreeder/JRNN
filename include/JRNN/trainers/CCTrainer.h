@@ -28,6 +28,8 @@ namespace JRNN {
 		hashedDoubleMap TestWiClass(Dataset::datatype type);
 		int GetEpochs();
 		int GetNumHidLayers();
+		doubles& GetMSERec();
+		doubles& GetVMSERec();
 		
 		struct parameters
 		{
@@ -60,8 +62,8 @@ namespace JRNN {
 				double changeThreshold;
 			} cand;
 
-			double sseThreshold;
-			double candScoreThreshold;
+			double indexThreshold;
+			double scoreThreshold;
 
 			int nCand;
 		} parms;
@@ -70,6 +72,8 @@ namespace JRNN {
 		//Members
 		CCNetworkPtr network;
 		DatasetPtr data;
+		doubles MSE_Rec;
+		doubles vMSE_Rec;
 		//LayerPtr candidateLayer;
 		//ConList candidateCons;
 		//TODO Implement Network caching
@@ -78,6 +82,7 @@ namespace JRNN {
 		//double sumSqErr; //Sum Squared Error Primes
 		//double trueErr;
 		double candBestScore;
+		int nTrainOutVals; //Training points times num outs
 		NodePtr bestCand;
 		//vecDouble errors;
 		//vecDouble sumErrs;
@@ -120,7 +125,8 @@ namespace JRNN {
 
 		//Methods
 		void QuickProp(ConPtr con, conVars& vars, double epsilon, double decay, double mu, double shrinkFactor);
-		
+		double ErrorIndex(double trueError, double stdDev, int nTrainOutVals);
+
 		//Output training methods
 		void resetError(errVars& errorVars);
 		void resetOutValues();

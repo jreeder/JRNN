@@ -56,7 +56,7 @@ namespace JRNN {
 	//    itOut = trainingOuts.begin();
 		itData = trainingIns.begin();
 		itOut = trainingOuts.begin();
-		double SSE = 0;
+		double MSE = 0;
 		while(itData != trainingIns.end()){
 			vecDouble input = (*itData);
 			vecDouble desiredOut = (*itOut);
@@ -65,7 +65,7 @@ namespace JRNN {
 		   // cout << "network output: " << output << " Desired Out: " << desiredOut << endl;
 			vecDouble error = desiredOut - output;
 			vecDouble sqError = SquareVec(error);
-			SSE += ublas::sum(sqError);
+			MSE += ublas::sum(sqError);
 			//weightUpdates.clear();
 			localGradients.clear();
 			CalcWeightUpdates(mNetwork->GetLayer("out"), desiredOut);
@@ -82,9 +82,9 @@ namespace JRNN {
 		}
 		dw.clear();
 		epochCount++;
-		SSE /= (double)trainingIns.size();
-		MSE_Rec.push_back(SSE);
-		return SSE;
+		MSE /= (double)trainingIns.size();
+		MSE_Rec.push_back(MSE);
+		return MSE;
 	}
 
 	double RPropTrainer::TestOnData(Dataset::datatype type){
@@ -93,7 +93,7 @@ namespace JRNN {
 		matDouble::iterator itIns = ins.begin();
 		matDouble::iterator itOuts = outs.begin();
 
-		double SSE = 0;
+		double MSE = 0;
 		while(itIns != ins.end()){
 			vecDouble input = (*itIns);
 			vecDouble desiredOut = (*itOuts);
@@ -101,12 +101,12 @@ namespace JRNN {
 			vecDouble output = mNetwork->GetOutputs();
 			vecDouble error = desiredOut - output;
 			vecDouble sqError = SquareVec(error);
-			SSE += ublas::sum(sqError);
+			MSE += ublas::sum(sqError);
 			itIns++;
 			itOuts++;
 		}
-		SSE /= (double)ins.size();
-		return SSE;
+		MSE /= (double)ins.size();
+		return MSE;
 	}
 
 	hashedDoubleMap RPropTrainer::TestWiClass(Dataset::datatype type){

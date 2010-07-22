@@ -12,7 +12,7 @@ using namespace JRNN;
 BackPropTrainer::BackPropTrainer(FFMLPNetPtr inNetwork, DatasetPtr inDataSet, double learningRate) {
     mNetwork = inNetwork;
     data = inDataSet;
-    //TODO: right now I'm assuming the dataset is ready to go. need to add in a flah
+    //TODO: right now I'm assuming the dataset is ready to go. need to add in a flag
     //that says it is ready or not and do something here accordingly. 
 //    trainingIns = trainingData;
 //    trainingOuts = desiredOuts;
@@ -53,7 +53,7 @@ double BackPropTrainer::TrainEpoch(){
 //    itOut = trainingOuts.begin();
     itData = trainingIns.begin();
     itOut = trainingOuts.begin();
-    double SSE = 0;
+    double MSE = 0;
     while(itData != trainingIns.end()){
         vecDouble input = (*itData);
         vecDouble desiredOut = (*itOut);
@@ -62,7 +62,7 @@ double BackPropTrainer::TrainEpoch(){
        // cout << "network output: " << output << " Desired Out: " << desiredOut << endl;
         vecDouble error = desiredOut - output;
         vecDouble sqError = SquareVec(error);
-        SSE += ublas::sum(sqError);
+        MSE += ublas::sum(sqError);
         weightUpdates.clear();
         localGradients.clear();
         CalcWeightUpdates(mNetwork->GetLayer("out"), desiredOut);
@@ -77,9 +77,9 @@ double BackPropTrainer::TrainEpoch(){
         itOut++;
     }
     epochCount++;
-    SSE /= (double)trainingIns.size();
-    MSE_Rec.push_back(SSE);
-    return SSE;
+    MSE /= (double)trainingIns.size();
+    MSE_Rec.push_back(MSE);
+    return MSE;
 }
 
 double BackPropTrainer::TestOnData(Dataset::datatype type){
@@ -88,7 +88,7 @@ double BackPropTrainer::TestOnData(Dataset::datatype type){
     matDouble::iterator itIns = ins.begin();
     matDouble::iterator itOuts = outs.begin();
 
-    double SSE = 0;
+    double MSE = 0;
     while(itIns != ins.end()){
         vecDouble input = (*itIns);
         vecDouble desiredOut = (*itOuts);
@@ -96,12 +96,12 @@ double BackPropTrainer::TestOnData(Dataset::datatype type){
         vecDouble output = mNetwork->GetOutputs();
         vecDouble error = desiredOut - output;
         vecDouble sqError = SquareVec(error);
-        SSE += ublas::sum(sqError);
+        MSE += ublas::sum(sqError);
         itIns++;
         itOuts++;
     }
-    SSE /= (double)ins.size();
-    return SSE;
+    MSE /= (double)ins.size();
+    return MSE;
 }
 
 hashedDoubleMap BackPropTrainer::TestWiClass(Dataset::datatype type){
@@ -192,8 +192,13 @@ void BackPropTrainer::CalcWeightUpdates(LayerPtr layer, vecDouble desiredOut){
 }
 
 doubles& BackPropTrainer::GetMSERec(){
-    return MSE_Rec;
+	return MSE_Rec;
 }
+
+doubles& BackPropTrainer::GetVMSERec(){
+	return vMSE_Rec;
+}
+
 
 void BackPropTrainer::TrainToConvergence(double maxSSE, int maxEpoch){
     double curSSE = 10;
@@ -230,11 +235,6 @@ void BackPropTrainer::TrainToValConv(int maxEpoch){
 
     }
 }
-
-doubles& BackPropTrainer::GetVMSERec(){
-    return vMSE_Rec;
-}
-
 
 int BackPropTrainer::GetEpochs(){
     return epochCount;
