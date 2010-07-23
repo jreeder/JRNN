@@ -37,7 +37,7 @@ namespace JRNN {
 		//np->layers["out"]->BuildLayer(Node::sigmoid);
 		//np->layers["bias"]->BuildLayer(Node::bias);
 		layers["input"]->BuildLayer<Linear>();
-		layers["hidden"]->BuildLayer<Sigmoid>();
+		layers["hidden"]->BuildLayer<ASigmoid>();
 		layers["out"]->BuildLayer<ASigmoid>();
 		layers["bias"]->BuildLayer<Bias>();
 		FullyConnect();

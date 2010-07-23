@@ -78,6 +78,7 @@ double BackPropTrainer::TrainEpoch(){
     }
     epochCount++;
     MSE /= (double)trainingIns.size();
+	MSE /= (double)mNetwork->GetNumOut();
     MSE_Rec.push_back(MSE);
     return MSE;
 }
@@ -101,6 +102,7 @@ double BackPropTrainer::TestOnData(Dataset::datatype type){
         itOuts++;
     }
     MSE /= (double)ins.size();
+	MSE /= (double)mNetwork->GetNumOut();
     return MSE;
 }
 

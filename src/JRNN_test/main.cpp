@@ -15,6 +15,7 @@
 //#include "utility/NetworkBuilder.h" Stupid Idea and not necessary
 #include <iostream>
 #include <fstream>
+#include <ctime>
 
 using namespace JRNN;
 using namespace std;
@@ -52,7 +53,7 @@ int main(int argc, char** argv) {
 			return -1;
 		}
 
-		useValidation = (argv[9] == "T") ? true : false;
+		useValidation = (std::string(argv[9]) == "T") ? true : false;
 
 		outfile = std::string(argv[10]);
 		
@@ -84,28 +85,31 @@ int main(int argc, char** argv) {
 		int skips = 0;
 		for (int i = 0; i < numRuns;){
 			//bp.trainToConvergence(0.1, 1000);
+			double time = 0.0;
+			clock_t startTime = clock();
 			if (useValidation){
 				bp.TrainToValConv(3000);
 			}
 			else {
-				bp.TrainToConvergence(0.1, 3000);
+				bp.TrainToConvergence(0.04, 3000);
 			}
-			
+			time = (clock() - startTime)/(double)CLOCKS_PER_SEC;
 			int epochs = bp.GetEpochs();
 			myfile << epochs << "\t";
-			cout << epochs << "\t";
+			myfile << time << "\t";
+			//cout << epochs << "\t";
 			myfile << numHid << "\t";
-			cout << numHid << "\t";
+			//cout << numHid << "\t";
 			hashedDoubleMap testresults = bp.TestWiClass(Dataset::TEST);
 			std::pair<std::string,double> p;
 			BOOST_FOREACH(p, testresults){
 				myfile << p.first << ":" << p.second << "\t";
-				cout << p.first << ":" << p.second << "\t";
+				//cout << p.first << ":" << p.second << "\t";
 			}
 			myfile << "|\t";
 			printDoubles(bp.GetMSERec(),myfile);
 			myfile << endl;
-			cout << endl;
+			//cout << endl;
 			i++;
 			bp.Reset();
 		}
@@ -118,29 +122,33 @@ int main(int argc, char** argv) {
 		CCTrainer cc = CCTrainer(net,ds,8);
 
 		for (int i = 0; i < numRuns;){
+			double time = 0.0;
+			clock_t startTime = clock();
 			if(useValidation){
 				cc.TrainToValConv(3000);
 			}
 			else {
 				cc.TrainToConvergence(3000);
 			}
-			
+			time = (clock() - startTime)/(double)CLOCKS_PER_SEC;
+
 			int epochs = cc.GetEpochs();
 			int hiddenLayers = cc.GetNumHidLayers();
 			myfile << epochs << "\t";
-			cout << epochs << "\t";
+			myfile << time << "\t";
+			//cout << epochs << "\t";
 			myfile << hiddenLayers << "\t";
-			cout << hiddenLayers << "\t";
+			//cout << hiddenLayers << "\t";
 			hashedDoubleMap testresults = cc.TestWiClass(Dataset::TEST);
 			std::pair<std::string,double> p;
 			BOOST_FOREACH(p, testresults){
 				myfile << p.first << ":" << p.second << "\t";
-				cout << p.first << ":" << p.second << "\t";
+				//cout << p.first << ":" << p.second << "\t";
 			}
 			myfile << "|\t";
 			printDoubles(cc.GetMSERec(),myfile);
 			myfile << endl;
-			cout << endl;
+			//cout << endl;
 			i++;
 			cc.Reset();
 		}

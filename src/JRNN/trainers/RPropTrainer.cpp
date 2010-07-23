@@ -83,6 +83,7 @@ namespace JRNN {
 		dw.clear();
 		epochCount++;
 		MSE /= (double)trainingIns.size();
+		MSE /= (double)mNetwork->GetNumOut();
 		MSE_Rec.push_back(MSE);
 		return MSE;
 	}
@@ -106,6 +107,7 @@ namespace JRNN {
 			itOuts++;
 		}
 		MSE /= (double)ins.size();
+		MSE /= (double)mNetwork->GetNumOut();
 		return MSE;
 	}
 
