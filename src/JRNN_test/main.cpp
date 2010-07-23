@@ -18,6 +18,9 @@
 
 using namespace JRNN;
 using namespace std;
+
+void printDoubles(doubles toPrint, ofstream& file);
+
 /*
  * 
  */
@@ -26,11 +29,12 @@ int main(int argc, char** argv) {
     std::string filename;
     std::string outfile = "";
 	std::string type = "";
-    int numIn,numHid,numOut, numTrain, numVal, numTest;
+    int numIn,numHid,numOut, numTrain, numVal, numTest, numRuns;
+	bool useValidation = true;
 
-    if (argc != 10){
+    if (argc != 12){
         cout << "Incorrect Arguments" << endl;
-		cout << "Proper Syntax: JRNN_test <filename> <numTrain> <numVal> <numTest> <numIn> <numHid> <numOut> <type = 'BP' or 'CC'> <outfilename>" << endl;
+		cout << "Proper Syntax: JRNN_test <filename> <numTrain> <numVal> <numTest> <numIn> <numHid> <numOut> <type = 'BP' or 'CC'> <validate = 'T' or 'F'> <outfilename> <numRuns>" << endl;
 		cout << "The number of training, validation, and testing points must be less than the number of points in the test set." << endl;
         return -1;
     }
@@ -47,9 +51,12 @@ int main(int argc, char** argv) {
 			cout << "Type must be 'CC' or 'BP'" << endl;
 			return -1;
 		}
-		outfile = std::string(argv[9]);
+
+		useValidation = (argv[9] == "T") ? true : false;
+
+		outfile = std::string(argv[10]);
 		
-		
+		numRuns = lexical_cast<int>(argv[11]);
         /*outfile = filename;
 		outfile.replace(outfile.end()-4,outfile.end()," ");
 		outfile += type;
@@ -64,7 +71,7 @@ int main(int argc, char** argv) {
     DatasetPtr ds(new Dataset());
 	//FFMLPNetwork netBuilder(numIn, numHid, numOut);
     ds->LoadFromFile(filename, numIn,numOut);
-    ds->DistData(100,100,500);
+    ds->DistData(numTrain,numVal,numTest);
     //NetworkPtr net = Network::CreateFFMLPNetwork(numIn,numHid,numOut);
 	if (type == "BP")
 	{
@@ -75,9 +82,15 @@ int main(int argc, char** argv) {
 		RPropTrainer bp(net, ds, 1.2, 0.5);
 	//    cout << bp.trainEpoch() << endl;
 		int skips = 0;
-		for (int i = 0; i < 60;){
+		for (int i = 0; i < numRuns;){
 			//bp.trainToConvergence(0.1, 1000);
-			bp.TrainToValConv(3000);
+			if (useValidation){
+				bp.TrainToValConv(3000);
+			}
+			else {
+				bp.TrainToConvergence(0.1, 3000);
+			}
+			
 			int epochs = bp.GetEpochs();
 			myfile << epochs << "\t";
 			cout << epochs << "\t";
@@ -86,9 +99,11 @@ int main(int argc, char** argv) {
 			hashedDoubleMap testresults = bp.TestWiClass(Dataset::TEST);
 			std::pair<std::string,double> p;
 			BOOST_FOREACH(p, testresults){
-				myfile << p.first << " " << p.second << "\t";
-				cout << p.first << " " << p.second << "\t";
+				myfile << p.first << ":" << p.second << "\t";
+				cout << p.first << ":" << p.second << "\t";
 			}
+			myfile << "|\t";
+			printDoubles(bp.GetMSERec(),myfile);
 			myfile << endl;
 			cout << endl;
 			i++;
@@ -102,8 +117,14 @@ int main(int argc, char** argv) {
 
 		CCTrainer cc = CCTrainer(net,ds,8);
 
-		for (int i = 0; i < 60;){
-			cc.TrainToValConv(3000);
+		for (int i = 0; i < numRuns;){
+			if(useValidation){
+				cc.TrainToValConv(3000);
+			}
+			else {
+				cc.TrainToConvergence(3000);
+			}
+			
 			int epochs = cc.GetEpochs();
 			int hiddenLayers = cc.GetNumHidLayers();
 			myfile << epochs << "\t";
@@ -113,9 +134,11 @@ int main(int argc, char** argv) {
 			hashedDoubleMap testresults = cc.TestWiClass(Dataset::TEST);
 			std::pair<std::string,double> p;
 			BOOST_FOREACH(p, testresults){
-				myfile << p.first << " " << p.second << "\t";
-				cout << p.first << " " << p.second << "\t";
+				myfile << p.first << ":" << p.second << "\t";
+				cout << p.first << ":" << p.second << "\t";
 			}
+			myfile << "|\t";
+			printDoubles(cc.GetMSERec(),myfile);
 			myfile << endl;
 			cout << endl;
 			i++;
@@ -126,3 +149,8 @@ int main(int argc, char** argv) {
     return (EXIT_SUCCESS);
 }
 
+void printDoubles(doubles toPrint, ofstream& file){
+	BOOST_FOREACH(double db, toPrint){
+		file << db << "\t";
+	}
+}
