@@ -23,9 +23,15 @@ def ProcessExperiment(argDict):
     useVal = argDict['useVal']
     #outfile = argDict['outfile']
     numRuns = argDict['numRuns']
+    expFold = argDict['expFold']
+
+    if not os.path.exists(outpath + expFold):
+        os.makedirs(outpath + expFold)
 
     outfile = "%s-%s-tr%s-v%s-t%s-hid%s-uv%s-r%s.txt" % (dataset[:-4], type, \
         numTrain, numVal, numTest, numHid, useVal, numRuns)
+
+    outfile = "\"./" + expFold + "/" + outfile + "\""
 
     dataset = "\"%s%s\"" % (datapath, dataset)
 
@@ -34,6 +40,7 @@ def ProcessExperiment(argDict):
         type, useVal, outfile, numRuns)
 
     (stdout, stderr) = Popen(cmd, stdout = PIPE).communicate()
+    if len(stdout) > 0: print stdout
     print outfile + " Done"
 
 if __name__ == "__main__":

@@ -3,4 +3,4 @@
 
 jrnn_exe = r"C:/Documents and Settings/jreeder/My Documents/Code/JRNN/Builds/VS2010/JRNN/Release/JRNN_test.exe"
 datapath = r"C:/Documents and Settings/jreeder/My Documents/Code/JRNN/src/JRNN_test/data/"
-outpath = r"C:/Documents and Settings/jreeder/My Documents/Code/JRNN/Experiments/Round-1/"
+outpath = r"C:/Documents and Settings/jreeder/My Documents/Code/JRNN/Experiments/Round-2/"

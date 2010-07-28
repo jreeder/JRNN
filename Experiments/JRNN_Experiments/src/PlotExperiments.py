@@ -20,7 +20,7 @@ def CalcMeanAndError(array, confidence = 0.95):
     return m, h
 
 if __name__ == "__main__":
-    os.chdir(outpath + "BP Test 1/")
+    os.chdir(outpath + "BP Test 5/")
     filelist = os.listdir(os.curdir)
     bpdata = {}
     for file in filelist:
