@@ -20,6 +20,11 @@ namespace JRNN {
 		CCTrainer(CCNetworkPtr network, DatasetPtr data, int numCandidates);
 		~CCTrainer();
 
+		enum ErrorType {
+			BITS,
+			INDEX
+		};
+
 		void ResetVars();
 		void Reset();
 		void TrainToValConv(int maxEpochs);
@@ -110,6 +115,7 @@ namespace JRNN {
 			double sumSqErr;
 			vecDouble errors;
 			vecDouble sumErrs;
+			ErrorType measure;
 		}valErr, err;
 
 		hashedDoubleMap candSumVals; //Sum of candidate activations over training. 
@@ -126,6 +132,8 @@ namespace JRNN {
 		//Methods
 		void QuickProp(ConPtr con, conVars& vars, double epsilon, double decay, double mu, double shrinkFactor);
 		double ErrorIndex(double trueError, double stdDev, int nTrainOutVals);
+		void PrintStatus(status runStatus);
+		int CalcErrorBits(vecDouble error);
 
 		//Output training methods
 		void resetError(errVars& errorVars);

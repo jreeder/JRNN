@@ -15,27 +15,27 @@ namespace JRNN {
 
 		nTrainOutVals = data->GetSize(Dataset::TRAIN) * network->GetNumOut();
 
-		parms.nTrials = 1;
+		parms.nTrials = 1;//Not used
 		parms.maxNewUnits = 25;
-		parms.valPatience = 3;
+		parms.valPatience = 2;
 		parms.weightMult = 1.0;
 
-		parms.out.epochs = 200; //200
+		parms.out.epochs = 300; //200
 		parms.out.patience = 12;//12
-		parms.out.epsilon = 1.0;
-		parms.out.decay = 0.0;
+		parms.out.epsilon = 10.0;//1.0
+		parms.out.decay = 0.001;
 		parms.out.mu = 2.0;
-		parms.out.changeThreshold = 0.01;
+		parms.out.changeThreshold = 0.02; //0.01
 
 		parms.cand.epochs = 200; //200
 		parms.cand.patience = 12; //12
 		parms.cand.epsilon = 100;
-		parms.cand.decay = 0.0;
+		parms.cand.decay = 0.001;
 		parms.cand.mu = 2.0;
 		parms.cand.changeThreshold = 0.03;
 		
 		parms.nCand = numCandidates;
-		parms.indexThreshold = 0.2;
+		parms.indexThreshold = 0.1;
 		parms.scoreThreshold = 0.4;
 		out.conDeltas.clear();
 		out.conPSlopes.clear();
@@ -47,8 +47,10 @@ namespace JRNN {
 		int numOut = network->GetNumOut();
 		err.errors = vecDouble(numOut);
 		err.sumErrs = vecDouble(numOut);
+		err.measure = BITS;
 		valErr.errors = vecDouble(numOut);
 		valErr.sumErrs = vecDouble(numOut);
+		valErr.measure = BITS;
 		candCorr = hashedVecDoubleMap(numOut);
 		candPCorr = hashedVecDoubleMap(numOut);
 		ResetVars();
@@ -86,7 +88,7 @@ namespace JRNN {
 			dw = 0.0; //The change in weight
 
 		w = con->GetWeight();
-		s = vars.conSlopes[conName];
+		s = vars.conSlopes[conName] + decay * w;
 		d = vars.conDeltas[conName];
 		p = vars.conPSlopes[conName];
 
@@ -157,10 +159,17 @@ namespace JRNN {
 			resetError(err);
 			
 			OutputEpoch();
-			double index = ErrorIndex(err.trueErr,1,nTrainOutVals);
-			if (index < parms.indexThreshold){
+
+			if ((err.measure == BITS) && (err.bits == 0)) {
 				return CCTrainer::WIN;
 			}
+			else {
+				double index = ErrorIndex(err.trueErr,1,nTrainOutVals);
+				if (index < parms.indexThreshold){
+					return CCTrainer::WIN;
+				}
+			}
+
 			UpdateOutWeights();
 			epoch++;
 
@@ -281,9 +290,9 @@ namespace JRNN {
 
 		//Alter Stats
 		if (alterStats){
+			errs.bits += CalcErrorBits(error);
 			errs.sumErrs += errPrimes;
-			vecDouble sqErrPrime = SquareVec(errPrimes);
-			errs.sumSqErr += ublas::sum(sqErrPrime);
+			errs.sumSqErr += ublas::sum(SquareVec(errPrimes));
 			errs.trueErr += ublas::sum(sqError);
 		}
 		//Update Slopes
@@ -326,7 +335,7 @@ namespace JRNN {
 		vecDouble *curCorr;
 		vecDouble *prevCorr;
 
-		candBestScore = 0.0;
+		candBestScore = -1.0;
 		bestCand.reset();
 		int nTrainPts = data->GetSize(Dataset::TRAIN);
 		int nOuts = network->GetNumOut();
@@ -507,6 +516,7 @@ namespace JRNN {
 		vecDouble outWeights(numOuts);
 		double weightMod;
 		weightMod = parms.weightMult / network->GetNumUnits();
+		assert(bestCand.get() != 0);
 		for (int i = 0; i < numOuts; i++){
 			outWeights[i] = -candPCorr[bestCand->GetName()][i] * weightMod;
 		}
@@ -568,11 +578,22 @@ namespace JRNN {
 
 	void CCTrainer::TrainToConvergence( int maxEpochs, bool validate )
 	{
+#ifdef _DEBUG
+		cout << "Start Training" << endl;
+#endif // _DEBUG
 		ResetVars();
 		status valStatus = TRAINING;
 		status outStatus;
+		status candStatus;
 		while(epoch < maxEpochs){
 			outStatus = TrainOuts();
+
+#ifdef _DEBUG
+			cout << "Out Status: ";
+			PrintStatus(outStatus);
+			cout << "Epochs: " << epoch << endl;
+#endif // _DEBUG
+
 			if (outStatus == WIN)
 				break;
 
@@ -583,11 +604,23 @@ namespace JRNN {
 					break;
 			}
 
+#ifdef _DEBUG
+			cout << "Val Status: ";
+			PrintStatus(valStatus);
+			cout << endl;
+#endif // _DEBUG
+
 			//train candidates
 
 			CreateCandidates();
-			TrainCandidates();
+			candStatus = TrainCandidates();
 			InsertCandidate();
+
+#ifdef _DEBUG
+			cout << "Cand Status: ";
+			PrintStatus(candStatus);
+			cout << "Epochs: " << epoch	<< endl;
+#endif // _DEBUG
 		}
 		if(outStatus != WIN && valStatus == TRAINING)
 			TrainOuts();
@@ -615,4 +648,36 @@ namespace JRNN {
 	doubles& CCTrainer::GetVMSERec(){
 		return vMSE_Rec;
 	}
+
+	void CCTrainer::PrintStatus( status runStatus )
+	{
+		switch (runStatus)
+		{
+		case STAGNANT:
+			cout << "Stagnant ";
+			break;
+		case WIN:
+			cout << "Win ";
+			break;
+		case TRAINING:
+			cout << "Training ";
+			break;
+		case TIMEOUT:
+			cout << "Timeout ";
+			break;
+		default:
+			cout << "N/A ";
+		}
+	}
+
+	int CCTrainer::CalcErrorBits( vecDouble error )
+	{
+		int errBits = 0;
+		BOOST_FOREACH(double err, error){
+			if (fabs(err) > parms.scoreThreshold)
+				errBits++;
+		}
+		return errBits;
+	}
+
 }
