@@ -65,6 +65,31 @@ namespace JRNN {
 		}
 	}
 
+	inline vecDouble Error(vecDouble first, vecDouble second){
+		assert(first.size() == second.size());
+		vecDouble result(first.size());
+		vecDouble::iterator firstIT = first.begin();
+		vecDouble::iterator secondIT = second.begin();
+		vecDouble::iterator resultIT = result.begin();
+		for (; firstIT != first.end(); firstIT++, secondIT++, resultIT++){
+			if ((*firstIT) == UNKNOWN || (*secondIT) == UNKNOWN){
+				(*resultIT) = 0;
+			}
+			else {
+				(*resultIT) = (*firstIT) - (*secondIT);
+			}
+		}
+		return result;
+	}
+
+	inline double Error(double first, double second){
+		double result = 0;
+		if (first != UNKNOWN && second != UNKNOWN){
+			result = first - second;
+		}
+		return result;
+	}
+
 	class hashedVecDoubleMap {
 	public:
 		hashedVecDoubleMap(){

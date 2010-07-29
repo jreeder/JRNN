@@ -19,6 +19,7 @@
 #include <boost/unordered_map.hpp>
 #include <boost/lexical_cast.hpp>
 #include <iostream>
+#include <limits>
 #include <math.h>
 #include <string>
 #include <stdlib.h>
@@ -59,6 +60,7 @@ namespace JRNN {
     typedef std::vector<ublas::vector<double> > matDouble;
     typedef std::vector<double> doubles;
     typedef boost::shared_ptr<Dataset> DatasetPtr;
+	const double UNKNOWN = std::numeric_limits<double>::max();
 }
 
 using boost::lexical_cast;

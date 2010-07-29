@@ -281,8 +281,8 @@ namespace JRNN {
 	{
 		//Compute Errors
 		vecDouble output = network->GetOutputs();
-		//vecDouble error = desiredOut - output;
-		vecDouble error = output - desiredOut;
+		//vecDouble error = output - desiredOut;
+		vecDouble error = Error(output, desiredOut);
 		vecDouble outPrimes = network->GetPrimes(std::string("out"));
 		vecDouble errPrimes = VecMultiply(error, outPrimes);
 		vecDouble sqError = SquareVec(error);

@@ -63,7 +63,8 @@ namespace JRNN {
 			mNetwork->Activate(input);
 			vecDouble output = mNetwork->GetOutputs();
 		   // cout << "network output: " << output << " Desired Out: " << desiredOut << endl;
-			vecDouble error = desiredOut - output;
+			//vecDouble error = desiredOut - output;
+			vecDouble error = Error(desiredOut, output);
 			vecDouble sqError = SquareVec(error);
 			MSE += ublas::sum(sqError);
 			//weightUpdates.clear();
@@ -159,7 +160,8 @@ namespace JRNN {
 						double act = nodes[i]->GetOut();
 						double nPrime = nodes[i]->GetPrime();
 						//double sigSteep = nodes[i]->GetSigSteepness();
-						double error = desiredOut[i] - act;
+						//double error = desiredOut[i] - act;
+						double error = Error(desiredOut[i], act);
 						//double delta = sigSteep * error * act * (1-act);
 						double delta = error * nPrime;
 						localGradients[name] = delta;

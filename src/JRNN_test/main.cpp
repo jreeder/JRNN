@@ -136,19 +136,29 @@ int main(int argc, char** argv) {
 			int hiddenLayers = cc.GetNumHidLayers();
 			myfile << epochs << "\t";
 			myfile << time << "\t";
-			//cout << epochs << "\t";
 			myfile << hiddenLayers << "\t";
-			//cout << hiddenLayers << "\t";
+#ifdef _DEBUG
+			cout << epochs << "\t";
+			cout << hiddenLayers << "\t";
+			cout << time << "\t";
+#endif // _DEBUG
+			
+			
 			hashedDoubleMap testresults = cc.TestWiClass(Dataset::TEST);
 			std::pair<std::string,double> p;
 			BOOST_FOREACH(p, testresults){
 				myfile << p.first << ":" << p.second << "\t";
-				//cout << p.first << ":" << p.second << "\t";
+#ifdef _DEBUG
+				cout << p.first << ":" << p.second << "\t";
+#endif // _DEBUG
 			}
 			myfile << "|\t";
 			printDoubles(cc.GetMSERec(),myfile);
 			myfile << endl;
-			//cout << endl;
+#ifdef _DEBUG
+			cout << endl;
+#endif // _DEBUG
+			
 			i++;
 			cc.Reset();
 		}
