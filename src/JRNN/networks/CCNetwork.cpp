@@ -36,6 +36,32 @@ namespace JRNN {
 		return np;
 	}
 
+	CCNetworkPtr CCNetwork::Clone( CCNetworkPtr net )
+	{
+		CCNetworkPtr ccnet(new CCNetwork());
+		ccnet->numHidLayers = net->numHidLayers;
+		ccnet->numIn = net->numIn;
+		ccnet->numOut = net->numOut;
+		ccnet->numUnits = net->numUnits;
+		BOOST_FOREACH(LayerPair newLP, net->layers){
+			ccnet->layers.insert(LayerPair(newLP.first, Layer::Clone(newLP.second)));
+		}
+		ccnet->candLayer = ccnet->layers["cand"];
+		BOOST_FOREACH(LayerPair lp, net->layers){
+			LayerPtr layer = ccnet->layers[lp.first];
+			if(lp.second->GetPrevLayer() != 0){
+				layer->SetPrevLayer(ccnet->layers[lp.second->GetPrevLayer()->GetName()]);
+			}
+			if(lp.second->GetNextLayer() != 0){
+				layer->SetNextLayer(ccnet->layers[lp.second->GetNextLayer()->GetName()]);
+			}
+		}
+		BOOST_FOREACH(ConPair conP, net->connections){
+			ConPtr con = conP.second;
+			ccnet->AddConnection(Connection::Clone(con,ccnet->GetNode(con->GetInNodeName()),ccnet->GetNode(con->GetOutNodeName())));
+		}
+	}
+
 	void CCNetwork::Build(int numIn, int numOut){
 		this->numIn	= numIn;
 		this->numOut = numOut;
@@ -79,16 +105,6 @@ namespace JRNN {
 			}
 		}
 	}
-
-	//NetworkPtr CCNetwork::GetNetwork()
-	//{
-	//	return np;
-	//}
-
-	//void CCNetwork::SetNetwork( NetworkPtr net )
-	//{
-	//	this->np = net;
-	//}
 
 	void CCNetwork::CreateCandLayer(int numCand)
 	{

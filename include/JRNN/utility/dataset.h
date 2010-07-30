@@ -9,7 +9,6 @@
 #define	_DATASET_H
 
 #include "JRNN.h"
-#include <boost/tokenizer.hpp>
 #include <fstream>
 
 namespace JRNN {

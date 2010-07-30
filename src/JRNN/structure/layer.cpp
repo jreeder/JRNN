@@ -29,6 +29,16 @@ LayerPtr Layer::CreateLayer(layerType type, int inLayerSize, int height, std::st
 }
 
 Layer::Layer(const Layer& orig) {
+	type = orig.type;
+	layerSize = orig.layerSize;
+	height = orig.height;
+	name = orig.name;
+	NodePtr np;
+	BOOST_FOREACH(NodePtr node, orig.nodes){
+		np.reset(new Node((*node)));
+		nodes.push_back(np);
+	}
+	np.reset();
 }
 
 void Layer::SetNextLayer(LayerPtr nextLayer) {
@@ -191,4 +201,25 @@ int Layer::RemoveUnconnectedNodes()
 	}
 	nodesToRemove.clear();
 	return nodesRemoved;
+}
+
+LayerPtr Layer::Clone( LayerPtr layer )
+{
+	LayerPtr lp(new Layer((*layer)));
+	return lp;
+}
+
+NodePtr Layer::GetNodeByName( std::string name )
+{
+	NodePtr retNode;
+	int pos = name.rfind("_");
+	std::string nodeIndex = "";
+	if (pos != std::string::npos){
+		nodeIndex = name.substr(pos+1);
+	}
+	if (nodeIndex.size() > 0){
+		int index = lexical_cast<int>(nodeIndex);
+		retNode = nodes[index];
+	}
+	return retNode;
 }

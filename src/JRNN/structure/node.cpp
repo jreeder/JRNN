@@ -71,8 +71,8 @@ Node::Node(const Node& orig) {
 //    inputs = orig.inputs;
 //    inputWeights = orig.inputWeights;
 	//isBias = orig.isBias;
-    inConnections = orig.inConnections;
-    outConnections = orig.outConnections;
+    //inConnections = orig.inConnections;
+    //outConnections = orig.outConnections;
 }
 
 

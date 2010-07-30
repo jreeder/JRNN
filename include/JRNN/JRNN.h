@@ -18,6 +18,7 @@
 #include <boost/foreach.hpp>
 #include <boost/unordered_map.hpp>
 #include <boost/lexical_cast.hpp>
+#include <boost/tokenizer.hpp>
 #include <iostream>
 #include <limits>
 #include <math.h>

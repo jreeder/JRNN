@@ -25,8 +25,10 @@ Connection::Connection(const Connection& orig) {
     weightedValue = orig.weightedValue;
     locked = orig.locked;
     name = orig.name;
-    inNode = orig.inNode;
-    outNode = orig.outNode;
+    //inNode = orig.inNode;
+    //outNode = orig.outNode;
+	inNode = NodePtr();
+	outNode = NodePtr();
 }
 
 Connection::Connection(double newDouble){
@@ -163,4 +165,12 @@ const std::string& Connection::GetOutNodeName(){
 
 const std::string& Connection::GetInNodeName(){
     return inNode->GetName();
+}
+
+ConPtr Connection::Clone( ConPtr con, NodePtr inNode, NodePtr outNode )
+{
+	ConPtr cp(new Connection((*con)));
+	cp->SetInNode(inNode);
+	cp->SetOutNode(outNode);
+	return cp;
 }

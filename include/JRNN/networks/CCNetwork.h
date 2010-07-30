@@ -24,6 +24,7 @@ namespace JRNN {
 		//CCNetwork(NetworkPtr network);
 		~CCNetwork();
 		static CCNetworkPtr Create();
+		static CCNetworkPtr Clone(CCNetworkPtr net);
 		//NetworkPtr GetNetwork();
 		//void SetNetwork(NetworkPtr net);
 		const LayerPtr GetCandLayer();

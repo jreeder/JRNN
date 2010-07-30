@@ -150,8 +150,12 @@ Network::Network() {
 //	}
 //}
 
-//network::network(const network& orig) {
-//}
+Network::Network(const Network& orig) {
+	locked = orig.locked;
+	numHidLayers = orig.locked;
+	numIn = orig.numIn;
+	numOut = orig.numOut;
+}
 
 Network::~Network() {
     connections.clear();
@@ -324,4 +328,18 @@ ConMap& Network::GetConnections(){
 		 layer->Clear();
 		 layers.erase(layer->GetName());
 	 }
+ }
+
+ NodePtr Network::GetNode( std::string nodeName )
+ {
+	 NodePtr retNode;
+	 int pos = nodeName.find("_");
+	 std::string layerName = "";
+	 if (pos != std::string::npos){
+		 layerName = nodeName.substr(0,pos);
+	 }
+	 if (layerName.size() > 0){
+		retNode = layers[layerName]->GetNodeByName(nodeName);
+	 }
+	 return retNode;
  }

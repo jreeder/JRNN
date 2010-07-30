@@ -25,7 +25,7 @@ namespace JRNN{
 		//This means making methods to remove them in nodes, 
 		//and having the destructor of connections take care of it. 
         
-//        network(const network& orig);
+		//Network(const Network& orig);
         virtual ~Network();
 
 		static NetworkPtr Create(){
@@ -50,6 +50,7 @@ namespace JRNN{
 		vecDouble GetPrimes(std::string layerName);
         void SetDesiredOut(vecDouble desiredOut);
         LayerPtr GetLayer(std::string layerName);
+		NodePtr GetNode(std::string nodeName);
         ConMap& GetConnections();
 		void AddConnection(ConPtr con);
 		void RemoveConnection(ConPtr con);
@@ -65,6 +66,7 @@ namespace JRNN{
         
     protected:
 		Network();
+		Network(const Network& orig);
 
         int numIn;
         int numOut;
@@ -77,7 +79,7 @@ namespace JRNN{
         ConList hidToOut;*/
         vecDouble inputs;
         vecDouble outputs;
-        vecDouble desiredOut;
+        //vecDouble desiredOut;
 
 		LayerPtr AddHiddenLayer();
 		virtual void RemoveHiddenLayer(LayerPtr layer);

@@ -31,10 +31,12 @@ namespace JRNN {
         void Activate(vecDouble inputs);
         //void BuildLayer(Node::nodeType nType);
 		static LayerPtr CreateLayer(layerType type, int inLayerSize, int height, std::string name);
+		static LayerPtr Clone( LayerPtr layer );
 		template<class T>
 		void BuildLayer();
 
         NodeList& GetNodes();
+		NodePtr GetNodeByName( std::string name );
         vecDouble GetOutput();
 
 		ConList GetConnections();
