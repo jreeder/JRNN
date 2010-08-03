@@ -18,8 +18,9 @@ using namespace std;
 namespace JRNN{
 
 	typedef NetworkPtrHelper<>::Ptr NetworkPtr;
+	typedef boost::enable_shared_from_this<Network> NetworkSharedFromThis;
 
-    class Network {
+    class Network: public NetworkSharedFromThis{
     public:
 		//TODO: need to add methods for removing connections. 
 		//This means making methods to remove them in nodes, 
@@ -32,7 +33,9 @@ namespace JRNN{
 			NetworkPtr np(new Network());
 			return np;
 		}
-
+		
+		static void Clone(NetworkPtr newP, NetworkPtr oldP);
+		virtual NetworkPtr Clone();
         void Activate(vecDouble inputs);
 		void Activate(LayerPtr layer);
 		void SetInputs(vecDouble inputs);

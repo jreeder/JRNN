@@ -15,8 +15,9 @@
 namespace JRNN {
 	class CCNetwork;
 	typedef NetworkPtrHelper<CCNetwork>::Ptr CCNetworkPtr;
+	typedef boost::enable_shared_from_this<CCNetwork> CCSharedFromThis;
 
-	class CCNetwork : public Network{
+	class CCNetwork : public Network, public CCSharedFromThis {
 	//This might be slightly inconsistent with my other use of builder
 	public: 
 		CCNetwork();
@@ -25,6 +26,7 @@ namespace JRNN {
 		~CCNetwork();
 		static CCNetworkPtr Create();
 		static CCNetworkPtr Clone(CCNetworkPtr net);
+		virtual NetworkPtr Clone();
 		//NetworkPtr GetNetwork();
 		//void SetNetwork(NetworkPtr net);
 		const LayerPtr GetCandLayer();

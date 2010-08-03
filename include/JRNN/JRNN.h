@@ -19,6 +19,7 @@
 #include <boost/unordered_map.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/tokenizer.hpp>
+#include <boost/enable_shared_from_this.hpp>
 #include <iostream>
 #include <limits>
 #include <math.h>

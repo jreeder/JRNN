@@ -44,6 +44,41 @@ namespace JRNN {
 		SetLocked(true);
 	}
 
+	FFMLPNetPtr FFMLPNetwork::Clone( FFMLPNetPtr net){
+		FFMLPNetPtr np(new FFMLPNetwork());
+		
+		//NetworkPtr newP(np);
+		//NetworkPtr oldP(net);
+		Network::Clone(np, net);
+		//np->numHidLayers = net->numHidLayers;
+		//np->numIn = net->numIn;
+		//np->numOut = net->numOut;
+		//BOOST_FOREACH(LayerPair newLP, net->layers){
+		//	np->layers.insert(LayerPair(newLP.first, Layer::Clone(newLP.second)));
+		//}
+		//BOOST_FOREACH(LayerPair lp, net->layers){
+		//	LayerPtr layer = np->layers[lp.first];
+		//	if (lp.second->GetPrevLayer() != 0){
+		//		layer->SetPrevLayer(np->layers[lp.second->GetPrevLayer()->GetName()]);
+		//	}
+		//	if (lp.second->GetNextLayer() != 0){
+		//		layer->SetNextLayer(np->layers[lp.second->GetNextLayer()->GetName()]);
+		//	}
+		//}
+		//BOOST_FOREACH(ConPair conP, net->connections){
+		//	ConPtr con = conP.second;
+		//	np->AddConnection(Connection::Clone(con, np->GetNode(con->GetInNodeName()), np->GetNode(con->GetOutNodeName())));
+		//}
+		np->numHid = net->numHid;
+		return np;
+	}
+
+	JRNN::NetworkPtr FFMLPNetwork::Clone()
+	{
+		FFMLPNetPtr oldP = FFMLPSharedFromThis::shared_from_this();
+		return FFMLPNetwork::Clone(oldP);
+	}
+
 	void FFMLPNetwork::FullyConnect()
 	{
 		NodeList inputNodes = layers["input"]->GetNodes();

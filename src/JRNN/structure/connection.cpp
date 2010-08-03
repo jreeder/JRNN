@@ -61,6 +61,16 @@ ConPtr Connection::Connect(NodePtr newInNode, NodePtr newOutNode, double weight)
     return p;
 }
 
+ConPtr Connection::Clone( ConPtr con, NodePtr inNode, NodePtr outNode )
+{
+	ConPtr cp(new Connection((*con)));
+	cp->SetInNode(inNode);
+	cp->SetOutNode(outNode);
+	cp->inNode->AddConnection(OUT,cp);
+	cp->outNode->AddConnection(IN,cp);
+	return cp;
+}
+
 void Connection::Disconnect(){
     inNode->RemoveConnection(name);
 	inNode.reset();
@@ -165,12 +175,4 @@ const std::string& Connection::GetOutNodeName(){
 
 const std::string& Connection::GetInNodeName(){
     return inNode->GetName();
-}
-
-ConPtr Connection::Clone( ConPtr con, NodePtr inNode, NodePtr outNode )
-{
-	ConPtr cp(new Connection((*con)));
-	cp->SetInNode(inNode);
-	cp->SetOutNode(outNode);
-	return cp;
 }

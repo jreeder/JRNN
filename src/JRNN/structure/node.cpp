@@ -258,7 +258,7 @@ ConList& Node::GetConnections(conType type){
     return type == IN ? inConnections : outConnections;
 }
 
-int JRNN::Node::GetNumConnections()
+int Node::GetNumConnections()
 {
 	return numConnections;
 }

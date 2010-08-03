@@ -343,3 +343,33 @@ ConMap& Network::GetConnections(){
 	 }
 	 return retNode;
  }
+
+ void Network::Clone(NetworkPtr newP, NetworkPtr oldP){
+	 newP->numHidLayers = oldP->numHidLayers;
+	 newP->numIn = oldP->numIn;
+	 newP->numOut = oldP->numOut;
+	 BOOST_FOREACH(LayerPair newLP, oldP->layers){
+		 newP->layers.insert(LayerPair(newLP.first, Layer::Clone(newLP.second)));
+	 }
+	 BOOST_FOREACH(LayerPair lp, oldP->layers){
+		 LayerPtr layer = newP->layers[lp.first];
+		 if (lp.second->GetPrevLayer() != 0){
+			 layer->SetPrevLayer(newP->layers[lp.second->GetPrevLayer()->GetName()]);
+		 }
+		 if (lp.second->GetNextLayer() != 0){
+			 layer->SetNextLayer(newP->layers[lp.second->GetNextLayer()->GetName()]);
+		 }
+	 }
+	 BOOST_FOREACH(ConPair conP, oldP->connections){
+		 ConPtr con = conP.second;
+		 newP->AddConnection(Connection::Clone(con, newP->GetNode(con->GetInNodeName()), newP->GetNode(con->GetOutNodeName())));
+	 }
+ }
+
+NetworkPtr Network::Clone()
+ {
+	 NetworkPtr np(new Network());
+	 NetworkPtr oldP = shared_from_this();
+	 Network::Clone(np, oldP);
+	 return np;
+ }

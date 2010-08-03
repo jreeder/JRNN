@@ -39,10 +39,10 @@ namespace JRNN {
 	CCNetworkPtr CCNetwork::Clone( CCNetworkPtr net )
 	{
 		CCNetworkPtr ccnet(new CCNetwork());
-		ccnet->numHidLayers = net->numHidLayers;
+		/*ccnet->numHidLayers = net->numHidLayers;
 		ccnet->numIn = net->numIn;
 		ccnet->numOut = net->numOut;
-		ccnet->numUnits = net->numUnits;
+		
 		BOOST_FOREACH(LayerPair newLP, net->layers){
 			ccnet->layers.insert(LayerPair(newLP.first, Layer::Clone(newLP.second)));
 		}
@@ -59,7 +59,19 @@ namespace JRNN {
 		BOOST_FOREACH(ConPair conP, net->connections){
 			ConPtr con = conP.second;
 			ccnet->AddConnection(Connection::Clone(con,ccnet->GetNode(con->GetInNodeName()),ccnet->GetNode(con->GetOutNodeName())));
-		}
+		}*/
+		//NetworkPtr newP(ccnet);
+		//NetworkPtr oldP(net);
+		Network::Clone(ccnet, net);
+		ccnet->candLayer = ccnet->layers["cand"];
+		ccnet->numUnits = net->numUnits;
+		return ccnet;
+	}
+
+	NetworkPtr CCNetwork::Clone()
+	{
+		CCNetworkPtr oldP = CCSharedFromThis::shared_from_this();
+		return CCNetwork::Clone(oldP);
 	}
 
 	void CCNetwork::Build(int numIn, int numOut){
