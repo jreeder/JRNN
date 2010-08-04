@@ -78,7 +78,7 @@ void Connection::Disconnect(){
 	outNode.reset();
 }
 
-void Connection::Disconnect(std::string nodeName){
+void Connection::Disconnect(string nodeName){
 	if (inNode->GetName() == nodeName){
 		outNode->RemoveConnection(name);
 	}
@@ -94,7 +94,7 @@ void Connection::SetRandomSeed(){
 }
 
 void Connection::SetName(){
-    std::string tmpName = "";
+    string tmpName = "";
     tmpName += inNode->GetName();
     tmpName += "->";
     tmpName += outNode->GetName();
@@ -161,18 +161,18 @@ double Connection::RandomWeight(double scale, double offset){
     return tmpDouble;
 }
 
-const std::string& Connection::GetName(){
+const string& Connection::GetName(){
     return name;
 }
 
-void Connection::SetName(std::string newName){
+void Connection::SetName(string newName){
     name = newName;
 }
 
-const std::string& Connection::GetOutNodeName(){
+const string& Connection::GetOutNodeName(){
     return outNode->GetName();
 }
 
-const std::string& Connection::GetInNodeName(){
+const string& Connection::GetInNodeName(){
     return inNode->GetName();
 }

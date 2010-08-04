@@ -104,7 +104,7 @@ namespace JRNN {
 			vecSize = orig.vecSize;
 		}
 
-		vecDouble& operator	[] (std::string name) {
+		vecDouble& operator	[] (string name) {
 			if(storage.find(name) != storage.end()){
 				return storage[name];
 			}
@@ -119,8 +119,26 @@ namespace JRNN {
 		}
 	private:
 		int vecSize;
-		boost::unordered_map<std::string, vecDouble> storage;
+		boost::unordered_map<string, vecDouble> storage;
 	};
+
+	template<class T>
+	inline string StringFromVector(T& inVector){
+		T::iterator it = inVector.begin();
+		string outstring = "";
+		bool firsttime = true;
+		while (it != inVector.end()){
+			if (firsttime == false){
+				outstring += ",";
+			}
+			else {
+				firsttime = false;
+			}
+			outstring += lexical_cast<string>((*it));
+			it++;
+		}
+		return outstring;
+	}
 }
 
 #endif

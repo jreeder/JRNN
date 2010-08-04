@@ -11,7 +11,7 @@ namespace JRNN {
 	{
 	}
 
-	std::vector<double>& NodeBuffer::operator[]( std::string key )
+	std::vector<double>& NodeBuffer::operator[]( string key )
 	{
 		return buffer[key];
 	}

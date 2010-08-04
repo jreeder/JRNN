@@ -26,11 +26,11 @@ namespace JRNN {
 		};*/
 
 		Node();
-		//Node(int height, nodeType nType, std::string name);
-		Node(int height, std::string name);
+		//Node(int height, nodeType nType, string name);
+		Node(int height, string name);
 		Node(const Node& orig);
 		template<typename T>
-		static NodePtr CreateNode(int height, std::string name);
+		static NodePtr CreateNode(int height, string name);
 		virtual ~Node();
 		void Activate();
 		void Activate(double input);
@@ -38,15 +38,15 @@ namespace JRNN {
 		double GetOut();
 		double GetPrime();
 		int GetNumConnections();
-		const std::string& GetName();
+		const string& GetName();
 		//double GetSigSteepness();
 		ConList& GetConnections(conType type);
         
-		void SetName(std::string newName);
+		void SetName(string newName);
 //        void setNumIn(int newNumIn);
 //        void setNumOut(int newNumOut);
 		bool AddConnection(conType type, ConPtr newCon);
-		void RemoveConnection(std::string name);
+		void RemoveConnection(string name);
 		void Disconnect();
 //        bool addConnection(node* newNodeCon, double conWeight);
 //        bool addConnections(nodeList inNodes, vector<double> conWeights);
@@ -57,7 +57,7 @@ namespace JRNN {
 		double sumOfIn;
 		double out;
 		double sigSteepness;
-		std::string name;
+		string name;
 		ConList inConnections;
 		ConList outConnections;
 		ActFuncPtr actFunction;
@@ -82,7 +82,7 @@ namespace JRNN {
 	};
 
 	template<typename T>
-	NodePtr Node::CreateNode(int height, std::string name){
+	NodePtr Node::CreateNode(int height, string name){
 		NodePtr np(new Node(height,name));
 		np->actFunction.reset(new T);
 		return np;
@@ -108,8 +108,8 @@ namespace JRNN {
 	//}
 
 	//template<class T>
-	//Node<T>::Node(int inHeight, std::string nodeName){
-	//	//Node<T>::Node(int inHeight, nodeType nType, std::string nodeName){
+	//Node<T>::Node(int inHeight, string nodeName){
+	//	//Node<T>::Node(int inHeight, nodeType nType, string nodeName){
 	//	height = inHeight;
 	////    numIn = inNumIn;
 	////    numOut = inNumOut;
@@ -231,7 +231,7 @@ namespace JRNN {
 	//}
 
 	//template<class T>
-	//const std::string& Node<T>::GetName(){
+	//const string& Node<T>::GetName(){
 	//	return name;
 	//}
 
@@ -240,7 +240,7 @@ namespace JRNN {
 	////}
 
 	//template<class T>
-	//void Node<T>::SetName(std::string newName){
+	//void Node<T>::SetName(string newName){
 	//	name = newName;
 	//}
 
@@ -275,7 +275,7 @@ namespace JRNN {
 	//}
 
 	//template<class T>
-	//void Node<T>::RemoveConnection(std::string name){
+	//void Node<T>::RemoveConnection(string name){
 	//	ConList::iterator incons = inConnections.begin();
 	//	bool found = false;
 	//	while(incons != inConnections.end()){

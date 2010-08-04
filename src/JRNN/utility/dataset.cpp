@@ -68,42 +68,42 @@ void Dataset::SetNumOutputs(int numOutputs){
     this->numOutputs = numOutputs;
 }
 
-void Dataset::LoadFromFile(std::string filepath, int numInputs, int numOutputs){
-    ifstream dataFile(filepath.c_str());
-    numInputs = numInputs;
-    numOutputs = numOutputs;
-    typedef boost::tokenizer<boost::char_separator<char> > tokenizer;
-    boost::char_separator<char> sep("\t");
-    std::string line;
-    if(dataFile.is_open()){
-        while(getline(dataFile,line)){
-            tokenizer tok(line,sep);
-            vecDouble in(numInputs);
-            vecDouble out(numOutputs);
-            int newIns = 0;
-            int newOuts = 0;
-            BOOST_FOREACH(std::string token, tok){
-                if (newIns < numInputs){
-                    in[newIns] = lexical_cast<double>(token);
-                    newIns++;
-                }
-                else if (newOuts < numOutputs){
-                    out[newOuts] = lexical_cast<double>(token);
-                    newOuts++;
-                }
-            }
-            inputs.push_back(in);
-            outputs.push_back(out);
-        }
-        size = inputs.size();
-        dataFile.close();
-    }
-    else {
-        size = 0;
-    }
-    for (int i = 0; i < size; i ++){
-        randomRange.push_back(i);
-    }
+void Dataset::LoadFromFile(string filepath, int numInputs, int numOutputs){
+	ifstream dataFile(filepath.c_str());
+	this->numInputs = numInputs;
+	this->numOutputs = numOutputs;
+	typedef boost::tokenizer<boost::char_separator<char> > tokenizer;
+	boost::char_separator<char> sep("\t");
+	string line;
+	if(dataFile.is_open()){
+		while(getline(dataFile,line)){
+			tokenizer tok(line,sep);
+			vecDouble in(numInputs);
+			vecDouble out(numOutputs);
+			int newIns = 0;
+			int newOuts = 0;
+			BOOST_FOREACH(string token, tok){
+				if (newIns < numInputs){
+					in[newIns] = lexical_cast<double>(token);
+					newIns++;
+				}
+				else if (newOuts < numOutputs){
+					out[newOuts] = lexical_cast<double>(token);
+					newOuts++;
+				}
+			}
+			inputs.push_back(in);
+			outputs.push_back(out);
+		}
+		size = inputs.size();
+		dataFile.close();
+	}
+	else {
+		size = 0;
+	}
+	for (int i = 0; i < size; i ++){
+		randomRange.push_back(i);
+	}
 
 }
 

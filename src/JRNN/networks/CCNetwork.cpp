@@ -177,8 +177,8 @@ namespace JRNN {
 
 	//LayerPtr CCNetwork::AddHiddenLayer()
 	//{
-	//	std::string name = "hidden-";
-	//	name += lexical_cast<std::string>(numHidLayers);
+	//	string name = "hidden-";
+	//	name += lexical_cast<string>(numHidLayers);
 	//	LayerPtr lp = Layer::CreateLayer(Layer::hidden,0,numHidLayers + 1,name);
 	//	layers.insert(LayerPair(name,lp));
 	//	LayerPtr out = layers["out"];
@@ -247,7 +247,7 @@ namespace JRNN {
 		ConList	consToRemove;
 		while(conIT != connections.end()){
 			ConPair con = (*conIT);
-			std::string name = con.first;
+			string name = con.first;
 			weightIT = weights.find(name);
 			if(weightIT != weights.end()){
 				con.second->SetWeight((*weightIT).second);

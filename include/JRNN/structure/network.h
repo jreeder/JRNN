@@ -50,10 +50,10 @@ namespace JRNN{
 		int GetNumHidLayers();
 
         vecDouble GetOutputs();
-		vecDouble GetPrimes(std::string layerName);
+		vecDouble GetPrimes(string layerName);
         void SetDesiredOut(vecDouble desiredOut);
-        LayerPtr GetLayer(std::string layerName);
-		NodePtr GetNode(std::string nodeName);
+        LayerPtr GetLayer(string layerName);
+		NodePtr GetNode(string nodeName);
         ConMap& GetConnections();
 		void AddConnection(ConPtr con);
 		void RemoveConnection(ConPtr con);

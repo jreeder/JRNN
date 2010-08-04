@@ -126,8 +126,8 @@ hashedDoubleMap BackPropTrainer::TestWiClass(Dataset::datatype type){
         vecDouble errors = desiredOut - thresOut;
 
         for(int i = 0; i < numTasks; i++){
-            std::string name = "task-";
-            name += lexical_cast<std::string>(i);
+            string name = "task-";
+            name += lexical_cast<string>(i);
             int tmp = (int)errors[i];
             //cout << tmp << " " << output << " " << desiredOut << endl;
             if (errors[i] != 0){
@@ -138,8 +138,8 @@ hashedDoubleMap BackPropTrainer::TestWiClass(Dataset::datatype type){
         itOuts++;
     }
     for (int i = 0; i < numTasks; i++){
-        std::string name = "task-";
-        name += lexical_cast<std::string>(i);
+        string name = "task-";
+        name += lexical_cast<string>(i);
         taskErrorRate[name] = taskErrors[name] / (double)totalItems;
     }
     return taskErrorRate;
@@ -151,7 +151,7 @@ void BackPropTrainer::CalcWeightUpdates(LayerPtr layer, vecDouble desiredOut){
         switch(layer->GetType()){
             case Layer::out:
                 for(int i = 0; i < layer->GetSize(); i++){
-                    std::string name = nodes[i]->GetName();
+                    string name = nodes[i]->GetName();
                     double act = nodes[i]->GetOut();
 					double nPrime = nodes[i]->GetPrime();
                     //double sigSteep = nodes[i]->GetSigSteepness();
@@ -169,7 +169,7 @@ void BackPropTrainer::CalcWeightUpdates(LayerPtr layer, vecDouble desiredOut){
                 break;
             case Layer::hidden:
                 for(int i = 0; i < layer->GetSize(); i++){
-                    std::string name = nodes[i]->GetName();
+                    string name = nodes[i]->GetName();
                     double act = nodes[i]->GetOut();
 					double nPrime = nodes[i]->GetPrime();
                     //double sigSteep = nodes[i]->GetSigSteepness();

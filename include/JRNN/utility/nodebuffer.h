@@ -17,12 +17,12 @@ namespace JRNN {
 	public:
 		NodeBuffer(void);
 		~NodeBuffer(void);
-		std::vector<double>& operator[] (std::string key);
+		std::vector<double>& operator[] (string key);
 
 		void Clear();
 
 	private:
-		boost::unordered_map<std::string, std::vector<double> > buffer;
+		boost::unordered_map<string, std::vector<double> > buffer;
 	};
 
 }

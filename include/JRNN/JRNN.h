@@ -62,10 +62,14 @@ namespace JRNN {
     typedef std::vector<ublas::vector<double> > matDouble;
     typedef std::vector<double> doubles;
     typedef boost::shared_ptr<Dataset> DatasetPtr;
+	typedef std::vector<std::string> strings;
+	typedef std::vector<int> ints;
 	const double UNKNOWN = std::numeric_limits<double>::max();
 }
 
 using boost::lexical_cast;
+using std::string;
+
 #include "utility/utility.h"
 //#include "structure/network.h"
 //#include "structure/node.h"

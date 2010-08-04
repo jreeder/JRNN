@@ -36,13 +36,13 @@ namespace JRNN {
         void SetLocked(bool lock);
         void SetWeight(double weight);
         void Disconnect();
-		void Disconnect(std::string nodeName);
+		void Disconnect(string nodeName);
 		double GetWeight() const;
-        const std::string& GetName();
-        void SetName(std::string newName);
+        const string& GetName();
+        void SetName(string newName);
         void SetName();
-        const std::string& GetOutNodeName();
-        const std::string& GetInNodeName();
+        const string& GetOutNodeName();
+        const string& GetInNodeName();
         Connection operator+ (const Connection &rhs);
         Connection operator* (const Connection &rhs);
         Connection& operator= (const Connection& rhs){
@@ -73,7 +73,7 @@ namespace JRNN {
         double value;
         double weightedValue;
         bool locked;
-        std::string name;
+        string name;
         NodePtr inNode;
         NodePtr outNode;
 

@@ -9,9 +9,9 @@
 
 using namespace JRNN;
 
-const std::string ActivationFunction::_type = "N/A";
-const std::string Sigmoid::_type = "SIGMOID";
-const std::string ASigmoid::_type = "ASIGMOID";
-const std::string Gaussian::_type = "GAUSSIAN";
-const std::string Bias::_type = "BIAS";
-const std::string Linear::_type = "LINEAR";
+const string ActivationFunction::_type = "N/A";
+const string Sigmoid::_type = "SIGMOID";
+const string ASigmoid::_type = "ASIGMOID";
+const string Gaussian::_type = "GAUSSIAN";
+const string Bias::_type = "BIAS";
+const string Linear::_type = "LINEAR";

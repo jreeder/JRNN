@@ -27,9 +27,9 @@ void printDoubles(doubles toPrint, ofstream& file);
  */
 int main(int argc, char** argv) {
 
-    std::string filename;
-    std::string outfile = "";
-	std::string type = "";
+    string filename;
+    string outfile = "";
+	string type = "";
     int numIn,numHid,numOut, numTrain, numVal, numTest, numRuns;
 	bool useValidation = true;
 
@@ -47,15 +47,15 @@ int main(int argc, char** argv) {
 		numIn = lexical_cast<int>(argv[5]);
 		numHid = lexical_cast<int>(argv[6]);
 		numOut = lexical_cast<int>(argv[7]);
-		type = std::string(argv[8]);
+		type = string(argv[8]);
 		if (type != "CC" && type != "BP"){
 			cout << "Type must be 'CC' or 'BP'" << endl;
 			return -1;
 		}
 
-		useValidation = (std::string(argv[9]) == "T") ? true : false;
+		useValidation = (string(argv[9]) == "T") ? true : false;
 
-		outfile = std::string(argv[10]);
+		outfile = string(argv[10]);
 		
 		numRuns = lexical_cast<int>(argv[11]);
         /*outfile = filename;
@@ -101,7 +101,7 @@ int main(int argc, char** argv) {
 			myfile << numHid << "\t";
 			//cout << numHid << "\t";
 			hashedDoubleMap testresults = bp.TestWiClass(Dataset::TEST);
-			std::pair<std::string,double> p;
+			std::pair<string,double> p;
 			BOOST_FOREACH(p, testresults){
 				myfile << p.first << ":" << p.second << "\t";
 				//cout << p.first << ":" << p.second << "\t";
@@ -145,7 +145,7 @@ int main(int argc, char** argv) {
 			
 			
 			hashedDoubleMap testresults = cc.TestWiClass(Dataset::TEST);
-			std::pair<std::string,double> p;
+			std::pair<string,double> p;
 			BOOST_FOREACH(p, testresults){
 				myfile << p.first << ":" << p.second << "\t";
 #ifdef _DEBUG

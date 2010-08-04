@@ -17,11 +17,11 @@ namespace JRNN {
 
 		virtual double prime(double value, double sum) = 0;
 		
-		std::string getType() {
+		string getType() {
 			return _type;
 		}
 	private:
-		static const std::string _type;
+		static const string _type;
 	};
 	
 
@@ -39,7 +39,7 @@ namespace JRNN {
 			return U::prime(value, sum);
 		}
 
-		std::string getType() {
+		string getType() {
 			return U::getType();
 		}
 	};*/
@@ -56,7 +56,7 @@ namespace JRNN {
 		}
 		
 	private:
-		  static const std::string _type;
+		  static const string _type;
 
 		  static double _activate(double sum){
 			  if  ( sum < -15.0 )
@@ -83,7 +83,7 @@ namespace JRNN {
 			return _prime(value, sum);
 		}
 	private:
-		static const std::string _type;
+		static const string _type;
 		static double _activate(double sum){ 
 			/*if  ( sum < -15.0 )
 				return 0.000001;
@@ -115,7 +115,7 @@ namespace JRNN {
 			return _prime(value, sum);
 		}
 	private:
-		static const std::string _type;
+		static const string _type;
 		static double _activate(double sum){
 			double temp = -0.5 * sum * sum;
 			if  ( temp < -75.0 )
@@ -139,7 +139,7 @@ namespace JRNN {
 			return _prime(value, sum);
 		}
 	private:
-		static const std::string _type;
+		static const string _type;
 		static double _activate(double sum){
 			return 1;
 		}
@@ -159,7 +159,7 @@ namespace JRNN {
 			return _prime(value, sum);
 		}
 	private:
-		static const std::string _type;
+		static const string _type;
 		static double _activate(double sum){
 			return( sum );
 		}

@@ -78,6 +78,9 @@
     <ClCompile Include="..\..\..\..\src\JRNN\networks\FFMLPNetwork.cpp">
       <Filter>Source Files\networks</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\src\JRNN\utility\mtldataset.cpp">
+      <Filter>Source Files\utility</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\include\JRNN\JRNN.h">
@@ -121,6 +124,9 @@
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\JRNN\networks\FFMLPNetwork.h">
       <Filter>Header Files\networks</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\JRNN\utility\mtldataset.h">
+      <Filter>Header Files\utility</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

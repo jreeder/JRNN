@@ -80,7 +80,7 @@ namespace JRNN {
 	void CCTrainer::QuickProp( ConPtr con, conVars& vars, double epsilon, double decay, 
 								double mu, double shrinkFactor )
 	{
-		std::string conName = con->GetName();
+		string conName = con->GetName();
 		double w, //weight value of con
 			d, //Delta value for this con
 			s, //Slope for this con
@@ -283,7 +283,7 @@ namespace JRNN {
 		vecDouble output = network->GetOutputs();
 		//vecDouble error = output - desiredOut;
 		vecDouble error = Error(output, desiredOut);
-		vecDouble outPrimes = network->GetPrimes(std::string("out"));
+		vecDouble outPrimes = network->GetPrimes(string("out"));
 		vecDouble errPrimes = VecMultiply(error, outPrimes);
 		vecDouble sqError = SquareVec(error);
 		errs.errors = errPrimes;
@@ -315,7 +315,7 @@ namespace JRNN {
 		network->GetCandLayer()->Activate();
 		BOOST_FOREACH(NodePtr node, candNodes){
 			sum = 0.0;
-			std::string name = node->GetName();
+			string name = node->GetName();
 			cCorr = &candCorr[name];
 			val = node->GetOut();
 			candSumVals[name] += val;
@@ -341,7 +341,7 @@ namespace JRNN {
 		int nOuts = network->GetNumOut();
 		NodeList candNodes = network->GetCandLayer()->GetNodes();
 		BOOST_FOREACH(NodePtr node, candNodes){
-			std::string name = node->GetName();
+			string name = node->GetName();
 			avgValue = candSumVals[name] / nTrainPts;
 			score = 0.0;
 			curCorr = &candCorr[name];
@@ -402,7 +402,7 @@ namespace JRNN {
 		network->GetCandLayer()->Activate();
 		int nOuts = network->GetNumOut();
 		BOOST_FOREACH(NodePtr candidate, candNodes){
-			std::string name = candidate->GetName();
+			string name = candidate->GetName();
 			value = candidate->GetOut();
 			actPrime = candidate->GetPrime();
 			change = 0.0;
@@ -468,8 +468,8 @@ namespace JRNN {
 			vecDouble errors = desiredOut - thresOut;
 
 			for(int i = 0; i < numTasks; i++){
-				std::string name = "task-";
-				name += lexical_cast<std::string>(i);
+				string name = "task-";
+				name += lexical_cast<string>(i);
 				int tmp = (int)errors[i];
 				//cout << tmp << " " << output << " " << desiredOut << endl;
 				if (errors[i] != 0){
@@ -480,8 +480,8 @@ namespace JRNN {
 			itOuts++;
 		}
 		for (int i = 0; i < numTasks; i++){
-			std::string name = "task-";
-			name += lexical_cast<std::string>(i);
+			string name = "task-";
+			name += lexical_cast<string>(i);
 			taskErrorRate[name] = taskErrors[name] / (double)totalItems;
 		}
 		return taskErrorRate;

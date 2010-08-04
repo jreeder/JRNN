@@ -29,8 +29,8 @@ Node::Node() {
 }
 
 
-Node::Node(int inHeight, std::string nodeName){
-	//Node::Node(int inHeight, nodeType nType, std::string nodeName){
+Node::Node(int inHeight, string nodeName){
+	//Node::Node(int inHeight, nodeType nType, string nodeName){
     height = inHeight;
 //    numIn = inNumIn;
 //    numOut = inNumOut;
@@ -156,7 +156,7 @@ double Node::GetPrime(){
 }
 
 
-const std::string& Node::GetName(){
+const string& Node::GetName(){
     return name;
 }
 
@@ -175,7 +175,7 @@ void Node::RenameConnections()
 	}
 }
 
-void Node::SetName(std::string newName){
+void Node::SetName(string newName){
     name = newName;
 	RenameConnections();
 }
@@ -213,7 +213,7 @@ bool Node::AddConnection(conType type, ConPtr newCon){
 }
 
 
-void Node::RemoveConnection(std::string name){
+void Node::RemoveConnection(string name){
     ConList::iterator incons = inConnections.begin();
     bool found = false;
     while(incons != inConnections.end()){

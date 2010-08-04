@@ -14,7 +14,7 @@
 #include "utility/dataset.h"
 
 namespace JRNN {
-	//typedef boost::unordered_map<std::string, vecDouble> hashedVecDoubleMap;
+	//typedef boost::unordered_map<string, vecDouble> hashedVecDoubleMap;
 	class CCTrainer {
 	public:
 		CCTrainer(CCNetworkPtr network, DatasetPtr data, int numCandidates);

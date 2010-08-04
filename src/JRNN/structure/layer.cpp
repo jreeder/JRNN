@@ -16,14 +16,14 @@ Layer::Layer(){
     name = "NONE";
 }
 
-Layer::Layer(layerType type, int inLayerSize, int height, std::string name) {
+Layer::Layer(layerType type, int inLayerSize, int height, string name) {
     this->type = type;
     this->layerSize = inLayerSize;
     this->height = height;
     this->name = name;
 }
 
-LayerPtr Layer::CreateLayer(layerType type, int inLayerSize, int height, std::string name){
+LayerPtr Layer::CreateLayer(layerType type, int inLayerSize, int height, string name){
 	LayerPtr lp(new Layer(type,inLayerSize,height, name));
 	return lp;
 }
@@ -71,10 +71,10 @@ Layer::layerType Layer::GetType() const {
 //    Node::nodeType nt = nType;
 //    
 ////    nt = (type != layer::input) ? node::sigmoid : node::linear;
-//    std::string baseName = name + "_";
+//    string baseName = name + "_";
 //    for (int i = 0; i < layerSize; i++){
-//        std::string num = lexical_cast<std::string>(i);
-//        std::string name = baseName + num;
+//        string num = lexical_cast<string>(i);
+//        string name = baseName + num;
 //        np.reset(new Node(height,nt,name));
 //        nodes.push_back(np);
 //    }
@@ -117,15 +117,15 @@ void Layer::Activate(vecDouble inputs){
 	assert(inputs.size() == layerSize);
     for(unsigned int i = 0; i < inputs.size(); i++){
         nodes[i]->Activate(inputs[i]);
-        std::string tmp = nodes[i]->GetName();
+        string tmp = nodes[i]->GetName();
     }
 }
 
-const std::string& Layer::GetName(){
+const string& Layer::GetName(){
     return name;
 }
 
-void Layer::SetName(std::string newName){
+void Layer::SetName(string newName){
     name = newName;
 }
 
@@ -146,8 +146,8 @@ void Layer::SetHeight( int newHeight ){
 }
 
 void Layer::AddNode( NodePtr node ){
-	std::string tmpName = name + "_";
-	tmpName += lexical_cast<std::string>(layerSize + 1);
+	string tmpName = name + "_";
+	tmpName += lexical_cast<string>(layerSize + 1);
 	node->SetName(tmpName);
 	nodes.push_back(node);
 	layerSize++;
@@ -209,12 +209,12 @@ LayerPtr Layer::Clone( LayerPtr layer )
 	return lp;
 }
 
-NodePtr Layer::GetNodeByName( std::string name )
+NodePtr Layer::GetNodeByName( string name )
 {
 	NodePtr retNode;
 	int pos = name.rfind("_");
-	std::string nodeIndex = "";
-	if (pos != std::string::npos){
+	string nodeIndex = "";
+	if (pos != string::npos){
 		nodeIndex = name.substr(pos+1);
 	}
 	if (nodeIndex.size() > 0){

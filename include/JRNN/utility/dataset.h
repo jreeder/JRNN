@@ -29,7 +29,7 @@ namespace JRNN {
         virtual ~Dataset();
         const matDouble& GetInputs(datatype type);
         const matDouble& GetOutputs(datatype type);
-        void LoadFromFile(std::string filepath, int numInputs, int numOutputs);
+        void LoadFromFile(string filepath, int numInputs, int numOutputs);
 		const int GetSize(datatype type);
 		double GetStdDev(datatype type);
         void SetNumInputs(int numInputs);
@@ -37,7 +37,7 @@ namespace JRNN {
         void DistData(int numTrain, int numVal, int numTest);
         void RedistData();
 
-    private:
+    protected:
         int size;
         int numInputs;
         int numOutputs;

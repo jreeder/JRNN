@@ -166,12 +166,12 @@ vecDouble Network::GetOutputs(){
     return outputs;
 }
 
-vecDouble Network::GetPrimes( std::string layerName )
+vecDouble Network::GetPrimes( string layerName )
 {
 	return layers[layerName]->GetPrimes();
 }
 
-LayerPtr Network::GetLayer(std::string layerName){
+LayerPtr Network::GetLayer(string layerName){
     return layers[layerName];
 }
 
@@ -270,9 +270,9 @@ ConMap& Network::GetConnections(){
  /*bool Network::AddHiddenLayer(LayerPtr newLayer){
 	if (!this->locked)
 	{
-		std::string tmpName = "hidden-";
+		string tmpName = "hidden-";
 		numHidLayers += 1;
-		tmpName += lexical_cast<std::string>(numHidLayers);
+		tmpName += lexical_cast<string>(numHidLayers);
 		layers.insert(LayerPair(tmpName,newLayer));
 		return true;
 	} 
@@ -301,8 +301,8 @@ ConMap& Network::GetConnections(){
 
  LayerPtr Network::AddHiddenLayer()
  {
-	 std::string name = "hidden-";
-	 name += lexical_cast<std::string>(numHidLayers);
+	 string name = "hidden-";
+	 name += lexical_cast<string>(numHidLayers);
 	 LayerPtr lp = Layer::CreateLayer(Layer::hidden,0,numHidLayers + 1,name);
 	 layers.insert(LayerPair(name,lp));
 	 LayerPtr out = layers["out"];
@@ -330,12 +330,12 @@ ConMap& Network::GetConnections(){
 	 }
  }
 
- NodePtr Network::GetNode( std::string nodeName )
+ NodePtr Network::GetNode( string nodeName )
  {
 	 NodePtr retNode;
 	 int pos = nodeName.find("_");
-	 std::string layerName = "";
-	 if (pos != std::string::npos){
+	 string layerName = "";
+	 if (pos != string::npos){
 		 layerName = nodeName.substr(0,pos);
 	 }
 	 if (layerName.size() > 0){

@@ -24,19 +24,19 @@ namespace JRNN {
         };
 
         Layer();
-        Layer(layerType type, int inLayerSize, int height, std::string name);
+        Layer(layerType type, int inLayerSize, int height, string name);
         Layer(const Layer& orig);
         virtual ~Layer();
         void Activate();
         void Activate(vecDouble inputs);
         //void BuildLayer(Node::nodeType nType);
-		static LayerPtr CreateLayer(layerType type, int inLayerSize, int height, std::string name);
+		static LayerPtr CreateLayer(layerType type, int inLayerSize, int height, string name);
 		static LayerPtr Clone( LayerPtr layer );
 		template<class T>
 		void BuildLayer();
 
         NodeList& GetNodes();
-		NodePtr GetNodeByName( std::string name );
+		NodePtr GetNodeByName( string name );
         vecDouble GetOutput();
 
 		ConList GetConnections();
@@ -54,8 +54,8 @@ namespace JRNN {
         void SetType(layerType type);
         layerType GetType() const;
 
-        void SetName(std::string newName);
-        const std::string& GetName();
+        void SetName(string newName);
+        const string& GetName();
 
 		void AddNode(NodePtr node);
 		void RemoveNode(NodePtr node);
@@ -73,7 +73,7 @@ namespace JRNN {
         //vector<double> outBuffer;
         int layerSize;
         int height;
-        std::string name;
+        string name;
         LayerPtr prevLayer;
         LayerPtr nextLayer;
         NodeList nodes;
@@ -82,10 +82,10 @@ namespace JRNN {
 	template<class T>
 	void Layer::BuildLayer(){
 		//NodePtr np;
-		std::string baseName = name + "_";
+		string baseName = name + "_";
 		for (int i = 0; i < layerSize; i++){
-			std::string num = lexical_cast<std::string>(i);
-			std::string name = baseName + num;
+			string num = lexical_cast<string>(i);
+			string name = baseName + num;
 			//np.reset(new Node<T>(height, name));
 			nodes.push_back(Node::CreateNode<T>(height,name));
 		}
