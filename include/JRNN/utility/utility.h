@@ -14,27 +14,29 @@ namespace JRNN {
 		OUT
 	};
 
-	inline vecDouble SquareVec(vecDouble vector){
-		vecDouble::iterator it = vector.begin();
-		for(;it < vector.end(); it++){
-			(*it) = pow((*it),2);
+	inline vecDouble SquareVec(vecDouble& vector){
+		//vecDouble::iterator it = vector.begin();
+		vecDouble result(vector.size());
+		for(unsigned int i = 0; i < vector.size(); i++){
+			result[i] = pow((vector[i]),2);
 		}
-		return vector;
+		return result;
 	}
-	inline vecDouble ApplyThreshold(vecDouble vector){
-		vecDouble::iterator it = vector.begin();
-		for(;it != vector.end(); it++){
-			if ((*it) < 0.5){
-				(*it) = 0;
+	inline vecDouble ApplyThreshold(vecDouble& vector){
+		//vecDouble::iterator it = vector.begin();
+		vecDouble result(vector.size());
+		for(unsigned int i = 0; i < vector.size(); i++){
+			if (vector[i] < 0.5){
+				result[i] = 0;
 			}
 			else{
-				(*it) = 1;
+				result[i] = 1;
 			}
 		}
-		return vector;
+		return result;
 	}
 
-	inline vecDouble VecMultiply(vecDouble v1, vecDouble v2){
+	inline vecDouble VecMultiply(vecDouble& v1, vecDouble& v2){
 		assert(v1.size() == v2.size());
 		vecDouble result(v1.size());
 		vecDouble::iterator it1 = v1.begin();
@@ -53,7 +55,7 @@ namespace JRNN {
 		}
 	}
 
-	inline int Sign(double num){
+	inline int Sign(double& num){
 		if (num > 0.0){
 			return 1;
 		}
@@ -65,7 +67,7 @@ namespace JRNN {
 		}
 	}
 
-	inline vecDouble Error(vecDouble first, vecDouble second){
+	inline vecDouble Error(vecDouble& first, vecDouble& second){
 		assert(first.size() == second.size());
 		vecDouble result(first.size());
 		vecDouble::iterator firstIT = first.begin();
@@ -82,10 +84,24 @@ namespace JRNN {
 		return result;
 	}
 
-	inline double Error(double first, double second){
+	inline double Error(double& first, double& second){
 		double result = 0;
 		if (first != UNKNOWN && second != UNKNOWN){
 			result = first - second;
+		}
+		return result;
+	}
+
+	inline vecDouble FilterError(vecDouble& errorVec, ints& primaryIndexes){
+		vecDouble result(errorVec.size());
+		FillVec(result, 0.0);
+		if (primaryIndexes.size() > 0){
+			for (unsigned int i = 0; i < primaryIndexes.size(); i++){
+				result[primaryIndexes[i]] = errorVec[primaryIndexes[i]];
+			}
+		}
+		else {
+			result = errorVec;
 		}
 		return result;
 	}

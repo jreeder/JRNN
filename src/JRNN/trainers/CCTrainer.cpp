@@ -9,14 +9,20 @@
 
 namespace JRNN {
 	
-	CCTrainer::CCTrainer(CCNetworkPtr network, DatasetPtr data, int numCandidates){
+	CCTrainer::CCTrainer(CCNetworkPtr network, DatasetPtr data, int numCandidates, ints primaryIndexes){
 		this->network = network;
 		this->data = data;
+		this->primaryIndexes = primaryIndexes;
 
-		nTrainOutVals = data->GetSize(Dataset::TRAIN) * network->GetNumOut();
-
+		if(primaryIndexes.size() > 0){
+			nTrainOutVals = data->GetSize(Dataset::TRAIN) * primaryIndexes.size();
+		}
+		else {
+			nTrainOutVals = data->GetSize(Dataset::TRAIN) * network->GetNumOut();
+		}
+		
 		parms.nTrials = 1;//Not used
-		parms.maxNewUnits = 25;
+		parms.maxNewUnits = 25;//Not used
 		parms.valPatience = 2;
 		parms.weightMult = 1.0;
 
@@ -290,10 +296,10 @@ namespace JRNN {
 
 		//Alter Stats
 		if (alterStats){
-			errs.bits += CalcErrorBits(error);
+			errs.bits += CalcErrorBits(FilterError(error,primaryIndexes));
 			errs.sumErrs += errPrimes;
 			errs.sumSqErr += ublas::sum(SquareVec(errPrimes));
-			errs.trueErr += ublas::sum(sqError);
+			errs.trueErr += ublas::sum(FilterError(sqError,primaryIndexes));
 		}
 		//Update Slopes
 		if (updateSlopes){
@@ -320,7 +326,7 @@ namespace JRNN {
 			val = node->GetOut();
 			candSumVals[name] += val;
 
-			//computer correlation for this unit
+			//compute correlation for this unit
 			for (unsigned int j = 0; j < err.errors.size(); j++ ){
 				(*cCorr)[j] += val * err.errors[j];
 			}

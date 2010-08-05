@@ -12,11 +12,18 @@ namespace JRNN {
 	const double RPropTrainer::deltaMax = 50;
 	const double RPropTrainer::deltaMin = 0.000001;
 
-	RPropTrainer::RPropTrainer(FFMLPNetPtr network, DatasetPtr inDataSet, double etaPlus, double etaMinus) {
+	RPropTrainer::RPropTrainer(FFMLPNetPtr network, DatasetPtr inDataSet, double etaPlus, double etaMinus, ints primaryIndexes) {
 		mNetwork = network;
 		data = inDataSet;
 		this->etaPlus = etaPlus;
 		this->etaMinus = etaMinus;
+		this->primaryIndexes = primaryIndexes;
+		if(primaryIndexes.size() > 0){
+			this->nTrainOutVals = data->GetSize(Dataset::TRAIN) * primaryIndexes.size();
+		}
+		else {
+			this->nTrainOutVals = data->GetSize(Dataset::TRAIN) * mNetwork->GetNumOut();
+		}
 		epochCount = 0;
 	}
 
@@ -26,6 +33,7 @@ namespace JRNN {
 		etaMinus = orig.etaMinus;
 		etaPlus = orig.etaPlus;
 		epochCount = orig.epochCount;
+		primaryIndexes = orig.primaryIndexes;
 	}
 
 	RPropTrainer::~RPropTrainer() {
@@ -66,7 +74,7 @@ namespace JRNN {
 			//vecDouble error = desiredOut - output;
 			vecDouble error = Error(desiredOut, output);
 			vecDouble sqError = SquareVec(error);
-			MSE += ublas::sum(sqError);
+			MSE += ublas::sum(FilterError(sqError, primaryIndexes));
 			//weightUpdates.clear();
 			localGradients.clear();
 			CalcWeightUpdates(mNetwork->GetLayer("out"), desiredOut);
@@ -83,8 +91,8 @@ namespace JRNN {
 		}
 		dw.clear();
 		epochCount++;
-		MSE /= (double)trainingIns.size();
-		MSE /= (double)mNetwork->GetNumOut();
+		MSE /= (double)nTrainOutVals;
+		//MSE /= (double)mNetwork->GetNumOut();
 		MSE_Rec.push_back(MSE);
 		return MSE;
 	}
@@ -103,12 +111,18 @@ namespace JRNN {
 			vecDouble output = mNetwork->GetOutputs();
 			vecDouble error = desiredOut - output;
 			vecDouble sqError = SquareVec(error);
-			MSE += ublas::sum(sqError);
+			MSE += ublas::sum(FilterError(sqError,primaryIndexes));
 			itIns++;
 			itOuts++;
 		}
 		MSE /= (double)ins.size();
-		MSE /= (double)mNetwork->GetNumOut();
+		if (primaryIndexes.size() > 0){
+			MSE /= (double)primaryIndexes.size();
+		}
+		else {
+			MSE /= (double)mNetwork->GetNumOut();
+		}
+		
 		return MSE;
 	}
 

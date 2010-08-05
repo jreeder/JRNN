@@ -8,6 +8,11 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "JRNN_test", "JRNN_test\JRNN
 		{E4965A51-3BB5-470F-83AE-C73B5E419A74} = {E4965A51-3BB5-470F-83AE-C73B5E419A74}
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "JRNN_test2", "JRNN_test2\JRNN_test2.vcxproj", "{A7C2E08F-F249-4E2A-A325-5457681F49EF}"
+	ProjectSection(ProjectDependencies) = postProject
+		{E4965A51-3BB5-470F-83AE-C73B5E419A74} = {E4965A51-3BB5-470F-83AE-C73B5E419A74}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -22,6 +27,10 @@ Global
 		{C27AD1F3-849D-4162-A1BD-878158CCA977}.Debug|Win32.Build.0 = Debug|Win32
 		{C27AD1F3-849D-4162-A1BD-878158CCA977}.Release|Win32.ActiveCfg = Release|Win32
 		{C27AD1F3-849D-4162-A1BD-878158CCA977}.Release|Win32.Build.0 = Release|Win32
+		{A7C2E08F-F249-4E2A-A325-5457681F49EF}.Debug|Win32.ActiveCfg = Debug|Win32
+		{A7C2E08F-F249-4E2A-A325-5457681F49EF}.Debug|Win32.Build.0 = Debug|Win32
+		{A7C2E08F-F249-4E2A-A325-5457681F49EF}.Release|Win32.ActiveCfg = Release|Win32
+		{A7C2E08F-F249-4E2A-A325-5457681F49EF}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

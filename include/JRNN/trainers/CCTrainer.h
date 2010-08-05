@@ -17,7 +17,7 @@ namespace JRNN {
 	//typedef boost::unordered_map<string, vecDouble> hashedVecDoubleMap;
 	class CCTrainer {
 	public:
-		CCTrainer(CCNetworkPtr network, DatasetPtr data, int numCandidates);
+		CCTrainer(CCNetworkPtr network, DatasetPtr data, int numCandidates, ints primaryIndexes = ints(0));
 		~CCTrainer();
 
 		enum ErrorType {
@@ -79,6 +79,7 @@ namespace JRNN {
 		DatasetPtr data;
 		doubles MSE_Rec;
 		doubles vMSE_Rec;
+		ints primaryIndexes;
 		//LayerPtr candidateLayer;
 		//ConList candidateCons;
 		//TODO Implement Network caching

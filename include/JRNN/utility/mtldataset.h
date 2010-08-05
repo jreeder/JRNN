@@ -21,8 +21,11 @@ namespace JRNN {
 		MTLDataset();
 		void SetView(strings view);
 		strings GetView();
+		ints GetIndexes(string taskName);
 		void AddTaskFromFile(string fileName, string taskName, int numIn, int numOut);
 		void AddTaskFromNet(NetworkPtr net, string taskName, ints primaryOuts);
+		void ImpoverishPrimaryTaskTraining(double percentMissing, unsigned int primaryTask = 0);
+		DatasetPtr SpawnDS();
 		
 		class Task {
 		public:
@@ -55,6 +58,7 @@ namespace JRNN {
 		strings inputStrings;
 		void GenerateDS();
 	};
+ 	
 }
 
 #endif

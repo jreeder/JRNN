@@ -39,6 +39,10 @@ namespace JRNN {
 		return view;
 	}
 
+	ints MTLDataset::GetIndexes(string taskName){
+		return taskList[taskName]->indexes;
+	}
+
 	void MTLDataset::AddTaskFromFile( string fileName, string taskName, int numIn, int numOut )
 	{
 		TaskPtr tp(new Task());
@@ -103,6 +107,7 @@ namespace JRNN {
 	{
 		matDouble::iterator inIt = inputs.begin();
 		int outSize = 0;
+		assert(inputs.size() > 0);
 		BOOST_FOREACH(string taskName, view){
 			int startIndex = outSize;
 			outSize += taskList[taskName]->numOuts;
@@ -112,6 +117,8 @@ namespace JRNN {
 			}
 		}
 		numOutputs = outSize;
+		numInputs = inputs[0].size();
+		outputs.clear();
 		while (inIt != inputs.end()){
 			vecDouble out(numOutputs);
 			int outIndex = 0;
@@ -134,7 +141,30 @@ namespace JRNN {
 				}
 			}
 			outputs.push_back(out);
+			inIt++;
 		}
+	}
+
+	void MTLDataset::ImpoverishPrimaryTaskTraining(double percentMissing, unsigned int primaryTask)
+	{
+		assert(trainOuts.size() > 0 && view.size() > 0 && primaryTask < view.size());
+		string primTask = view[primaryTask];
+		ints primIndexes = taskList[primTask]->indexes;
+		srand(randSeed);
+		BOOST_FOREACH(vecDouble& outVec, trainOuts){
+			double randNum = (rand() % 100) / (double)100;
+			if (randNum < percentMissing){
+				BOOST_FOREACH(int ind, primIndexes){
+					outVec[ind] = UNKNOWN;
+				}
+			}
+		}
+	}
+
+	DatasetPtr MTLDataset::SpawnDS()
+	{
+		DatasetPtr ds(new Dataset(*this));
+		return ds;
 	}
 
 	vecDouble MTLDataset::Task::getNetOuts( vecDouble inputs )

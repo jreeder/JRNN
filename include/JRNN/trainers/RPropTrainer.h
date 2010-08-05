@@ -18,7 +18,7 @@ namespace JRNN {
 	class RPropTrainer {
 		//TODO: need to abstract this class and backproptrainer and use inheritance
 	public:
-		RPropTrainer(FFMLPNetPtr network, DatasetPtr inDataSet, double etaPlus, double etaMinus);
+		RPropTrainer(FFMLPNetPtr network, DatasetPtr inDataSet, double etaPlus, double etaMinus, ints primaryIndexes = ints(0));
 		RPropTrainer(const RPropTrainer& orig);
 		virtual ~RPropTrainer();
 		double TrainEpoch();
@@ -43,6 +43,7 @@ namespace JRNN {
 		double learningRate;
 		doubles MSE_Rec;
 		doubles vMSE_Rec;
+		ints primaryIndexes;
 		DatasetPtr data;
 		hashedDoubleMap localGradients;
 		hashedDoubleMap weightUpdates;
@@ -54,7 +55,7 @@ namespace JRNN {
 		hashedDoubleMap bestWeights;
 		hashedIntMap taskErrors;
 		hashedDoubleMap taskErrorRate;
-
+		int nTrainOutVals;
 		void RPropUpdate(ConPtr con);
 		void CalcWeightUpdates(LayerPtr layer, vecDouble desiredOut = vecDouble());
 	};

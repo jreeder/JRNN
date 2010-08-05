@@ -14,6 +14,26 @@ Dataset::Dataset() {
 }
 
 Dataset::Dataset(const Dataset& orig) {
+	inputs = orig.inputs;
+	numInputs = orig.numInputs;
+	numOutputs = orig.numOutputs;
+	numTest	= orig.numTest;
+	numTrain = orig.numTrain;
+	numVal = orig.numVal;
+	outputs = orig.outputs;
+	randomRange = orig.randomRange;
+	randSeed = orig.randSeed;
+	stdDev = orig.stdDev;
+	testIns = orig.testIns;
+	testOuts = orig.testOuts;
+	testStdDev = orig.testStdDev;
+	trainIns = orig.trainIns;
+	trainOuts = orig.trainOuts;
+	trainStdDev = orig.trainStdDev;
+	valIns = orig.valIns;
+	valOuts = orig.valOuts;
+	valStdDev = orig.valStdDev;
+	size = orig.size;
 }
 
 Dataset::~Dataset() {
@@ -111,6 +131,12 @@ void Dataset::DistData(int numTrain, int numVal, int numTest){
     this->numTrain = numTrain;
     this->numVal = numVal;
     this->numTest = numTest;
+	trainIns.clear();
+	trainOuts.clear();
+	valIns.clear();
+	valOuts.clear();
+	testIns.clear();
+	testOuts.clear();
     randSeed = 314159;
     //genRandRange();
     Distribute();
