@@ -10,6 +10,7 @@
 #include <fstream>
 #include <ctime>
 #include <boost/thread.hpp>
+#include <cmath>
 
 using namespace JRNN;
 using namespace std;
@@ -21,17 +22,42 @@ boost::mutex io_mutex;
 
 int main(int argc, char* argv[])
 {
-
+	string basepath = "";
+	int numRuns = 5;
+	double impPerc = 0.7;
+	int numTrain = 50;
+	int numVal = 100;
+	int numTest = 500;
+	int numHidPerOut = 4;
+	if (argc > 1){
+		basepath = argv[1];
+		if (argc == 8){
+			numTrain = lexical_cast<int>(argv[2]);
+			numVal = lexical_cast<int>(argv[3]);
+			numTest = lexical_cast<int>(argv[4]);
+			numHidPerOut = lexical_cast<int>(argv[5]);
+			numRuns = lexical_cast<int>(argv[6]);
+			impPerc = lexical_cast<double>(argv[7]);
+		}
+		else if (argc > 2){
+			cout << "Incorrect Number of arguments ... Please give basepath and 7 experiment values" << endl;
+			return -1;
+		}
+	}
+	else {
+		cout << "Incorrect usage ... Please give basepath." << endl;
+		return -1;
+	}
 	
 	MTLDataset* mds = new MTLDataset();
-	mds->AddTaskFromFile("band-task1.txt", "task-1", 2, 1);
-	mds->AddTaskFromFile("band-task2.txt", "task-2", 2, 1);
-	mds->AddTaskFromFile("band-task3.txt", "task-3", 2, 1);
-	mds->AddTaskFromFile("band-task4.txt", "task-4", 2, 1);
-	mds->AddTaskFromFile("band-task5.txt", "task-5", 2, 1);
-	mds->AddTaskFromFile("band-task6.txt", "task-6", 2, 1);
-	mds->AddTaskFromFile("band-task7.txt", "task-7", 2, 1);
-	mds->AddTaskFromFile("band-task8.txt", "task-8", 2, 1);
+	mds->AddTaskFromFile(basepath + "band-task1.txt", "task-1", 2, 1);
+	mds->AddTaskFromFile(basepath + "band-task2.txt", "task-2", 2, 1);
+	mds->AddTaskFromFile(basepath + "band-task3.txt", "task-3", 2, 1);
+	mds->AddTaskFromFile(basepath + "band-task4.txt", "task-4", 2, 1);
+	mds->AddTaskFromFile(basepath + "band-task5.txt", "task-5", 2, 1);
+	mds->AddTaskFromFile(basepath + "band-task6.txt", "task-6", 2, 1);
+	mds->AddTaskFromFile(basepath + "band-task7.txt", "task-7", 2, 1);
+	mds->AddTaskFromFile(basepath + "band-task8.txt", "task-8", 2, 1);
 
 	strings view;
 	view.push_back("task-1");
@@ -40,22 +66,22 @@ int main(int argc, char* argv[])
 	view.push_back("task-4");
 
 	mds->SetView(view);
-	mds->DistData(50, 100, 200);
-	mds->ImpoverishPrimaryTaskTraining(0.7);
+	mds->DistData(numTrain, numVal, numTest);
+	mds->ImpoverishPrimaryTaskTraining(impPerc);
 	ints mtlPrimaryIndexes = mds->GetIndexes("task-1");
 	DatasetPtr mtl_ds = mds->SpawnDS();
 	view.clear();
 	view.push_back("task-1");
 	mds->SetView(view);
-	mds->DistData(10, 100, 200);
+	mds->DistData((int)floor(numTrain*(1-impPerc)), numVal, numTest);
 	DatasetPtr stl_ds = mds->SpawnDS();
 	delete mds;
 	mds = NULL;
 
 	FFMLPNetPtr ffnet_stl = FFMLPNetwork::Create();
-	ffnet_stl->Build(2, 4, 1);
+	ffnet_stl->Build(2, numHidPerOut, 1);
 	FFMLPNetPtr ffnet_mtl = FFMLPNetwork::Create();
-	ffnet_mtl->Build(2, 16, 4);
+	ffnet_mtl->Build(2, numHidPerOut * 4, 4);
 
 	CCNetworkPtr ccnet_stl = CCNetwork::Create();
 	CCNetworkPtr ccnet_mtl = CCNetwork::Create();
@@ -71,10 +97,10 @@ int main(int argc, char* argv[])
 	strings ccstlresults;
 	strings ccmtlresults;
 
-	boost::thread bpstlthread(BPWorker, bp_stl, 4, &bpstlresults, 2, true);
-	boost::thread bpmtlthread(BPWorker, bp_mtl, 16, &bpmtlresults, 2, true);
-	boost::thread ccstlthread(CCWorker, cc_stl, &ccstlresults, 2, true);
-	boost::thread ccmtlthread(CCWorker, cc_mtl, &ccmtlresults, 2, true);
+	boost::thread bpstlthread(BPWorker, bp_stl, numHidPerOut, &bpstlresults, numRuns, true);
+	boost::thread bpmtlthread(BPWorker, bp_mtl, numHidPerOut * 4, &bpmtlresults, numRuns, true);
+	boost::thread ccstlthread(CCWorker, cc_stl, &ccstlresults, numRuns, true);
+	boost::thread ccmtlthread(CCWorker, cc_mtl, &ccmtlresults, numRuns, true);
 
 	bpstlthread.join();
 	bpmtlthread.join();
