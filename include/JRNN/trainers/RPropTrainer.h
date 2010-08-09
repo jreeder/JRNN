@@ -19,7 +19,7 @@ namespace JRNN {
 		//TODO: need to abstract this class and backproptrainer and use inheritance
 	public:
 		RPropTrainer(FFMLPNetPtr network, DatasetPtr inDataSet, double etaPlus, double etaMinus, ints primaryIndexes = ints(0));
-		RPropTrainer(const RPropTrainer& orig);
+		//RPropTrainer(const RPropTrainer& orig);
 		virtual ~RPropTrainer();
 		double TrainEpoch();
 		double TestOnData(Dataset::datatype type);

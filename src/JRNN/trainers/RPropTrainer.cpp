@@ -27,14 +27,17 @@ namespace JRNN {
 		epochCount = 0;
 	}
 
-	RPropTrainer::RPropTrainer(const RPropTrainer& orig) {
-		mNetwork = orig.mNetwork;
-		data = orig.data;
-		etaMinus = orig.etaMinus;
-		etaPlus = orig.etaPlus;
-		epochCount = orig.epochCount;
-		primaryIndexes = orig.primaryIndexes;
-	}
+	/*RPropTrainer::RPropTrainer(const RPropTrainer& orig) {
+	mNetwork = orig.mNetwork;
+	data = orig.data;
+	etaMinus = orig.etaMinus;
+	etaPlus = orig.etaPlus;
+	epochCount = orig.epochCount;
+	primaryIndexes = orig.primaryIndexes;
+	nTrainOutVals = orig.nTrainOutVals;
+	MSE_Rec = orig.MSE_Rec;
+	vMSE_Rec = orig.vMSE_Rec;
+	}*/
 
 	RPropTrainer::~RPropTrainer() {
 	}

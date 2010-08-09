@@ -15,12 +15,14 @@ using namespace JRNN;
 using namespace std;
 
 void printDoubles(doubles toPrint, iostream& stream);
-void CCWorker(CCTrainer& trainer, strings& results, int numRuns, bool useValidation = true);
-void BPWorker(RPropTrainer& trainer, int numHid, strings& results, int numRuns, bool useValidation = true);
-
+void CCWorker(CCTrainer& trainer, strings* results, int numRuns, bool useValidation = true);
+void BPWorker(RPropTrainer& trainer, int numHid, strings* results, int numRuns, bool useValidation = true);
+boost::mutex io_mutex;
 
 int main(int argc, char* argv[])
 {
+
+	
 	MTLDataset* mds = new MTLDataset();
 	mds->AddTaskFromFile("band-task1.txt", "task-1", 2, 1);
 	mds->AddTaskFromFile("band-task2.txt", "task-2", 2, 1);
@@ -69,20 +71,47 @@ int main(int argc, char* argv[])
 	strings ccstlresults;
 	strings ccmtlresults;
 
-	boost::thread bpstlthread(BPWorker, bp_stl, 4, bpstlresults, 2, true);
-	boost::thread bpmtlthread(BPWorker, bp_mtl, 16, bpmtlresults, 2, true);
-	boost::thread ccstlthread(CCWorker, cc_stl, ccstlresults, 2, true);
-	boost::thread ccmtlthread(CCWorker, cc_mtl, ccmtlresults, 2, true);
+	boost::thread bpstlthread(BPWorker, bp_stl, 4, &bpstlresults, 2, true);
+	boost::thread bpmtlthread(BPWorker, bp_mtl, 16, &bpmtlresults, 2, true);
+	boost::thread ccstlthread(CCWorker, cc_stl, &ccstlresults, 2, true);
+	boost::thread ccmtlthread(CCWorker, cc_mtl, &ccmtlresults, 2, true);
 
 	bpstlthread.join();
 	bpmtlthread.join();
 	ccstlthread.join();
 	ccmtlthread.join();
 
+	ofstream bpstlfile;
+	ofstream bpmtlfile;
+	ofstream ccstlfile;
+	ofstream ccmtlfile;
+
+	bpstlfile.open("bpstlresults.txt");
+	bpmtlfile.open("bpmtlresults.txt");
+	ccstlfile.open("ccstlresults.txt");
+	ccmtlfile.open("ccmtlresutls.txt");
+
+	BOOST_FOREACH(string line, bpstlresults){
+		bpstlfile << line << endl;
+	}
+	BOOST_FOREACH(string line, bpmtlresults){
+		bpmtlfile << line << endl;
+	}
+	BOOST_FOREACH(string line, ccstlresults){
+		ccstlfile << line << endl;
+	}
+	BOOST_FOREACH(string line, ccmtlresults){
+		ccmtlfile << line << endl;
+	}
+
+	bpstlfile.close();
+	bpmtlfile.close();
+	ccstlfile.close();
+	ccmtlfile.close();
 	return 0;
 }
 
-void BPWorker(RPropTrainer& trainer, int numHid, strings& results, int numRuns, bool useValidation){
+void BPWorker(RPropTrainer& trainer, int numHid, strings* results, int numRuns, bool useValidation){
 	stringstream output(stringstream::out);
 	for (int i = 0; i < numRuns; i++){
 		double time = 0.0;
@@ -110,14 +139,14 @@ void BPWorker(RPropTrainer& trainer, int numHid, strings& results, int numRuns, 
 		printDoubles(trainer.GetMSERec(),output);
 		output << endl;
 		//cout << endl;
-		results.push_back(output.str());
+		results->push_back(output.str());
 		output.str("");
 		output.clear();
 		trainer.Reset();
 	}
 }
 
-void CCWorker(CCTrainer& trainer, strings& results, int numRuns, bool useValidation){
+void CCWorker(CCTrainer& trainer, strings* results, int numRuns, bool useValidation){
 	stringstream output(stringstream::out);
 	for (int i = 0; i < numRuns; i++)
 	{
@@ -137,6 +166,7 @@ void CCWorker(CCTrainer& trainer, strings& results, int numRuns, bool useValidat
 		output << time << "\t";
 		output << hiddenLayers << "\t";
 #ifdef _DEBUG
+		io_mutex.lock();
 		cout << epochs << "\t";
 		cout << hiddenLayers << "\t";
 		cout << time << "\t";
@@ -156,8 +186,9 @@ void CCWorker(CCTrainer& trainer, strings& results, int numRuns, bool useValidat
 		output << endl;
 #ifdef _DEBUG
 		cout << endl;
+		io_mutex.unlock();
 #endif // _DEBUG
-		results.push_back(output.str());
+		results->push_back(output.str());
 		output.str("");
 		output.clear();
 		trainer.Reset();
