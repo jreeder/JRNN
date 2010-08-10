@@ -29,14 +29,14 @@ namespace JRNN {
 		parms.out.epochs = 300; //200
 		parms.out.patience = 12;//12
 		parms.out.epsilon = 10.0;//1.0
-		parms.out.decay = 0.001;
+		parms.out.decay = 0.001;//0.001
 		parms.out.mu = 2.0;
 		parms.out.changeThreshold = 0.02; //0.01
 
 		parms.cand.epochs = 200; //200
 		parms.cand.patience = 12; //12
 		parms.cand.epsilon = 100;
-		parms.cand.decay = 0.001;
+		parms.cand.decay = 0.001;//0.001
 		parms.cand.mu = 2.0;
 		parms.cand.changeThreshold = 0.03;
 		

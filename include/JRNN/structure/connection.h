@@ -76,6 +76,7 @@ namespace JRNN {
         string name;
         NodePtr inNode;
         NodePtr outNode;
+		static RandomGenerator cRand;
 
         double RandomWeight(double scale = 1, double offset = 0.5);
 

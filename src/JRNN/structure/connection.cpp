@@ -9,6 +9,8 @@
 
 using namespace JRNN;
 
+RandomGenerator Connection::cRand = RandomGenerator();
+
 Connection::Connection() {
     weight = RandomWeight();
     value = 0;
@@ -90,7 +92,8 @@ void Connection::Disconnect(string nodeName){
 }
 
 void Connection::SetRandomSeed(){
-    srand( time(NULL));
+    //srand( time(NULL));
+	cRand.gen.seed(static_cast<unsigned int>(time(NULL)));
 }
 
 void Connection::SetName(){
@@ -157,7 +160,10 @@ Connection Connection::operator *(const Connection& rhs) {
 
 double Connection::RandomWeight(double scale, double offset){
     double tmpDouble;
-    tmpDouble = (((rand() % 10000 + 1)/(double)10000) * scale) - offset;
+	//UniformDist01 dist;
+	//RandGenerator randgen(gen,dist);
+    //tmpDouble = (((rand() % 10000 + 1)/(double)10000) * scale) - offset;
+	tmpDouble = ((cRand() * scale)) - offset;
     return tmpDouble;
 }
 

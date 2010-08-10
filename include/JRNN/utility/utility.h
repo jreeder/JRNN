@@ -155,6 +155,18 @@ namespace JRNN {
 		}
 		return outstring;
 	}
+
+	class RandomGenerator {
+	public:
+		rangeType gen;
+		RandomGenerator() : dist(), randgen(gen,dist) {}
+		double operator ()() {
+			return randgen();
+		}
+	private:
+		UniformDist01 dist;
+		RandGenerator randgen;
+	};
 }
 
 #endif

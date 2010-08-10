@@ -20,6 +20,8 @@
 #include <boost/lexical_cast.hpp>
 #include <boost/tokenizer.hpp>
 #include <boost/enable_shared_from_this.hpp>
+#include <boost/random.hpp>
+#include <boost/generator_iterator.hpp>
 #include <iostream>
 #include <limits>
 #include <math.h>
@@ -65,6 +67,9 @@ namespace JRNN {
 	typedef std::vector<std::string> strings;
 	typedef std::vector<int> ints;
 	const double UNKNOWN = std::numeric_limits<double>::max();
+	typedef boost::mt19937 rangeType;
+	typedef boost::uniform_01<double> UniformDist01;
+	typedef boost::variate_generator<rangeType&, UniformDist01> RandGenerator;
 }
 
 using boost::lexical_cast;
