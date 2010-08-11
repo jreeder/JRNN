@@ -115,7 +115,7 @@ experiments = [\
 #        {'dsfile':'band-task3-6.txt','numTrain':50,'numVal':100\
 #        ,'numTest':500,'numIn':2,'numHid':32,'numOut':4,'type':'BP','useVal':'F'\
 #        ,'numRuns':60,'expFold':'BP Test 6'},\
-#        #CC Standard Run
+        #CC Standard Run
         {'dsfile':'band-task1.txt','numTrain':50,'numVal':100\
         ,'numTest':500,'numIn':2,'numHid':1,'numOut':1,'type':'CC','useVal':'T'\
         ,'numRuns':60,'expFold':'CC Test 1'},\
@@ -134,7 +134,7 @@ experiments = [\
         {'dsfile':'band-task3-6.txt','numTrain':50,'numVal':100\
         ,'numTest':500,'numIn':2,'numHid':1,'numOut':4,'type':'CC','useVal':'T'\
         ,'numRuns':60,'expFold':'CC Test 1'},\
-#        #CC Starved Data 20 pts
+        #CC Starved Data 20 pts
         {'dsfile':'band-task1.txt','numTrain':20,'numVal':100\
         ,'numTest':500,'numIn':2,'numHid':1,'numOut':1,'type':'CC','useVal':'T'\
         ,'numRuns':60,'expFold':'CC Test 2'},\
@@ -153,7 +153,7 @@ experiments = [\
         {'dsfile':'band-task3-6.txt','numTrain':20,'numVal':100\
         ,'numTest':500,'numIn':2,'numHid':1,'numOut':4,'type':'CC','useVal':'T'\
         ,'numRuns':60,'expFold':'CC Test 2'},\
-#        #CC Starved Data 10 pts
+        #CC Starved Data 10 pts
         {'dsfile':'band-task1.txt','numTrain':10,'numVal':100\
         ,'numTest':500,'numIn':2,'numHid':1,'numOut':1,'type':'CC','useVal':'T'\
         ,'numRuns':60,'expFold':'CC Test 3'},\

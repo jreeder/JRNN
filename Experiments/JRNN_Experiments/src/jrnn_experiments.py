@@ -51,6 +51,6 @@ if __name__ == "__main__":
         os.makedirs(outpath)
 
     os.chdir(outpath)
-    pool = Pool()
+    pool = Pool(3)
     pool.map(ProcessExperiment,experiments)
     print "Finished"
