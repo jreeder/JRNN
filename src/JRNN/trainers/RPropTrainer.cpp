@@ -25,6 +25,7 @@ namespace JRNN {
 			this->nTrainOutVals = data->GetSize(Dataset::TRAIN) * mNetwork->GetNumOut();
 		}
 		epochCount = 0;
+		primeOffset = 0.1;
 	}
 
 	/*RPropTrainer::RPropTrainer(const RPropTrainer& orig) {
@@ -175,7 +176,7 @@ namespace JRNN {
 					for(int i = 0; i < layer->GetSize(); i++){
 						string name = nodes[i]->GetName();
 						double act = nodes[i]->GetOut();
-						double nPrime = nodes[i]->GetPrime();
+						double nPrime = nodes[i]->GetPrime() + primeOffset;
 						//double sigSteep = nodes[i]->GetSigSteepness();
 						//double error = desiredOut[i] - act;
 						double error = Error(desiredOut[i], act);
@@ -193,7 +194,7 @@ namespace JRNN {
 					for(int i = 0; i < layer->GetSize(); i++){
 						string name = nodes[i]->GetName();
 						double act = nodes[i]->GetOut();
-						double nPrime = nodes[i]->GetPrime();
+						double nPrime = nodes[i]->GetPrime() + primeOffset;
 						//double sigSteep = nodes[i]->GetSigSteepness();
 						ConList outCons = nodes[i]->GetConnections(OUT);
 						double sumOfChildError = 0;

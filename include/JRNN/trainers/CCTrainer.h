@@ -32,6 +32,7 @@ namespace JRNN {
 		double TestOnData(Dataset::datatype type);
 		hashedDoubleMap TestWiClass(Dataset::datatype type);
 		int GetEpochs();
+		int GetNumResets();
 		int GetNumHidLayers();
 		doubles& GetMSERec();
 		doubles& GetVMSERec();
@@ -41,7 +42,12 @@ namespace JRNN {
 			int nTrials;
 			int maxNewUnits;
 			int valPatience;
+			int impPatience;
 			double weightMult;
+			double maxWeight;
+			bool useMaxWeight;
+			int maxResets;
+			double primeOffset;
 
 			struct  
 			{
@@ -80,6 +86,8 @@ namespace JRNN {
 		doubles MSE_Rec;
 		doubles vMSE_Rec;
 		ints primaryIndexes;
+		bool resetFlag;
+		int numResets;
 		//LayerPtr candidateLayer;
 		//ConList candidateCons;
 		//TODO Implement Network caching
@@ -98,7 +106,7 @@ namespace JRNN {
 			hashedDoubleMap bestWeights;
 			double bestErr;
 			int bestPass;
-		} val;
+		} val, imp;
 		int epoch;
 
 		//hashedDoubleMap outSumErrs; //sum of errors for each output node
@@ -140,6 +148,7 @@ namespace JRNN {
 		void resetError(errVars& errorVars);
 		void resetOutValues();
 		status TrainOuts();
+		void resetTrainOuts();
 		void OutputEpoch(); 
 
 		void ComputeError( vecDouble desiredOut, errVars& errs, NodeList &outNodes, bool alterStats, bool updateSlopes);
@@ -150,6 +159,7 @@ namespace JRNN {
 		//Candidate training methods
 		void CreateCandidates();
 		status TrainCandidates();
+		void resetTrainCandidates();
 		void resetCandValues();
 		void CorrelationEpoch();
 		void CandEpoch();
@@ -162,6 +172,7 @@ namespace JRNN {
 		//Validation Methods
 
 		status ValidationEpoch();
+		status TestImprovement();
 
 
 

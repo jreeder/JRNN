@@ -41,6 +41,7 @@ namespace JRNN {
 		static const double deltaMin;
 		int trainingIndex;
 		double learningRate;
+		double primeOffset; //helps stop flat spots
 		doubles MSE_Rec;
 		doubles vMSE_Rec;
 		ints primaryIndexes;

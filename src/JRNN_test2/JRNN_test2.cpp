@@ -24,7 +24,7 @@ int main(int argc, char* argv[])
 {
 	string basepath = "";
 	int numRuns = 5;
-	double impPerc = 0.7;
+	double impPerc = 0.8;
 	int numTrain = 50;
 	int numVal = 100;
 	int numTest = 500;
@@ -155,6 +155,7 @@ void BPWorker(RPropTrainer& trainer, int numHid, strings* results, int numRuns, 
 		//cout << epochs << "\t";
 		output << numHid << "\t";
 		//cout << numHid << "\t";
+		output << 0 << "\t";
 		hashedDoubleMap testresults = trainer.TestWiClass(Dataset::TEST);
 		std::pair<string,double> p;
 		BOOST_FOREACH(p, testresults){
@@ -191,11 +192,13 @@ void CCWorker(CCTrainer& trainer, strings* results, int numRuns, bool useValidat
 		output << epochs << "\t";
 		output << time << "\t";
 		output << hiddenLayers << "\t";
+		output << trainer.GetNumResets() << "\t";
 #ifdef _DEBUG
 		io_mutex.lock();
 		cout << epochs << "\t";
 		cout << hiddenLayers << "\t";
 		cout << time << "\t";
+		cout << trainer.GetNumResets() << "\t";
 #endif // _DEBUG
 
 

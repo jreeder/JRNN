@@ -12,6 +12,8 @@ using namespace JRNN;
 RandomGenerator Connection::cRand = RandomGenerator();
 
 Connection::Connection() {
+	scale = 2;
+	offset = 1;
     weight = RandomWeight();
     value = 0;
     weightedValue = 0;
@@ -27,6 +29,8 @@ Connection::Connection(const Connection& orig) {
     weightedValue = orig.weightedValue;
     locked = orig.locked;
     name = orig.name;
+	scale = orig.scale;
+	offset = orig.offset;
     //inNode = orig.inNode;
     //outNode = orig.outNode;
 	inNode = NodePtr();
@@ -34,6 +38,8 @@ Connection::Connection(const Connection& orig) {
 }
 
 Connection::Connection(double newDouble){
+	scale = 2;
+	offset = 1;
     weight = newDouble;
     value = 0;
     weightedValue = 0;
@@ -158,7 +164,7 @@ Connection Connection::operator *(const Connection& rhs) {
     return tmp;
 }
 
-double Connection::RandomWeight(double scale, double offset){
+double Connection::RandomWeight(){
     double tmpDouble;
 	//UniformDist01 dist;
 	//RandGenerator randgen(gen,dist);
@@ -181,4 +187,10 @@ const string& Connection::GetOutNodeName(){
 
 const string& Connection::GetInNodeName(){
     return inNode->GetName();
+}
+
+void JRNN::Connection::SetScaleAndOffset( double scale, double offset )
+{
+	this->scale = scale;
+	this->offset = offset;
 }

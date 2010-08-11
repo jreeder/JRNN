@@ -35,6 +35,7 @@ namespace JRNN {
         void SetOutNode(NodePtr newOutnode);
         void SetLocked(bool lock);
         void SetWeight(double weight);
+		void SetScaleAndOffset(double scale, double offset);
         void Disconnect();
 		void Disconnect(string nodeName);
 		double GetWeight() const;
@@ -72,13 +73,15 @@ namespace JRNN {
         double weight;
         double value;
         double weightedValue;
+		double scale;
+		double offset;
         bool locked;
         string name;
         NodePtr inNode;
         NodePtr outNode;
 		static RandomGenerator cRand;
 
-        double RandomWeight(double scale = 1, double offset = 0.5);
+        double RandomWeight();
 
 
     };

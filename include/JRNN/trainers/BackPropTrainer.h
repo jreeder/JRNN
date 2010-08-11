@@ -18,7 +18,7 @@ namespace JRNN {
 class BackPropTrainer {
 public:
     BackPropTrainer(FFMLPNetPtr network, DatasetPtr inDataSet, double learningRate);
-    BackPropTrainer(const BackPropTrainer& orig);
+    //BackPropTrainer(const BackPropTrainer& orig);
     virtual ~BackPropTrainer();
     double TrainEpoch();
     double TestOnData(Dataset::datatype type);
@@ -36,6 +36,7 @@ private:
     static const int continueEpochs = 50; //Number of epochs to continue looking for improvement on validation set.
     int trainingIndex;
     double learningRate;
+	double primeOffset;
     doubles MSE_Rec;
     doubles vMSE_Rec;
     DatasetPtr data;

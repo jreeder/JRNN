@@ -14,6 +14,14 @@ namespace JRNN {
 		OUT
 	};
 
+	inline vecDouble VecAddScalar(vecDouble& vector, double scalar){
+		vecDouble result(vector.size());
+		for (unsigned int i = 0; i < vector.size(); i++){
+			result[i] = vector[i] + scalar;
+		}
+		return result;
+	}
+
 	inline vecDouble SquareVec(vecDouble& vector){
 		//vecDouble::iterator it = vector.begin();
 		vecDouble result(vector.size());
@@ -126,6 +134,7 @@ namespace JRNN {
 			}
 			else{
 				storage[name] = vecDouble(vecSize);
+				FillVec(storage[name], 0.0);
 				return storage[name];
 			}
 			

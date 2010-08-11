@@ -85,17 +85,17 @@ namespace JRNN {
 	private:
 		static const string _type;
 		static double _activate(double sum){ 
-			/*if  ( sum < -15.0 )
-				return 0.000001;
+			if  ( sum < -15.0 )
+				return 0.0;
 			if  ( sum > 15.0 )
-				return 0.999999;*/
+				return 1.0;
 			double retVal = ( 1.0 / (1.0 + exp( -sum  )) );
-			if (retVal == 0) {
-				retVal = 0.01;
-			}
-			else if (retVal == 1){
-				retVal = 0.99;
-			}
+			//if (retVal == 0) { //Confuses correlation stuff add prime in trainers that need it. 
+			//	retVal = 0.01;
+			//}
+			//else if (retVal == 1){
+			//	retVal = 0.99;
+			//}
 			return  retVal;
 		}
 		static double _prime(double value, double sum){
