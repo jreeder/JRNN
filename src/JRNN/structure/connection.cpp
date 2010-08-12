@@ -9,7 +9,7 @@
 
 using namespace JRNN;
 
-RandomGenerator Connection::cRand = RandomGenerator();
+RandomGenerator01 Connection::cRand = RandomGenerator01();
 
 Connection::Connection() {
 	scale = 2;

@@ -62,8 +62,8 @@ int main(int argc, char* argv[])
 	strings view;
 	view.push_back("task-1");
 	view.push_back("task-2");
-	view.push_back("task-3");
-	view.push_back("task-4");
+	view.push_back("task-5");
+	view.push_back("task-6");
 
 	mds->SetView(view);
 	mds->DistData(numTrain, numVal, numTest);

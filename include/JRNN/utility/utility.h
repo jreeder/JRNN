@@ -165,17 +165,28 @@ namespace JRNN {
 		return outstring;
 	}
 
-	class RandomGenerator {
+	class RandomGenerator01 : public StaticRange {
 	public:
-		rangeType gen;
-		RandomGenerator() : dist(), randgen(gen,dist) {}
+		RandomGenerator01() : dist(), randgen(gen,dist) {}
 		double operator ()() {
 			return randgen();
 		}
 	private:
 		UniformDist01 dist;
-		RandGenerator randgen;
+		RandGenerator01 randgen;
 	};
+
+	class RandomGeneratorInt : public StaticRange {
+	public:
+		RandomGeneratorInt(long start, long end) : dist(start, end), randgen(gen,dist){}
+		long operator ()() {
+			return randgen();
+		}
+	private:
+		UniformDistInt dist;
+		RandGeneratorInt randgen;
+	};
+
 }
 
 #endif

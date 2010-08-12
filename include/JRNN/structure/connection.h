@@ -79,7 +79,7 @@ namespace JRNN {
         string name;
         NodePtr inNode;
         NodePtr outNode;
-		static RandomGenerator cRand;
+		static RandomGenerator01 cRand;
 
         double RandomWeight();
 

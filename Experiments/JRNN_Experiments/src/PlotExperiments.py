@@ -19,15 +19,15 @@ def CalcMeanAndError(array, confidence = 0.95):
     h = se * scistats.t._ppf((1+confidence)/2.0, n-1)
     return m, h
 
-if __name__ == "__main__":
-    os.chdir(outpath + "BP Test 5/")
+def MakeGraphs(title, fignum, folder1, folder1name, folder2, folder2name):
+    os.chdir(outpath + folder1)
     filelist = os.listdir(os.curdir)
     bpdata = {}
     for file in filelist:
         tmpBundle = pe.ParseFile(file)
         bpdata[tmpBundle.dsname] = tmpBundle
 
-    os.chdir(outpath + "CC Test 1/")
+    os.chdir(outpath + folder2)
     filelist = os.listdir(os.curdir)
     ccdata = {}
     for file in filelist:
@@ -59,14 +59,14 @@ if __name__ == "__main__":
     taskerrbars = [task1errerr, task2errerr, task3errerr, task4errerr]
     xticks = ["Task 1", "Task 2", "Task 3", "Task 4"]
 
-    plt.figure(1)
+    plt.figure(fignum)
 
     locs = np.arange(1, len(taskavgerrs)+1)
     width = 0.2
     plt.bar(locs, taskavgerrs, yerr=taskerrbars, color="red", width=width, \
-    antialiased=True, label="BP STL")
-    
-    
+    antialiased=True, label=folder1name + " STL")
+
+
 
     mtltask1bperr = np.array([v['task-0'] for v in bpdata["band-task1-4"].errors])
     mtlt1avge, mtlt1eb = CalcMeanAndError(mtltask1bperr)
@@ -83,7 +83,7 @@ if __name__ == "__main__":
     mtleb = [mtlt1eb, mtlt2eb, mtlt3eb, mtlt4eb]
 
     plt.bar(locs+width, mtlavgerr, yerr=mtleb, color="cyan", width=width, \
-    antialiased=True, label="BP MTL")
+    antialiased=True, label=folder1name + " MTL")
 
 #    plt.figure(2)
 
@@ -111,7 +111,7 @@ if __name__ == "__main__":
     cctaskerrbars = [cctask1errerr, cctask2errerr, cctask3errerr, cctask4errerr]
 
     plt.bar(locs+2*width, cctaskavgerrs, yerr=cctaskerrbars, color="red", width=width, \
-    antialiased=True, hatch="/", label="CC STL")
+    antialiased=True, hatch="/", label=folder2name + " STL")
 
     ccmtltask1bperr = np.array([v['task-0'] for v in ccdata["band-task1-4"].errors])
     ccmtlt1avge, ccmtlt1eb = CalcMeanAndError(ccmtltask1bperr)
@@ -128,9 +128,16 @@ if __name__ == "__main__":
     ccmtleb = [ccmtlt1eb, ccmtlt2eb, ccmtlt3eb, ccmtlt4eb]
 
     plt.bar(locs+3*width, ccmtlavgerr, yerr=ccmtleb, color="cyan", width=width, \
-    antialiased=True, hatch="/", label="CC MTL")
+    antialiased=True, hatch="/", label=folder2name + " MTL")
     plt.xticks(locs + 2*width, xticks)
+    plt.title(title)
     plt.legend()
+
+if __name__ == "__main__":
+
+    MakeGraphs("Experiment 1", 1, "BP Test 1/", "BP", "CC Test 1/", "CC")
+    MakeGraphs("Experiment 2", 2, "BP Test 2/", "BP", "CC Test 2/", "CC")
+    MakeGraphs("Experiment 3", 3, "BP Test 3/", "BP", "CC Test 3/", "CC")
     plt.show()
     #values = pe.ParseFile("band-task3-BP-tr50-v100-t500-hid4-uvT-r60.txt")
 #    print values.type

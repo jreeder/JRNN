@@ -69,7 +69,14 @@ namespace JRNN {
 	const double UNKNOWN = std::numeric_limits<double>::max();
 	typedef boost::mt19937 rangeType;
 	typedef boost::uniform_01<double> UniformDist01;
-	typedef boost::variate_generator<rangeType&, UniformDist01> RandGenerator;
+	typedef boost::uniform_int<long> UniformDistInt;
+	typedef boost::variate_generator<rangeType&, UniformDist01> RandGenerator01;
+	typedef boost::variate_generator<rangeType&, UniformDistInt> RandGeneratorInt;
+
+	class StaticRange {
+	public:
+		static rangeType gen;
+	};
 }
 
 using boost::lexical_cast;
