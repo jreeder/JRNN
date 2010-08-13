@@ -18,14 +18,15 @@ def ProcessExperiment(argDict):
     numRuns = argDict['numRuns']
     expFold = argDict['expFold']
     impPerc = argDict['impPerc']
+    useVal = argDict['useVal']
 
     if not os.path.exists(outpath2 + expFold):
         os.makedirs(outpath2 + expFold)
 
     os.chdir(outpath2 + expFold)
 
-    cmd = "%s \"%s\" %s %s %s %s %s %s" % (jrnn_exe2, datapath, numTrain, numVal,\
-        numTest, numHidPerOut, numRuns, impPerc)
+    cmd = "%s \"%s\" %s %s %s %s %s %s %s" % (jrnn_exe2, datapath, numTrain, numVal,\
+        numTest, numHidPerOut, numRuns, impPerc, useVal)
 
     (stdout, stderr) = Popen(cmd, stdout = PIPE).communicate()
     if len(stdout) > 0: print stdout

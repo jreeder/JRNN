@@ -6,9 +6,15 @@ __date__ ="$Aug 9, 2010 4:42:52 PM$"
 
 experiments = [\
     {'numTrain':50,'numVal':100, 'numTest':500, 'numHidPerOut':4, 'numRuns':60,\
-    'impPerc':0.8,'expFold':'NormSize'},\
+    'impPerc':0.8,'expFold':'NormSize', 'useVal':'T'},\
     {'numTrain':50,'numVal':100, 'numTest':500, 'numHidPerOut':1, 'numRuns':60,\
-    'impPerc':0.8,'expFold':'SmallSize'},\
+    'impPerc':0.8,'expFold':'SmallSize', 'useVal':'T'},\
     {'numTrain':50,'numVal':100, 'numTest':500, 'numHidPerOut':8, 'numRuns':60,\
-    'impPerc':0.8,'expFold':'LargeSize'}
+    'impPerc':0.8,'expFold':'LargeSize', 'useVal':'T'},\
+    {'numTrain':50,'numVal':100, 'numTest':500, 'numHidPerOut':4, 'numRuns':60,\
+    'impPerc':0.8,'expFold':'NormSizeNoVal', 'useVal':'F'},\
+    {'numTrain':50,'numVal':100, 'numTest':500, 'numHidPerOut':1, 'numRuns':60,\
+    'impPerc':0.8,'expFold':'SmallSizeNoVal', 'useVal':'F'},\
+    {'numTrain':50,'numVal':100, 'numTest':500, 'numHidPerOut':8, 'numRuns':60,\
+    'impPerc':0.8,'expFold':'LargeSizeNoVal', 'useVal':'F'}
 ]
