@@ -9,16 +9,9 @@ import os
 from config import *
 from itertools import izip
 import ParseExperimentFile as pe
-import scipy.stats as scistats
 import numpy as np
 import matplotlib.pyplot as plt
 
-
-def CalcMeanAndError(array, confidence = 0.95):
-    n = len(array)
-    m, se = np.mean(array), scistats.sem(array)
-    h = se * scistats.t._ppf((1+confidence)/2.0, n-1)
-    return m, h
 
 def MakeGraphs(title, fignum, folder1, folder1name, folder2, folder2name):
     os.chdir(outpath + folder1)

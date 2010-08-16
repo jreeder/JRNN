@@ -22,7 +22,7 @@ AS=as
 
 # Macros
 CND_PLATFORM=GNU-MacOSX
-CND_CONF=Release
+CND_CONF=Debug
 CND_DISTDIR=dist
 
 # Include project Makefile
@@ -33,7 +33,7 @@ OBJECTDIR=build/${CND_CONF}/${CND_PLATFORM}
 
 # Object Files
 OBJECTFILES= \
-	${OBJECTDIR}/_ext/65608049/main.o
+	${OBJECTDIR}/_ext/2033849469/JRNN_test2.o
 
 
 # C Compiler Flags
@@ -50,41 +50,37 @@ FFLAGS=
 ASFLAGS=
 
 # Link Libraries and Options
-LDLIBSOPTIONS=../JRNN/dist/Debug/GNU-MacOSX/libjrnn.a ../JRNN/dist/Release/GNU-MacOSX/libjrnn.a
+LDLIBSOPTIONS=-L../../../../boost_1_43_0/stage/lib ../JRNN/dist/Debug/GNU-MacOSX/libjrnn.a ../JRNN/dist/Release/GNU-MacOSX/libjrnn.a -lboost_thread
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
-	"${MAKE}"  -f nbproject/Makefile-Release.mk dist/Release/GNU-MacOSX/jrnn_test
+	"${MAKE}"  -f nbproject/Makefile-Debug.mk dist/Debug/GNU-MacOSX/jrnn_test2
 
-dist/Release/GNU-MacOSX/jrnn_test: ../JRNN/dist/Debug/GNU-MacOSX/libjrnn.a
+dist/Debug/GNU-MacOSX/jrnn_test2: ../JRNN/dist/Debug/GNU-MacOSX/libjrnn.a
 
-dist/Release/GNU-MacOSX/jrnn_test: ../JRNN/dist/Release/GNU-MacOSX/libjrnn.a
+dist/Debug/GNU-MacOSX/jrnn_test2: ../JRNN/dist/Release/GNU-MacOSX/libjrnn.a
 
-dist/Release/GNU-MacOSX/jrnn_test: ${OBJECTFILES}
-	${MKDIR} -p dist/Release/GNU-MacOSX
-	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/jrnn_test ${OBJECTFILES} ${LDLIBSOPTIONS} 
+dist/Debug/GNU-MacOSX/jrnn_test2: ${OBJECTFILES}
+	${MKDIR} -p dist/Debug/GNU-MacOSX
+	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/jrnn_test2 ${OBJECTFILES} ${LDLIBSOPTIONS} 
 
-${OBJECTDIR}/_ext/65608049/main.o: ../../../src/JRNN_test/main.cpp 
-	${MKDIR} -p ${OBJECTDIR}/_ext/65608049
+${OBJECTDIR}/_ext/2033849469/JRNN_test2.o: ../../../src/JRNN_test2/JRNN_test2.cpp 
+	${MKDIR} -p ${OBJECTDIR}/_ext/2033849469
 	${RM} $@.d
-	$(COMPILE.cc) -O2 -I../../../include/JRNN -I../../../../boost_1_43_0 -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/65608049/main.o ../../../src/JRNN_test/main.cpp
+	$(COMPILE.cc) -g -I../../../include/JRNN -I../../../../boost_1_43_0 -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/2033849469/JRNN_test2.o ../../../src/JRNN_test2/JRNN_test2.cpp
 
 # Subprojects
 .build-subprojects:
 	cd ../JRNN && ${MAKE}  -f Makefile CONF=Debug
 	cd ../JRNN && ${MAKE}  -f Makefile CONF=Release
-	cd ../JRNN && ${MAKE}  -f Makefile CONF=Debug
-	cd ../JRNN && ${MAKE}  -f Makefile CONF=Release
 
 # Clean Targets
 .clean-conf: ${CLEAN_SUBPROJECTS}
-	${RM} -r build/Release
-	${RM} dist/Release/GNU-MacOSX/jrnn_test
+	${RM} -r build/Debug
+	${RM} dist/Debug/GNU-MacOSX/jrnn_test2
 
 # Subprojects
 .clean-subprojects:
-	cd ../JRNN && ${MAKE}  -f Makefile CONF=Debug clean
-	cd ../JRNN && ${MAKE}  -f Makefile CONF=Release clean
 	cd ../JRNN && ${MAKE}  -f Makefile CONF=Debug clean
 	cd ../JRNN && ${MAKE}  -f Makefile CONF=Release clean
 

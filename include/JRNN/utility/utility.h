@@ -149,7 +149,7 @@ namespace JRNN {
 
 	template<class T>
 	inline string StringFromVector(T& inVector){
-		T::iterator it = inVector.begin();
+		typename T::iterator it = inVector.begin();
 		string outstring = "";
 		bool firsttime = true;
 		while (it != inVector.end()){

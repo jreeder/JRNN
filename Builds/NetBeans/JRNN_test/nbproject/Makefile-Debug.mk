@@ -10,6 +10,8 @@
 # Environment
 MKDIR=mkdir
 CP=cp
+GREP=grep
+NM=nm
 CCADMIN=CCadmin
 RANLIB=ranlib
 CC=gcc
@@ -31,7 +33,8 @@ OBJECTDIR=build/${CND_CONF}/${CND_PLATFORM}
 
 # Object Files
 OBJECTFILES= \
-	${OBJECTDIR}/_ext/_DOTDOT/_DOTDOT/_DOTDOT/src/JRNN_test/main.o
+	${OBJECTDIR}/_ext/65608049/main.o
+
 
 # C Compiler Flags
 CFLAGS=
@@ -51,7 +54,7 @@ LDLIBSOPTIONS=../JRNN/dist/Debug/GNU-MacOSX/libjrnn.a ../JRNN/dist/Release/GNU-M
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
-	${MAKE}  -f nbproject/Makefile-Debug.mk dist/Debug/GNU-MacOSX/jrnn_test
+	"${MAKE}"  -f nbproject/Makefile-Debug.mk dist/Debug/GNU-MacOSX/jrnn_test
 
 dist/Debug/GNU-MacOSX/jrnn_test: ../JRNN/dist/Debug/GNU-MacOSX/libjrnn.a
 
@@ -61,10 +64,10 @@ dist/Debug/GNU-MacOSX/jrnn_test: ${OBJECTFILES}
 	${MKDIR} -p dist/Debug/GNU-MacOSX
 	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/jrnn_test ${OBJECTFILES} ${LDLIBSOPTIONS} 
 
-${OBJECTDIR}/_ext/_DOTDOT/_DOTDOT/_DOTDOT/src/JRNN_test/main.o: nbproject/Makefile-${CND_CONF}.mk ../../../src/JRNN_test/main.cpp 
-	${MKDIR} -p ${OBJECTDIR}/_ext/_DOTDOT/_DOTDOT/_DOTDOT/src/JRNN_test
+${OBJECTDIR}/_ext/65608049/main.o: ../../../src/JRNN_test/main.cpp 
+	${MKDIR} -p ${OBJECTDIR}/_ext/65608049
 	${RM} $@.d
-	$(COMPILE.cc) -g -I../../../include/JRNN -I../../../../boost_1_43_0 -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/_DOTDOT/_DOTDOT/_DOTDOT/src/JRNN_test/main.o ../../../src/JRNN_test/main.cpp
+	$(COMPILE.cc) -g -I../../../include/JRNN -I../../../../boost_1_43_0 -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/65608049/main.o ../../../src/JRNN_test/main.cpp
 
 # Subprojects
 .build-subprojects:

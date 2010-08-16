@@ -3,20 +3,29 @@
   <logicalFolder name="root" displayName="root" projectFiles="true">
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
-                   projectFiles="true">
+                   projectFiles="true"
+                   kind="SOURCE_LOGICAL_FOLDER">
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
                    displayName="Resource Files"
-                   projectFiles="true">
+                   projectFiles="true"
+                   kind="SOURCE_LOGICAL_FOLDER">
     </logicalFolder>
     <logicalFolder name="SourceFiles"
                    displayName="Source Files"
-                   projectFiles="true">
-      <itemPath>../../../src/JRNN_test/main.cpp</itemPath>
+                   projectFiles="true"
+                   kind="SOURCE_LOGICAL_FOLDER">
+      <itemPath>../../../src/JRNN_test2/JRNN_test2.cpp</itemPath>
+    </logicalFolder>
+    <logicalFolder name="TestFiles"
+                   displayName="Test Files"
+                   projectFiles="false"
+                   kind="TEST_LOGICAL_FOLDER">
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
-                   projectFiles="false">
+                   projectFiles="false"
+                   kind="IMPORTANT_FILES_FOLDER">
       <itemPath>Makefile</itemPath>
     </logicalFolder>
   </logicalFolder>
@@ -36,6 +45,9 @@
           </incDir>
         </ccTool>
         <linkerTool>
+          <linkerAddLib>
+            <pElem>../../../../boost_1_43_0/stage/lib</pElem>
+          </linkerAddLib>
           <linkerLibItems>
             <linkerLibProjectItem>
               <makeArtifact PL="../JRNN"
@@ -61,6 +73,7 @@
                             OP="dist/Release/GNU-MacOSX/libjrnn.a">
               </makeArtifact>
             </linkerLibProjectItem>
+            <linkerLibLibItem>boost_thread</linkerLibLibItem>
           </linkerLibItems>
         </linkerTool>
         <requiredProjects>
@@ -68,7 +81,7 @@
                         CT="3"
                         CN="Debug"
                         AC="true"
-                        BL="true"
+                        BL="false"
                         WD="../JRNN"
                         BC="${MAKE}  -f Makefile CONF=Debug"
                         CC="${MAKE}  -f Makefile CONF=Debug clean"
@@ -78,7 +91,7 @@
                         CT="3"
                         CN="Release"
                         AC="false"
-                        BL="true"
+                        BL="false"
                         WD="../JRNN"
                         BC="${MAKE}  -f Makefile CONF=Release"
                         CC="${MAKE}  -f Makefile CONF=Release clean"
@@ -100,20 +113,26 @@
         <ccTool>
           <developmentMode>5</developmentMode>
           <incDir>
-            <pElem>../../../include/JRNN</pElem>
             <pElem>../../../../boost_1_43_0</pElem>
+            <pElem>../../../include/JRNN</pElem>
           </incDir>
         </ccTool>
         <fortranCompilerTool>
           <developmentMode>5</developmentMode>
         </fortranCompilerTool>
+        <asmTool>
+          <developmentMode>5</developmentMode>
+        </asmTool>
         <linkerTool>
+          <linkerAddLib>
+            <pElem>../../../../boost_1_43_0/stage/lib</pElem>
+          </linkerAddLib>
           <linkerLibItems>
             <linkerLibProjectItem>
               <makeArtifact PL="../JRNN"
                             CT="3"
                             CN="Debug"
-                            AC="true"
+                            AC="false"
                             BL="true"
                             WD="../JRNN"
                             BC="${MAKE}  -f Makefile CONF=Debug"
@@ -125,7 +144,7 @@
               <makeArtifact PL="../JRNN"
                             CT="3"
                             CN="Release"
-                            AC="false"
+                            AC="true"
                             BL="true"
                             WD="../JRNN"
                             BC="${MAKE}  -f Makefile CONF=Release"
@@ -133,24 +152,15 @@
                             OP="dist/Release/GNU-MacOSX/libjrnn.a">
               </makeArtifact>
             </linkerLibProjectItem>
+            <linkerLibLibItem>boost_thread</linkerLibLibItem>
           </linkerLibItems>
         </linkerTool>
         <requiredProjects>
           <makeArtifact PL="../JRNN"
                         CT="3"
-                        CN="Debug"
-                        AC="true"
-                        BL="true"
-                        WD="../JRNN"
-                        BC="${MAKE}  -f Makefile CONF=Debug"
-                        CC="${MAKE}  -f Makefile CONF=Debug clean"
-                        OP="dist/Debug/GNU-MacOSX/libjrnn.a">
-          </makeArtifact>
-          <makeArtifact PL="../JRNN"
-                        CT="3"
                         CN="Release"
                         AC="false"
-                        BL="true"
+                        BL="false"
                         WD="../JRNN"
                         BC="${MAKE}  -f Makefile CONF=Release"
                         CC="${MAKE}  -f Makefile CONF=Release clean"

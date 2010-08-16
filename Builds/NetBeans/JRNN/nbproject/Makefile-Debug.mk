@@ -10,6 +10,8 @@
 # Environment
 MKDIR=mkdir
 CP=cp
+GREP=grep
+NM=nm
 CCADMIN=CCadmin
 RANLIB=ranlib
 CC=gcc
@@ -31,16 +33,21 @@ OBJECTDIR=build/${CND_CONF}/${CND_PLATFORM}
 
 # Object Files
 OBJECTFILES= \
-	${OBJECTDIR}/_ext/_DOTDOT/_DOTDOT/_DOTDOT/src/JRNN/structure/connection.o \
-	${OBJECTDIR}/_ext/_DOTDOT/_DOTDOT/_DOTDOT/src/JRNN/trainers/CCTrainer.o \
-	${OBJECTDIR}/_ext/_DOTDOT/_DOTDOT/_DOTDOT/src/JRNN/structure/node.o \
-	${OBJECTDIR}/_ext/_DOTDOT/_DOTDOT/_DOTDOT/src/JRNN/utility/nodebuffer.o \
-	${OBJECTDIR}/_ext/_DOTDOT/_DOTDOT/_DOTDOT/src/JRNN/structure/layer.o \
-	${OBJECTDIR}/_ext/_DOTDOT/_DOTDOT/_DOTDOT/src/JRNN/trainers/BackPropTrainer.o \
-	${OBJECTDIR}/_ext/_DOTDOT/_DOTDOT/_DOTDOT/src/JRNN/structure/network.o \
-	${OBJECTDIR}/_ext/_DOTDOT/_DOTDOT/_DOTDOT/src/JRNN/trainers/RPropTrainer.o \
-	${OBJECTDIR}/_ext/_DOTDOT/_DOTDOT/_DOTDOT/src/JRNN/utility/dataset.o \
-	${OBJECTDIR}/_ext/_DOTDOT/_DOTDOT/_DOTDOT/src/JRNN/JRNN.o
+	${OBJECTDIR}/_ext/607673378/JRNN.o \
+	${OBJECTDIR}/_ext/384699334/connection.o \
+	${OBJECTDIR}/_ext/1976599979/BackPropTrainer.o \
+	${OBJECTDIR}/_ext/1062213505/activationfunctions.o \
+	${OBJECTDIR}/_ext/384699334/layer.o \
+	${OBJECTDIR}/_ext/2013951826/CCNetwork.o \
+	${OBJECTDIR}/_ext/1062213505/mtldataset.o \
+	${OBJECTDIR}/_ext/384699334/network.o \
+	${OBJECTDIR}/_ext/1062213505/nodebuffer.o \
+	${OBJECTDIR}/_ext/1976599979/CCTrainer.o \
+	${OBJECTDIR}/_ext/1062213505/dataset.o \
+	${OBJECTDIR}/_ext/1976599979/RPropTrainer.o \
+	${OBJECTDIR}/_ext/384699334/node.o \
+	${OBJECTDIR}/_ext/2013951826/FFMLPNetwork.o
+
 
 # C Compiler Flags
 CFLAGS=
@@ -60,63 +67,83 @@ LDLIBSOPTIONS=
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
-	${MAKE}  -f nbproject/Makefile-Debug.mk dist/Debug/GNU-MacOSX/libjrnn.a
+	"${MAKE}"  -f nbproject/Makefile-Debug.mk dist/Debug/GNU-MacOSX/libjrnn.a
 
 dist/Debug/GNU-MacOSX/libjrnn.a: ${OBJECTFILES}
 	${MKDIR} -p dist/Debug/GNU-MacOSX
 	${RM} dist/Debug/GNU-MacOSX/libjrnn.a
-	${AR} rv ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libjrnn.a ${OBJECTFILES} 
+	${AR} -rv ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libjrnn.a ${OBJECTFILES} 
 	$(RANLIB) dist/Debug/GNU-MacOSX/libjrnn.a
 
-${OBJECTDIR}/_ext/_DOTDOT/_DOTDOT/_DOTDOT/src/JRNN/structure/connection.o: nbproject/Makefile-${CND_CONF}.mk ../../../src/JRNN/structure/connection.cpp 
-	${MKDIR} -p ${OBJECTDIR}/_ext/_DOTDOT/_DOTDOT/_DOTDOT/src/JRNN/structure
+${OBJECTDIR}/_ext/607673378/JRNN.o: ../../../src/JRNN/JRNN.cpp 
+	${MKDIR} -p ${OBJECTDIR}/_ext/607673378
 	${RM} $@.d
-	$(COMPILE.cc) -g -I../../../../boost_1_43_0 -I../../../include/JRNN -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/_DOTDOT/_DOTDOT/_DOTDOT/src/JRNN/structure/connection.o ../../../src/JRNN/structure/connection.cpp
+	$(COMPILE.cc) -g -I../../../../boost_1_43_0 -I../../../include/JRNN -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/607673378/JRNN.o ../../../src/JRNN/JRNN.cpp
 
-${OBJECTDIR}/_ext/_DOTDOT/_DOTDOT/_DOTDOT/src/JRNN/trainers/CCTrainer.o: nbproject/Makefile-${CND_CONF}.mk ../../../src/JRNN/trainers/CCTrainer.cpp 
-	${MKDIR} -p ${OBJECTDIR}/_ext/_DOTDOT/_DOTDOT/_DOTDOT/src/JRNN/trainers
+${OBJECTDIR}/_ext/384699334/connection.o: ../../../src/JRNN/structure/connection.cpp 
+	${MKDIR} -p ${OBJECTDIR}/_ext/384699334
 	${RM} $@.d
-	$(COMPILE.cc) -g -I../../../../boost_1_43_0 -I../../../include/JRNN -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/_DOTDOT/_DOTDOT/_DOTDOT/src/JRNN/trainers/CCTrainer.o ../../../src/JRNN/trainers/CCTrainer.cpp
+	$(COMPILE.cc) -g -I../../../../boost_1_43_0 -I../../../include/JRNN -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/384699334/connection.o ../../../src/JRNN/structure/connection.cpp
 
-${OBJECTDIR}/_ext/_DOTDOT/_DOTDOT/_DOTDOT/src/JRNN/structure/node.o: nbproject/Makefile-${CND_CONF}.mk ../../../src/JRNN/structure/node.cpp 
-	${MKDIR} -p ${OBJECTDIR}/_ext/_DOTDOT/_DOTDOT/_DOTDOT/src/JRNN/structure
+${OBJECTDIR}/_ext/1976599979/BackPropTrainer.o: ../../../src/JRNN/trainers/BackPropTrainer.cpp 
+	${MKDIR} -p ${OBJECTDIR}/_ext/1976599979
 	${RM} $@.d
-	$(COMPILE.cc) -g -I../../../../boost_1_43_0 -I../../../include/JRNN -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/_DOTDOT/_DOTDOT/_DOTDOT/src/JRNN/structure/node.o ../../../src/JRNN/structure/node.cpp
+	$(COMPILE.cc) -g -I../../../../boost_1_43_0 -I../../../include/JRNN -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/1976599979/BackPropTrainer.o ../../../src/JRNN/trainers/BackPropTrainer.cpp
 
-${OBJECTDIR}/_ext/_DOTDOT/_DOTDOT/_DOTDOT/src/JRNN/utility/nodebuffer.o: nbproject/Makefile-${CND_CONF}.mk ../../../src/JRNN/utility/nodebuffer.cpp 
-	${MKDIR} -p ${OBJECTDIR}/_ext/_DOTDOT/_DOTDOT/_DOTDOT/src/JRNN/utility
+${OBJECTDIR}/_ext/1062213505/activationfunctions.o: ../../../src/JRNN/utility/activationfunctions.cpp 
+	${MKDIR} -p ${OBJECTDIR}/_ext/1062213505
 	${RM} $@.d
-	$(COMPILE.cc) -g -I../../../../boost_1_43_0 -I../../../include/JRNN -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/_DOTDOT/_DOTDOT/_DOTDOT/src/JRNN/utility/nodebuffer.o ../../../src/JRNN/utility/nodebuffer.cpp
+	$(COMPILE.cc) -g -I../../../../boost_1_43_0 -I../../../include/JRNN -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/1062213505/activationfunctions.o ../../../src/JRNN/utility/activationfunctions.cpp
 
-${OBJECTDIR}/_ext/_DOTDOT/_DOTDOT/_DOTDOT/src/JRNN/structure/layer.o: nbproject/Makefile-${CND_CONF}.mk ../../../src/JRNN/structure/layer.cpp 
-	${MKDIR} -p ${OBJECTDIR}/_ext/_DOTDOT/_DOTDOT/_DOTDOT/src/JRNN/structure
+${OBJECTDIR}/_ext/384699334/layer.o: ../../../src/JRNN/structure/layer.cpp 
+	${MKDIR} -p ${OBJECTDIR}/_ext/384699334
 	${RM} $@.d
-	$(COMPILE.cc) -g -I../../../../boost_1_43_0 -I../../../include/JRNN -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/_DOTDOT/_DOTDOT/_DOTDOT/src/JRNN/structure/layer.o ../../../src/JRNN/structure/layer.cpp
+	$(COMPILE.cc) -g -I../../../../boost_1_43_0 -I../../../include/JRNN -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/384699334/layer.o ../../../src/JRNN/structure/layer.cpp
 
-${OBJECTDIR}/_ext/_DOTDOT/_DOTDOT/_DOTDOT/src/JRNN/trainers/BackPropTrainer.o: nbproject/Makefile-${CND_CONF}.mk ../../../src/JRNN/trainers/BackPropTrainer.cpp 
-	${MKDIR} -p ${OBJECTDIR}/_ext/_DOTDOT/_DOTDOT/_DOTDOT/src/JRNN/trainers
+${OBJECTDIR}/_ext/2013951826/CCNetwork.o: ../../../src/JRNN/networks/CCNetwork.cpp 
+	${MKDIR} -p ${OBJECTDIR}/_ext/2013951826
 	${RM} $@.d
-	$(COMPILE.cc) -g -I../../../../boost_1_43_0 -I../../../include/JRNN -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/_DOTDOT/_DOTDOT/_DOTDOT/src/JRNN/trainers/BackPropTrainer.o ../../../src/JRNN/trainers/BackPropTrainer.cpp
+	$(COMPILE.cc) -g -I../../../../boost_1_43_0 -I../../../include/JRNN -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/2013951826/CCNetwork.o ../../../src/JRNN/networks/CCNetwork.cpp
 
-${OBJECTDIR}/_ext/_DOTDOT/_DOTDOT/_DOTDOT/src/JRNN/structure/network.o: nbproject/Makefile-${CND_CONF}.mk ../../../src/JRNN/structure/network.cpp 
-	${MKDIR} -p ${OBJECTDIR}/_ext/_DOTDOT/_DOTDOT/_DOTDOT/src/JRNN/structure
+${OBJECTDIR}/_ext/1062213505/mtldataset.o: ../../../src/JRNN/utility/mtldataset.cpp 
+	${MKDIR} -p ${OBJECTDIR}/_ext/1062213505
 	${RM} $@.d
-	$(COMPILE.cc) -g -I../../../../boost_1_43_0 -I../../../include/JRNN -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/_DOTDOT/_DOTDOT/_DOTDOT/src/JRNN/structure/network.o ../../../src/JRNN/structure/network.cpp
+	$(COMPILE.cc) -g -I../../../../boost_1_43_0 -I../../../include/JRNN -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/1062213505/mtldataset.o ../../../src/JRNN/utility/mtldataset.cpp
 
-${OBJECTDIR}/_ext/_DOTDOT/_DOTDOT/_DOTDOT/src/JRNN/trainers/RPropTrainer.o: nbproject/Makefile-${CND_CONF}.mk ../../../src/JRNN/trainers/RPropTrainer.cpp 
-	${MKDIR} -p ${OBJECTDIR}/_ext/_DOTDOT/_DOTDOT/_DOTDOT/src/JRNN/trainers
+${OBJECTDIR}/_ext/384699334/network.o: ../../../src/JRNN/structure/network.cpp 
+	${MKDIR} -p ${OBJECTDIR}/_ext/384699334
 	${RM} $@.d
-	$(COMPILE.cc) -g -I../../../../boost_1_43_0 -I../../../include/JRNN -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/_DOTDOT/_DOTDOT/_DOTDOT/src/JRNN/trainers/RPropTrainer.o ../../../src/JRNN/trainers/RPropTrainer.cpp
+	$(COMPILE.cc) -g -I../../../../boost_1_43_0 -I../../../include/JRNN -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/384699334/network.o ../../../src/JRNN/structure/network.cpp
 
-${OBJECTDIR}/_ext/_DOTDOT/_DOTDOT/_DOTDOT/src/JRNN/utility/dataset.o: nbproject/Makefile-${CND_CONF}.mk ../../../src/JRNN/utility/dataset.cpp 
-	${MKDIR} -p ${OBJECTDIR}/_ext/_DOTDOT/_DOTDOT/_DOTDOT/src/JRNN/utility
+${OBJECTDIR}/_ext/1062213505/nodebuffer.o: ../../../src/JRNN/utility/nodebuffer.cpp 
+	${MKDIR} -p ${OBJECTDIR}/_ext/1062213505
 	${RM} $@.d
-	$(COMPILE.cc) -g -I../../../../boost_1_43_0 -I../../../include/JRNN -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/_DOTDOT/_DOTDOT/_DOTDOT/src/JRNN/utility/dataset.o ../../../src/JRNN/utility/dataset.cpp
+	$(COMPILE.cc) -g -I../../../../boost_1_43_0 -I../../../include/JRNN -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/1062213505/nodebuffer.o ../../../src/JRNN/utility/nodebuffer.cpp
 
-${OBJECTDIR}/_ext/_DOTDOT/_DOTDOT/_DOTDOT/src/JRNN/JRNN.o: nbproject/Makefile-${CND_CONF}.mk ../../../src/JRNN/JRNN.cpp 
-	${MKDIR} -p ${OBJECTDIR}/_ext/_DOTDOT/_DOTDOT/_DOTDOT/src/JRNN
+${OBJECTDIR}/_ext/1976599979/CCTrainer.o: ../../../src/JRNN/trainers/CCTrainer.cpp 
+	${MKDIR} -p ${OBJECTDIR}/_ext/1976599979
 	${RM} $@.d
-	$(COMPILE.cc) -g -I../../../../boost_1_43_0 -I../../../include/JRNN -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/_DOTDOT/_DOTDOT/_DOTDOT/src/JRNN/JRNN.o ../../../src/JRNN/JRNN.cpp
+	$(COMPILE.cc) -g -I../../../../boost_1_43_0 -I../../../include/JRNN -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/1976599979/CCTrainer.o ../../../src/JRNN/trainers/CCTrainer.cpp
+
+${OBJECTDIR}/_ext/1062213505/dataset.o: ../../../src/JRNN/utility/dataset.cpp 
+	${MKDIR} -p ${OBJECTDIR}/_ext/1062213505
+	${RM} $@.d
+	$(COMPILE.cc) -g -I../../../../boost_1_43_0 -I../../../include/JRNN -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/1062213505/dataset.o ../../../src/JRNN/utility/dataset.cpp
+
+${OBJECTDIR}/_ext/1976599979/RPropTrainer.o: ../../../src/JRNN/trainers/RPropTrainer.cpp 
+	${MKDIR} -p ${OBJECTDIR}/_ext/1976599979
+	${RM} $@.d
+	$(COMPILE.cc) -g -I../../../../boost_1_43_0 -I../../../include/JRNN -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/1976599979/RPropTrainer.o ../../../src/JRNN/trainers/RPropTrainer.cpp
+
+${OBJECTDIR}/_ext/384699334/node.o: ../../../src/JRNN/structure/node.cpp 
+	${MKDIR} -p ${OBJECTDIR}/_ext/384699334
+	${RM} $@.d
+	$(COMPILE.cc) -g -I../../../../boost_1_43_0 -I../../../include/JRNN -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/384699334/node.o ../../../src/JRNN/structure/node.cpp
+
+${OBJECTDIR}/_ext/2013951826/FFMLPNetwork.o: ../../../src/JRNN/networks/FFMLPNetwork.cpp 
+	${MKDIR} -p ${OBJECTDIR}/_ext/2013951826
+	${RM} $@.d
+	$(COMPILE.cc) -g -I../../../../boost_1_43_0 -I../../../include/JRNN -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/2013951826/FFMLPNetwork.o ../../../src/JRNN/networks/FFMLPNetwork.cpp
 
 # Subprojects
 .build-subprojects:
