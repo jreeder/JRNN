@@ -47,7 +47,7 @@ namespace JRNN {
 		parms.cand.changeThreshold = 0.03;
 		
 		parms.nCand = numCandidates;
-		parms.indexThreshold = 0.1; //Index is the Sqrt of MSE so Mean Err
+		parms.indexThreshold = 0.05; //0.1 Index is the Sqrt of MSE so Mean Err
 		parms.scoreThreshold = 0.4;
 		out.conDeltas.clear();
 		out.conPSlopes.clear();
@@ -59,10 +59,10 @@ namespace JRNN {
 		int numOut = network->GetNumOut();
 		err.errors = vecDouble(numOut);
 		err.sumErrs = vecDouble(numOut);
-		err.measure = BITS;
+		err.measure = INDEX;
 		valErr.errors = vecDouble(numOut);
 		valErr.sumErrs = vecDouble(numOut);
-		valErr.measure = BITS;
+		valErr.measure = INDEX;
 		candCorr = hashedVecDoubleMap(numOut);
 		candPCorr = hashedVecDoubleMap(numOut);
 		ResetVars();

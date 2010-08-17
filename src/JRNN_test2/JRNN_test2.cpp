@@ -111,7 +111,7 @@ int main(int argc, char* argv[])
 	CCTrainer cc_stl(ccnet_stl, stl_ds, 8);
 	CCTrainer cc_mtl(ccnet_mtl, mtl_ds, 8, mtlPrimaryIndexes);
 	CCTrainer cc_mtl_ur(ccnet_mtl_ur, mtl_ds_ur, 8, mtlPrimaryIndexes);
-	
+
 	strings bpstlresults;
 	strings bpmtlresults;
 	strings bpmtlurresults;
