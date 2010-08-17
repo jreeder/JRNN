@@ -8,7 +8,16 @@ import os
 import ParseExperimentFile2 as pe
 import numpy as np
 import matplotlib.pyplot as plt
+from matplotlib.backends.backend_pdf import PdfPages
 from config import *
+
+expfigpath = figpath + "Exp 2/INDEX/"
+usesave=True
+
+def Save(name):
+    plt.savefig(expfigpath + name + ".pdf")
+    plt.savefig(expfigpath + name + ".eps")
+    plt.savefig(pp, format="pdf")
 
 def MakeGraphs(title, fignum, folder):
     print "StartFile"
@@ -94,7 +103,9 @@ def MakeGraphs(title, fignum, folder):
     plt.legend()
     plt.title(title + " Error")
     plt.xticks((locs + 3*(width/2)), xticks)
-    plt.ylabel("% Error")
+    plt.ylabel("Error Rate")
+
+    if usesave: Save(title + " Error")
 
     plt.figure(fignum+1)
 
@@ -120,6 +131,8 @@ def MakeGraphs(title, fignum, folder):
     plt.title(title + " Epochs")
     plt.xticks((locs + 3*(width/2)), xticks)
     plt.ylabel("# Epochs")
+    
+    if usesave: Save(title + " Epochs")
 
     plt.figure(fignum+2)
 
@@ -146,11 +159,21 @@ def MakeGraphs(title, fignum, folder):
     plt.xticks((locs + 3*(width/2)), xticks)
     plt.ylabel("Time (s)")
 
-
+    if usesave: Save(title + " Times")
 
 
     
 
 if __name__ == "__main__":
-    MakeGraphs("Test 1", 1, "NormSize")
-    plt.show()
+    if not os.path.exists(expfigpath):
+        os.makedirs(expfigpath)
+
+    if usesave: pp = PdfPages(expfigpath + "Collected Figures.pdf")
+    MakeGraphs("Impoverished Primary Task (NS)", 1, "NormSize")
+    MakeGraphs("Impoverished Primary Task (SS)", 4, "SmallSize")
+    MakeGraphs("Impoverished Primary Task (LS)", 7, "LargeSize")
+    MakeGraphs("Impoverished Primary Task (NS NV)", 10, "NormSizeNoVal")
+    MakeGraphs("Impoverished Primary Task (SS NV)", 13, "SmallSizeNoVal")
+    MakeGraphs("Impoverished Primary Task (LS NV)", 16, "LargeSizeNoVal")
+    if usesave: pp.close()
+    if not usesave: plt.show()

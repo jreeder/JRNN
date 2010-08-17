@@ -1,3 +1,4 @@
+import os.path
 #! /usr/bin/python
 
 # Used to parse the experiment files and plot them. 
@@ -11,7 +12,10 @@ from itertools import izip
 import ParseExperimentFile as pe
 import numpy as np
 import matplotlib.pyplot as plt
+from matplotlib.backends.backend_pdf import PdfPages
 
+expfigpath = figpath + "Exp 1/INDEX05/"
+usesave=True
 
 def MakeGraphs(title, fignum, folder1, folder1name, folder2, folder2name):
     os.chdir(outpath + folder1)
@@ -154,24 +158,44 @@ def MakeGraphs(title, fignum, folder1, folder1name, folder2, folder2name):
     antialiased=True, hatch="/", label=folder2name + " MTL")
     plt.xticks(locs + 2*width, xticks)
     plt.title(title + " Error")
+    plt.ylabel("Error Rate")
     plt.legend()
+    if usesave: Save(title + " Error")
 
     plt.figure(fignum + 1)
-    locs2 = np.arange(1,4)
+    locs2 = np.arange(1,3)
     plt.title(title + " Epochs")
-    xticks2 = ["","BP", "CC",""]
+    xticks2 = ["BP", "CC",""]
+    plt.ylabel("# Epochs")
 #    plt.bar(locs[0], bpstlavgepochs, yerr=bpstlerrepochs, width=width, \
 #        antialiased=True)
-    StackBar(locs2[1], bpstlavgepochs, bpstlerrepochs, width, True)
-    plt.bar(locs2[1] + width, bpmtlepochavg, yerr=bpmtlepocherr, width=width, \
+    StackBar(locs2[0], bpstlavgepochs, bpstlerrepochs, width, True)
+    plt.bar(locs2[0] + width, bpmtlepochavg, yerr=bpmtlepocherr, width=width, \
         antialiased=True, color = '#FF3333', label = 'MTL All Tasks')
 
-    StackBar(locs2[2], cctaskavgepochs, cctaskerrepochs, width, False)
-    plt.bar(locs2[2] + width, ccmtltaskepochavg, yerr=ccmtltaskepocherr, width=width, \
+    StackBar(locs2[1], cctaskavgepochs, cctaskerrepochs, width, False)
+    plt.bar(locs2[1] + width, ccmtltaskepochavg, yerr=ccmtltaskepocherr, width=width, \
         antialiased=True, color = '#FF3333')
 
     plt.legend()
     plt.xticks(locs + width, xticks2)
+    if usesave: Save(title + " Epochs")
+
+    plt.figure(fignum + 2)
+    plt.title(title + " Times")
+    plt.ylabel("Time (s)")
+
+    StackBar(locs2[0], bpstlavgtime, bpstlerrtime, width, True)
+    plt.bar(locs2[0] + width, bpmtltimeavg, yerr=bpmtltimeerr, width=width,\
+    antialiased=True, color="#FF3333", label='MTL All Tasks')
+
+    StackBar(locs2[1], cctaskavgtime, cctaskerrtime, width, False)
+    plt.bar(locs2[1] + width, ccmtltasktimeavg, yerr=ccmtltasktimeerr, width=width, \
+    antialiased=True, color="#FF3333")
+
+    plt.legend()
+    plt.xticks(locs+width, xticks2)
+    if usesave: Save(title + " Times")
 
 def StackBar(loc, avg, errs, width, label):
     bottom = 0
@@ -185,12 +209,29 @@ def StackBar(loc, avg, errs, width, label):
         bottom = bottom + a
         count = count + 1
 
+def Save(name):
+    plt.savefig(expfigpath + name + ".pdf")
+    plt.savefig(expfigpath + name + ".eps")
+    plt.savefig(pp, format="pdf")
+
 if __name__ == "__main__":
 
-    MakeGraphs("Experiment 1", 1, "BP Test 1/", "BP", "CC Test 1/", "CC")
-    MakeGraphs("Experiment 2", 3, "BP Test 2/", "BP", "CC Test 2/", "CC")
-    MakeGraphs("Experiment 3", 5, "BP Test 3/", "BP", "CC Test 3/", "CC")
-    plt.show()
+    if not os.path.exists(expfigpath):
+        os.makedirs(expfigpath)
+
+    if usesave: pp = PdfPages(expfigpath + "Collected Figures.pdf")
+    MakeGraphs("Full Training", 1, "BP Test 1/", "BP", "CC Test 1/", "CC")
+    MakeGraphs("Half Training", 4, "BP Test 2/", "BP", "CC Test 2/", "CC")
+    MakeGraphs("Minimal Training", 7, "BP Test 3/", "BP", "CC Test 3/", "CC")
+    MakeGraphs("Full Training (NV)", 10, "BP Test 7/", "BP", "CC Test 4/", "CC")
+    MakeGraphs("Half Training (NV)", 13, "BP Test 8/", "BP", "CC Test 5/", "CC")
+    MakeGraphs("Minimal Training (NV)", 16, "BP Test 9/", "BP", "CC Test 6/", "CC")
+
+    MakeGraphs("Full Training (1 NPT)", 19, "BP Test 4/", "BP", "CC Test 1/", "CC")
+    MakeGraphs("Full Training (8 NPT)", 22, "BP Test 5/", "BP", "CC Test 1/", "CC")
+    MakeGraphs("Full Training (8 NPT NV)", 25, "BP Test 6/", "BP", "CC Test 4/", "CC")
+    if not usesave: plt.show()
+    if usesave: pp.close()
     #values = pe.ParseFile("band-task3-BP-tr50-v100-t500-hid4-uvT-r60.txt")
 #    print values.type
 #    print values.epochs
