@@ -205,7 +205,7 @@ namespace JRNN {
 			UpdateOutWeights();
 			epoch++;
 
-			if (resetFlag == true){
+			if (resetFlag == true){ //this is not used currently. 
 				epoch = startEpoch;
 				i = 0;
 				quitEpoch = 0;
@@ -284,7 +284,7 @@ namespace JRNN {
 		double lastScore = 0.0;
 		int quitEpoch = 0;
 		int startEpoch = epoch;
-		err.sumErrs /= data->GetSize(Dataset::TRAIN);
+		err.sumErrs /= data->GetSize(Dataset::TRAIN); //Might be causing some issues here. Needs to be cast to double. 
 		CorrelationEpoch();
 		for (int i = 0; i < parms.cand.epochs; i ++){
 			
@@ -296,7 +296,7 @@ namespace JRNN {
 
 			epoch++;
 
-			if(resetFlag){
+			if(resetFlag){ //Not used right now
 				epoch = startEpoch;
 				i = 0;
 				quitEpoch = 0;
@@ -434,13 +434,16 @@ namespace JRNN {
 
 			assert((*curCorr).size() == nOuts);
 			for (int j = 0; j < nOuts; j++){
-				double tmp1 = (*curCorr)[j];
-				double tmp2 = err.sumErrs[j];
+				/*double tmp1 = (*curCorr)[j]; //Used for Debugging. 
+				double tmp2 = err.sumErrs[j];*/
 				cor = ((*curCorr)[j] - avgValue * err.sumErrs[j]) / err.sumSqErr;
 				(*prevCorr)[j] = cor;
 				(*curCorr)[j] = 0.0;
 				score += fabs (cor);
 			}
+
+			//TODO Need to add code here to weight the scores.
+			//Positively for primary task and tending to zero for unrelated tasks.
 
 			candSumVals[name] = 0.0;
 
@@ -498,6 +501,8 @@ namespace JRNN {
 
 			candSumVals[name] += value;
 			actPrime /= err.sumSqErr;
+
+			//TODO need to look into making changes here for eta MTL style focusing. 
 
 			//compute correlations to each output
 			for (int j = 0; j < nOuts; j++){
