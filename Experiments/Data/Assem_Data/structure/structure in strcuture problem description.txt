@@ -1,0 +1,19 @@
+here you go
+
+CINS 50 50, size of circle is 50% prob is 50% uniform dist' (center of circle iss 0.5,0.5)
+
+
+CINS 30 70, size of circle is 30% prob is 30% uniform dist' (center of circle iss 0.5,0.5)
+
+
+4CINS each circle is 0.1 area, square is 0.6 area, each class is 0.2 probablity  (circles centers are 0.25,0.25  and 0.75,0.25 and 0.75,0.75 and 0.25,0.75)
+
+
+4SINS each small square is 0.1 area, big square is 0.6 area, each class is 0.2 probablity (each suare side is sqrt(0.1), the centers of the squares are 0.25,0.25  and 0.75,0.25 and 0.75,0.75 and 0.25,0.75)
+
+
+concentric circles, each class has a prob of 1/6, center of all is 0.5,0.5,radius is 0.1, 0.2, 0.3, 0.4, 0.5 and hence the area is c1 = 0.1 * 0.1 * pi, c2 = 0.2*0.2*pi - c1 and so on, area
+of square is 1 - c5
+
+
+2cins areas are 0.05, 0.2 and 0.75, where prob are 0.2, 0.3 and 0.5 respectively  (circles centers are 0.25,0.25   and 0.75,0.75)
