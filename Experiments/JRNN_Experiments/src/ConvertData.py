@@ -7,7 +7,7 @@ __author__="John"
 __date__ ="$Jan 10, 2011 8:32:03 PM$"
 
 import sys
-import os.path
+import os
 from pyExcelerator import *
 
 def xls2list(fname,encoding='cp1251'):
@@ -73,7 +73,8 @@ def xls2list(fname,encoding='cp1251'):
     for i in range(len(data)):
         sheet_name=data[i][0]
         values = data[i][1]
-
+        if sheet_name.lower() == "chart":
+            continue
         # first stuff all the nonempty cells into a dict keyed by tuples
         # e.g. vdict[(0,0)] holds the contents of the top-left cell (if non-empty)
         # else, (0,0) key will not exist in vdict.
@@ -101,17 +102,29 @@ def xls2list(fname,encoding='cp1251'):
 
     return results
 
+sourcepath = r"C:\\Users\\John Reeder\\Code\\JRNN\\Experiments\\Data\\Assem_Data\\structure\\"
+outpath = r"C:\\Users\\John Reeder\\Code\\JRNN\\Experiments\\Data\\Tabbed Data\\"
 
 if __name__ == "__main__":
-    filepath = sys.argv[1]
-    print filepath
-    filename = filepath.split("/")[-1].split(".")[0]
-    newfilename = filename + "_tab.txt"
-    outfile = open(newfilename, "w")
-    results = xls2list(filepath)
-    print len(results)
-    for i in range(len(results)):
-        print >> outfile, "\t".join(map(str,results[i]))
+    #filepath = sys.argv[1]
+    #print filepath
+    if not os.path.exists(outpath):
+        os.makedirs(outpath)
 
-    outfile.close()
+    os.chdir(sourcepath)
+    filelist = os.listdir(os.curdir)
+    
+    for filepath in filelist:
+        if not "xls" in filepath:
+            continue
+        filename = filepath.split("/")[-1].split(".")[0]
+        newfilename = filename + "_tab.txt"
+        print newfilename
+        outfile = open(outpath + newfilename, "w")
+        results = xls2list(sourcepath + filepath)
+        print len(results)
+        for i in range(len(results)):
+            print >> outfile, "\t".join(map(str,results[i]))
+    
+        outfile.close()
     #for item in results:
