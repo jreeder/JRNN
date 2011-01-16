@@ -89,6 +89,8 @@ void Dataset::SetNumOutputs(int numOutputs){
 }
 
 void Dataset::LoadFromFile(string filepath, int numInputs, int numOutputs){
+	//TODO: Need to read class when it loads here and store that information for later use.
+	//TODO: Need to analyze class distribution of data coming in. 
 	ifstream dataFile(filepath.c_str());
 	this->numInputs = numInputs;
 	this->numOutputs = numOutputs;
@@ -150,6 +152,7 @@ void Dataset::RedistData(){
 
 void Dataset::Distribute(){
     //TODO: need to place some error checks here ... this is very unsafe.
+	//TODO: need to load numbers of points based on class distribution.
     int i = 0;
 	assert(size);
     for (;i < numTrain; i++)
