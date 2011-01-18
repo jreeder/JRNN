@@ -20,7 +20,7 @@
 using namespace JRNN;
 using namespace std;
 
-void printDoubles(doubles toPrint, ofstream& file);
+//void printDoubles(doubles toPrint, ofstream& file);
 
 /*
  * 
@@ -63,7 +63,7 @@ int main(int argc, char** argv) {
 		outfile += type;
         outfile += " results.txt";*/
     }
-    ofstream myfile;
+    fstream myfile;
     myfile.open(outfile.c_str());
 	if (myfile.is_open() == false){
 		cout << "Output file Not open: " << outfile.c_str() << endl;
@@ -167,8 +167,8 @@ int main(int argc, char** argv) {
     return (EXIT_SUCCESS);
 }
 
-void printDoubles(doubles toPrint, ofstream& file){
-	BOOST_FOREACH(double db, toPrint){
-		file << db << "\t";
-	}
-}
+//void printDoubles(doubles toPrint, ofstream& file){
+//	BOOST_FOREACH(double db, toPrint){
+//		file << db << "\t";
+//	}
+//}

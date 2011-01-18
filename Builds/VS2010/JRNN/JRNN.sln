@@ -13,6 +13,11 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "JRNN_test2", "JRNN_test2\JR
 		{E4965A51-3BB5-470F-83AE-C73B5E419A74} = {E4965A51-3BB5-470F-83AE-C73B5E419A74}
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "JRNN_FindLimits", "JRNN_FindLimits\JRNN_FindLimits.vcxproj", "{BA78808A-AFC0-4103-B6EA-D41C4E2A4701}"
+	ProjectSection(ProjectDependencies) = postProject
+		{E4965A51-3BB5-470F-83AE-C73B5E419A74} = {E4965A51-3BB5-470F-83AE-C73B5E419A74}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -31,6 +36,10 @@ Global
 		{A7C2E08F-F249-4E2A-A325-5457681F49EF}.Debug|Win32.Build.0 = Debug|Win32
 		{A7C2E08F-F249-4E2A-A325-5457681F49EF}.Release|Win32.ActiveCfg = Release|Win32
 		{A7C2E08F-F249-4E2A-A325-5457681F49EF}.Release|Win32.Build.0 = Release|Win32
+		{BA78808A-AFC0-4103-B6EA-D41C4E2A4701}.Debug|Win32.ActiveCfg = Debug|Win32
+		{BA78808A-AFC0-4103-B6EA-D41C4E2A4701}.Debug|Win32.Build.0 = Debug|Win32
+		{BA78808A-AFC0-4103-B6EA-D41C4E2A4701}.Release|Win32.ActiveCfg = Release|Win32
+		{BA78808A-AFC0-4103-B6EA-D41C4E2A4701}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -187,6 +187,12 @@ namespace JRNN {
 		RandGeneratorInt randgen;
 	};
 
+	inline void printDoubles(doubles toPrint, std::iostream& stream){
+		BOOST_FOREACH(double db, toPrint){
+			stream << db << "\t";
+		}
+	}
+
 }
 
 #endif
