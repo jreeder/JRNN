@@ -64,7 +64,7 @@ int main(int argc, char** argv) {
         outfile += " results.txt";*/
     }
     fstream myfile;
-    myfile.open(outfile.c_str());
+    myfile.open(outfile.c_str(),fstream::out);
 	if (myfile.is_open() == false){
 		cout << "Output file Not open: " << outfile.c_str() << endl;
 		return -1;
@@ -72,6 +72,10 @@ int main(int argc, char** argv) {
     DatasetPtr ds(new Dataset());
 	//FFMLPNetwork netBuilder(numIn, numHid, numOut);
     ds->LoadFromFile(filename, numIn,numOut);
+	if (ds->GetSize(Dataset::ALL) == 0){
+		cout << "input file not loaded" << endl;
+		return -1;
+	}
     ds->DistData(numTrain,numVal,numTest);
     //NetworkPtr net = Network::CreateFFMLPNetwork(numIn,numHid,numOut);
 	if (type == "BP")

@@ -57,6 +57,8 @@ namespace JRNN {
 		hashedIntMap taskErrors;
 		hashedDoubleMap taskErrorRate;
 		int nTrainOutVals;
+		bool useMaxWeight;
+		double maxWeight;
 		void RPropUpdate(ConPtr con);
 		void CalcWeightUpdates(LayerPtr layer, vecDouble desiredOut = vecDouble());
 	};

@@ -166,7 +166,7 @@ void Dataset::RedistData(){
 void Dataset::Distribute(){
     //TODO: need to place some error checks here ... this is very unsafe.
     int i = 0;
-	assert(size < (numTrain + numVal + numTest));
+	assert(size > (numTrain + numVal + numTest));
     for (;i < numTrain; i++)
     {
         trainIns.push_back(inputs[randomRange[i]]);
