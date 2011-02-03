@@ -16,6 +16,7 @@ namespace JRNN {
     class Dataset {
 
     public:
+		typedef boost::unordered_map<std::string, std::vector<int> > hashedIntsMap;
 
         enum datatype {
             TRAIN,
@@ -34,6 +35,8 @@ namespace JRNN {
 		double GetStdDev(datatype type);
         void SetNumInputs(int numInputs);
         void SetNumOutputs(int numOutputs);
+		void SetOutputPerCategory(bool outPerClass);
+		void SetNormalizeReals(bool normReals);
         void DistData(int numTrain, int numVal, int numTest);
         void RedistData();
 
@@ -44,7 +47,10 @@ namespace JRNN {
         int numTrain;
         int numVal;
         int numTest;
+		int numClasses;
         int randSeed;
+		bool outputPerCategory;
+		bool normalizeReals;
         std::vector<int> randomRange;
 		double trainStdDev;
 		double testStdDev;

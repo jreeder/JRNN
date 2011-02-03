@@ -26,6 +26,8 @@ namespace JRNN {
 		}
 		epochCount = 0;
 		primeOffset = 0.1;
+		useMaxWeight = false;
+		maxWeight = 1000;
 	}
 
 	/*RPropTrainer::RPropTrainer(const RPropTrainer& orig) {
@@ -92,6 +94,11 @@ namespace JRNN {
 			double tmp = weightUpdates[con->GetName()];
 			//cout << "weight update: " << tmp << endl;
 			(*con.get()) += weightUpdates[con->GetName()];
+			if (useMaxWeight && con->GetWeight() > maxWeight){
+				con->Reset();
+				delta[con->GetName()] = 1;
+				dw_last[con->GetName()] = 0;
+			}
 		}
 		dw.clear();
 		epochCount++;

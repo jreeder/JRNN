@@ -15,7 +15,7 @@
 using namespace JRNN;
 using namespace std;
 
-void printDoubles(doubles toPrint, iostream& stream);
+//void printDoubles(doubles toPrint, iostream& stream);
 void CCWorker(CCTrainer& trainer, strings* results, int numRuns, bool useValidation = true);
 void BPWorker(RPropTrainer& trainer, int numHid, strings* results, int numRuns, bool useValidation = true);
 boost::mutex io_mutex;
@@ -264,8 +264,8 @@ void CCWorker(CCTrainer& trainer, strings* results, int numRuns, bool useValidat
 	}
 }
 
-void printDoubles(doubles toPrint, iostream& stream){
-	BOOST_FOREACH(double db, toPrint){
-		stream << db << "\t";
-	}
-}
+//void printDoubles(doubles toPrint, iostream& stream){
+//	BOOST_FOREACH(double db, toPrint){
+//		stream << db << "\t";
+//	}
+//}

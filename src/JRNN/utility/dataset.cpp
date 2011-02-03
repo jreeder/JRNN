@@ -11,6 +11,8 @@ using namespace JRNN;
 using namespace std;
 
 Dataset::Dataset() {
+	outputPerCategory = false;
+	normalizeReals = false;
 }
 
 Dataset::Dataset(const Dataset& orig) {
@@ -20,6 +22,9 @@ Dataset::Dataset(const Dataset& orig) {
 	numTest	= orig.numTest;
 	numTrain = orig.numTrain;
 	numVal = orig.numVal;
+	numClasses = orig.numClasses;
+	outputPerCategory = orig.outputPerCategory;
+	normalizeReals = orig.normalizeReals;
 	outputs = orig.outputs;
 	randomRange = orig.randomRange;
 	randSeed = orig.randSeed;
@@ -88,6 +93,16 @@ void Dataset::SetNumOutputs(int numOutputs){
     this->numOutputs = numOutputs;
 }
 
+void Dataset::SetOutputPerCategory( bool outPerCat )
+{
+	outputPerCategory = outPerCat;
+}
+
+void Dataset::SetNormalizeReals( bool normReals )
+{
+	normalizeReals = normReals;
+}
+
 void Dataset::LoadFromFile(string filepath, int numInputs, int numOutputs){
 	//TODO: Need to read class when it loads here and store that information for later use.
 	//TODO: Need to analyze class distribution of data coming in. 
@@ -154,7 +169,7 @@ void Dataset::Distribute(){
     //TODO: need to place some error checks here ... this is very unsafe.
 	//TODO: need to load numbers of points based on class distribution.
     int i = 0;
-	assert(size);
+	assert(size > (numTrain + numVal + numTest));
     for (;i < numTrain; i++)
     {
         trainIns.push_back(inputs[randomRange[i]]);
