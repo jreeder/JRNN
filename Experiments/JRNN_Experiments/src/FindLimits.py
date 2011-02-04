@@ -13,9 +13,9 @@ numVal = 200
 numIn = 2
 numOut = 1
 type = 'BP'
-useVal = 'F'
+useVal = 'T'
 numRuns = 60
-expFold = 'BP Limits No Val'
+expFold = 'BP Limits 1'
 
 def ProcessFile(file):
     

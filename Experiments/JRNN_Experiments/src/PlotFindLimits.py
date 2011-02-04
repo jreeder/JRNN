@@ -12,7 +12,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_pdf import PdfPages
 
-expfigpath = os.path.join(figpath, "Exp 1-1/")
+expfigpath = os.path.join(figpath, "Exp 1-1/Round 2/")
 fignum = 0
 usesave = True
 
