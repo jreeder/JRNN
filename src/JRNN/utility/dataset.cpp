@@ -13,6 +13,8 @@ using namespace std;
 Dataset::Dataset() {
 	outputPerCategory = false;
 	normalizeReals = false;
+	outClassIndexes.clear();
+	outClassPercentage.clear();
 }
 
 Dataset::Dataset(const Dataset& orig) {
@@ -22,7 +24,6 @@ Dataset::Dataset(const Dataset& orig) {
 	numTest	= orig.numTest;
 	numTrain = orig.numTrain;
 	numVal = orig.numVal;
-	numClasses = orig.numClasses;
 	outputPerCategory = orig.outputPerCategory;
 	normalizeReals = orig.normalizeReals;
 	outputs = orig.outputs;
@@ -38,6 +39,9 @@ Dataset::Dataset(const Dataset& orig) {
 	valIns = orig.valIns;
 	valOuts = orig.valOuts;
 	valStdDev = orig.valStdDev;
+	outClassIndexes = orig.outClassIndexes;
+	outClassPercentage = orig.outClassPercentage;
+	outClassNames = orig.outClassNames;
 	size = orig.size;
 }
 
@@ -112,6 +116,7 @@ void Dataset::LoadFromFile(string filepath, int numInputs, int numOutputs){
 	typedef boost::tokenizer<boost::char_separator<char> > tokenizer;
 	boost::char_separator<char> sep("\t");
 	string line;
+	int count = 0;
 	if(dataFile.is_open()){
 		while(getline(dataFile,line)){
 			tokenizer tok(line,sep);
@@ -131,8 +136,26 @@ void Dataset::LoadFromFile(string filepath, int numInputs, int numOutputs){
 			}
 			inputs.push_back(in);
 			outputs.push_back(out);
+			string outname = StringFromVector(out);
+			outClassIndexes[outname].push_back(count);
+			//if (outClassIndexes.find(outname) != outClassIndexes.end()){
+			//	outClassIndexes[outname].push_back(count);
+			//}
+			//else {
+			//	//temp
+			//}
+			count++;
 		}
 		size = inputs.size();
+		hashedIntsMap::iterator it = outClassIndexes.begin();
+		//calculate the percentage of each outclass to the whole.
+		while(it != outClassIndexes.end()){
+			double tmpPerc = it->second.size() / (double)size;
+			outClassPercentage[it->first] = tmpPerc;
+			outClassNames.push_back(it->first);
+			Shuffle(it->second);
+			it++;
+		}
 		dataFile.close();
 	}
 	else {
@@ -161,31 +184,82 @@ void Dataset::DistData(int numTrain, int numVal, int numTest){
 
 void Dataset::RedistData(){
     randSeed++;
-    GenRandRange();
+    //GenRandRange();
+	Reshuffle();
     Distribute();
 }
 
 void Dataset::Distribute(){
     //TODO: need to place some error checks here ... this is very unsafe.
 	//TODO: need to load numbers of points based on class distribution.
-    int i = 0;
-	assert(size > (numTrain + numVal + numTest));
-    for (;i < numTrain; i++)
-    {
-        trainIns.push_back(inputs[randomRange[i]]);
-        trainOuts.push_back(outputs[randomRange[i]]);
-    }
-    for (; i < (numTrain + numVal); i++){
-        valIns.push_back(inputs[randomRange[i]]);
-        valOuts.push_back(outputs[randomRange[i]]);
-    }
-    for(; i < (numTrain + numVal + numTest); i++){
-        testIns.push_back(inputs[randomRange[i]]);
-        testOuts.push_back(outputs[randomRange[i]]);
-    }
+    assert(size > (numTrain + numVal + numTest));
+	
+	//Find the number of points from each class that goes into the subsets
+	ints trainClsCounts, valClsCounts, testClsCounts, clsPositions;
+	int totalTr = 0, totalVal = 0, totalTest = 0;
+	int numClasses = outClassNames.size();
+	for(int i = 0; i < numClasses; i++){
+		string className = outClassNames[i];
+		double tmpPerc = outClassPercentage[className];
+		int trTmpCount = 0, valTmpCount = 0, testTmpCount = 0;
+		if (i < numClasses - 1){
+			trTmpCount = (int)floor(numTrain * tmpPerc);
+			valTmpCount = (int)floor(numVal * tmpPerc);
+			testTmpCount = (int)floor(numTest * tmpPerc);
+			totalTr += trTmpCount;
+			totalVal += valTmpCount;
+			totalTest += testTmpCount;
+		} 
+		else
+		{
+			trTmpCount = numTrain - totalTr;
+			valTmpCount = numVal - totalVal;
+			testTmpCount = numTest - totalTest;
+		}
+		/*trainClsCounts.push_back(trTmpCount);
+		valClsCounts.push_back(valTmpCount);
+		testClsCounts.push_back(testTmpCount);
+		clsPositions.push_back(0);*/
+		assert (outClassIndexes[className].size() > (unsigned int)(trTmpCount + valTmpCount + testTmpCount));
+		int j = 0;
+		for (; j < trTmpCount; j++){
+			trainIns.push_back(inputs[outClassIndexes[className][j]]);
+			trainOuts.push_back(outputs[outClassIndexes[className][j]]);
+		}
+		for (; j < trTmpCount + valTmpCount; j++){
+			valIns.push_back(inputs[outClassIndexes[className][j]]);
+			valOuts.push_back(outputs[outClassIndexes[className][j]]);
+		}
+		for(; j < trTmpCount + valTmpCount + testTmpCount; j++){
+			testIns.push_back(inputs[outClassIndexes[className][j]]);
+			testOuts.push_back(outputs[outClassIndexes[className][j]]);
+		}
+	}
+
+
+	ShuffleSubsets();
+
+
+	//Old way of distributing
+	//int i = 0;
+	//
+ //   for (;i < numTrain; i++)
+ //   {
+ //       trainIns.push_back(inputs[randomRange[i]]);
+ //       trainOuts.push_back(outputs[randomRange[i]]);
+ //   }
+ //   for (; i < (numTrain + numVal); i++){
+ //       valIns.push_back(inputs[randomRange[i]]);
+ //       valOuts.push_back(outputs[randomRange[i]]);
+ //   }
+ //   for(; i < (numTrain + numVal + numTest); i++){
+ //       testIns.push_back(inputs[randomRange[i]]);
+ //       testOuts.push_back(outputs[randomRange[i]]);
+ //   }
 	CalcStdDevs();
 }
 
+//Not really used anymore. 
 void Dataset::GenRandRange(){
     srand(randSeed);
     vector<int> source;
@@ -200,6 +274,62 @@ void Dataset::GenRandRange(){
         randomRange[i] = randomRange[j];
         randomRange[j] = source[i];
     }
+}
+
+void Dataset::Shuffle(ints &indexes){
+	srand((unsigned int)time(NULL));
+	int tmpSize = indexes.size();
+	int tmpIndex = 0;
+	for (int i = tmpSize - 1; i > 0; i--){
+		int j = rand() % (i+1);
+		tmpIndex = indexes[i];
+		indexes[i] = indexes[j];
+		indexes[j] = tmpIndex;
+	}
+}
+
+void Dataset::Reshuffle(){
+	BOOST_FOREACH(string className, outClassNames){
+		Shuffle(outClassIndexes[className]);
+	}
+}
+
+//Shuffles the subsets so that they are in random order. 
+void Dataset::ShuffleSubsets(){
+	srand((unsigned int)time(NULL));
+	int tmpSize = trainIns.size();
+	vecDouble tmpInVec, tmpOutVec;
+	for (int i = tmpSize - 1; i > 0; i--){
+		int j = rand() % (i + 1);
+		tmpInVec = trainIns[i];
+		tmpOutVec = trainOuts[i];
+		trainIns[i] = trainIns[j];
+		trainIns[j] = tmpInVec;
+		trainOuts[i] = trainOuts[j];
+		trainOuts[j] = tmpOutVec;
+	}
+
+	tmpSize = valIns.size();
+	for (int i = tmpSize - 1; i > 0; i--){
+		int j = rand() % (i + 1);
+		tmpInVec = valIns[i];
+		tmpOutVec = valOuts[i];
+		valIns[i] = valIns[j];
+		valIns[j] = tmpInVec;
+		valOuts[i] = valOuts[j];
+		valOuts[j] = tmpOutVec;
+	}
+
+	tmpSize = testIns.size();
+	for (int i = tmpSize - 1; i > 0; i--){
+		int j = rand() % (i + 1);
+		tmpInVec = testIns[i];
+		tmpOutVec = testOuts[i];
+		testIns[i] = testIns[j];
+		testIns[j] = tmpInVec;
+		testOuts[i] = testOuts[j];
+		testOuts[j] = tmpOutVec;
+	}
 }
 
 double Dataset::GetStdDev( datatype type )

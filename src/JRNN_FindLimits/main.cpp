@@ -60,4 +60,11 @@ int main(int argc, char** argv) {
 	BOOST_FOREACH(int x, temparray2){
 		numHids.push_back(x);
 	}
+
+	//hashedDoubleMap test1;
+	//hashedIntMap test2;
+
+	//cout << test1["hello"] << " " << test2["hello"] << endl;
+
+	//return 0;
 }

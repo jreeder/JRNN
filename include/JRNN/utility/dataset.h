@@ -47,7 +47,6 @@ namespace JRNN {
         int numTrain;
         int numVal;
         int numTest;
-		int numClasses;
         int randSeed;
 		bool outputPerCategory;
 		bool normalizeReals;
@@ -64,14 +63,20 @@ namespace JRNN {
         matDouble valOuts;
         matDouble testIns;
         matDouble testOuts;
-
+		hashedIntsMap outClassIndexes;
+		hashedDoubleMap outClassPercentage;
+		strings outClassNames;
         void GenRandRange();
         void Distribute();
 		void CalcStdDevs();
 		double CalcStdDev(datatype type);
+		void Shuffle(ints &indexes);
+		void ShuffleSubsets();
+		void Reshuffle();
 
     };
 
 }
+
 #endif	/* _DATASET_H */
 

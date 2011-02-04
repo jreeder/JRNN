@@ -284,7 +284,7 @@ namespace JRNN {
 		double lastScore = 0.0;
 		int quitEpoch = 0;
 		int startEpoch = epoch;
-		err.sumErrs /= data->GetSize(Dataset::TRAIN); //TODO Might be causing some issues here. Needs to be cast to double. 
+		err.sumErrs /= (double)data->GetSize(Dataset::TRAIN); //TODO Might be causing some issues here. Needs to be cast to double. 
 		CorrelationEpoch();
 		for (int i = 0; i < parms.cand.epochs; i ++){
 			
