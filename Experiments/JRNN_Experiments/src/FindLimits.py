@@ -13,9 +13,9 @@ numVal = 200
 numIn = 2
 numOut = 1
 type = 'BP'
-useVal = 'T'
+useVal = 'F'
 numRuns = 60
-expFold = 'BP Limits 1'
+expFold = 'BP Limits No Val'
 
 def ProcessFile(file):
     
@@ -72,7 +72,7 @@ if __name__ == "__main__":
     
     #ProcessFile(filelist[0])
     
-    pool = Pool(4)
+    pool = Pool(7)
     pool.map(ProcessFile,filelist)
     print "Finished"
     
