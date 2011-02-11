@@ -8,7 +8,7 @@ basepath = r"C:/Users/John/Documents/Source/JRNN"
 #Windows Values
 jrnn_exe = basepath + r"/Builds/VS2010/JRNN/Release/JRNN_test.exe"
 datapath = basepath + r"/Experiments/Data/Tabbed Data/"
-outpath = basepath + r"/Experiments/Exp 1-1/Round-2/"
+outpath = basepath + r"/Experiments/Exp 1-1/Round-3/"
 outpath2 = basepath + r"/Experiments/Exp 2/Round 6/"
 jrnn_exe2 = basepath + r"/Builds/VS2010/JRNN/Release/JRNN_test2.exe"
 figpath = basepath + r"/Experiments/Figures/"

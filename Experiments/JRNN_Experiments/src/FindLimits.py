@@ -65,10 +65,12 @@ if __name__ == "__main__":
     if not os.path.exists(outpath + expFold):
         os.makedirs(outpath + expFold)
     
-    bandpath = datapath + "Band Tasks/Single Tasks"
-    strucpath = datapath + "Binary Tasks"
+    #bandpath = datapath + "Band Tasks/Single Tasks"
+    strucpath = datapath + "New Binary Tasks"
     
-    filelist =  [os.path.join(strucpath, f) for f in os.listdir(strucpath)]+[os.path.join(bandpath, f) for f in os.listdir(bandpath)]
+    #filelist =  [os.path.join(strucpath, f) for f in os.listdir(strucpath)]+[os.path.join(bandpath, f) for f in os.listdir(bandpath)]
+    
+    filelist = [os.path.join(strucpath, f) for f in os.listdir(strucpath)]
     
     #ProcessFile(filelist[0])
     
