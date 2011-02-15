@@ -11,6 +11,8 @@ from subprocess import *
 
 
 def ProcessExperiment(argDict):
+    dsname = argDict['dsname']
+    numTasks = argDict['numTasks']
     numTrain = argDict['numTrain']
     numVal = argDict['numVal']
     numTest = argDict['numTest']
@@ -20,17 +22,18 @@ def ProcessExperiment(argDict):
     impPerc = argDict['impPerc']
     useVal = argDict['useVal']
 
-    if not os.path.exists(outpath2 + expFold):
-        os.makedirs(outpath2 + expFold)
+    outfilepath = os.path.join(outpath2, dsname, expFold)
+    if not os.path.exists(outfilepath):
+        os.makedirs(outfilepath)
 
-    os.chdir(outpath2 + expFold)
+    os.chdir(outfilepath)
 
-    cmd = "%s \"%s\" %s %s %s %s %s %s %s" % (jrnn_exe2, datapath, numTrain, numVal,\
+    cmd = "%s \"%s\" %s %s %s %s %s %s %s %s %s" % (jrnn_exe2, datapath, dsname, numTasks, numTrain, numVal,\
         numTest, numHidPerOut, numRuns, impPerc, useVal)
 
     (stdout, stderr) = Popen(cmd, stdout = PIPE).communicate()
     if len(stdout) > 0: print stdout
-    print expFold + " Done"
+    print dsname + " " + expFold + " Done"
 
 if __name__ == "__main__":
     from experiments2 import *

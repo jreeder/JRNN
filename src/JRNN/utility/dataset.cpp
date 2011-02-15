@@ -13,6 +13,7 @@ using namespace std;
 Dataset::Dataset() {
 	outputPerCategory = false;
 	normalizeReals = false;
+	dsAnalyzed = false;
 	outClassIndexes.clear();
 	outClassPercentage.clear();
 }
@@ -42,6 +43,7 @@ Dataset::Dataset(const Dataset& orig) {
 	outClassIndexes = orig.outClassIndexes;
 	outClassPercentage = orig.outClassPercentage;
 	outClassNames = orig.outClassNames;
+	dsAnalyzed = orig.dsAnalyzed;
 	size = orig.size;
 }
 
@@ -156,6 +158,7 @@ void Dataset::LoadFromFile(string filepath, int numInputs, int numOutputs){
 			Shuffle(it->second);
 			it++;
 		}
+		dsAnalyzed = true;
 		dataFile.close();
 	}
 	else {
@@ -179,6 +182,9 @@ void Dataset::DistData(int numTrain, int numVal, int numTest){
 	testOuts.clear();
     randSeed = 314159;
     //genRandRange();
+	if (!dsAnalyzed){
+		AnalyzeDS();
+	}
     Distribute();
 }
 
@@ -187,6 +193,23 @@ void Dataset::RedistData(){
     //GenRandRange();
 	Reshuffle();
     Distribute();
+}
+
+//Analyze the dataset and shuffle according to out class distribution
+void Dataset::AnalyzeDS(){
+	for (int i = 0; i < size; i++){
+		string outname = StringFromVector(outputs[i]);
+		outClassIndexes[outname].push_back(i);
+	}
+	hashedIntsMap::iterator it = outClassIndexes.begin();
+	//calculate the percentage of each outclass to the whole.
+	while(it != outClassIndexes.end()){
+		double tmpPerc = it->second.size() / (double)size;
+		outClassPercentage[it->first] = tmpPerc;
+		outClassNames.push_back(it->first);
+		Shuffle(it->second);
+		it++;
+	}
 }
 
 void Dataset::Distribute(){

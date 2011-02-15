@@ -23,6 +23,8 @@ boost::mutex io_mutex;
 int main(int argc, char* argv[])
 {
 	string basepath = "";
+	string dsname = "";
+	int numTasks = 0;
 	int numRuns = 5;
 	double impPerc = 0.8;
 	int numTrain = 50;
@@ -32,34 +34,44 @@ int main(int argc, char* argv[])
 	bool useValidation = true;
 	if (argc > 1){
 		basepath = argv[1];
-		if (argc == 9){
-			numTrain = lexical_cast<int>(argv[2]);
-			numVal = lexical_cast<int>(argv[3]);
-			numTest = lexical_cast<int>(argv[4]);
-			numHidPerOut = lexical_cast<int>(argv[5]);
-			numRuns = lexical_cast<int>(argv[6]);
-			impPerc = lexical_cast<double>(argv[7]);
-			useValidation = (string(argv[8]) == "T") ? true : false;
+		dsname = argv[2];
+		numTasks = lexical_cast<int>(argv[3]);
+		if (argc == 11){
+			numTrain = lexical_cast<int>(argv[4]);
+			numVal = lexical_cast<int>(argv[5]);
+			numTest = lexical_cast<int>(argv[6]);
+			numHidPerOut = lexical_cast<int>(argv[7]);
+			numRuns = lexical_cast<int>(argv[8]);
+			impPerc = lexical_cast<double>(argv[9]);
+			useValidation = (string(argv[10]) == "T") ? true : false;
 		}
 		else if (argc > 2){
-			cout << "Incorrect Number of arguments ... Please give basepath and 8 experiment values" << endl;
+			cout << "Incorrect Number of arguments ... Please give basepath, dataset name, number of tasks, and 8 experiment values" << endl;
 			return -1;
 		}
 	}
 	else {
-		cout << "Incorrect usage ... Please give basepath." << endl;
+		cout << "Incorrect usage ... Please give basepath, dataset name, and number of tasks." << endl;
 		return -1;
 	}
 	
 	MTLDataset* mds = new MTLDataset();
-	mds->AddTaskFromFile(basepath + "band-task1.txt", "task-1", 2, 1);
+	/*mds->AddTaskFromFile(basepath + "band-task1.txt", "task-1", 2, 1);
 	mds->AddTaskFromFile(basepath + "band-task2.txt", "task-2", 2, 1);
 	mds->AddTaskFromFile(basepath + "band-task3.txt", "task-3", 2, 1);
 	mds->AddTaskFromFile(basepath + "band-task4.txt", "task-4", 2, 1);
 	mds->AddTaskFromFile(basepath + "band-task5.txt", "task-5", 2, 1);
 	mds->AddTaskFromFile(basepath + "band-task6.txt", "task-6", 2, 1);
 	mds->AddTaskFromFile(basepath + "band-task7.txt", "task-7", 2, 1);
-	mds->AddTaskFromFile(basepath + "band-task8.txt", "task-8", 2, 1);
+	mds->AddTaskFromFile(basepath + "band-task8.txt", "task-8", 2, 1);*/
+
+	for (int i = 0; i < numTasks; i++)
+	{
+		string tasknum = lexical_cast<string>(i+1);
+		string filename = basepath + dsname + "-task" + tasknum + ".txt";
+		string taskname = "task-" + tasknum;
+		mds->AddTaskFromFile(filename,taskname,2,1);
+	}
 
 	strings view;
 	view.push_back("task-1");

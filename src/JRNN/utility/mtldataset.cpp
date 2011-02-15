@@ -31,6 +31,7 @@ namespace JRNN {
 	void MTLDataset::SetView( strings view )
 	{
 		this->view = view;
+		this->dsAnalyzed = false;
 		GenerateDS();
 	}
 
