@@ -12,7 +12,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_pdf import PdfPages
 
-expfigpath = os.path.join(figpath, "Exp 1-1/Round 3/")
+expfigpath = os.path.join(figpath, "Exp 1-1/Round 3/No Val/")
 fignum = 0
 usesave = True
 
@@ -85,7 +85,7 @@ def Save(name):
 
 if __name__=='__main__':
     
-    filepath = os.path.join(outpath, "BP Limits 1")
+    filepath = os.path.join(outpath, "BP Limits No Val")
     os.chdir(filepath)
 
     if not os.path.exists(expfigpath):

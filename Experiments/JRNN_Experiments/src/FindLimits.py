@@ -13,9 +13,9 @@ numVal = 200
 numIn = 2
 numOut = 1
 type = 'BP'
-useVal = 'T'
+useVal = 'F'
 numRuns = 60
-expFold = 'BP Limits 1'
+expFold = 'BP Limits No Val'
 
 def ProcessFile(file):
     
@@ -65,12 +65,12 @@ if __name__ == "__main__":
     if not os.path.exists(outpath + expFold):
         os.makedirs(outpath + expFold)
     
-    #bandpath = datapath + "Band Tasks/Single Tasks"
+    bandpath = datapath + "Band Tasks/Single Tasks"
     strucpath = datapath + "New Binary Tasks"
     
-    #filelist =  [os.path.join(strucpath, f) for f in os.listdir(strucpath)]+[os.path.join(bandpath, f) for f in os.listdir(bandpath)]
+    filelist =  [os.path.join(strucpath, f) for f in os.listdir(strucpath)]+[os.path.join(bandpath, f) for f in os.listdir(bandpath)]
     
-    filelist = [os.path.join(strucpath, f) for f in os.listdir(strucpath)]
+    #filelist = [os.path.join(strucpath, f) for f in os.listdir(strucpath)]
     
     #ProcessFile(filelist[0])
     
