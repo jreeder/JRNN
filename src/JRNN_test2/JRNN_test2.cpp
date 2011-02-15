@@ -45,7 +45,7 @@ int main(int argc, char* argv[])
 			impPerc = lexical_cast<double>(argv[9]);
 			useValidation = (string(argv[10]) == "T") ? true : false;
 		}
-		else if (argc > 2){
+		else if (argc > 4){
 			cout << "Incorrect Number of arguments ... Please give basepath, dataset name, number of tasks, and 8 experiment values" << endl;
 			return -1;
 		}

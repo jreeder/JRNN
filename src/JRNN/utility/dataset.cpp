@@ -16,6 +16,7 @@ Dataset::Dataset() {
 	dsAnalyzed = false;
 	outClassIndexes.clear();
 	outClassPercentage.clear();
+	outClassNames.clear();
 }
 
 Dataset::Dataset(const Dataset& orig) {
@@ -197,6 +198,9 @@ void Dataset::RedistData(){
 
 //Analyze the dataset and shuffle according to out class distribution
 void Dataset::AnalyzeDS(){
+	outClassIndexes.clear();
+	outClassPercentage.clear();
+	outClassNames.clear();
 	for (int i = 0; i < size; i++){
 		string outname = StringFromVector(outputs[i]);
 		outClassIndexes[outname].push_back(i);
@@ -214,50 +218,123 @@ void Dataset::AnalyzeDS(){
 
 void Dataset::Distribute(){
     //TODO: need to place some error checks here ... this is very unsafe.
-	//TODO: need to load numbers of points based on class distribution.
     assert(size > (numTrain + numVal + numTest));
 	
 	//Find the number of points from each class that goes into the subsets
 	ints trainClsCounts, valClsCounts, testClsCounts, clsPositions;
 	int totalTr = 0, totalVal = 0, totalTest = 0;
 	int numClasses = outClassNames.size();
-	for(int i = 0; i < numClasses; i++){
-		string className = outClassNames[i];
+	hashedIntsMap indexQueues = outClassIndexes;
+
+	//changed to attempt to overcome small numbers of specific outputs.
+	//TODO: pull a method out here so this is less verbose. 
+	int i = 0;
+	while (totalTr < numTrain)
+	{
+		int classIndex = i++ % numClasses; 
+		string className = outClassNames[classIndex];
 		double tmpPerc = outClassPercentage[className];
-		int trTmpCount = 0, valTmpCount = 0, testTmpCount = 0;
-		if (i < numClasses - 1){
-			trTmpCount = (int)floor(numTrain * tmpPerc);
-			valTmpCount = (int)floor(numVal * tmpPerc);
-			testTmpCount = (int)floor(numTest * tmpPerc);
-			totalTr += trTmpCount;
-			totalVal += valTmpCount;
-			totalTest += testTmpCount;
-		} 
-		else
+		int tmpCount = 0;
+		tmpCount = (int)floor((numTrain * tmpPerc) + 0.5);
+		if (tmpCount > (numTrain - totalTr)){
+			tmpCount = numTrain - totalTr;
+		}
+		while (!indexQueues[className].empty() && tmpCount-- > 0)
 		{
-			trTmpCount = numTrain - totalTr;
-			valTmpCount = numVal - totalVal;
-			testTmpCount = numTest - totalTest;
+			int index = indexQueues[className].back();
+			trainIns.push_back(inputs[index]);
+			trainOuts.push_back(outputs[index]);
+			totalTr++;
+			indexQueues[className].pop_back();
 		}
-		/*trainClsCounts.push_back(trTmpCount);
-		valClsCounts.push_back(valTmpCount);
-		testClsCounts.push_back(testTmpCount);
-		clsPositions.push_back(0);*/
-		assert (outClassIndexes[className].size() > (unsigned int)(trTmpCount + valTmpCount + testTmpCount));
-		int j = 0;
-		for (; j < trTmpCount; j++){
-			trainIns.push_back(inputs[outClassIndexes[className][j]]);
-			trainOuts.push_back(outputs[outClassIndexes[className][j]]);
-		}
-		for (; j < trTmpCount + valTmpCount; j++){
-			valIns.push_back(inputs[outClassIndexes[className][j]]);
-			valOuts.push_back(outputs[outClassIndexes[className][j]]);
-		}
-		for(; j < trTmpCount + valTmpCount + testTmpCount; j++){
-			testIns.push_back(inputs[outClassIndexes[className][j]]);
-			testOuts.push_back(outputs[outClassIndexes[className][j]]);
-		}
+		int tmpSize1 = indexQueues[className].size();
+		int tmpSize2 = outClassIndexes[className].size();
 	}
+	i = 0;
+	while (totalVal < numVal)
+	{
+		int classIndex = i++ % numClasses; 
+		string className = outClassNames[classIndex];
+		double tmpPerc = outClassPercentage[className];
+		int tmpCount = 0;
+		tmpCount = (int)floor((numVal * tmpPerc) + 0.5);
+		if (tmpCount > (numVal - totalVal)){
+			tmpCount = numVal - totalVal;
+		}
+		while (!indexQueues[className].empty() && tmpCount-- > 0)
+		{
+			int index = indexQueues[className].back();
+			valIns.push_back(inputs[index]);
+			valOuts.push_back(outputs[index]);
+			totalVal++;
+			indexQueues[className].pop_back();
+		}
+		int tmpSize1 = indexQueues[className].size();
+		int tmpSize2 = outClassIndexes[className].size();
+	}
+	i = 0;
+	while (totalTest < numTest)
+	{
+		int classIndex = i++ % numClasses; 
+		string className = outClassNames[classIndex];
+		double tmpPerc = outClassPercentage[className];
+		int tmpCount = 0;
+		tmpCount = (int)floor((numTest * tmpPerc) + 0.5);
+		if (tmpCount > (numTest - totalTest)){
+			tmpCount = numTest - totalTest;
+		}
+		while (!indexQueues[className].empty() && tmpCount-- > 0)
+		{
+			int index = indexQueues[className].back();
+			testIns.push_back(inputs[index]);
+			testOuts.push_back(outputs[index]);
+			totalTest++;
+			indexQueues[className].pop_back();
+		}
+		int tmpSize1 = indexQueues[className].size();
+		int tmpSize2 = outClassIndexes[className].size();
+	}
+
+	//for(int i = 0; i < numClasses; i++){
+	//	string className = outClassNames[i];
+	//	double tmpPerc = outClassPercentage[className];
+	//	int trTmpCount = 0, valTmpCount = 0, testTmpCount = 0;
+	//	if (outClassIndexes[className].size() < 3){
+	//		continue;
+	//	}
+	//	if (i < numClasses - 1){
+	//		trTmpCount = (int)floor(numTrain * tmpPerc);
+	//		valTmpCount = (int)floor(numVal * tmpPerc);
+	//		testTmpCount = (int)floor(numTest * tmpPerc);
+	//		totalTr += trTmpCount;
+	//		totalVal += valTmpCount;
+	//		totalTest += testTmpCount;
+	//	} 
+	//	else
+	//	{
+	//		trTmpCount = numTrain - totalTr;
+	//		valTmpCount = numVal - totalVal;
+	//		testTmpCount = numTest - totalTest;
+	//	}
+	//	/*trainClsCounts.push_back(trTmpCount);
+	//	valClsCounts.push_back(valTmpCount);
+	//	testClsCounts.push_back(testTmpCount);
+	//	clsPositions.push_back(0);*/
+	//	assert (outClassIndexes[className].size() > (unsigned int)(trTmpCount + valTmpCount + testTmpCount));
+	//	int j = 0;
+	//	for (; j < trTmpCount; j++){
+	//		trainIns.push_back(inputs[outClassIndexes[className][j]]);
+	//		trainOuts.push_back(outputs[outClassIndexes[className][j]]);
+	//	}
+	//	for (; j < trTmpCount + valTmpCount; j++){
+	//		valIns.push_back(inputs[outClassIndexes[className][j]]);
+	//		valOuts.push_back(outputs[outClassIndexes[className][j]]);
+	//	}
+	//	for(; j < trTmpCount + valTmpCount + testTmpCount; j++){
+	//		testIns.push_back(inputs[outClassIndexes[className][j]]);
+	//		testOuts.push_back(outputs[outClassIndexes[className][j]]);
+	//	}
+	//}
 
 
 	ShuffleSubsets();
