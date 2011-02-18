@@ -11,7 +11,7 @@ import matplotlib.pyplot as plt
 from matplotlib.backends.backend_pdf import PdfPages
 from config import *
 
-expfigpath = figpath + "Exp 2/INDEX/"
+expfigpath = figpath + "Exp 2-1/INDEX/"
 usesave=True
 
 def Save(name):
@@ -31,6 +31,48 @@ def MakeGraphs(title, fignum, folder):
     bpstlerr = np.array([v['task-0'] for v in data['BP_STL'].errors])
     bpstlepochs = np.array(data['BP_STL'].epochs)
     bpstltimes = np.array(data['BP_STL'].times)
+
+    #Part of Experiment 1
+    bpstl1err = np.array([v['task-0'] for v in data['BP_STL_1'].errors])
+    bpstl2err = np.array([v['task-0'] for v in data['BP_STL_2'].errors])
+    bpstl3err = np.array([v['task-0'] for v in data['BP_STL_3'].errors])
+    bpstl4err = np.array([v['task-0'] for v in data['BP_STL_4'].errors])
+
+    bpstl1erravg, bpstl1errerr = CalcMeanAndError(bpstl1err)
+    bpstl2erravg, bpstl2errerr = CalcMeanAndError(bpstl2err)
+    bpstl3erravg, bpstl3errerr = CalcMeanAndError(bpstl3err)
+    bpstl4erravg, bpstl4errerr = CalcMeanAndError(bpstl4err)
+    
+    bpmtl1err = np.array([v['task-0'] for v in data['BP_MTL_1'].errors])
+    bpmtl2err = np.array([v['task-1'] for v in data['BP_MTL_2'].errors])
+    bpmtl3err = np.array([v['task-2'] for v in data['BP_MTL_3'].errors])
+    bpmtl4err = np.array([v['task-3'] for v in data['BP_MTL_4'].errors])
+    
+    bpmtl1erravg, bpmtl1errerr = CalcMeanAndError(bpmtl1err)
+    bpmtl2erravg, bpmtl2errerr = CalcMeanAndError(bpmtl2err)
+    bpmtl3erravg, bpmtl3errerr = CalcMeanAndError(bpmtl3err)
+    bpmtl4erravg, bpmtl4errerr = CalcMeanAndError(bpmtl4err)
+    
+    ccstl1err = np.array([v['task-0'] for v in data['CC_STL_1'].errors])
+    ccstl2err = np.array([v['task-0'] for v in data['CC_STL_2'].errors])
+    ccstl3err = np.array([v['task-0'] for v in data['CC_STL_3'].errors])
+    ccstl4err = np.array([v['task-0'] for v in data['CC_STL_4'].errors])
+
+    ccstl1erravg, ccstl1errerr = CalcMeanAndError(ccstl1err)
+    ccstl2erravg, ccstl2errerr = CalcMeanAndError(ccstl2err)
+    ccstl3erravg, ccstl3errerr = CalcMeanAndError(ccstl3err)
+    ccstl4erravg, ccstl4errerr = CalcMeanAndError(ccstl4err)
+    
+    ccmtl1err = np.array([v['task-0'] for v in data['CC_MTL_1'].errors])
+    ccmtl2err = np.array([v['task-1'] for v in data['CC_MTL_2'].errors])
+    ccmtl3err = np.array([v['task-2'] for v in data['CC_MTL_3'].errors])
+    ccmtl4err = np.array([v['task-3'] for v in data['CC_MTL_4'].errors])
+    
+    ccmtl1erravg, ccmtl1errerr = CalcMeanAndError(ccmtl1err)
+    ccmtl2erravg, ccmtl2errerr = CalcMeanAndError(ccmtl2err)
+    ccmtl3erravg, ccmtl3errerr = CalcMeanAndError(ccmtl3err)
+    ccmtl4erravg, ccmtl4errerr = CalcMeanAndError(ccmtl4err)
+    #end of Experiment 1 Data
     
     bpstlerravg, bpstlerrerr = CalcMeanAndError(bpstlerr)
     bpstlepochavg, bpstlepocherr = CalcMeanAndError(bpstlepochs)
@@ -169,11 +211,17 @@ if __name__ == "__main__":
         os.makedirs(expfigpath)
 
     if usesave: pp = PdfPages(expfigpath + "Collected Figures.pdf")
-    MakeGraphs("Impoverished Primary Task (NS)", 1, "NormSize")
-    MakeGraphs("Impoverished Primary Task (SS)", 4, "SmallSize")
-    MakeGraphs("Impoverished Primary Task (LS)", 7, "LargeSize")
-    MakeGraphs("Impoverished Primary Task (NS NV)", 10, "NormSizeNoVal")
-    MakeGraphs("Impoverished Primary Task (SS NV)", 13, "SmallSizeNoVal")
-    MakeGraphs("Impoverished Primary Task (LS NV)", 16, "LargeSizeNoVal")
+    MakeGraphs("Linear Impoverished Primary Task (NS)", 1, "linear/NormSize")
+    MakeGraphs("Linear Impoverished Primary Task (SS)", 4, "linear/SmallSize")
+    MakeGraphs("Linear Impoverished Primary Task (LS)", 7, "linear/LargeSize")
+    MakeGraphs("Band Impoverished Primary Task (NS)", 10, "band/NormSize")
+    MakeGraphs("Band Impoverished Primary Task (SS)", 13, "band/SmallSize")
+    MakeGraphs("Band Impoverished Primary Task (LS)", 16, "band/LargeSize")
+    MakeGraphs("CirInSq Impoverished Primary Task (NS)", 19, "CirInSq/NormSize")
+    MakeGraphs("CirInSq Impoverished Primary Task (SS)", 22, "CirInSq/SmallSize")
+    MakeGraphs("CirInSq Impoverished Primary Task (LS)", 25, "CirInSq/LargeSize")
+    #MakeGraphs("Impoverished Primary Task (NS NV)", 10, "NormSizeNoVal")
+    #MakeGraphs("Impoverished Primary Task (SS NV)", 13, "SmallSizeNoVal")
+    #MakeGraphs("Impoverished Primary Task (LS NV)", 16, "LargeSizeNoVal")
     if usesave: pp.close()
     if not usesave: plt.show()

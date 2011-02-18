@@ -106,7 +106,7 @@ int main(int argc, char* argv[])
 	mds->DistData((int)floor(numTrain*(1-impPerc)), numVal, numTest);
 	DatasetPtr stl_ds = mds->SpawnDS();
 	mds->DistData(numTrain, numVal, numTest);
-	DatasetPtr full_stl_ds = mds->SpawnDS();
+	DatasetPtr stl_ds_t1 = mds->SpawnDS();
 
 	view.clear();
 	view.push_back("task-2");
@@ -131,8 +131,10 @@ int main(int argc, char* argv[])
 
 	FFMLPNetPtr ffnet_stl = FFMLPNetwork::Create();
 	ffnet_stl->Build(2, numHidPerOut, 1);
+	FFMLPNetPtr ffnet_stl1 = FFMLPNetwork::Create();
+	ffnet_stl1->Build(2, numHidPerOut, 1);
 	FFMLPNetPtr ffnet_stl2 = FFMLPNetwork::Create();
-	ffnet_stl->Build(2, numHidPerOut, 1);
+	ffnet_stl2->Build(2, numHidPerOut, 1);
 	FFMLPNetPtr ffnet_stl3 = FFMLPNetwork::Create();
 	ffnet_stl3->Build(2, numHidPerOut, 1);
 	FFMLPNetPtr ffnet_stl4 = FFMLPNetwork::Create();
@@ -153,6 +155,7 @@ int main(int argc, char* argv[])
 	ffnet_mtl_ur->Build(2, numHidPerOut * 4, 4);
 
 	CCNetworkPtr ccnet_stl = CCNetwork::Create();
+	CCNetworkPtr ccnet_stl1 = CCNetwork::Create();
 	CCNetworkPtr ccnet_stl2 = CCNetwork::Create();
 	CCNetworkPtr ccnet_stl3 = CCNetwork::Create();
 	CCNetworkPtr ccnet_stl4 = CCNetwork::Create();
@@ -167,6 +170,7 @@ int main(int argc, char* argv[])
 	
 	
 	ccnet_stl->Build(2,1);
+	ccnet_stl1->Build(2,1);
 	ccnet_stl2->Build(2,1);
 	ccnet_stl3->Build(2,1);
 	ccnet_stl4->Build(2,1);
@@ -180,6 +184,7 @@ int main(int argc, char* argv[])
 	ccnet_mtl_ur->Build(2,4);
 
 	RPropTrainer bp_stl(ffnet_stl,stl_ds,1.2,0.5);
+	RPropTrainer bp_stl1(ffnet_stl1,stl_ds_t1,1.2,0.5);
 	RPropTrainer bp_stl2(ffnet_stl2,stl_ds_t2,1.2,0.5);
 	RPropTrainer bp_stl3(ffnet_stl3,stl_ds_t3,1.2,0.5);
 	RPropTrainer bp_stl4(ffnet_stl4,stl_ds_t4,1.2,0.5);
@@ -193,6 +198,7 @@ int main(int argc, char* argv[])
 	RPropTrainer bp_mtl_ur(ffnet_mtl_ur,mtl_ds_ur, 1.2, 0.5, mtlPrimaryIndexes);
 
 	CCTrainer cc_stl(ccnet_stl, stl_ds, 8);
+	CCTrainer cc_stl1(ccnet_stl1, stl_ds_t1, 8);
 	CCTrainer cc_stl2(ccnet_stl2, stl_ds_t2, 8);
 	CCTrainer cc_stl3(ccnet_stl3, stl_ds_t3, 8);
 	CCTrainer cc_stl4(ccnet_stl4, stl_ds_t4, 8);
@@ -206,6 +212,7 @@ int main(int argc, char* argv[])
 	CCTrainer cc_mtl_ur(ccnet_mtl_ur, mtl_ds_ur, 8, mtlPrimaryIndexes);
 
 	strings bpstlresults;
+	strings bpstl1results;
 	strings bpstl2results;
 	strings bpstl3results;
 	strings bpstl4results;
@@ -219,6 +226,7 @@ int main(int argc, char* argv[])
 	strings bpmtlurresults;
 
 	strings ccstlresults;
+	strings ccstl1results;
 	strings ccstl2results;
 	strings ccstl3results;
 	strings ccstl4results;
@@ -232,6 +240,7 @@ int main(int argc, char* argv[])
 	strings ccmtlurresults;
 
 	boost::thread bpstlthread(BPWorker, bp_stl, numHidPerOut, &bpstlresults, numRuns, useValidation);
+	boost::thread bpstl1thread(BPWorker, bp_stl1, numHidPerOut, &bpstl1results, numRuns, useValidation);
 	boost::thread bpstl2thread(BPWorker, bp_stl2, numHidPerOut, &bpstl2results, numRuns, useValidation);
 	boost::thread bpstl3thread(BPWorker, bp_stl3, numHidPerOut, &bpstl3results, numRuns, useValidation);
 	boost::thread bpstl4thread(BPWorker, bp_stl4, numHidPerOut, &bpstl4results, numRuns, useValidation);
@@ -243,6 +252,7 @@ int main(int argc, char* argv[])
 	boost::thread bpmtlfull4thread(BPWorker, bp_mtl_full4, numHidPerOut * 4, &bpmtlfull4results, numRuns, useValidation);
 	
 	boost::thread ccstlthread(CCWorker, cc_stl, &ccstlresults, numRuns, useValidation);
+	boost::thread ccstl1thread(CCWorker, cc_stl1, &ccstl1results, numRuns, useValidation);
 	boost::thread ccstl2thread(CCWorker, cc_stl2, &ccstl2results, numRuns, useValidation);
 	boost::thread ccstl3thread(CCWorker, cc_stl3, &ccstl3results, numRuns, useValidation);
 	boost::thread ccstl4thread(CCWorker, cc_stl4, &ccstl4results, numRuns, useValidation);
@@ -254,6 +264,7 @@ int main(int argc, char* argv[])
 	boost::thread ccmtlfull4thread(CCWorker, cc_mtl_full4, &ccmtlfull4results, numRuns, useValidation);
 
 	bpstlthread.join();
+	bpstl1thread.join();
 	bpstl2thread.join();
 	bpstl3thread.join();
 	bpstl4thread.join();
@@ -265,6 +276,7 @@ int main(int argc, char* argv[])
 	bpmtlfull4thread.join();
 
 	ccstlthread.join();
+	ccstl1thread.join();
 	ccstl2thread.join();
 	ccstl3thread.join();
 	ccstl4thread.join();
@@ -282,6 +294,7 @@ int main(int argc, char* argv[])
 	bpmtlurthread.join();
 
 	ofstream bpstlfile;
+	ofstream bpstl1file;
 	ofstream bpstl2file;
 	ofstream bpstl3file;
 	ofstream bpstl4file;
@@ -295,6 +308,7 @@ int main(int argc, char* argv[])
 	ofstream bpmtlurfile;
 
 	ofstream ccstlfile;
+	ofstream ccstl1file;
 	ofstream ccstl2file;
 	ofstream ccstl3file;
 	ofstream ccstl4file;
@@ -308,6 +322,7 @@ int main(int argc, char* argv[])
 	ofstream ccmtlurfile;
 
 	bpstlfile.open("bpstlresults.txt");
+	bpstl1file.open("bpstl1results.txt");
 	bpstl2file.open("bpstl2results.txt");
 	bpstl3file.open("bpstl3results.txt");
 	bpstl4file.open("bpstl4results.txt");
@@ -321,21 +336,25 @@ int main(int argc, char* argv[])
 	bpmtlurfile.open("bpmtlurresults.txt");
 
 	ccstlfile.open("ccstlresults.txt");
-	ccstl2file.open("bpstl2results.txt");
-	ccstl3file.open("bpstl3results.txt");
-	ccstl4file.open("bpstl4results.txt");
+	ccstl1file.open("ccstl1results.txt");
+	ccstl2file.open("ccstl2results.txt");
+	ccstl3file.open("ccstl3results.txt");
+	ccstl4file.open("ccstl4results.txt");
 
 	ccmtlfile.open("ccmtlresutls.txt");
-	ccmtlfull1file.open("bpmtlfull1results.txt");
-	ccmtlfull2file.open("bpmtlfull2results.txt");
-	ccmtlfull3file.open("bpmtlfull3results.txt");
-	ccmtlfull4file.open("bpmtlfull4results.txt");
+	ccmtlfull1file.open("ccmtlfull1results.txt");
+	ccmtlfull2file.open("ccmtlfull2results.txt");
+	ccmtlfull3file.open("ccmtlfull3results.txt");
+	ccmtlfull4file.open("ccmtlfull4results.txt");
 
 	ccmtlurfile.open("ccmtlurresults.txt");
 	
 	//bpstl results
 	BOOST_FOREACH(string line, bpstlresults){
 		bpstlfile << line << endl;
+	}
+	BOOST_FOREACH(string line, bpstl1results){
+		bpstl1file << line << endl;
 	}
 	BOOST_FOREACH(string line, bpstl2results){
 		bpstl2file << line << endl;
@@ -373,6 +392,9 @@ int main(int argc, char* argv[])
 	BOOST_FOREACH(string line, ccstlresults){
 		ccstlfile << line << endl;
 	}
+	BOOST_FOREACH(string line, ccstl1results){
+		ccstl1file << line << endl;
+	}
 	BOOST_FOREACH(string line, ccstl2results){
 		ccstl2file << line << endl;
 	}
@@ -406,6 +428,7 @@ int main(int argc, char* argv[])
 	}
 
 	bpstlfile.close();
+	bpstl1file.close();
 	bpstl2file.close();
 	bpstl3file.close();
 	bpstl4file.close();
@@ -419,6 +442,7 @@ int main(int argc, char* argv[])
 	bpmtlurfile.close();
 
 	ccstlfile.close();
+	ccstl1file.close();
 	ccstl2file.close();
 	ccstl3file.close();
 	ccstl4file.close();

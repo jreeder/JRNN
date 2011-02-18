@@ -24,11 +24,24 @@ def ParseFile(filename):
     else:
         unrelated = False
 
+    taskNum = 0
+    
+    if "1" in filename:
+        taskNum = 1
+    elif "2" in filename:
+        taskNum = 2
+    elif "3" in filename:
+        taskNum = 3
+    elif "4" in filename: 
+        taskNum = 4
+    
     if not unrelated:
         thisName = typeName + "_" + taskType
     else:
         thisName = typeName + "_" + taskType + "_UR"
 
+    if not taskNum == 0:
+        thisName = thisName + "_" + str(taskNum)
 #    print thisName
     
 #    subfilename = filename.split(typeName)

@@ -454,6 +454,9 @@ namespace JRNN {
 				bestCand = node;
 			}
 		}
+		if (bestCand.get() == 0){
+			bestCand = candNodes[0];
+		}
 	}
 
 	void CCTrainer::CandEpoch()
