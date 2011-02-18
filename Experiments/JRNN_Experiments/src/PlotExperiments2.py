@@ -31,48 +31,6 @@ def MakeGraphs(title, fignum, folder):
     bpstlerr = np.array([v['task-0'] for v in data['BP_STL'].errors])
     bpstlepochs = np.array(data['BP_STL'].epochs)
     bpstltimes = np.array(data['BP_STL'].times)
-
-    #Part of Experiment 1
-    bpstl1err = np.array([v['task-0'] for v in data['BP_STL_1'].errors])
-    bpstl2err = np.array([v['task-0'] for v in data['BP_STL_2'].errors])
-    bpstl3err = np.array([v['task-0'] for v in data['BP_STL_3'].errors])
-    bpstl4err = np.array([v['task-0'] for v in data['BP_STL_4'].errors])
-
-    bpstl1erravg, bpstl1errerr = CalcMeanAndError(bpstl1err)
-    bpstl2erravg, bpstl2errerr = CalcMeanAndError(bpstl2err)
-    bpstl3erravg, bpstl3errerr = CalcMeanAndError(bpstl3err)
-    bpstl4erravg, bpstl4errerr = CalcMeanAndError(bpstl4err)
-    
-    bpmtl1err = np.array([v['task-0'] for v in data['BP_MTL_1'].errors])
-    bpmtl2err = np.array([v['task-1'] for v in data['BP_MTL_2'].errors])
-    bpmtl3err = np.array([v['task-2'] for v in data['BP_MTL_3'].errors])
-    bpmtl4err = np.array([v['task-3'] for v in data['BP_MTL_4'].errors])
-    
-    bpmtl1erravg, bpmtl1errerr = CalcMeanAndError(bpmtl1err)
-    bpmtl2erravg, bpmtl2errerr = CalcMeanAndError(bpmtl2err)
-    bpmtl3erravg, bpmtl3errerr = CalcMeanAndError(bpmtl3err)
-    bpmtl4erravg, bpmtl4errerr = CalcMeanAndError(bpmtl4err)
-    
-    ccstl1err = np.array([v['task-0'] for v in data['CC_STL_1'].errors])
-    ccstl2err = np.array([v['task-0'] for v in data['CC_STL_2'].errors])
-    ccstl3err = np.array([v['task-0'] for v in data['CC_STL_3'].errors])
-    ccstl4err = np.array([v['task-0'] for v in data['CC_STL_4'].errors])
-
-    ccstl1erravg, ccstl1errerr = CalcMeanAndError(ccstl1err)
-    ccstl2erravg, ccstl2errerr = CalcMeanAndError(ccstl2err)
-    ccstl3erravg, ccstl3errerr = CalcMeanAndError(ccstl3err)
-    ccstl4erravg, ccstl4errerr = CalcMeanAndError(ccstl4err)
-    
-    ccmtl1err = np.array([v['task-0'] for v in data['CC_MTL_1'].errors])
-    ccmtl2err = np.array([v['task-1'] for v in data['CC_MTL_2'].errors])
-    ccmtl3err = np.array([v['task-2'] for v in data['CC_MTL_3'].errors])
-    ccmtl4err = np.array([v['task-3'] for v in data['CC_MTL_4'].errors])
-    
-    ccmtl1erravg, ccmtl1errerr = CalcMeanAndError(ccmtl1err)
-    ccmtl2erravg, ccmtl2errerr = CalcMeanAndError(ccmtl2err)
-    ccmtl3erravg, ccmtl3errerr = CalcMeanAndError(ccmtl3err)
-    ccmtl4erravg, ccmtl4errerr = CalcMeanAndError(ccmtl4err)
-    #end of Experiment 1 Data
     
     bpstlerravg, bpstlerrerr = CalcMeanAndError(bpstlerr)
     bpstlepochavg, bpstlepocherr = CalcMeanAndError(bpstlepochs)
@@ -203,9 +161,88 @@ def MakeGraphs(title, fignum, folder):
 
     if usesave: Save(title + " Times")
 
-
     
+def MakeGraph2(title, fignum, data):
+    plt.figure(fignum)
 
+    xticks = ["Task 1", "Task 2", "Task 3", "Task 4"]
+    locs = np.arange(1, len(xticks) + 1)
+    width = 0.2
+    
+    #Part of Experiment 1
+    bpstl1err = np.array([v['task-0'] for v in data['BP_STL_1'].errors])
+    bpstl2err = np.array([v['task-0'] for v in data['BP_STL_2'].errors])
+    bpstl3err = np.array([v['task-0'] for v in data['BP_STL_3'].errors])
+    bpstl4err = np.array([v['task-0'] for v in data['BP_STL_4'].errors])
+
+    bpstl1erravg, bpstl1errerr = CalcMeanAndError(bpstl1err)
+    bpstl2erravg, bpstl2errerr = CalcMeanAndError(bpstl2err)
+    bpstl3erravg, bpstl3errerr = CalcMeanAndError(bpstl3err)
+    bpstl4erravg, bpstl4errerr = CalcMeanAndError(bpstl4err)
+    
+    bpmtl1err = np.array([v['task-0'] for v in data['BP_MTL_1'].errors])
+    bpmtl2err = np.array([v['task-1'] for v in data['BP_MTL_2'].errors])
+    bpmtl3err = np.array([v['task-2'] for v in data['BP_MTL_3'].errors])
+    bpmtl4err = np.array([v['task-3'] for v in data['BP_MTL_4'].errors])
+    
+    bpmtl1erravg, bpmtl1errerr = CalcMeanAndError(bpmtl1err)
+    bpmtl2erravg, bpmtl2errerr = CalcMeanAndError(bpmtl2err)
+    bpmtl3erravg, bpmtl3errerr = CalcMeanAndError(bpmtl3err)
+    bpmtl4erravg, bpmtl4errerr = CalcMeanAndError(bpmtl4err)
+    
+    ccstl1err = np.array([v['task-0'] for v in data['CC_STL_1'].errors])
+    ccstl2err = np.array([v['task-0'] for v in data['CC_STL_2'].errors])
+    ccstl3err = np.array([v['task-0'] for v in data['CC_STL_3'].errors])
+    ccstl4err = np.array([v['task-0'] for v in data['CC_STL_4'].errors])
+
+    ccstl1erravg, ccstl1errerr = CalcMeanAndError(ccstl1err)
+    ccstl2erravg, ccstl2errerr = CalcMeanAndError(ccstl2err)
+    ccstl3erravg, ccstl3errerr = CalcMeanAndError(ccstl3err)
+    ccstl4erravg, ccstl4errerr = CalcMeanAndError(ccstl4err)
+    
+    ccmtl1err = np.array([v['task-0'] for v in data['CC_MTL_1'].errors])
+    ccmtl2err = np.array([v['task-1'] for v in data['CC_MTL_2'].errors])
+    ccmtl3err = np.array([v['task-2'] for v in data['CC_MTL_3'].errors])
+    ccmtl4err = np.array([v['task-3'] for v in data['CC_MTL_4'].errors])
+    
+    ccmtl1erravg, ccmtl1errerr = CalcMeanAndError(ccmtl1err)
+    ccmtl2erravg, ccmtl2errerr = CalcMeanAndError(ccmtl2err)
+    ccmtl3erravg, ccmtl3errerr = CalcMeanAndError(ccmtl3err)
+    ccmtl4erravg, ccmtl4errerr = CalcMeanAndError(ccmtl4err)
+    #end of Experiment 1 Data
+    
+    bpfullstlerravg = [bpstl1erravg, bpstl2erravg, bpstl3erravg, bpstl4erravg]
+    bpfullstlerrerr = [bpstl1errerr, bpstl2errerr, bpstl3errerr, bpstl4errerr]
+    
+    bpfullmtlerravg = [bpmtl1erravg, bpmtl2erravg, bpstl3erravg, bpstl4erravg]
+    bpfullmtlerrerr = [bpmtl1errerr, bpmtl2errerr, bpstl3errerr, bpstl4errerr]
+    
+    ccfullmtlerravg = [ccmtl1erravg, ccmtl2erravg, ccmtl3erravg, ccmtl4erravg]
+    ccfullmtlerrerr = [ccmtl1errerr, ccmtl2errerr, ccmtl3errerr, ccmtl4errerr]
+    
+    ccfullstlerravg = [ccstl1erravg, ccstl2erravg, ccstl3erravg, ccstl4erravg]
+    ccfullstlerrerr = [ccstl1errerr, ccstl2errerr, ccstl3errerr, ccstl4errerr]
+                       
+    plt.bar(locs, bpfullstlerravg, yerr=bpfullstlerrerr, color="red", width=width, \
+    antialiased=True, label="BP STL")
+    
+    plt.bar(locs + width, bpfullmtlerravg, yerr=bpfullmtlerrerr, color="red", width=width, \
+    antialiased=True, hatch="/", label="BP MTL")
+    
+    plt.bar(locs + 2*width, ccfullstlerravg, yerr=ccfullstlerrerr, color="blue", width=width, \
+    antialiased=True, label="CC STL")
+    
+    plt.bar(locs + 3*width, ccfullmtlerravg, yerr=ccfullmtlerrerr, color="blue", width=width, \
+    antialiased=True, hatch="/", label="CC MTL")
+    
+    plt.legend()
+    plt.title(title + " Error")
+    plt.xticks(locs + 2*width, xticks)
+    plt.ylable("Error")
+    
+    if usesave: Save(title + " Error")
+    
+    
 if __name__ == "__main__":
     if not os.path.exists(expfigpath):
         os.makedirs(expfigpath)
