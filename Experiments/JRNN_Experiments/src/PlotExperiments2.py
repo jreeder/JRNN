@@ -11,7 +11,7 @@ import matplotlib.pyplot as plt
 from matplotlib.backends.backend_pdf import PdfPages
 from config import *
 
-expfigpath = figpath + "Exp 2-1/INDEX/"
+expfigpath = figpath + "Exp 2-1/INDEX 3/"
 usesave=True
 
 def Save(name):
@@ -27,7 +27,12 @@ def MakeGraphs(title, fignum, folder):
     for file in filelist:
         tmpBundle = pe.ParseFile(file)
         data[tmpBundle.name] = tmpBundle
+    
+    MakeGraph1(title, fignum, data)
+    MakeGraph2(title, fignum + 3, data)
 
+    
+def MakeGraph1(title, fignum, data):
     bpstlerr = np.array([v['task-0'] for v in data['BP_STL'].errors])
     bpstlepochs = np.array(data['BP_STL'].epochs)
     bpstltimes = np.array(data['BP_STL'].times)
@@ -160,7 +165,7 @@ def MakeGraphs(title, fignum, folder):
     plt.ylabel("Time (s)")
 
     if usesave: Save(title + " Times")
-
+    
     
 def MakeGraph2(title, fignum, data):
     plt.figure(fignum)
@@ -238,7 +243,7 @@ def MakeGraph2(title, fignum, data):
     plt.legend()
     plt.title(title + " Error")
     plt.xticks(locs + 2*width, xticks)
-    plt.ylable("Error")
+    plt.ylabel("Error")
     
     if usesave: Save(title + " Error")
     
@@ -249,14 +254,14 @@ if __name__ == "__main__":
 
     if usesave: pp = PdfPages(expfigpath + "Collected Figures.pdf")
     MakeGraphs("Linear Impoverished Primary Task (NS)", 1, "linear/NormSize")
-    MakeGraphs("Linear Impoverished Primary Task (SS)", 4, "linear/SmallSize")
-    MakeGraphs("Linear Impoverished Primary Task (LS)", 7, "linear/LargeSize")
-    MakeGraphs("Band Impoverished Primary Task (NS)", 10, "band/NormSize")
-    MakeGraphs("Band Impoverished Primary Task (SS)", 13, "band/SmallSize")
-    MakeGraphs("Band Impoverished Primary Task (LS)", 16, "band/LargeSize")
-    MakeGraphs("CirInSq Impoverished Primary Task (NS)", 19, "CirInSq/NormSize")
-    MakeGraphs("CirInSq Impoverished Primary Task (SS)", 22, "CirInSq/SmallSize")
-    MakeGraphs("CirInSq Impoverished Primary Task (LS)", 25, "CirInSq/LargeSize")
+    MakeGraphs("Linear Impoverished Primary Task (SS)", 5, "linear/SmallSize")
+    MakeGraphs("Linear Impoverished Primary Task (LS)", 9, "linear/LargeSize")
+    MakeGraphs("Band Impoverished Primary Task (NS)", 13, "band/NormSize")
+    MakeGraphs("Band Impoverished Primary Task (SS)", 17, "band/SmallSize")
+    MakeGraphs("Band Impoverished Primary Task (LS)", 21, "band/LargeSize")
+    MakeGraphs("CirInSq Impoverished Primary Task (NS)", 25, "CirInSq/NormSize")
+    MakeGraphs("CirInSq Impoverished Primary Task (SS)", 29, "CirInSq/SmallSize")
+    MakeGraphs("CirInSq Impoverished Primary Task (LS)", 33, "CirInSq/LargeSize")
     #MakeGraphs("Impoverished Primary Task (NS NV)", 10, "NormSizeNoVal")
     #MakeGraphs("Impoverished Primary Task (SS NV)", 13, "SmallSizeNoVal")
     #MakeGraphs("Impoverished Primary Task (LS NV)", 16, "LargeSizeNoVal")
