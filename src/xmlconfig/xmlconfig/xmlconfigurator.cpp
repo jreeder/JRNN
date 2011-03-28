@@ -219,15 +219,17 @@ bool XmlConfigurator::GetVar(const string& elemPath, string& returnString, const
     IsFileUpdated();
     bool returnVal = false;
     map<string, string>::iterator mapit;
+	string tmpString = "";
     if ( ( mapit = mVariableCache.find ( elemPath ) ) != mVariableCache.end() )
     {
         returnVal = true;
         returnString = mapit->second;
     }
-    else if (CheckXmlPointers(elemPath, returnString))
+    else if (CheckXmlPointers(elemPath, tmpString))
     {
-        if (returnString.compare("NULL") != 0)
+        if (tmpString.compare("NULL") != 0)
         {
+			returnString = tmpString;
             returnVal = true;
         }
         else

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xml>
+  <rProp>
+    <params etaPlus="1.2"
+            etaMinus="0.5"
+            maxEpochs="3000"
+            minError="0.04"/>
+  </rProp>
+  <CC>
+    <!--errorMeasure 1=INDEX 0=BITS-->
+    <params maxEpochs="3000"
+            numCands="8"
+            valPatience="2"
+            impPatience="2"
+            weightMult="1.0"
+            maxWeight="10000"
+            useMaxWeight="true"
+            primeOffset="0.1"
+            indexThreshold="0.05"
+            scoreThreshold="0.4"
+            errorMeasure="1">
+      <out epochs="300"
+           patience="12"
+           epsilon="10.0"
+           decay="0.0"
+           mu="2.0"
+           changeThreshold="0.02"/>
+      <cand epochs="200"
+            patience="12"
+            epsilon="100.0"
+            decay="0.0"
+            mu="2.0"
+            changeThreshold="0.03"/>
+    </params>
+  </CC>
+</xml>

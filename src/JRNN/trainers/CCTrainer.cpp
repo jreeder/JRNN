@@ -49,6 +49,7 @@ namespace JRNN {
 		parms.nCand = numCandidates;
 		parms.indexThreshold = 0.05; //0.1 Index is the Sqrt of MSE so Mean Err
 		parms.scoreThreshold = 0.4;
+		parms.errorMeasure = INDEX;
 		out.conDeltas.clear();
 		out.conPSlopes.clear();
 		out.conSlopes.clear();

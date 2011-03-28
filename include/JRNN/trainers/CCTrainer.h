@@ -75,6 +75,7 @@ namespace JRNN {
 
 			double indexThreshold;
 			double scoreThreshold;
+			int errorMeasure;
 
 			int nCand;
 		} parms;

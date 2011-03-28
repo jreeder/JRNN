@@ -16,9 +16,11 @@
 #include <iostream>
 #include <fstream>
 #include <ctime>
+#include <xmlconfig/xmlconfigurator.h>
 
 using namespace JRNN;
 using namespace std;
+using namespace xmlconfig;
 
 //void printDoubles(doubles toPrint, ofstream& file);
 
@@ -30,12 +32,14 @@ int main(int argc, char** argv) {
     string filename;
     string outfile = "";
 	string type = "";
+	string xmlpath = "";
     int numIn,numHid,numOut, numTrain, numVal, numTest, numRuns;
 	bool useValidation = true;
+	XmlConfigurator params;
 
-    if (argc != 12){
+    if (argc != 13){
         cout << "Incorrect Arguments" << endl;
-		cout << "Proper Syntax: JRNN_test <filename> <numTrain> <numVal> <numTest> <numIn> <numHid> <numOut> <type = 'BP' or 'CC'> <validate = 'T' or 'F'> <outfilename> <numRuns>" << endl;
+		cout << "Proper Syntax: JRNN_test <filename> <numTrain> <numVal> <numTest> <numIn> <numHid> <numOut> <type = 'BP' or 'CC'> <validate = 'T' or 'F'> <outfilename> <numRuns> <xmlconfigpath>" << endl;
 		cout << "The number of training, validation, and testing points must be less than the number of points in the test set." << endl;
         return -1;
     }
@@ -58,6 +62,9 @@ int main(int argc, char** argv) {
 		outfile = string(argv[10]);
 		
 		numRuns = lexical_cast<int>(argv[11]);
+
+		xmlpath	= string(argv[12]);
+
         /*outfile = filename;
 		outfile.replace(outfile.end()-4,outfile.end()," ");
 		outfile += type;
@@ -78,13 +85,36 @@ int main(int argc, char** argv) {
 	}
     ds->DistData(numTrain,numVal,numTest);
     //NetworkPtr net = Network::CreateFFMLPNetwork(numIn,numHid,numOut);
+
+	double rPropEtaPlus = 1.2;
+	double rPropEtaMinus = 0.5;
+	int rPropMaxEpochs = 3000;
+	double rPropMinError = 0.04;
+
+	double ccMaxEpochs = 3000;
+	double ccNumCands = 8;
+
+	if (params.Load(xmlpath,"params")){
+		params.GetVar("rProp.vars@etaPlus",rPropEtaPlus,true);
+		params.GetVar("rProp.vars@etaMinus",rPropEtaMinus,true);
+		params.GetVar("rProp.vars@maxEpochs",rPropMaxEpochs,true);
+		params.GetVar("rProp.vars@minError",rPropMinError,true);
+
+		params.GetVar("CC.vars@maxEpochs", ccMaxEpochs, true);
+		params.GetVar("CC.vars@numCands", ccNumCands, true);
+		
+	}
+
+
+
+
 	if (type == "BP")
 	{
 		FFMLPNetPtr net = FFMLPNetwork::Create();
 		net->Build(numIn,numHid,numOut);
 		//net.printConnections();
 	//    BackPropTrainer bp(net, ds, 0.01);
-		RPropTrainer bp(net, ds, 1.2, 0.5);
+		RPropTrainer bp(net, ds, rPropEtaPlus, rPropEtaMinus);
 	//    cout << bp.trainEpoch() << endl;
 		int skips = 0;
 		for (int i = 0; i < numRuns;){
@@ -92,10 +122,10 @@ int main(int argc, char** argv) {
 			double time = 0.0;
 			clock_t startTime = clock();
 			if (useValidation){
-				bp.TrainToValConv(3000);
+				bp.TrainToValConv(rPropMaxEpochs);
 			}
 			else {
-				bp.TrainToConvergence(0.04, 3000);
+				bp.TrainToConvergence(rPropMinError, rPropMaxEpochs);
 			}
 			time = (clock() - startTime)/(double)CLOCKS_PER_SEC;
 			int epochs = bp.GetEpochs();
@@ -123,16 +153,16 @@ int main(int argc, char** argv) {
 		CCNetworkPtr net = CCNetwork::Create();
 		net->Build(numIn,numOut);
 
-		CCTrainer cc = CCTrainer(net,ds,8);
+		CCTrainer cc = CCTrainer(net,ds,ccNumCands);
 
 		for (int i = 0; i < numRuns;){
 			double time = 0.0;
 			clock_t startTime = clock();
 			if(useValidation){
-				cc.TrainToValConv(3000);
+				cc.TrainToValConv(ccMaxEpochs);
 			}
 			else {
-				cc.TrainToConvergence(3000);
+				cc.TrainToConvergence(ccMaxEpochs);
 			}
 			time = (clock() - startTime)/(double)CLOCKS_PER_SEC;
 
