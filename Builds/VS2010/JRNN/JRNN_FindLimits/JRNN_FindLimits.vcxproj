@@ -81,7 +81,9 @@
     <ClCompile Include="..\..\..\..\src\JRNN_FindLimits\main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\..\..\Experiments\config\Parameters.xml" />
+    <None Include="..\..\..\..\Experiments\config\Parameters.xml">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

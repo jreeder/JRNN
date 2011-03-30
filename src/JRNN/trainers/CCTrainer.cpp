@@ -60,10 +60,10 @@ namespace JRNN {
 		int numOut = network->GetNumOut();
 		err.errors = vecDouble(numOut);
 		err.sumErrs = vecDouble(numOut);
-		err.measure = INDEX;
+		err.measure = (ErrorType) parms.errorMeasure;
 		valErr.errors = vecDouble(numOut);
 		valErr.sumErrs = vecDouble(numOut);
-		valErr.measure = INDEX;
+		valErr.measure = (ErrorType) parms.errorMeasure;
 		candCorr = hashedVecDoubleMap(numOut);
 		candPCorr = hashedVecDoubleMap(numOut);
 		ResetVars();

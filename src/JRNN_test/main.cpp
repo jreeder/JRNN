@@ -91,18 +91,24 @@ int main(int argc, char** argv) {
 	int rPropMaxEpochs = 3000;
 	double rPropMinError = 0.04;
 
-	double ccMaxEpochs = 3000;
-	double ccNumCands = 8;
+	int ccMaxEpochs = 3000;
+	int ccNumCands = 8;
+	bool xmlLoaded = false;
+	bool parmsOptional = true;
+
+#ifdef DEBUG
+	parmsOptional = false;
+#endif
 
 	if (params.Load(xmlpath,"params")){
-		params.GetVar("rProp.vars@etaPlus",rPropEtaPlus,true);
-		params.GetVar("rProp.vars@etaMinus",rPropEtaMinus,true);
-		params.GetVar("rProp.vars@maxEpochs",rPropMaxEpochs,true);
-		params.GetVar("rProp.vars@minError",rPropMinError,true);
+		params.GetVar("rProp.params@etaPlus",rPropEtaPlus, parmsOptional);
+		params.GetVar("rProp.params@etaMinus",rPropEtaMinus, parmsOptional);
+		params.GetVar("rProp.params@maxEpochs",rPropMaxEpochs, parmsOptional);
+		params.GetVar("rProp.params@minError",rPropMinError, parmsOptional);
 
-		params.GetVar("CC.vars@maxEpochs", ccMaxEpochs, true);
-		params.GetVar("CC.vars@numCands", ccNumCands, true);
-		
+		params.GetVar("CC.params@maxEpochs", ccMaxEpochs, parmsOptional);
+		params.GetVar("CC.params@numCands", ccNumCands, parmsOptional);
+		xmlLoaded = true;
 	}
 
 
@@ -154,6 +160,30 @@ int main(int argc, char** argv) {
 		net->Build(numIn,numOut);
 
 		CCTrainer cc = CCTrainer(net,ds,ccNumCands);
+
+		if (xmlLoaded) {
+			params.GetVar("CC.params@valPatience", cc.parms.valPatience, parmsOptional);
+			params.GetVar("CC.params@impPatience", cc.parms.impPatience, parmsOptional);
+			params.GetVar("CC.params@weightMult", cc.parms.weightMult, parmsOptional);
+			params.GetVar("CC.params@maxWeight", cc.parms.maxWeight, parmsOptional);
+			params.GetVar("CC.params@useMaxWeight", cc.parms.useMaxWeight, parmsOptional);
+			params.GetVar("CC.params@primeOffset", cc.parms.primeOffset, parmsOptional);
+			params.GetVar("CC.params@indexThreshold", cc.parms.indexThreshold, parmsOptional);
+			params.GetVar("CC.params@scoreThreshold", cc.parms.scoreThreshold, parmsOptional);
+			params.GetVar("CC.params@errorMeasure", cc.parms.errorMeasure, parmsOptional);
+			params.GetVar("CC.params.out@epochs", cc.parms.out.epochs, parmsOptional);
+			params.GetVar("CC.params.out@patience", cc.parms.out.patience, parmsOptional);
+			params.GetVar("CC.params.out@epsilon", cc.parms.out.epsilon, parmsOptional);
+			params.GetVar("CC.params.out@decay", cc.parms.out.decay, parmsOptional);
+			params.GetVar("CC.params.out@mu", cc.parms.out.mu, parmsOptional);
+			params.GetVar("CC.params.out@changeThreshold", cc.parms.out.changeThreshold , parmsOptional);
+			params.GetVar("CC.params.cand@epochs", cc.parms.cand.epochs , parmsOptional);
+			params.GetVar("CC.params.cand@patience", cc.parms.cand.patience, parmsOptional);
+			params.GetVar("CC.params.cand@epsilon", cc.parms.cand.epsilon , parmsOptional);
+			params.GetVar("CC.params.cand@decay", cc.parms.cand.decay, parmsOptional);
+			params.GetVar("CC.params.cand@mu", cc.parms.cand.mu, parmsOptional);
+			params.GetVar("CC.params.cand@changeThreshold", cc.parms.cand.changeThreshold, parmsOptional);
+		}
 
 		for (int i = 0; i < numRuns;){
 			double time = 0.0;
