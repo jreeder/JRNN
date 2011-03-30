@@ -101,6 +101,9 @@ int main(int argc, char** argv) {
 #endif
 
 	if (params.Load(xmlpath,"params")){
+#ifdef DEBUG
+		cout << "Loading parameters from xml" << endl;
+#endif
 		params.GetVar("rProp.params@etaPlus",rPropEtaPlus, parmsOptional);
 		params.GetVar("rProp.params@etaMinus",rPropEtaMinus, parmsOptional);
 		params.GetVar("rProp.params@maxEpochs",rPropMaxEpochs, parmsOptional);
