@@ -70,9 +70,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\..\src\xmlconfig\tinyxml\tinystr.cpp" />
+    <ClCompile Include="..\..\..\..\src\xmlconfig\tinyxml\tinyxml.cpp" />
+    <ClCompile Include="..\..\..\..\src\xmlconfig\tinyxml\tinyxmlerror.cpp" />
+    <ClCompile Include="..\..\..\..\src\xmlconfig\tinyxml\tinyxmlparser.cpp" />
     <ClCompile Include="..\..\..\..\src\xmlconfig\xmlconfig\xmlconfigurator.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\..\include\xmlconfig\tinyxml\tinystr.h" />
+    <ClInclude Include="..\..\..\..\include\xmlconfig\tinyxml\tinyxml.h" />
     <ClInclude Include="..\..\..\..\include\xmlconfig\xmlconfig\xmlconfigurator.h" />
     <ClInclude Include="..\..\..\..\include\xmlconfig\xmlconfig\xmlpathfinder.h" />
   </ItemGroup>

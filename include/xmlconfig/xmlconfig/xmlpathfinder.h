@@ -10,7 +10,7 @@
 #ifndef _XMLPATHFINDER_H
 #define _XMLPATHFINDER_H
 
-#include <tinyxml.h>
+#include "tinyxml/tinyxml.h"
 #include <map>
 
 namespace xmlconfig

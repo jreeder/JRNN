@@ -19,10 +19,28 @@
     <Filter Include="Header Files\xmlconfig">
       <UniqueIdentifier>{913f1c99-e2f3-4677-a8d0-63c43f481caa}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\tinyxml">
+      <UniqueIdentifier>{54c1faf0-c60a-4126-9d41-46ed3e361025}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\tinyxml">
+      <UniqueIdentifier>{0730ff0a-c62d-490d-ba72-71cc32e7e152}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\..\src\xmlconfig\xmlconfig\xmlconfigurator.cpp">
       <Filter>Source Files\xmlconfig</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\xmlconfig\tinyxml\tinystr.cpp">
+      <Filter>Source Files\tinyxml</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\xmlconfig\tinyxml\tinyxml.cpp">
+      <Filter>Source Files\tinyxml</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\xmlconfig\tinyxml\tinyxmlerror.cpp">
+      <Filter>Source Files\tinyxml</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\xmlconfig\tinyxml\tinyxmlparser.cpp">
+      <Filter>Source Files\tinyxml</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -31,6 +49,12 @@
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\xmlconfig\xmlconfig\xmlpathfinder.h">
       <Filter>Header Files\xmlconfig</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\xmlconfig\tinyxml\tinystr.h">
+      <Filter>Header Files\tinyxml</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\xmlconfig\tinyxml\tinyxml.h">
+      <Filter>Header Files\tinyxml</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

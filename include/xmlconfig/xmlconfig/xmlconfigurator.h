@@ -9,7 +9,7 @@
 #ifndef _XMLCONFIGURATOR_H
 #define _XMLCONFIGURATOR_H
 
-#include <tinyxml.h>
+#include "tinyxml/tinyxml.h"
 #include <map>
 #include <string>
 #include <vector>
