@@ -12,6 +12,7 @@
 #include "networks/FFMLPNetwork.h"
 #include "networks/CCNetwork.h"
 #include "trainers/CCTrainer.h"
+#include <tclap/CmdLine.h>
 //#include "utility/NetworkBuilder.h" Stupid Idea and not necessary
 #include <iostream>
 #include <fstream>
@@ -21,7 +22,9 @@
 using namespace JRNN;
 using namespace std;
 using namespace xmlconfig;
+using namespace TCLAP;
 
+#define USE_NEW_CMDLINE
 //void printDoubles(doubles toPrint, ofstream& file);
 
 /*
@@ -37,6 +40,53 @@ int main(int argc, char** argv) {
 	bool useValidation = true;
 	XmlConfigurator params;
 
+#ifdef USE_NEW_CMDLINE
+
+	vector<string> allowedTypes;
+	allowedTypes.push_back("CC");
+	allowedTypes.push_back("BP");
+	ValuesConstraint<string> allowedType (allowedTypes);
+	vector<string> validationOptions;
+	validationOptions.push_back("T");
+	validationOptions.push_back("F");
+	ValuesConstraint<string> boolOptions (validationOptions);
+
+	try {
+		CmdLine cmd("JRNN_test: Single run experimental executable.", ' ', "0.87");
+		UnlabeledValueArg<string> inFilename("filename", "The datafile path", true, "", "string", cmd);
+		UnlabeledValueArg<int> inNumTrain("numTrain", "Number of training points", true, 0, "int", cmd);
+		UnlabeledValueArg<int> inNumVal("numVal", "Number of validation points", true, 0, "int", cmd);
+		UnlabeledValueArg<int> inNumTest("numTest", "Number of testing points", true, 0, "int", cmd);
+		UnlabeledValueArg<int> inNumIn("numIn", "Number of in nodes", true, 0, "int", cmd);
+		UnlabeledValueArg<int> inNumHid("numHid", "Number of hidden nodes", true, 0, "int", cmd);
+		UnlabeledValueArg<int> inNumOut("numOut", "Number of out nodes", true, 0, "int", cmd);
+		UnlabeledValueArg<string> inType("type", "Type of neural network CC or BP", true, "CC", &allowedType, cmd);
+		UnlabeledValueArg<string> inUseValidation("inValidation", "Use validation T or F", true, "T", &boolOptions, cmd);
+		UnlabeledValueArg<string> inOutfile("outfile", "The outfile path", true, "", "string", cmd);
+		UnlabeledValueArg<int> inNumRuns("numRuns", "Number runs", true, 2, "int", cmd);
+		UnlabeledValueArg<string> inXmlPath("xmlpath", "The xml parameters file path", true, "", "string", cmd);
+
+		cmd.parse(argc,argv);
+
+		filename = inFilename.getValue();
+		numTrain = inNumTrain.getValue();
+		numVal = inNumVal.getValue();
+		numTest = inNumTest.getValue();
+		numIn = inNumIn.getValue();
+		numHid = inNumHid.getValue();
+		numOut = inNumOut.getValue();
+		type = inType.getValue();
+		useValidation = (inUseValidation.getValue() == "T") ? true : false;
+		outfile = inOutfile.getValue();
+		numRuns = inNumRuns.getValue();
+		xmlpath = inXmlPath.getValue();
+
+	}
+	catch (TCLAP::ArgException &e) {
+		cout << "error: " << e.error() << " for arg " << e.argId() << endl;
+	}
+
+#else
     if (argc != 13){
         cout << "Incorrect Arguments" << endl;
 		cout << "Proper Syntax: JRNN_test <filename> <numTrain> <numVal> <numTest> <numIn> <numHid> <numOut> <type = 'BP' or 'CC'> <validate = 'T' or 'F'> <outfilename> <numRuns> <xmlconfigpath>" << endl;
@@ -70,6 +120,9 @@ int main(int argc, char** argv) {
 		outfile += type;
         outfile += " results.txt";*/
     }
+
+#endif
+
     fstream myfile;
     myfile.open(outfile.c_str(),fstream::out);
 	if (myfile.is_open() == false){
