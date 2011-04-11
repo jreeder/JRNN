@@ -11,9 +11,13 @@
 #include <ctime>
 #include <boost/thread.hpp>
 #include <cmath>
+#include <tclap/CmdLine.h>
 
 using namespace JRNN;
 using namespace std;
+using namespace TCLAP;
+
+#define USE_NEW_CMDLINE
 
 //void printDoubles(doubles toPrint, iostream& stream);
 void CCWorker(CCTrainer& trainer, strings* results, int numRuns, bool useValidation = true);
@@ -32,6 +36,43 @@ int main(int argc, char* argv[])
 	int numTest = 500;
 	int numHidPerOut = 4;
 	bool useValidation = true;
+	
+#ifdef USE_NEW_CMDLINE
+	vector<string> validationOptions;
+	validationOptions.push_back("T");
+	validationOptions.push_back("F");
+	ValuesConstraint<string> boolOptions (validationOptions);
+
+	try {
+		CmdLine cmd("JRNN_Test2: Experiment 2 executable", ' ', "0.87");
+		UnlabeledValueArg<string> inBasepath("basepath", "The data basepath", true, "", "string", cmd);
+		UnlabeledValueArg<string> inDsname("dsname", "The name of the dataset to test", true, "", "string", cmd);
+		UnlabeledValueArg<int> inNumTasks("numTasks", "The number of tasks to load", true, 1, "integer", cmd);
+		UnlabeledValueArg<int> inNumTrain("numTrain", "Number of training points", true, 0, "int", cmd);
+		UnlabeledValueArg<int> inNumVal("numVal", "Number of validation points", true, 0, "int", cmd);
+		UnlabeledValueArg<int> inNumTest("numTest", "Number of testing points", true, 0, "int", cmd);
+		UnlabeledValueArg<int> inNumHidPerOut("numHid", "Number of hidden nodes", true, 0, "int", cmd);
+		UnlabeledValueArg<int> inNumRuns("numRuns", "Number runs", true, 2, "int", cmd);
+		UnlabeledValueArg<double> inImpPerc("impPerc", "Percentage of normal training size to impoverish", true, 0.0, "double", cmd);
+		UnlabeledValueArg<string> inUseValidation("inValidation", "Use validation T or F", true, "T", &boolOptions, cmd);
+
+		cmd.parse(argc,argv);
+
+		basepath = inBasepath.getValue();
+		dsname = inDsname.getValue();
+		numTasks = inNumTasks.getValue();
+		numTrain = inNumTrain.getValue();
+		numVal = inNumVal.getValue();
+		numTest = inNumTest.getValue();
+		numHidPerOut = inNumHidPerOut.getValue();
+		numRuns = inNumRuns.getValue();
+		impPerc = inImpPerc.getValue();
+		useValidation = (inUseValidation.getValue() == "T") ? true : false;
+	}
+	catch (TCLAP::ArgException &e) {
+		cout << "error: " << e.error() << " for arg " << e.argId() << endl;
+	}
+#else
 	if (argc > 1){
 		basepath = argv[1];
 		dsname = argv[2];
@@ -55,6 +96,7 @@ int main(int argc, char* argv[])
 		return -1;
 	}
 	
+#endif
 	MTLDataset* mds = new MTLDataset();
 	/*mds->AddTaskFromFile(basepath + "band-task1.txt", "task-1", 2, 1);
 	mds->AddTaskFromFile(basepath + "band-task2.txt", "task-2", 2, 1);
