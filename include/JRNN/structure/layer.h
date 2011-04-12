@@ -52,7 +52,9 @@ namespace JRNN {
         int GetLayerSize() const;
 
         void SetType(layerType type);
+		void SetTypeByName(string type);
         layerType GetType() const;
+		string GetTypeName();
 
         void SetName(string newName);
         const string& GetName();

@@ -223,3 +223,37 @@ NodePtr Layer::GetNodeByName( string name )
 	}
 	return retNode;
 }
+
+void Layer::SetTypeByName( string type )
+{
+	if (type == "bias"){
+		type = Layer::bias;
+	} 
+	else if (type == "hidden"){
+		type = Layer::hidden;
+	} 
+	else if (type == "input"){
+		type = Layer::input;
+	} 
+	else if (type == "out"){
+		type = Layer::out;
+	}
+	else {
+		type = Layer::hidden;
+	}
+}
+
+string Layer::GetTypeName()
+{
+	switch (type)
+	{
+	case Layer::bias:
+		return "bias";
+	case Layer::hidden:
+		return "hidden";
+	case Layer::input:
+		return "input";
+	case Layer::out:
+		return "out"
+	}
+}

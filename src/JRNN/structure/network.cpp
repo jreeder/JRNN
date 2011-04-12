@@ -237,7 +237,12 @@ ConMap& Network::GetConnections(){
     return connections;
 }
 
- void Network::Reset(){
+LayerMap& Network::GetLayers()
+{
+	return layers;
+}
+
+void Network::Reset(){
      BOOST_FOREACH(ConPair con, connections){
          con.second->Reset();
      }

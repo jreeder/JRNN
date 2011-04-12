@@ -22,9 +22,6 @@ namespace JRNN{
 
     class Network: public NetworkSharedFromThis{
     public:
-		//TODO: need to add methods for removing connections. 
-		//This means making methods to remove them in nodes, 
-		//and having the destructor of connections take care of it. 
         
 		//Network(const Network& orig);
         virtual ~Network();
@@ -55,6 +52,7 @@ namespace JRNN{
         LayerPtr GetLayer(string layerName);
 		NodePtr GetNode(string nodeName);
         ConMap& GetConnections();
+		LayerMap& GetLayers();
 		void AddConnection(ConPtr con);
 		void RemoveConnection(ConPtr con);
 		void RemoveConnections(ConList cons);

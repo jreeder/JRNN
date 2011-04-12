@@ -41,6 +41,8 @@ namespace JRNN {
 		const string& GetName();
 		//double GetSigSteepness();
 		ConList& GetConnections(conType type);
+		string GetActFuncType();
+		int getHeight();
         
 		void SetName(string newName);
 //        void setNumIn(int newNumIn);
@@ -66,6 +68,7 @@ namespace JRNN {
 		void UpdateOut();
 		void SetDefaults();
 		void RenameConnections();
+		
 //        vector<double> inputWeights;
 //        vector<double> inputs;
 //        nodeList inputNodes;
