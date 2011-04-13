@@ -96,6 +96,7 @@
     <ClCompile Include="..\..\..\..\src\JRNN\structure\layer.cpp" />
     <ClCompile Include="..\..\..\..\src\JRNN\structure\network.cpp" />
     <ClCompile Include="..\..\..\..\src\JRNN\structure\node.cpp" />
+    <ClCompile Include="..\..\..\..\src\JRNN\utility\serialization.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\include\JRNN\JRNN.h" />
@@ -109,6 +110,7 @@
     <ClInclude Include="..\..\..\..\include\JRNN\utility\dataset.h" />
     <ClInclude Include="..\..\..\..\include\JRNN\utility\mtldataset.h" />
     <ClInclude Include="..\..\..\..\include\JRNN\utility\nodebuffer.h" />
+    <ClInclude Include="..\..\..\..\include\JRNN\utility\serialization.h" />
     <ClInclude Include="..\..\..\..\include\JRNN\utility\utility.h" />
     <ClInclude Include="..\..\..\..\include\JRNN\trainers\BackPropTrainer.h" />
     <ClInclude Include="..\..\..\..\include\JRNN\trainers\CCTrainer.h" />

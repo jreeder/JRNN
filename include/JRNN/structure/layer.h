@@ -60,6 +60,7 @@ namespace JRNN {
         const string& GetName();
 
 		void AddNode(NodePtr node);
+		void AddNode( NodePtr node, bool createName);
 		void RemoveNode(NodePtr node);
 		int RemoveUnconnectedNodes();
 

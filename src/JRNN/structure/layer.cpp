@@ -153,6 +153,15 @@ void Layer::AddNode( NodePtr node ){
 	layerSize++;
 }
 
+void Layer::AddNode( NodePtr node, bool createName){
+	if (createName){
+		AddNode(node);
+	}
+	else {
+		nodes.push_back(node);
+	}
+}
+
 void Layer::RemoveNode(NodePtr node){
 	NodeList::iterator it = nodes.begin();
 	while (it != nodes.end()){
@@ -254,6 +263,8 @@ string Layer::GetTypeName()
 	case Layer::input:
 		return "input";
 	case Layer::out:
-		return "out"
+		return "out";
+	default:
+		return "";
 	}
 }
