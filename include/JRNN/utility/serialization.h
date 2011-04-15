@@ -11,6 +11,13 @@
 
 #include "JRNN.h"
 #include "structure/network.h"
+#include <iostream>
+#include <fstream>
+#include <json_spirit_reader_template.h>
+#include <json_spirit_writer_template.h>
+
+using namespace std;
+using namespace json_spirit;
 
 namespace JRNN {
 
@@ -46,21 +53,31 @@ namespace JRNN {
 		};
 	}
 
-	class Serializer
-	{
+	class Serializer {
+
 	public:
-		static serialize::Network FillNetwork(NetworkPtr net);
-		static NetworkPtr FillNetwork(serialize::Network net);
+		Serializer(){}
+		~Serializer(){}
+		virtual NetworkPtr Load(istream inStream) = 0;
+		virtual ostream Save(NetworkPtr net) = 0;
 
 	protected:
-		static serialize::Node FillNode(NodePtr node);
-		static NodePtr FillNode(serialize::Node node);
-		static serialize::Connection FillConnection (ConPtr con);
-		static serialize::Layer FillLayer (LayerPtr layer);
-		static LayerPtr FillLayer (serialize::Layer layer);
+		static serialize::Network ConvNetwork(NetworkPtr net);
+		static NetworkPtr ConvNetwork(serialize::Network& net);
+		static serialize::Node ConvNode(NodePtr node);
+		static NodePtr ConvNode(serialize::Node& node);
+		static serialize::Connection ConvConnection (ConPtr con);
+		static serialize::Layer ConvLayer (LayerPtr layer);
+		static LayerPtr ConvLayer (serialize::Layer& layer);
+	};
+
+	class JSONArchiver : Serializer {
+	public:
+		virtual NetworkPtr Load(istream inStream);
+		virtual ostream Save(NetworkPtr net);
 
 	private:
-		Serializer();
-		~Serializer();
+		mObject writeNetwork(serialize::Network& net);
+		serialize::Network readNetwork(mObject& obj);
 	};
 }

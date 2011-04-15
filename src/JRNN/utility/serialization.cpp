@@ -13,7 +13,7 @@
 
 namespace JRNN {
 
-	serialize::Network Serializer::FillNetwork(NetworkPtr net){
+	serialize::Network Serializer::ConvNetwork(NetworkPtr net){
 		serialize::Network sNet;
 		sNet.numHidLayers = net->GetNumHidLayers();
 		sNet.numIn = net->GetNumIn();
@@ -22,23 +22,23 @@ namespace JRNN {
 		ConMap::iterator conITend = net->GetConnections().end();
 		for(;conIT != conITend; conIT++){
 			ConPair con = (*conIT);
-			sNet.connections.push_back(FillConnection(con.second));
+			sNet.connections.push_back(ConvConnection(con.second));
 		}
 		LayerMap::iterator layerIT = net->GetLayers().begin();
 		LayerMap::iterator layerITend = net->GetLayers().end();
 		for(;layerIT != layerITend; layerIT++){
-			sNet.layers.push_back(FillLayer((*layerIT).second));
+			sNet.layers.push_back(ConvLayer((*layerIT).second));
 		}
 		return sNet;
 	}
 
-	NetworkPtr Serializer::FillNetwork(serialize::Network net){
+	NetworkPtr Serializer::ConvNetwork(serialize::Network net){
 		NetworkPtr sNet = Network::Create();
 		sNet->SetNumIn(net.numIn);
 		sNet->SetNumOut(net.numOut);
 		sNet->SetNumHidLayers(net.numHidLayers);
 		BOOST_FOREACH(serialize::Layer layer, net.layers){
-			sNet->GetLayers().insert(LayerPair(layer.name,FillLayer(layer)));
+			sNet->GetLayers().insert(LayerPair(layer.name,ConvLayer(layer)));
 		}
 		BOOST_FOREACH(serialize::Layer layer, net.layers){
 			LayerPtr sLayer = sNet->GetLayers()[layer.name];
@@ -55,7 +55,7 @@ namespace JRNN {
 		return sNet;
 	}
 
-	serialize::Node Serializer::FillNode(NodePtr node){
+	serialize::Node Serializer::ConvNode(NodePtr node){
 		serialize::Node sNode;
 		sNode.activationFunc = node->GetActFuncType();
 		sNode.height = node->getHeight();
@@ -63,7 +63,7 @@ namespace JRNN {
 		return sNode;
 	}
 
-	NodePtr Serializer::FillNode(serialize::Node node){
+	NodePtr Serializer::ConvNode(serialize::Node node){
 		NodePtr sNode;
 		if (node.activationFunc == "SIGMOID"){
 			sNode = Node::CreateNode<Sigmoid>(node.height,node.name);
@@ -83,7 +83,7 @@ namespace JRNN {
 		return sNode;
 	}
 
-	serialize::Connection Serializer::FillConnection (ConPtr con){
+	serialize::Connection Serializer::ConvConnection (ConPtr con){
 		serialize::Connection sCon;
 		sCon.weight = con->GetWeight();
 		sCon.inNodeName = con->GetInNodeName();
@@ -91,7 +91,7 @@ namespace JRNN {
 		return sCon;
 	}
 
-	serialize::Layer Serializer::FillLayer (LayerPtr layer){
+	serialize::Layer Serializer::ConvLayer (LayerPtr layer){
 		serialize::Layer sLayer;
 		sLayer.height = layer->GetHeight();
 		sLayer.name = layer->GetName();
@@ -100,17 +100,17 @@ namespace JRNN {
 		sLayer.size	= layer->GetSize();
 		sLayer.type	= layer->GetTypeName();
 		BOOST_FOREACH(NodePtr node, layer->GetNodes()){
-			sLayer.Nodes.push_back(FillNode(node));
+			sLayer.Nodes.push_back(ConvNode(node));
 		}
 
 		return sLayer;
 	}
 
-	LayerPtr Serializer::FillLayer (serialize::Layer layer){
+	LayerPtr Serializer::ConvLayer (serialize::Layer layer){
 		LayerPtr sLayer = Layer::CreateLayer(Layer::hidden,layer.size,layer.height,layer.name);
 		sLayer->SetTypeByName(layer.type);
 		BOOST_FOREACH(serialize::Node node, layer.Nodes){
-			sLayer->AddNode(FillNode(node),false);
+			sLayer->AddNode(ConvNode(node),false);
 		}
 		return sLayer;
 	}
