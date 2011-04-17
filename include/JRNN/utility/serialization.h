@@ -41,7 +41,7 @@ namespace JRNN {
 			string name;
 			string prevLayerName;
 			string nextLayerName;
-			std::vector<Node> Nodes;
+			std::vector<Node> nodes;
 		};
 
 		struct Network {
@@ -59,7 +59,7 @@ namespace JRNN {
 		Serializer(){}
 		~Serializer(){}
 		virtual NetworkPtr Load(istream inStream) = 0;
-		virtual ostream Save(NetworkPtr net) = 0;
+		virtual void Save(NetworkPtr net, ostream& stream) = 0;
 
 	protected:
 		static serialize::Network ConvNetwork(NetworkPtr net);
@@ -74,10 +74,24 @@ namespace JRNN {
 	class JSONArchiver : Serializer {
 	public:
 		virtual NetworkPtr Load(istream inStream);
-		virtual ostream Save(NetworkPtr net);
+		virtual void Save(NetworkPtr net, ostream& stream);
 
 	private:
+		const mValue& findValue( const mObject& obj, const string& name  );
 		mObject writeNetwork(serialize::Network& net);
 		serialize::Network readNetwork(mObject& obj);
+		mArray writeLayers(std::vector<serialize::Layer>& layers);
+		std::vector<serialize::Layer> readLayers(mArray& layers);
+		mObject writeLayer(serialize::Layer layer);
+		serialize::Layer readLayer(mObject& layer);
+		mArray writeCons(std::vector<serialize::Connection>& cons);
+		std::vector<serialize::Connection> readCons(mArray& cons);
+		mObject writeCon(serialize::Connection& con);
+		serialize::Connection readCon(mObject& con);
+		mObject writeNode(serialize::Node& node);
+		serialize::Node readNode(mObject& node);
+		std::vector<serialize::Node> readNodes(mArray& nodes);
+		mArray writeNodes(std::vector<serialize::Node>& nodes);
+		
 	};
 }

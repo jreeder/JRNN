@@ -11,6 +11,8 @@
 #include "JRNN.h"
 #include "utility/serialization.h"
 
+using namespace json_spirit;
+
 namespace JRNN {
 
 	serialize::Network Serializer::ConvNetwork(NetworkPtr net){
@@ -32,7 +34,7 @@ namespace JRNN {
 		return sNet;
 	}
 
-	NetworkPtr Serializer::ConvNetwork(serialize::Network net){
+	NetworkPtr Serializer::ConvNetwork(serialize::Network& net){
 		NetworkPtr sNet = Network::Create();
 		sNet->SetNumIn(net.numIn);
 		sNet->SetNumOut(net.numOut);
@@ -63,7 +65,7 @@ namespace JRNN {
 		return sNode;
 	}
 
-	NodePtr Serializer::ConvNode(serialize::Node node){
+	NodePtr Serializer::ConvNode(serialize::Node& node){
 		NodePtr sNode;
 		if (node.activationFunc == "SIGMOID"){
 			sNode = Node::CreateNode<Sigmoid>(node.height,node.name);
@@ -100,18 +102,196 @@ namespace JRNN {
 		sLayer.size	= layer->GetSize();
 		sLayer.type	= layer->GetTypeName();
 		BOOST_FOREACH(NodePtr node, layer->GetNodes()){
-			sLayer.Nodes.push_back(ConvNode(node));
+			sLayer.nodes.push_back(ConvNode(node));
 		}
 
 		return sLayer;
 	}
 
-	LayerPtr Serializer::ConvLayer (serialize::Layer layer){
+	LayerPtr Serializer::ConvLayer (serialize::Layer& layer){
 		LayerPtr sLayer = Layer::CreateLayer(Layer::hidden,layer.size,layer.height,layer.name);
 		sLayer->SetTypeByName(layer.type);
-		BOOST_FOREACH(serialize::Node node, layer.Nodes){
+		BOOST_FOREACH(serialize::Node node, layer.nodes){
 			sLayer->AddNode(ConvNode(node),false);
 		}
 		return sLayer;
 	}
+
+
+	const mValue& JSONArchiver::findValue( const mObject& obj, const string& name  )
+	{
+		mObject::const_iterator i = obj.find( name );
+
+		assert( i != obj.end() );
+		assert( i->first == name );
+
+		return i->second;
+	}
+
+
+	mObject JSONArchiver::writeNetwork( serialize::Network& net )
+	{
+		mObject newNet;
+		newNet["numIn"] = net.numIn;
+		newNet["numOut"] = net.numOut;
+		newNet["numHidLayers"] = net.numHidLayers;
+		newNet["layers"] = writeLayers(net.layers);
+		newNet["connections"] = writeCons(net.connections);
+		return newNet;
+	}
+
+	serialize::Network JSONArchiver::readNetwork( mObject& net )
+	{
+		serialize::Network newNet;
+		newNet.numIn = findValue(net, "numIn").get_int();
+		newNet.numOut = findValue(net, "numOut").get_int();
+		newNet.numHidLayers = findValue(net, "numHidLayers").get_int();
+		mArray cons = findValue(net, "connections").get_array();
+		mArray layers = findValue(net, "layers").get_array();
+		newNet.layers = readLayers(layers);
+		newNet.connections = readCons(cons);
+		return newNet;
+	}
+
+	mArray JSONArchiver::writeLayers( std::vector<serialize::Layer>& layers )
+	{
+		mArray newLayers;
+		std::vector<serialize::Layer>::iterator it = layers.begin();
+		for(; it != layers.end(); it++){
+			newLayers.push_back(writeLayer((*it)));
+		}
+		return newLayers;
+	}
+
+	std::vector<serialize::Layer> JSONArchiver::readLayers( mArray& layers )
+	{
+		std::vector<serialize::Layer> newLayers;
+		mArray::iterator it = layers.begin();
+		for(; it != layers.end(); it++){
+			newLayers.push_back(readLayer((*it).get_obj()));
+		}
+		return newLayers;
+	}
+
+	mObject JSONArchiver::writeLayer( serialize::Layer layer )
+	{
+		mObject newLayer;
+		newLayer["type"] = layer.type;
+		newLayer["size"] = layer.size;
+		newLayer["height"] = layer.height;
+		newLayer["name"] = layer.name;
+		newLayer["prevLayerName"] = layer.prevLayerName;
+		newLayer["nextLayerName"] = layer.nextLayerName;
+		newLayer["nodes"] = writeNodes(layer.nodes);
+		return newLayer;
+	}
+
+	serialize::Layer JSONArchiver::readLayer( mObject& layer )
+	{
+		serialize::Layer newLayer;
+		newLayer.type = findValue(layer, "type").get_str();
+		newLayer.size = findValue(layer, "size").get_int();
+		newLayer.height = findValue(layer, "height").get_int();
+		newLayer.name = findValue(layer, "name").get_str();
+		newLayer.prevLayerName = findValue(layer, "prevValueName").get_str();
+		newLayer.nextLayerName = findValue(layer, "nextValueName").get_str();
+		mArray nodes = findValue(layer, "nodes").get_array();
+		newLayer.nodes = readNodes(nodes);
+		return newLayer;
+	}
+
+	mArray JSONArchiver::writeCons( std::vector<serialize::Connection>& cons )
+	{
+		mArray newCons;
+		std::vector<serialize::Connection>::iterator it = cons.begin();
+		for(; it != cons.end(); it++){
+			newCons.push_back(writeCon((*it)));
+		}
+		return newCons;
+	}
+
+	std::vector<serialize::Connection> JSONArchiver::readCons( mArray& cons )
+	{
+		std::vector<serialize::Connection> newCons;
+		mArray::iterator it = cons.begin();
+		for (; it != cons.end(); it++){
+			newCons.push_back(readCon((*it).get_obj()));
+		}
+		return newCons;
+	}
+
+	mObject JSONArchiver::writeCon( serialize::Connection& con )
+	{
+		mObject newCon;
+		newCon["inNodeName"] = con.inNodeName;
+		newCon["outNodeName"] = con.outNodeName;
+		newCon["weight"] = con.weight;
+		return newCon;
+	}
+
+	serialize::Connection JSONArchiver::readCon( mObject& con )
+	{
+		serialize::Connection newCon;
+		newCon.inNodeName = findValue(con,"inNodeName").get_str();
+		newCon.outNodeName = findValue(con, "outNodeName").get_str();
+		newCon.weight = findValue(con, "weight").get_real();
+		return newCon;
+	}
+
+	mObject JSONArchiver::writeNode( serialize::Node& node )
+	{
+		mObject newNode;
+		newNode["name"] = node.name;
+		newNode["height"] = node.height;
+		newNode["activationFunc"] = node.activationFunc;
+		return newNode;
+
+	}
+
+	serialize::Node JSONArchiver::readNode( mObject& node )
+	{
+		serialize::Node newNode;
+		newNode.name = findValue(node, "name").get_str();
+		newNode.height = findValue(node, "height").get_int();
+		newNode.activationFunc = findValue(node, "activationFunc").get_str();
+		return newNode;
+	}
+
+	std::vector<serialize::Node> JSONArchiver::readNodes( mArray& nodes )
+	{
+		std::vector<serialize::Node> newNodes;
+		mArray::iterator it = nodes.begin();
+		for(;it != nodes.end(); it++){
+			newNodes.push_back(readNode((*it).get_obj()));
+		}
+		return newNodes;
+	}
+
+	mArray JSONArchiver::writeNodes( std::vector<serialize::Node>& nodes )
+	{
+		mArray newNodes;
+		std::vector<serialize::Node>::iterator it = nodes.begin();
+		for(;it != nodes.end();it++){
+			newNodes.push_back(writeNode((*it)));
+		}
+		return newNodes;
+	}
+
+	NetworkPtr JSONArchiver::Load( istream inStream )
+	{
+		mValue value;
+		read_stream(inStream, value);
+		mObject inNet = value.get_obj();
+		serialize::Network sNet = readNetwork(inNet);
+		NetworkPtr newNet = ConvNetwork(sNet);
+		return newNet;
+	}
+
+	void JSONArchiver::Save( NetworkPtr net, ostream& stream)
+	{
+		serialize::Network sNet = ConvNetwork(net);
+		mObject outNet = writeNetwork(sNet);
+		write_stream(mValue(outNet),stream);
+	}
+
 }
