@@ -10,8 +10,6 @@
 
 namespace JRNN {
 
-	//TODO: need to test this dataset to see if it builds correctly. 
-
 	MTLDataset::MTLDataset()
 	{
 		firstLoad = true;
