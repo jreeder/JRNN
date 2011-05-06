@@ -50,10 +50,23 @@ namespace JRNN {
 						newIns++;
 					}
 					else if(newOuts < numOut){
-						//continue from here
+						out.push_back(lexical_cast<double>(token));
+						newOuts++;
 					}
 				}
+				string instring = StringFromVector(in);
+				StringSetRet ret = inputStrings.insert(instring);
+				dataStore[instring][taskName] = out;
+				//Don't need this yet. Inputs will change based on tasks. 
+				if (ret.second){
+					realInputs.push_back(in);
+				}
 			}
+			dataFile.close();
+		}
+		else {
+			//Data file didn't load
+			assert(0);
 		}
 	}
 

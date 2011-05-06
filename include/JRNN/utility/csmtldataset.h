@@ -54,7 +54,8 @@ namespace JRNN {
 		CSMTLDataStore dataStore;
 		Tasks taskList;
 		strings view;
-		strings inputStrings;
+		StringSet inputStrings;
+		matDouble realInputs;
 		void GenerateDS();
 	};
 }

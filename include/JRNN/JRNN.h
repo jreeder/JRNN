@@ -11,6 +11,7 @@
 
 #include <vector>
 #include <map>
+#include <set>
 #include <boost/numeric/ublas/vector.hpp>
 #include <boost/numeric/ublas/io.hpp>
 #include <boost/shared_ptr.hpp>
@@ -65,6 +66,8 @@ namespace JRNN {
     typedef std::vector<double> doubles;
     typedef boost::shared_ptr<Dataset> DatasetPtr;
 	typedef std::vector<std::string> strings;
+	typedef std::set<std::string> StringSet;
+	typedef std::pair<StringSet::iterator, bool> StringSetRet;
 	typedef std::vector<int> ints;
 	const double UNKNOWN = std::numeric_limits<double>::max();
 	typedef boost::mt19937 rangeType;
