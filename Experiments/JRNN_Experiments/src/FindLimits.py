@@ -14,7 +14,7 @@ numIn = 2
 numOut = 1
 type = 'BP'
 useVal = 'F'
-numRuns = 60
+numRuns = 30
 expFold = 'BP Limits No Val'
 
 def ProcessFile(file):
@@ -24,38 +24,55 @@ def ProcessFile(file):
     outfilepath = os.path.join(outpath, expFold)
     os.chdir(filepath)
         
-    numTrain = 200
-    
-    for numHid in [1,2,4,8,16,32]:
-        
-        outfilename = "%s-%s-tr%s-v%s-t%s-hid%s-uv%s-r%s.txt" % (dataset, type, \
+    for numHid in [1,2,4,6,8,10,12,14,16,18,20]:
+        for numTrain in [5,10,20,30,40,50,60,70,80,90,100]:
+    #for numHid in [1]:
+        #for numTrain in [5]:
+            outfilename = "%s-%s-tr%s-v%s-t%s-hid%s-uv%s-r%s.txt" % (dataset, type, \
             numTrain, numVal, numTest, numHid, useVal, numRuns)
         
-        outfile = os.path.join(outfilepath, outfilename)
-        
-        cmd = "%s %s %s %s %s %s %s %s %s %s \"%s\" %s" % \
-        (jrnn_exe, filename, numTrain, numVal, numTest, numIn, numHid, numOut, \
-        type, useVal, outfile, numRuns)
+            outfile = os.path.join(outfilepath, outfilename)
+            
+            cmd = "%s %s %s %s %s %s %s %s %s %s \"%s\" %s \"%s\"" % \
+            (jrnn_exe, filename, numTrain, numVal, numTest, numIn, numHid, numOut, \
+            type, useVal, outfile, numRuns, paramspath)
+    
+            (stdout, stderr) = Popen(cmd, stdout = PIPE).communicate()
+            if len(stdout) > 0: print stdout
+            print outfilename + " Done"
 
-        (stdout, stderr) = Popen(cmd, stdout = PIPE).communicate()
-        if len(stdout) > 0: print stdout
-        print outfilename + " Done"
-        
-    numHid = 8
+    #numTrain = 200
     
-    for numTrain in [100,50,40,30,20,10,5]:
-        outfilename = "%s-%s-tr%s-v%s-t%s-hid%s-uv%s-r%s.txt" % (dataset, type, \
-            numTrain, numVal, numTest, numHid, useVal, numRuns)
+    #for numHid in [1,2,4,8,16,32]:
         
-        outfile = os.path.join(outfilepath, outfilename)
+        #outfilename = "%s-%s-tr%s-v%s-t%s-hid%s-uv%s-r%s.txt" % (dataset, type, \
+            #numTrain, numVal, numTest, numHid, useVal, numRuns)
         
-        cmd = "%s %s %s %s %s %s %s %s %s %s \"%s\" %s" % \
-        (jrnn_exe, filename, numTrain, numVal, numTest, numIn, numHid, numOut, \
-        type, useVal, outfile, numRuns)
+        #outfile = os.path.join(outfilepath, outfilename)
         
-        (stdout, stderr) = Popen(cmd, stdout = PIPE).communicate()
-        if len(stdout) > 0: print stdout
-        print outfilename + " Done"
+        #cmd = "%s %s %s %s %s %s %s %s %s %s \"%s\" %s" % \
+        #(jrnn_exe, filename, numTrain, numVal, numTest, numIn, numHid, numOut, \
+        #type, useVal, outfile, numRuns)
+
+        #(stdout, stderr) = Popen(cmd, stdout = PIPE).communicate()
+        #if len(stdout) > 0: print stdout
+        #print outfilename + " Done"
+        
+    #numHid = 8
+    
+    #for numTrain in [100,50,40,30,20,10,5]:
+        #outfilename = "%s-%s-tr%s-v%s-t%s-hid%s-uv%s-r%s.txt" % (dataset, type, \
+            #numTrain, numVal, numTest, numHid, useVal, numRuns)
+        
+        #outfile = os.path.join(outfilepath, outfilename)
+        
+        #cmd = "%s %s %s %s %s %s %s %s %s %s \"%s\" %s" % \
+        #(jrnn_exe, filename, numTrain, numVal, numTest, numIn, numHid, numOut, \
+        #type, useVal, outfile, numRuns)
+        
+        #(stdout, stderr) = Popen(cmd, stdout = PIPE).communicate()
+        #if len(stdout) > 0: print stdout
+        #print outfilename + " Done"
     
     print dataset + " Done"
 
@@ -65,12 +82,12 @@ if __name__ == "__main__":
     if not os.path.exists(outpath + expFold):
         os.makedirs(outpath + expFold)
     
-    bandpath = datapath + "Band Tasks/Single Tasks"
-    strucpath = datapath + "New Binary Tasks"
+    #bandpath = datapath + "Band Tasks/Single Tasks"
+    #strucpath = datapath + "New Binary Tasks"
     
-    filelist =  [os.path.join(strucpath, f) for f in os.listdir(strucpath)]+[os.path.join(bandpath, f) for f in os.listdir(bandpath)]
+    #filelist =  [os.path.join(strucpath, f) for f in os.listdir(strucpath)]+[os.path.join(bandpath, f) for f in os.listdir(bandpath)]
     
-    #filelist = [os.path.join(strucpath, f) for f in os.listdir(strucpath)]
+    filelist = [os.path.join(datapath, f) for f in os.listdir(datapath)]
     
     #ProcessFile(filelist[0])
     

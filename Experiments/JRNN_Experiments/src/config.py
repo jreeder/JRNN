@@ -5,17 +5,18 @@ import scipy.stats as scistats
 import numpy as np
 
 #Lab Computer
-#basepath = r"C:/Users/John/Documents/Source/JRNN"
+basepath = r"C:/Users/John/Documents/Source/JRNN"
 #Home Computer
-basepath = r"C:/Users/John Reeder/Code/JRNN"
+#basepath = r"C:/Users/John Reeder/Code/JRNN"
 
 #Windows Values
 jrnn_exe = basepath + r"/Builds/VS2010/JRNN/Release/JRNN_test.exe"
 datapath = basepath + r"/Experiments/Data/Tabbed Data/New Binary Tasks/"
-outpath = basepath + r"/Experiments/Exp 1-1/Round-3/"
+outpath = basepath + r"/Experiments/Exp 1-1/Round-4/"
 outpath2 = basepath + r"/Experiments/Exp 2-1/Round 4/"
 jrnn_exe2 = basepath + r"/Builds/VS2010/JRNN/Release/JRNN_test2.exe"
 figpath = basepath + r"/Experiments/Figures/"
+paramspath = basepath + r"/Experiments/config/Parameters.xml"
 
 #Mac Values
 #jrnn_exe = r"/Users/jreeder/Source/JRNN/Builds/NetBeans/JRNN_test/dist/Release/GNU-MacOSX/jrnn_test"

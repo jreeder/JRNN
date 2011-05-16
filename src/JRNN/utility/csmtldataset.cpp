@@ -87,7 +87,8 @@ namespace JRNN {
 
 	JRNN::DatasetPtr CSMTLDataset::SpawnDS()
 	{
-
+		DatasetPtr ds(new Dataset(*this));
+		return ds;
 	}
 
 
