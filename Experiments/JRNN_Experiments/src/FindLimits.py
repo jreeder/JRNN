@@ -25,7 +25,7 @@ def ProcessFile(file):
     os.chdir(filepath)
         
     for numHid in [1,2,4,6,8,10,12,14,16,18,20]:
-        for numTrain in [5,10,20,30,40,50,60,70,80,90,100]:
+        for numTrain in [15,25,35,45,55,65,75,85,95]:
     #for numHid in [1]:
         #for numTrain in [5]:
             outfilename = "%s-%s-tr%s-v%s-t%s-hid%s-uv%s-r%s.txt" % (dataset, type, \
