@@ -15,7 +15,7 @@ from matplotlib import cm
 from mpl_toolkits.mplot3d import axes3d
 from matplotlib.backends.backend_pdf import PdfPages
 
-expfigpath = os.path.join(figpath, "Exp 1-1/Round 4/No Val/")
+expfigpath = os.path.join(figpath, "Exp 1-1/Round 4/No Val 2/")
 fignum = 0
 usesave = True
 def MakeGraph(datasetname, datasetfiles):
@@ -80,7 +80,7 @@ def MakeGraph(datasetname, datasetfiles):
     #xi = np.linspace(min(npnumhids), max(npnumhids),num=11)
     #yi = np.linspace(min(npnumtrs), max(npnumtrs),num=11)
     xi = np.array([1,2,4,6,8,10,12,14,16,18,20])
-    yi = np.array([5,10,20,30,40,50,60,70,80,90,100])
+    yi = np.array([5,10,15,20,25,30,35,40,45,50,55,60,65,70,75,80,85,90,95,100])
     zi = griddata(npnumhids, npnumtrs, nperrors, xi, yi)
     xim, yim = np.meshgrid(xi, yi)
     plt.contourf(xim,yim,zi, cmap=cm.jet)
@@ -100,7 +100,7 @@ def MakeGraph(datasetname, datasetfiles):
     #plt.title(datasetname + " Error vs Hidden Unit #")
     #plt.ylabel("Error Rate")
 
-    if usesave: Save(datasetname + " ErrVsHidNum")
+    if usesave: Save(datasetname + " ErrContour")
     
     #fignum += 1
     
