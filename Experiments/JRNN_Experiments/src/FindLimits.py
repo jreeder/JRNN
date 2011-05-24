@@ -17,15 +17,26 @@ useVal = 'F'
 numRuns = 30
 expFold = 'BP Limits No Val'
 
+expvals = {}
+expvals["smallcovtype"] = {"numTest":200, "numVal":0, "numIn":10}
+expvals["derm"] = {"numTest":200, "numVal":0, "numIn":33}
+expvals["heart"] = {"numTest":200, "numVal":0, "numIn":13}
+expvals["glass"] = {"numTest":100, "numVal":0, "numIn":9}
+
 def ProcessFile(file):
     
     (filepath, filename) = os.path.split(file)
     (dataset,trash) = os.path.splitext(filename)
     outfilepath = os.path.join(outpath, expFold)
     os.chdir(filepath)
+    datasetname = dataset.split("-")[0]
+    if datasetname in expvals.keys():
+        numTest = expvals[datasetname]["numTest"]
+        numVal = expvals[datasetname]["numVal"]
+        numIn = expvals[datasetname]["numIn"]
         
     for numHid in [1,2,4,6,8,10,12,14,16,18,20]:
-        for numTrain in [15,25,35,45,55,65,75,85,95]:
+        for numTrain in [5,10,15,20,25,30,35,40,45,50,55,60,65,70,75,80,85,90,95,100]:
     #for numHid in [1]:
         #for numTrain in [5]:
             outfilename = "%s-%s-tr%s-v%s-t%s-hid%s-uv%s-r%s.txt" % (dataset, type, \

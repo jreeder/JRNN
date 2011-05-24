@@ -718,6 +718,7 @@ namespace JRNN {
 			}
 			//do validation? 
 			if (validate) {
+				assert(data->GetSize(Dataset::VAL) > 0);
 				valStatus = ValidationEpoch();
 				if (valStatus != TRAINING)
 					break;
