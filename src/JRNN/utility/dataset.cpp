@@ -484,6 +484,10 @@ double Dataset::CalcStdDev( datatype type )
 		sum += ublas::sum(curOut);
 		sumSq += ublas::sum(SquareVec(curOut));
 	}
-
-	return sqrt((nVals * sumSq - sum * sum) / (double)(nVals * (nVals - 1.0)));
+	if(nVals > 0){
+		return sqrt((nVals * sumSq - sum * sum) / (double)(nVals * (nVals - 1.0)));
+	}
+	else {
+		return 0;
+	}
 }

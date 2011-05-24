@@ -13,7 +13,7 @@
 namespace JRNN {
 	CSMTLDataset::CSMTLDataset()
 	{
-		firstLoad = true;
+		newData = true;
 	}
 
 	void CSMTLDataset::SetView(strings view)
@@ -31,6 +31,7 @@ namespace JRNN {
 		tp->hasNet = false;
 		tp->numOuts = numOut;
 		taskList[taskName] = tp;
+		newData = true;
 
 		ifstream dataFile(fileName.c_str());
 		typedef boost::tokenizer<boost::char_separator<char> > tokenizer;
@@ -80,10 +81,6 @@ namespace JRNN {
 		taskList[taskName] = tp;
 	}
 
-	void CSMTLDataset::ImpoverishPrimaryTaskTraining( double percentMissing, unsigned int primaryTask /*= 0*/ )
-	{
-
-	}
 
 	JRNN::DatasetPtr CSMTLDataset::SpawnDS()
 	{

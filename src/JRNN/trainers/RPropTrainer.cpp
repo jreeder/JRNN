@@ -147,6 +147,7 @@ namespace JRNN {
 		int numInCorrect = 0;
 		int totalItems = ins.size();
 		int numTasks = (*itOuts).size();
+		assert(totalItems > 0);
 		while(itIns != ins.end()){
 			vecDouble input = (*itIns);
 			vecDouble desiredOut = (*itOuts);

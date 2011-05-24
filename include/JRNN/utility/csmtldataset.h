@@ -24,7 +24,6 @@ namespace JRNN {
 		void SetView(strings view);
 		void AddTaskFromFile(string fileName, string taskName, int numIn, int numOut);
 		void AddTaskFromNet(NetworkPtr net, string taskName);
-		void ImpoverishPrimaryTaskTraining(double percentMissing, unsigned int primaryTask = 0);
 		DatasetPtr SpawnDS();
 
 		class Task {
@@ -50,7 +49,7 @@ namespace JRNN {
 		typedef std::pair<string, TaskPtr> TaskPair;
 
 	private:
-		bool firstLoad;
+		bool newData;
 		CSMTLDataStore dataStore;
 		Tasks taskList;
 		strings view;
