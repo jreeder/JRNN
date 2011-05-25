@@ -33,6 +33,7 @@ def MakeGraphs(title, fignum, folder):
 
     
 def MakeGraph1(title, fignum, data):
+    title = title + " Impoverished Primary Task"
     bpstlerr = np.array([v['task-0'] for v in data['BP_STL'].errors])
     bpstlepochs = np.array(data['BP_STL'].epochs)
     bpstltimes = np.array(data['BP_STL'].times)
@@ -168,6 +169,7 @@ def MakeGraph1(title, fignum, data):
     
     
 def MakeGraph2(title, fignum, data):
+    title = title + " All Tasks"
     plt.figure(fignum)
 
     xticks = ["Task 1", "Task 2", "Task 3", "Task 4"]
@@ -253,17 +255,17 @@ if __name__ == "__main__":
         os.makedirs(expfigpath)
 
     if usesave: pp = PdfPages(expfigpath + "Collected Figures.pdf")
-    MakeGraphs("Linear Impoverished Primary Task (NS)", 1, "linear/NormSize")
-    MakeGraphs("Linear Impoverished Primary Task (SS)", 5, "linear/SmallSize")
-    MakeGraphs("Linear Impoverished Primary Task (LS)", 9, "linear/LargeSize")
-    MakeGraphs("Band Impoverished Primary Task (NS)", 13, "band/NormSize")
-    MakeGraphs("Band Impoverished Primary Task (SS)", 17, "band/SmallSize")
-    MakeGraphs("Band Impoverished Primary Task (LS)", 21, "band/LargeSize")
-    MakeGraphs("CirInSq Impoverished Primary Task (NS)", 25, "CirInSq/NormSize")
-    MakeGraphs("CirInSq Impoverished Primary Task (SS)", 29, "CirInSq/SmallSize")
-    MakeGraphs("CirInSq Impoverished Primary Task (LS)", 33, "CirInSq/LargeSize")
-    #MakeGraphs("Impoverished Primary Task (NS NV)", 10, "NormSizeNoVal")
-    #MakeGraphs("Impoverished Primary Task (SS NV)", 13, "SmallSizeNoVal")
-    #MakeGraphs("Impoverished Primary Task (LS NV)", 16, "LargeSizeNoVal")
+    MakeGraphs("Linear (NS)", 1, "linear/NormSize")
+    MakeGraphs("Linear (SS)", 5, "linear/SmallSize")
+    MakeGraphs("Linear (LS)", 9, "linear/LargeSize")
+    MakeGraphs("Band (NS)", 13, "band/NormSize")
+    MakeGraphs("Band (SS)", 17, "band/SmallSize")
+    MakeGraphs("Band (LS)", 21, "band/LargeSize")
+    MakeGraphs("CirInSq (NS)", 25, "CirInSq/NormSize")
+    MakeGraphs("CirInSq (SS)", 29, "CirInSq/SmallSize")
+    MakeGraphs("CirInSq (LS)", 33, "CirInSq/LargeSize")
+    #MakeGraphs(" (NS NV)", 10, "NormSizeNoVal")
+    #MakeGraphs(" (SS NV)", 13, "SmallSizeNoVal")
+    #MakeGraphs(" (LS NV)", 16, "LargeSizeNoVal")
     if usesave: pp.close()
     if not usesave: plt.show()
