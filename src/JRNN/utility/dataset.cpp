@@ -10,6 +10,8 @@
 using namespace JRNN;
 using namespace std;
 
+RandomGeneratorInt Dataset::dRand = RandomGeneratorInt(1,RAND_MAX);
+
 Dataset::Dataset() {
 	outputPerCategory = false;
 	normalizeReals = false;
@@ -361,7 +363,7 @@ void Dataset::Distribute(){
 
 //Not really used anymore. 
 void Dataset::GenRandRange(){
-    srand(randSeed);
+    dRand.gen.seed(randSeed);
     vector<int> source;
     source.reserve(size);
     randomRange.resize(size);
@@ -370,22 +372,31 @@ void Dataset::GenRandRange(){
     }
     randomRange[0] = source[0];
     for (int i = 1; i < size; i++){
-        int j = rand() % (i + 1);
+        int j = dRand() % (i + 1);
         randomRange[i] = randomRange[j];
         randomRange[j] = source[i];
     }
 }
 
 void Dataset::Shuffle(ints &indexes){
-	srand((unsigned int)time(NULL));
+	dRand.gen.seed((unsigned int)time(NULL));
 	int tmpSize = indexes.size();
 	int tmpIndex = 0;
 	for (int i = tmpSize - 1; i > 0; i--){
-		int j = rand() % (i+1);
+		int j = dRand() % (i+1);
 		tmpIndex = indexes[i];
 		indexes[i] = indexes[j];
 		indexes[j] = tmpIndex;
 	}
+}
+
+ints Dataset::ARange(int start, int end){
+	ints retInts;
+	retInts.reserve((end - start) + 1);
+	for (int i = start; i <= end; i++){
+		retInts.push_back(i);
+	}
+	return retInts;
 }
 
 void Dataset::Reshuffle(){
@@ -396,11 +407,11 @@ void Dataset::Reshuffle(){
 
 //Shuffles the subsets so that they are in random order. 
 void Dataset::ShuffleSubsets(){
-	srand((unsigned int)time(NULL));
+	dRand.gen.seed((unsigned int)time(NULL));
 	int tmpSize = trainIns.size();
 	vecDouble tmpInVec, tmpOutVec;
 	for (int i = tmpSize - 1; i > 0; i--){
-		int j = rand() % (i + 1);
+		int j = dRand() % (i + 1);
 		tmpInVec = trainIns[i];
 		tmpOutVec = trainOuts[i];
 		trainIns[i] = trainIns[j];
@@ -411,7 +422,7 @@ void Dataset::ShuffleSubsets(){
 
 	tmpSize = valIns.size();
 	for (int i = tmpSize - 1; i > 0; i--){
-		int j = rand() % (i + 1);
+		int j = dRand() % (i + 1);
 		tmpInVec = valIns[i];
 		tmpOutVec = valOuts[i];
 		valIns[i] = valIns[j];
@@ -422,7 +433,7 @@ void Dataset::ShuffleSubsets(){
 
 	tmpSize = testIns.size();
 	for (int i = tmpSize - 1; i > 0; i--){
-		int j = rand() % (i + 1);
+		int j = dRand() % (i + 1);
 		tmpInVec = testIns[i];
 		tmpOutVec = testOuts[i];
 		testIns[i] = testIns[j];

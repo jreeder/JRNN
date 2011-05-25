@@ -146,7 +146,7 @@ namespace JRNN {
 
 	void MTLDataset::ImpoverishPrimaryTaskTraining(double percentMissing, unsigned int primaryTask)
 	{
-		assert(trainOuts.size() > 0 && view.size() > 0 && primaryTask < view.size());
+		/*assert(trainOuts.size() > 0 && view.size() > 0 && primaryTask < view.size());
 		string primTask = view[primaryTask];
 		ints primIndexes = taskList[primTask]->indexes;
 		srand(randSeed);
@@ -156,6 +156,27 @@ namespace JRNN {
 				BOOST_FOREACH(int ind, primIndexes){
 					outVec[ind] = UNKNOWN;
 				}
+			}
+		}*/
+		int numImpoverished = static_cast<int>(percentMissing * numTrain);
+		ImpoverishPrimaryTaskTraining(numImpoverished, primaryTask);
+	}
+	//////////////////////////////////////////////////////////////////////////
+	/*
+	 *	numImpoverished is the total number of points to mark as unknown
+	 */
+	//////////////////////////////////////////////////////////////////////////
+	void MTLDataset::ImpoverishPrimaryTaskTraining(int numImpoverished, unsigned int primaryTask)
+	{
+		assert(trainOuts.size() > 0 && view.size() > 0 && primaryTask < view.size());
+		string primTask = view[primaryTask];
+		ints primIndexes = taskList[primTask]->indexes;
+		ints indexes = ARange(0,numTrain-1);
+		Shuffle(indexes);
+		for (int i = 0; i < numImpoverished; i++){
+			vecDouble& outVec = trainOuts[indexes[i]];
+			BOOST_FOREACH(int ind, primIndexes){
+				outVec[ind] = UNKNOWN;
 			}
 		}
 	}

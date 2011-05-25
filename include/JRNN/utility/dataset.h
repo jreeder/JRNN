@@ -52,6 +52,7 @@ namespace JRNN {
 		bool normalizeReals;
 		bool dsAnalyzed;
         std::vector<int> randomRange;
+		static RandomGeneratorInt dRand;
 		double trainStdDev;
 		double testStdDev;
 		double valStdDev;
@@ -75,6 +76,7 @@ namespace JRNN {
 		void ShuffleSubsets();
 		void Reshuffle();
 		void AnalyzeDS();
+		ints ARange(int start, int end);
 
     };
 

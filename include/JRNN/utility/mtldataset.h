@@ -25,6 +25,7 @@ namespace JRNN {
 		void AddTaskFromFile(string fileName, string taskName, int numIn, int numOut);
 		void AddTaskFromNet(NetworkPtr net, string taskName, ints primaryOuts);
 		void ImpoverishPrimaryTaskTraining(double percentMissing, unsigned int primaryTask = 0);
+		void ImpoverishPrimaryTaskTraining(int numImpoverished, unsigned int primaryTask = 0);
 		DatasetPtr SpawnDS();
 		
 		class Task {
