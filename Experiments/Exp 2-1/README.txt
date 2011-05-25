@@ -12,3 +12,4 @@ Round 5 Uses values found in the grid search for band linear and circ datasets
 	Band hN: 4 imp:20 Full:60
 	cirinsq hN: 6 imp:20 Full:60
 	linear hN: 4 imp:10 Full:60
+Swapped cirinsq tasks 1 and 2 to 7 and 8. Moved all others up to fill the gap. 
