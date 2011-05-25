@@ -5,9 +5,9 @@ __author__="jreeder"
 __date__ ="$Aug 9, 2010 4:42:52 PM$"
 
 experiments = [\
+    #{'dsname':'band','numTasks':8,'numTrain':60,'numVal':100, 'numTest':500,\
+     #'numHidPerOut':4, 'numRuns':60,'impPerc':0.7,'expFold':'NormSize', 'useVal':'T'},\
     {'dsname':'band','numTasks':8,'numTrain':60,'numVal':100, 'numTest':500,\
-     'numHidPerOut':4, 'numRuns':60,'impPerc':0.7,'expFold':'NormSize', 'useVal':'T'},\
-    {'dsname':'band','numTasks':8,'numHidPerOut':6,'numVal':100, 'numTest':500,\
      'numHidPerOut':1, 'numRuns':60,'impPerc':0.7,'expFold':'SmallSize', 'useVal':'T'},\
     {'dsname':'band','numTasks':8,'numTrain':60,'numVal':100, 'numTest':500,\
      'numHidPerOut':8, 'numRuns':60,'impPerc':0.7,'expFold':'LargeSize', 'useVal':'T'},\

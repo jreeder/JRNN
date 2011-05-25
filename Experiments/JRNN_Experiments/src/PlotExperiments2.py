@@ -11,7 +11,7 @@ import matplotlib.pyplot as plt
 from matplotlib.backends.backend_pdf import PdfPages
 from config import *
 
-expfigpath = figpath + "Exp 2-1/INDEX 3/"
+expfigpath = figpath + "Exp 2-1/INDEX 4/"
 usesave=True
 
 def Save(name):
