@@ -15,7 +15,7 @@ from matplotlib import cm
 from mpl_toolkits.mplot3d import axes3d
 from matplotlib.backends.backend_pdf import PdfPages
 
-expfigpath = os.path.join(figpath, "Exp 1-1/Round 4/No Val 2/")
+expfigpath = os.path.join(figpath, "Exp 1-1/Round 4/No Val 3/")
 fignum = 0
 usesave = True
 def MakeGraph(datasetname, datasetfiles):
