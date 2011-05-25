@@ -4,7 +4,9 @@
     <params etaPlus="1.2"
             etaMinus="0.5"
             maxEpochs="3000"
-            minError="0.04"/>
+            minError="0.04"
+            maxWeight="1000"
+            useMaxWeight="false"/>
   </rProp>
   <CC>
     <!--errorMeasure 1=INDEX 0=BITS-->

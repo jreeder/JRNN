@@ -30,6 +30,13 @@ namespace JRNN {
 		maxWeight = 1000;
 	}
 
+	//void RPropTrainer::SetUseMaxWeight(bool inUseMaxWeight){
+	//	useMaxWeight = inUseMaxWeight;
+	//}
+	//void RPropTrainer::SetMaxWeight(double inMaxWeight){
+	//	maxWeight = inMaxWeight;
+	//}
+
 	/*RPropTrainer::RPropTrainer(const RPropTrainer& orig) {
 	mNetwork = orig.mNetwork;
 	data = orig.data;

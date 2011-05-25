@@ -193,6 +193,17 @@ namespace JRNN {
 		}
 	}
 
+	inline strings splitString(string inString, string charSep){
+		typedef boost::tokenizer<boost::char_separator<char> > tokenizer;
+		boost::char_separator<char> sep(charSep.c_str());
+		tokenizer tok(inString, sep);
+		strings retStrings;
+		BOOST_FOREACH(string token, tok){
+			retStrings.push_back(token);
+		}
+		return retStrings;
+	}
+
 }
 
 #endif

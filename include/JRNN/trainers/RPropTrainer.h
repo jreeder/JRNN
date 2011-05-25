@@ -30,6 +30,10 @@ namespace JRNN {
 		void TrainToConvergence(double maxSSE, int maxEpoch);
 		void TrainToValConv(int maxEpoch);
 		void Reset();
+		bool useMaxWeight;
+		double maxWeight;
+		//void SetUseMaxWeight(bool inUseMaxWeight);
+		//void SetMaxWeight(double inMaxWeight);
 
 	private:
 		FFMLPNetPtr mNetwork;
@@ -57,8 +61,6 @@ namespace JRNN {
 		hashedIntMap taskErrors;
 		hashedDoubleMap taskErrorRate;
 		int nTrainOutVals;
-		bool useMaxWeight;
-		double maxWeight;
 		void RPropUpdate(ConPtr con);
 		void CalcWeightUpdates(LayerPtr layer, vecDouble desiredOut = vecDouble());
 	};
