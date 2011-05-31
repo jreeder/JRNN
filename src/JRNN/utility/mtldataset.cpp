@@ -13,6 +13,7 @@ namespace JRNN {
 	MTLDataset::MTLDataset()
 	{
 		firstLoad = true;
+		numImpTrain = 0;
 	}
 
 	void MTLDataset::AddTaskFromNet( NetworkPtr net, string taskName, ints primaryOuts )
@@ -144,6 +145,11 @@ namespace JRNN {
 		}
 	}
 
+	//////////////////////////////////////////////////////////////////////////
+	/*
+	 *	Decremented function. Newer Dist Data function handles this. 
+	 */
+	//////////////////////////////////////////////////////////////////////////
 	void MTLDataset::ImpoverishPrimaryTaskTraining(double percentMissing, unsigned int primaryTask)
 	{
 		/*assert(trainOuts.size() > 0 && view.size() > 0 && primaryTask < view.size());
@@ -164,6 +170,7 @@ namespace JRNN {
 	//////////////////////////////////////////////////////////////////////////
 	/*
 	 *	numImpoverished is the total number of points to mark as unknown
+	 *	Decremented function. Newer dist data function handles this. 
 	 */
 	//////////////////////////////////////////////////////////////////////////
 	void MTLDataset::ImpoverishPrimaryTaskTraining(int numImpoverished, unsigned int primaryTask)
@@ -186,6 +193,77 @@ namespace JRNN {
 		DatasetPtr ds(new Dataset(*this));
 		return ds;
 	}
+
+	void MTLDataset::DistData( int numTrain, int numVal, int numTest, bool impoverish /*= false*/, int impTrainNum /*= 0*/, unsigned int primaryTask /*= 0*/ )
+	{
+		if (!impoverish){
+			Dataset::DistData(numTrain, numVal, numTest);
+		}
+		else {
+			this->numImpTrain = impTrainNum;
+			this->numTrain = numTrain;
+			this->numVal = numVal;
+			this->numTest = numTest;
+			trainIns.clear();
+			trainOuts.clear();
+			valIns.clear();
+			valOuts.clear();
+			testIns.clear();
+			testOuts.clear();
+			if (!dsAnalyzed){
+				AnalyzeDS();
+			}
+			DistributeImp(primaryTask);
+		}
+	}
+
+	void MTLDataset::DistributeImp( unsigned int primaryTask )
+	{
+		assert(size > (numTrain + numVal + numTest) && numImpTrain < numTrain && view.size() > 0 && primaryTask < view.size());
+		//int totalTr = 0, totalVal = 0, totalTest = 0;
+		int numClasses = outClassNames.size();
+		hashedIntsMap indexQueues = outClassIndexes;
+		string primTask = view[primaryTask];
+		ints primIndexes = taskList[primTask]->indexes;
+		int numFirstTrains = numTrain - numImpTrain;
+
+		FillSubset(trainIns, trainOuts, numFirstTrains, indexQueues);
+		BOOST_FOREACH(vecDouble& outVec, trainOuts){
+			BOOST_FOREACH(int ind, primIndexes){
+				outVec[ind] = UNKNOWN;
+			}
+		}
+		FillSubset(trainIns, trainOuts, numImpTrain, indexQueues);
+		FillSubset(valIns, valOuts, numVal, indexQueues);
+		FillSubset(testIns, testOuts, numTest, indexQueues);
+		
+		ShuffleSubsets();
+		CalcStdDevs();
+	}
+
+	//Moved to base class. 
+	//void MTLDataset::FillSubset( matDouble& ins, matDouble& outs, int numExamples, hashedIntsMap& indexQueues )
+	//{
+	//	int i = 0, total = 0;
+	//	int numClasses = outClassNames.size();
+	//	while (total < numExamples){
+	//		int classIndex = i++ % numClasses;
+	//		string className = outClassNames[classIndex];
+	//		double tmpPerc = outClassPercentage[className];
+	//		int tmpCount = 0;
+	//		tmpCount = (int)floor((numExamples * tmpPerc) + 0.5);
+	//		if (tmpCount > (numExamples - total)){
+	//			tmpCount = numExamples - total;
+	//		}
+	//		while(!indexQueues[className].empty() && tmpCount-- > 0){
+	//			int index = indexQueues[className].back();
+	//			ins.push_back(inputs[index]);
+	//			outs.push_back(outputs[index]);
+	//			total++;
+	//			indexQueues[className].pop_back();
+	//		}
+	//	}
+	//}
 
 	vecDouble MTLDataset::Task::getNetOuts( vecDouble inputs )
 	{

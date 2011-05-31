@@ -68,7 +68,7 @@ int main(int argc, char* argv[]){
 	XmlConfigurator params;
 
 	try {
-		CmdLine cmd("JRNN_mtl: Atomic MTL experiment executable", ' ', "0.89");
+		CmdLine cmd("JRNN_exprun: Atomic JRNN experiment executable", ' ', "0.89");
 		ValueArg<string> inBasepath("", "basepath", "The data basepath", true, "", "string", cmd);
 		ValueArg<string> inDsname("", "dsname", "The name of the dataset", true, "", "string", cmd);
 		ValueArg<int> inNumInputs("", "numinputs", "The number of inputs", true, 2, "int", cmd);
@@ -147,16 +147,20 @@ int main(int argc, char* argv[]){
 
 	
 	mds->SetView(view);
-	mds->DistData(numTrain,numVal,numTest);
+	//mds->DistData(numTrain,numVal,numTest);
 	
 	ints primaryIndexes = ints(0);
 	if (primarytask > 0){
-		string taskname = "task-" + lexical_cast<string>(primarytask);
+		string taskname = "task" + lexical_cast<string>(primarytask);
 		primaryIndexes = mds->GetIndexes(taskname);
 		if (impNumTrain > 0) {
-			int numImpoverished = numTrain - impNumTrain;
-			mds->ImpoverishPrimaryTaskTraining(numImpoverished,(primarytask - 1));
+			/*int numImpoverished = numTrain - impNumTrain;
+			mds->ImpoverishPrimaryTaskTraining(numImpoverished,(primarytask - 1));*/
+			mds->DistData(numTrain,numVal,numTest, true, impNumTrain, (primarytask - 1));
 		}
+	}
+	else {
+		mds->DistData(numTrain, numVal, numTest);
 	}
 	
 	DatasetPtr ds = mds->SpawnDS();
