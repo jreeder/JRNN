@@ -15,13 +15,14 @@ numOut = 1
 type = 'BP'
 useVal = 'F'
 numRuns = 30
-expFold = 'BP Limits No Val'
+expFold = 'BP Limits No Val 1'
 
 expvals = {}
-expvals["smallcovtype"] = {"numTest":200, "numVal":0, "numIn":10}
-expvals["derm"] = {"numTest":200, "numVal":0, "numIn":33}
-expvals["heart"] = {"numTest":200, "numVal":0, "numIn":13}
-expvals["glass"] = {"numTest":100, "numVal":0, "numIn":9}
+#expvals["smallcovtype"] = {"numTest":200, "numVal":0, "numIn":10}
+#expvals["derm"] = {"numTest":200, "numVal":0, "numIn":33}
+#expvals["heart"] = {"numTest":200, "numVal":0, "numIn":13}
+#expvals["glass"] = {"numTest":100, "numVal":0, "numIn":9}
+expvals["CirInSq"] = {"numTest":200, "numVal":0, "numIn":2}
 
 def ProcessFile(file):
     
@@ -30,10 +31,12 @@ def ProcessFile(file):
     outfilepath = os.path.join(outpath, expFold)
     os.chdir(filepath)
     datasetname = dataset.split("-")[0]
-    if datasetname in expvals.keys():
-        numTest = expvals[datasetname]["numTest"]
-        numVal = expvals[datasetname]["numVal"]
-        numIn = expvals[datasetname]["numIn"]
+    if datasetname not in expvals.keys():
+        return
+    
+    numTest = expvals[datasetname]["numTest"]
+    numVal = expvals[datasetname]["numVal"]
+    numIn = expvals[datasetname]["numIn"]
         
     for numHid in [1,2,4,6,8,10,12,14,16,18,20]:
         for numTrain in [5,10,15,20,25,30,35,40,45,50,55,60,65,70,75,80,85,90,95,100]:
