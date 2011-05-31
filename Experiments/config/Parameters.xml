@@ -6,7 +6,9 @@
             maxEpochs="3000"
             minError="0.04"
             maxWeight="1000"
-            useMaxWeight="false"/>
+            useMaxWeight="true"
+            conScale="0.5"
+            conOffset="0.25"/>
   </rProp>
   <CC>
     <!--errorMeasure 1=INDEX 0=BITS-->
@@ -20,7 +22,9 @@
             primeOffset="0.1"
             indexThreshold="0.05"
             scoreThreshold="0.4"
-            errorMeasure="1">
+            errorMeasure="1"
+            conScale="1.0"
+            conOffset="0.5"/>
       <out epochs="300"
            patience="12"
            epsilon="10.0"

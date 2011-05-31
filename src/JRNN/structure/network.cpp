@@ -22,6 +22,8 @@ Network::Network() {
 //    layers["out"]->BuildLayer(node::sigmoid);
 //    layers["bias"]->BuildLayer(node::bias);
 //    fullyConnect();
+	conScale = 2.0;
+	conOffset = 1.0;
 }
 
 //NetworkPtr Network::CreateFFMLPNetwork(int numIn, int numHid, int numOut){
@@ -155,6 +157,8 @@ Network::Network(const Network& orig) {
 	numHidLayers = orig.locked;
 	numIn = orig.numIn;
 	numOut = orig.numOut;
+	conScale = orig.conScale;
+	conOffset = orig.conOffset;
 }
 
 Network::~Network() {
@@ -284,6 +288,7 @@ ConMap& Network::GetConnections(){
 
  void Network::AddConnection( ConPtr con )
  {
+	 con->SetScaleAndOffset(conScale, conOffset);
 	 connections.insert(ConPair(con->GetName(),con));
  }
 
@@ -373,3 +378,9 @@ NetworkPtr Network::Clone()
 	 Network::Clone(np, oldP);
 	 return np;
  }
+
+void Network::SetScaleAndOffset( double scale, double offset )
+{
+	conScale = scale;
+	conOffset = offset;
+}

@@ -48,6 +48,7 @@ namespace JRNN{
 		int GetNumOut();
 		void SetNumHidLayers(int numHidLayers);
 		int GetNumHidLayers();
+		void SetScaleAndOffset(double scale, double offset);
 
         vecDouble GetOutputs();
 		vecDouble GetPrimes(string layerName);
@@ -78,6 +79,8 @@ namespace JRNN{
         //int numHid; //TODO: need to abstract this out. 
 		int numHidLayers;
 		bool locked;
+		double conScale;
+		double conOffset;
         /*ConList inToHid;
         ConList hidToOut;*/
         vecDouble inputs;
