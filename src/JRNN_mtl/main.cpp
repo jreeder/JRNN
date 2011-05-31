@@ -85,8 +85,8 @@ int main(int argc, char* argv[]){
 		ValueArg<string> inOutFilename("", "outfile", "The name of the output file", true, "", "string", cmd);
 		ValueArg<string> inParamsPath("", "params", "The path to the parameters xml file", false, "", "string", cmd);
 		ValueArg<int> inPrimaryTask("", "primtask", "The primary task, ex: 1", false, 0, "int", cmd);
-		SwitchArg inCC("","CC", "Use Cascade Correlation", true);
-		SwitchArg inBP("","BP", "Use Back Propagation", true);
+		SwitchArg inCC("","CC", "Use Cascade Correlation", false);
+		SwitchArg inBP("","BP", "Use Back Propagation", false);
 		cmd.xorAdd(inCC, inBP);
 
 		cmd.parse(argc,argv);
@@ -141,7 +141,7 @@ int main(int argc, char* argv[]){
 	view = splitString(viewString, ",");
 	
 	BOOST_FOREACH(string taskname, view){
-		string filename = basepath + dsname + taskname + ".txt";
+		string filename = basepath + dsname + "-" + taskname + ".txt";
 		mds->AddTaskFromFile(filename, taskname, numInputs, numOutputs);
 	}
 
@@ -170,6 +170,15 @@ int main(int argc, char* argv[]){
 		FFMLPNetPtr ffnet = FFMLPNetwork::Create();
 		int numHid = numHidPerTask * numTasks;
 		ffnet->Build(numInputs, numHid, numOutputs);
+		double scale, offset;
+		if (xmlLoaded) {
+			bool success = true;
+			success &= params.GetVar("rProp.params@conScale", scale, parmsOptional);
+			success &= params.GetVar("rProp.params@conOffset", offset, parmsOptional);
+			if (success) {
+				ffnet->SetScaleAndOffset(scale, offset);
+			}
+		}
 		RPropTrainer bp(ffnet, ds, rPropEtaPlus, rPropEtaMinus);
 		if (xmlLoaded){
 			params.GetVar("rProp.params@maxWeight", bp.maxWeight, parmsOptional);
@@ -179,6 +188,15 @@ int main(int argc, char* argv[]){
 	}
 	else {
 		CCNetworkPtr ccnet = CCNetwork::Create();
+		double scale,offset;
+		if (xmlLoaded){
+			bool success = true;
+			success &= params.GetVar("CC.params@conScale", scale, parmsOptional);
+			success &= params.GetVar("CC.params@conOffset", offset, parmsOptional);
+			if (success){
+				ccnet->SetScaleAndOffset(scale, offset);
+			}
+		}
 		ccnet->Build(numInputs, numOutputs);
 		CCTrainer cc(ccnet,ds,ccNumCands);
 		if (xmlLoaded) {
@@ -235,7 +253,7 @@ void BPWorker(RPropTrainer& trainer, int numHid, strings* results, int numRuns, 
 		//cout << epochs << "\t";
 		output << numHid << "\t";
 		//cout << numHid << "\t";
-		output << 0 << "\t";
+		output << trainer.GetNumResets() << "\t";
 		hashedDoubleMap testresults = trainer.TestWiClass(Dataset::TEST);
 		std::pair<string,double> p;
 		BOOST_FOREACH(p, testresults){
