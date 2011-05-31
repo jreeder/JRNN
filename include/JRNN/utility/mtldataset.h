@@ -26,6 +26,7 @@ namespace JRNN {
 		void AddTaskFromNet(NetworkPtr net, string taskName, ints primaryOuts);
 		void ImpoverishPrimaryTaskTraining(double percentMissing, unsigned int primaryTask = 0);
 		void ImpoverishPrimaryTaskTraining(int numImpoverished, unsigned int primaryTask = 0);
+		virtual void DistData(int numTrain, int numVal, int numTest, bool impoverish = false, int impTrainNum = 0, unsigned int primaryTask = 0);
 		DatasetPtr SpawnDS();
 		
 		class Task {
@@ -55,9 +56,12 @@ namespace JRNN {
 		bool firstLoad;
 		MTLDataStore dataStore;
 		Tasks taskList;
+		int numImpTrain;
 		strings view;
 		strings inputStrings;
 		void GenerateDS();
+		void DistributeImp(unsigned int primaryt);
+		//void FillSubset( matDouble& trainIns, matDouble& trainOuts, int numTrain, hashedIntsMap& indexQueues );
 	};
  	
 }

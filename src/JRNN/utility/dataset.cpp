@@ -223,79 +223,82 @@ void Dataset::Distribute(){
     assert(size > (numTrain + numVal + numTest));
 	
 	//Find the number of points from each class that goes into the subsets
-	ints trainClsCounts, valClsCounts, testClsCounts, clsPositions;
-	int totalTr = 0, totalVal = 0, totalTest = 0;
-	int numClasses = outClassNames.size();
+	//ints trainClsCounts, valClsCounts, testClsCounts, clsPositions;
+	//int totalTr = 0, totalVal = 0, totalTest = 0;
+	//int numClasses = outClassNames.size();
 	hashedIntsMap indexQueues = outClassIndexes;
 
-	//changed to attempt to overcome small numbers of specific outputs.
-	//TODO: pull a method out here so this is less verbose. 
-	int i = 0;
-	while (totalTr < numTrain)
-	{
-		int classIndex = i++ % numClasses; 
-		string className = outClassNames[classIndex];
-		double tmpPerc = outClassPercentage[className];
-		int tmpCount = 0;
-		tmpCount = (int)floor((numTrain * tmpPerc) + 0.5);
-		if (tmpCount > (numTrain - totalTr)){
-			tmpCount = numTrain - totalTr;
-		}
-		while (!indexQueues[className].empty() && tmpCount-- > 0)
-		{
-			int index = indexQueues[className].back();
-			trainIns.push_back(inputs[index]);
-			trainOuts.push_back(outputs[index]);
-			totalTr++;
-			indexQueues[className].pop_back();
-		}
-		int tmpSize1 = indexQueues[className].size();
-		int tmpSize2 = outClassIndexes[className].size();
-	}
-	i = 0;
-	while (totalVal < numVal)
-	{
-		int classIndex = i++ % numClasses; 
-		string className = outClassNames[classIndex];
-		double tmpPerc = outClassPercentage[className];
-		int tmpCount = 0;
-		tmpCount = (int)floor((numVal * tmpPerc) + 0.5);
-		if (tmpCount > (numVal - totalVal)){
-			tmpCount = numVal - totalVal;
-		}
-		while (!indexQueues[className].empty() && tmpCount-- > 0)
-		{
-			int index = indexQueues[className].back();
-			valIns.push_back(inputs[index]);
-			valOuts.push_back(outputs[index]);
-			totalVal++;
-			indexQueues[className].pop_back();
-		}
-		int tmpSize1 = indexQueues[className].size();
-		int tmpSize2 = outClassIndexes[className].size();
-	}
-	i = 0;
-	while (totalTest < numTest)
-	{
-		int classIndex = i++ % numClasses; 
-		string className = outClassNames[classIndex];
-		double tmpPerc = outClassPercentage[className];
-		int tmpCount = 0;
-		tmpCount = (int)floor((numTest * tmpPerc) + 0.5);
-		if (tmpCount > (numTest - totalTest)){
-			tmpCount = numTest - totalTest;
-		}
-		while (!indexQueues[className].empty() && tmpCount-- > 0)
-		{
-			int index = indexQueues[className].back();
-			testIns.push_back(inputs[index]);
-			testOuts.push_back(outputs[index]);
-			totalTest++;
-			indexQueues[className].pop_back();
-		}
-		int tmpSize1 = indexQueues[className].size();
-		int tmpSize2 = outClassIndexes[className].size();
-	}
+
+	FillSubset(trainIns, trainOuts, numTrain, indexQueues);
+	FillSubset(valIns, valOuts, numVal, indexQueues);
+	FillSubset(testIns, testOuts, numTest, indexQueues);
+	//changed to attempt to overcome small numbers of specific outputs. 
+	//int i = 0;
+	//while (totalTr < numTrain)
+	//{
+	//	int classIndex = i++ % numClasses; 
+	//	string className = outClassNames[classIndex];
+	//	double tmpPerc = outClassPercentage[className];
+	//	int tmpCount = 0;
+	//	tmpCount = (int)floor((numTrain * tmpPerc) + 0.5);
+	//	if (tmpCount > (numTrain - totalTr)){
+	//		tmpCount = numTrain - totalTr;
+	//	}
+	//	while (!indexQueues[className].empty() && tmpCount-- > 0)
+	//	{
+	//		int index = indexQueues[className].back();
+	//		trainIns.push_back(inputs[index]);
+	//		trainOuts.push_back(outputs[index]);
+	//		totalTr++;
+	//		indexQueues[className].pop_back();
+	//	}
+	//	int tmpSize1 = indexQueues[className].size();
+	//	int tmpSize2 = outClassIndexes[className].size();
+	//}
+	//i = 0;
+	//while (totalVal < numVal)
+	//{
+	//	int classIndex = i++ % numClasses; 
+	//	string className = outClassNames[classIndex];
+	//	double tmpPerc = outClassPercentage[className];
+	//	int tmpCount = 0;
+	//	tmpCount = (int)floor((numVal * tmpPerc) + 0.5);
+	//	if (tmpCount > (numVal - totalVal)){
+	//		tmpCount = numVal - totalVal;
+	//	}
+	//	while (!indexQueues[className].empty() && tmpCount-- > 0)
+	//	{
+	//		int index = indexQueues[className].back();
+	//		valIns.push_back(inputs[index]);
+	//		valOuts.push_back(outputs[index]);
+	//		totalVal++;
+	//		indexQueues[className].pop_back();
+	//	}
+	//	int tmpSize1 = indexQueues[className].size();
+	//	int tmpSize2 = outClassIndexes[className].size();
+	//}
+	//i = 0;
+	//while (totalTest < numTest)
+	//{
+	//	int classIndex = i++ % numClasses; 
+	//	string className = outClassNames[classIndex];
+	//	double tmpPerc = outClassPercentage[className];
+	//	int tmpCount = 0;
+	//	tmpCount = (int)floor((numTest * tmpPerc) + 0.5);
+	//	if (tmpCount > (numTest - totalTest)){
+	//		tmpCount = numTest - totalTest;
+	//	}
+	//	while (!indexQueues[className].empty() && tmpCount-- > 0)
+	//	{
+	//		int index = indexQueues[className].back();
+	//		testIns.push_back(inputs[index]);
+	//		testOuts.push_back(outputs[index]);
+	//		totalTest++;
+	//		indexQueues[className].pop_back();
+	//	}
+	//	int tmpSize1 = indexQueues[className].size();
+	//	int tmpSize2 = outClassIndexes[className].size();
+	//}
 
 	//for(int i = 0; i < numClasses; i++){
 	//	string className = outClassNames[i];
@@ -360,6 +363,30 @@ void Dataset::Distribute(){
  //   }
 	CalcStdDevs();
 }
+
+void Dataset::FillSubset( matDouble& ins, matDouble& outs, int numExamples, hashedIntsMap& indexQueues )
+{
+	int i = 0, total = 0;
+	int numClasses = outClassNames.size();
+	while (total < numExamples){
+		int classIndex = i++ % numClasses;
+		string className = outClassNames[classIndex];
+		double tmpPerc = outClassPercentage[className];
+		int tmpCount = 0;
+		tmpCount = (int)floor((numExamples * tmpPerc) + 0.5);
+		if (tmpCount > (numExamples - total)){
+			tmpCount = numExamples - total;
+		}
+		while(!indexQueues[className].empty() && tmpCount-- > 0){
+			int index = indexQueues[className].back();
+			ins.push_back(inputs[index]);
+			outs.push_back(outputs[index]);
+			total++;
+			indexQueues[className].pop_back();
+		}
+	}
+}
+
 
 //Not really used anymore. 
 void Dataset::GenRandRange(){

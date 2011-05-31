@@ -30,6 +30,7 @@ namespace JRNN {
 		void TrainToConvergence(double maxSSE, int maxEpoch);
 		void TrainToValConv(int maxEpoch);
 		void Reset();
+		int GetNumResets();
 		bool useMaxWeight;
 		double maxWeight;
 		//void SetUseMaxWeight(bool inUseMaxWeight);
@@ -38,6 +39,7 @@ namespace JRNN {
 	private:
 		FFMLPNetPtr mNetwork;
 		int epochCount;
+		int numResets;
 		double etaPlus;
 		double etaMinus;
 		static const int continueEpochs = 50;

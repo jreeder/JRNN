@@ -68,7 +68,7 @@ int main(int argc, char* argv[]){
 	XmlConfigurator params;
 
 	try {
-		CmdLine cmd("JRNN_mtl: Atomic MTL experiment executable", ' ', "0.89");
+		CmdLine cmd("JRNN_exprun: Atomic JRNN experiment executable", ' ', "0.89");
 		ValueArg<string> inBasepath("", "basepath", "The data basepath", true, "", "string", cmd);
 		ValueArg<string> inDsname("", "dsname", "The name of the dataset", true, "", "string", cmd);
 		ValueArg<int> inNumInputs("", "numinputs", "The number of inputs", true, 2, "int", cmd);
@@ -85,8 +85,8 @@ int main(int argc, char* argv[]){
 		ValueArg<string> inOutFilename("", "outfile", "The name of the output file", true, "", "string", cmd);
 		ValueArg<string> inParamsPath("", "params", "The path to the parameters xml file", false, "", "string", cmd);
 		ValueArg<int> inPrimaryTask("", "primtask", "The primary task, ex: 1", false, 0, "int", cmd);
-		SwitchArg inCC("","CC", "Use Cascade Correlation", true);
-		SwitchArg inBP("","BP", "Use Back Propagation", true);
+		SwitchArg inCC("","CC", "Use Cascade Correlation", false);
+		SwitchArg inBP("","BP", "Use Back Propagation", false);
 		cmd.xorAdd(inCC, inBP);
 
 		cmd.parse(argc,argv);
@@ -141,22 +141,26 @@ int main(int argc, char* argv[]){
 	view = splitString(viewString, ",");
 	
 	BOOST_FOREACH(string taskname, view){
-		string filename = basepath + dsname + taskname + ".txt";
+		string filename = basepath + dsname + "-" + taskname + ".txt";
 		mds->AddTaskFromFile(filename, taskname, numInputs, numOutputs);
 	}
 
 	
 	mds->SetView(view);
-	mds->DistData(numTrain,numVal,numTest);
+	//mds->DistData(numTrain,numVal,numTest);
 	
 	ints primaryIndexes = ints(0);
 	if (primarytask > 0){
-		string taskname = "task-" + lexical_cast<string>(primarytask);
+		string taskname = "task" + lexical_cast<string>(primarytask);
 		primaryIndexes = mds->GetIndexes(taskname);
 		if (impNumTrain > 0) {
-			int numImpoverished = numTrain - impNumTrain;
-			mds->ImpoverishPrimaryTaskTraining(numImpoverished,(primarytask - 1));
+			/*int numImpoverished = numTrain - impNumTrain;
+			mds->ImpoverishPrimaryTaskTraining(numImpoverished,(primarytask - 1));*/
+			mds->DistData(numTrain,numVal,numTest, true, impNumTrain, (primarytask - 1));
 		}
+	}
+	else {
+		mds->DistData(numTrain, numVal, numTest);
 	}
 	
 	DatasetPtr ds = mds->SpawnDS();
@@ -166,6 +170,15 @@ int main(int argc, char* argv[]){
 		FFMLPNetPtr ffnet = FFMLPNetwork::Create();
 		int numHid = numHidPerTask * numTasks;
 		ffnet->Build(numInputs, numHid, numOutputs);
+		double scale, offset;
+		if (xmlLoaded) {
+			bool success = true;
+			success &= params.GetVar("rProp.params@conScale", scale, parmsOptional);
+			success &= params.GetVar("rProp.params@conOffset", offset, parmsOptional);
+			if (success) {
+				ffnet->SetScaleAndOffset(scale, offset);
+			}
+		}
 		RPropTrainer bp(ffnet, ds, rPropEtaPlus, rPropEtaMinus);
 		if (xmlLoaded){
 			params.GetVar("rProp.params@maxWeight", bp.maxWeight, parmsOptional);
@@ -175,6 +188,15 @@ int main(int argc, char* argv[]){
 	}
 	else {
 		CCNetworkPtr ccnet = CCNetwork::Create();
+		double scale,offset;
+		if (xmlLoaded){
+			bool success = true;
+			success &= params.GetVar("CC.params@conScale", scale, parmsOptional);
+			success &= params.GetVar("CC.params@conOffset", offset, parmsOptional);
+			if (success){
+				ccnet->SetScaleAndOffset(scale, offset);
+			}
+		}
 		ccnet->Build(numInputs, numOutputs);
 		CCTrainer cc(ccnet,ds,ccNumCands);
 		if (xmlLoaded) {
@@ -231,7 +253,7 @@ void BPWorker(RPropTrainer& trainer, int numHid, strings* results, int numRuns, 
 		//cout << epochs << "\t";
 		output << numHid << "\t";
 		//cout << numHid << "\t";
-		output << 0 << "\t";
+		output << trainer.GetNumResets() << "\t";
 		hashedDoubleMap testresults = trainer.TestWiClass(Dataset::TEST);
 		std::pair<string,double> p;
 		BOOST_FOREACH(p, testresults){

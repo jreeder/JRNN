@@ -27,6 +27,7 @@ namespace JRNN {
 		epochCount = 0;
 		primeOffset = 0.1;
 		useMaxWeight = false;
+		numResets = 0;
 		maxWeight = 1000;
 	}
 
@@ -56,6 +57,7 @@ namespace JRNN {
 		MSE_Rec.clear();
 		bestWeights.clear();
 		epochCount = 0;
+		numResets = 0;
 		localGradients.clear();
 		mNetwork->Reset();
 		taskErrorRate.clear();
@@ -105,6 +107,7 @@ namespace JRNN {
 				con->Reset();
 				delta[con->GetName()] = 1;
 				dw_last[con->GetName()] = 0;
+				numResets++;
 			}
 		}
 		dw.clear();
@@ -307,4 +310,10 @@ namespace JRNN {
 	int RPropTrainer::GetEpochs(){
 		return epochCount;
 	}
+
+	int RPropTrainer::GetNumResets()
+	{
+		return numResets;
+	}
+
 }

@@ -37,7 +37,7 @@ namespace JRNN {
         void SetNumOutputs(int numOutputs);
 		void SetOutputPerCategory(bool outPerClass);
 		void SetNormalizeReals(bool normReals);
-        void DistData(int numTrain, int numVal, int numTest);
+        virtual void DistData(int numTrain, int numVal, int numTest);
         void RedistData();
 
     protected:
@@ -70,6 +70,7 @@ namespace JRNN {
 		strings outClassNames;
         void GenRandRange();
         void Distribute();
+		void FillSubset( matDouble& ins, matDouble& outs, int numExamples, hashedIntsMap& indexQueues );
 		void CalcStdDevs();
 		double CalcStdDev(datatype type);
 		void Shuffle(ints &indexes);
