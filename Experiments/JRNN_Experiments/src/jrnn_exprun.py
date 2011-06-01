@@ -55,11 +55,14 @@ def ProcessExp(expparams):
         + "--numval %(numVal)d --numtest %(numTest)d --numhid %(numHidPerTask)d " % locals()\
         + "--numruns %(numRuns)d --view \"%(viewString)s\" --outfile \"%(outfile)s\" " % locals()\
         + "--primtask %(primTask)d --%(netType)s" % locals()
-    
-    if useValidation:
-        cmd = cmd + " -V"
+
+    if impNumTrain > 0:
+        cmd += " --impnumtrain %d" % impNumTrain
         
-    cmd = cmd + " --params \"%s\"" % paramspath
+    if useValidation:
+        cmd += " -V"
+        
+    cmd += " --params \"%s\"" % paramspath
     
     if verbose: print cmd
     
@@ -77,7 +80,7 @@ if __name__=='__main__':
         
     os.chdir(outpath3)
     if test:
-        ProcessExp(experiments[8])
+        ProcessExp(experiments[19])
     else:
         pool = Pool(4)
         pool.map(ProcessExp, experiments)
