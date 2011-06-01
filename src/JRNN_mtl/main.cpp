@@ -43,6 +43,7 @@ int main(int argc, char* argv[]){
 	int numVal = 100;
 	int numTest = 500;
 	int numHidPerTask = 4;
+	int numNetOutputs = 1;
 	bool useValidation = true;
 	string viewString = "";
 	strings view;
@@ -109,6 +110,7 @@ int main(int argc, char* argv[]){
 		primarytask = inPrimaryTask.getValue();
 		useCC = inCC.getValue();
 		useBP = inBP.getValue();
+		numNetOutputs = numTasks * numOutputs;
 	}
 	catch (TCLAP::ArgException &e) {
 		cout << "error: " << e.error() << " for arg " << e.argId() << endl;
@@ -169,7 +171,7 @@ int main(int argc, char* argv[]){
 	if (useBP) {
 		FFMLPNetPtr ffnet = FFMLPNetwork::Create();
 		int numHid = numHidPerTask * numTasks;
-		ffnet->Build(numInputs, numHid, numOutputs);
+		ffnet->Build(numInputs, numHid, numNetOutputs);
 		double scale, offset;
 		if (xmlLoaded) {
 			bool success = true;
@@ -179,7 +181,7 @@ int main(int argc, char* argv[]){
 				ffnet->SetScaleAndOffset(scale, offset);
 			}
 		}
-		RPropTrainer bp(ffnet, ds, rPropEtaPlus, rPropEtaMinus);
+		RPropTrainer bp(ffnet, ds, rPropEtaPlus, rPropEtaMinus,primaryIndexes);
 		if (xmlLoaded){
 			params.GetVar("rProp.params@maxWeight", bp.maxWeight, parmsOptional);
 			params.GetVar("rProp.params@useMaxWeight", bp.useMaxWeight, parmsOptional);
@@ -197,8 +199,8 @@ int main(int argc, char* argv[]){
 				ccnet->SetScaleAndOffset(scale, offset);
 			}
 		}
-		ccnet->Build(numInputs, numOutputs);
-		CCTrainer cc(ccnet,ds,ccNumCands);
+		ccnet->Build(numInputs, numNetOutputs);
+		CCTrainer cc(ccnet,ds,ccNumCands,primaryIndexes);
 		if (xmlLoaded) {
 			params.GetVar("CC.params@valPatience", cc.parms.valPatience, parmsOptional);
 			params.GetVar("CC.params@impPatience", cc.parms.impPatience, parmsOptional);

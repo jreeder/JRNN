@@ -55,11 +55,14 @@ def ProcessExp(expparams):
         + "--numval %(numVal)d --numtest %(numTest)d --numhid %(numHidPerTask)d " % locals()\
         + "--numruns %(numRuns)d --view \"%(viewString)s\" --outfile \"%(outfile)s\" " % locals()\
         + "--primtask %(primTask)d --%(netType)s" % locals()
-    
-    if useValidation:
-        cmd = cmd + " -V"
+
+    if impNumTrain > 0:
+        cmd += " --impnumtrain %d" % impNumTrain
         
-    cmd = cmd + " --params \"%s\"" % paramspath
+    if useValidation:
+        cmd += " -V"
+        
+    cmd += " --params \"%s\"" % paramspath
     
     if verbose: print cmd
     
