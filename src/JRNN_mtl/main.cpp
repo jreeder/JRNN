@@ -153,11 +153,11 @@ int main(int argc, char* argv[]){
 	if (primarytask > 0){
 		string taskname = "task" + lexical_cast<string>(primarytask);
 		primaryIndexes = mds->GetIndexes(taskname);
-		if (impNumTrain > 0) {
-			/*int numImpoverished = numTrain - impNumTrain;
-			mds->ImpoverishPrimaryTaskTraining(numImpoverished,(primarytask - 1));*/
-			mds->DistData(numTrain,numVal,numTest, true, impNumTrain, (primarytask - 1));
-		}
+	}
+	if (impNumTrain > 0 && primarytask > 0) {
+		/*int numImpoverished = numTrain - impNumTrain;
+		mds->ImpoverishPrimaryTaskTraining(numImpoverished,(primarytask - 1));*/
+		mds->DistData(numTrain,numVal,numTest, true, impNumTrain, (primarytask - 1));
 	}
 	else {
 		mds->DistData(numTrain, numVal, numTest);
