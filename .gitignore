@@ -13,4 +13,5 @@ ipch/
 *.sdf
 *.opensdf
 *.pyc
+~*
 Thumbs.db
