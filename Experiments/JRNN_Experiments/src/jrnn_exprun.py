@@ -77,9 +77,9 @@ if __name__=='__main__':
         
     os.chdir(outpath3)
     if test:
-        ProcessExp(experiments[0])
+        ProcessExp(experiments[19])
     else:
-        pool = Pool(4)
+        pool = Pool(7)
         pool.map(ProcessExp, experiments)
         
     print "Finished"
