@@ -77,7 +77,7 @@ if __name__=='__main__':
         
     os.chdir(outpath3)
     if test:
-        ProcessExp(experiments[0])
+        ProcessExp(experiments[8])
     else:
         pool = Pool(4)
         pool.map(ProcessExp, experiments)
