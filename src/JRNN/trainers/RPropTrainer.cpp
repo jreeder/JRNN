@@ -124,6 +124,8 @@ namespace JRNN {
 		matDouble::iterator itIns = ins.begin();
 		matDouble::iterator itOuts = outs.begin();
 
+		assert(data->GetSize(type) > 0);
+
 		double MSE = 0;
 		while(itIns != ins.end()){
 			vecDouble input = (*itIns);

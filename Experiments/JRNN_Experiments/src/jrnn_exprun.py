@@ -9,7 +9,7 @@ from subprocess import *
 from multiprocessing import *
 from config import *
 
-verbose = Truetest = True
+verbose = Falsetest = False
 real = True
 
 def ProcessExp(expparams):

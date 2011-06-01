@@ -11,7 +11,7 @@ import matplotlib.pyplot as plt
 from matplotlib.backends.backend_pdf import PdfPages
 from config import *
 
-expfigpath = figpath + "Exp 2-1/INDEX 4/"
+expfigpath = figpath + "Exp 2-1/INDEX 5/"
 usesave=True
 
 def Save(name):
@@ -22,7 +22,7 @@ def Save(name):
 def MakeGraphs(title, fignum, folder):
     print "StartFile"
     data = {}
-    os.chdir(outpath2 + folder)
+    os.chdir(outpath3 + folder)
     filelist = os.listdir(os.curdir)
     for file in filelist:
         tmpBundle = pe.ParseFile(file)
@@ -256,14 +256,14 @@ if __name__ == "__main__":
 
     if usesave: pp = PdfPages(expfigpath + "Collected Figures.pdf")
     MakeGraphs("Linear (NS)", 1, "linear/NormSize")
-    MakeGraphs("Linear (SS)", 5, "linear/SmallSize")
-    MakeGraphs("Linear (LS)", 9, "linear/LargeSize")
+    MakeGraphs("Linear (SS NV)", 5, "linear/SmallSizeNV")
+    MakeGraphs("Linear (LS NV)", 9, "linear/LargeSizeNV")
     MakeGraphs("Band (NS)", 13, "band/NormSize")
-    MakeGraphs("Band (SS)", 17, "band/SmallSize")
-    MakeGraphs("Band (LS)", 21, "band/LargeSize")
+    MakeGraphs("Band (SS NV)", 17, "band/SmallSizeNV")
+    MakeGraphs("Band (LS NV)", 21, "band/LargeSizeNV")
     MakeGraphs("CirInSq (NS)", 25, "CirInSq/NormSize")
-    MakeGraphs("CirInSq (SS)", 29, "CirInSq/SmallSize")
-    MakeGraphs("CirInSq (LS)", 33, "CirInSq/LargeSize")
+    MakeGraphs("CirInSq (SS NV)", 29, "CirInSq/SmallSizeNV")
+    MakeGraphs("CirInSq (LS NV)", 33, "CirInSq/LargeSizeNV")
     #MakeGraphs(" (NS NV)", 10, "NormSizeNoVal")
     #MakeGraphs(" (SS NV)", 13, "SmallSizeNoVal")
     #MakeGraphs(" (LS NV)", 16, "LargeSizeNoVal")
