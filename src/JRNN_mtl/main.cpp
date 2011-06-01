@@ -153,7 +153,7 @@ int main(int argc, char* argv[]){
 	
 	ints primaryIndexes = ints(0);
 	if (primarytask > 0){
-		string taskname = "task" + lexical_cast<string>(primarytask);
+		string taskname = view[primarytask-1];
 		primaryIndexes = mds->GetIndexes(taskname);
 	}
 	if (impNumTrain > 0 && primarytask > 0) {

@@ -9,7 +9,7 @@ from subprocess import *
 from multiprocessing import *
 from config import *
 
-verbose = Truetest = True
+verbose = Falsetest = False
 real = True
 
 def ProcessExp(expparams):
@@ -82,7 +82,7 @@ if __name__=='__main__':
     if test:
         ProcessExp(experiments[19])
     else:
-        pool = Pool(4)
+        pool = Pool(7)
         pool.map(ProcessExp, experiments)
         
     print "Finished"

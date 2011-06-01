@@ -13,3 +13,8 @@ Round 5 Uses values found in the grid search for band linear and circ datasets
 	cirinsq hN: 6 imp:20 Full:60
 	linear hN: 4 imp:10 Full:60
 Swapped cirinsq tasks 1 and 2 to 7 and 8. Moved all others up to fill the gap. 
+
+Round 6 same values as Round 5 but uses full of 100. 
+	Also turned on max weights for rprop, and changed scale and offset for rProp to .5 and .25 and cc to 1 and .5
+	Also using new impoverish function. 
+	This test was done using jrnn_exprun.  
