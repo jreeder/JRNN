@@ -1,27 +1,27 @@
 #!/usr/bin/env python
 #coding:utf-8
 # Author:  jreeder --<>
-# Purpose: file for glass experiments
-# Created: 6/1/2011
+# Purpose: smallcovtype exp 
+# Created: 6/5/2011
 
 def cau(source, upd):
     dictcopy = source.copy()
     dictcopy.update(upd)
     return dictcopy
 
-standardvars = {'dsname':'glass','numRuns':60, 'numInputs':9,'numOutputs':1,\
-                'numVal':50, 'numTest':100, 'numTrain':50, \
-                'numHidPerTask':5,'useValidation':True, 'primTask':0, \
-                'numTasks':1, 'viewString':'task1', 'expFold':'glass/NormSize', \
+standardvars = {'dsname':'smallcovtype','numRuns':60, 'numInputs':10,'numOutputs':1,\
+                'numVal':100, 'numTest':200, 'numTrain':100, \
+                'numHidPerTask':6,'useValidation':True, 'primTask':0, \
+                'numTasks':1, 'viewString':'task1', 'expFold':'smallcovtype/NormSize', \
                 'outfile':'results.txt', 'netType':'BP', 'impNumTrain':0}
 
-impNumTrain = 20
-normnvpath = 'glass/NormSizeNV'
-largenvpath = 'glass/LargeSizeNV'
-smallnvpath = 'glass/SmallSizeNV'
-largenumhid = 10
-smallnumhid = 2
-relatedView = 'task1, task2, task3, task6'
+impNumTrain = 25
+normnvpath = 'smallcovtype/NormSizeNV'
+largenvpath = 'smallcovtype/LargeSizeNV'
+smallnvpath = 'smallcovtype/SmallSizeNV'
+largenumhid = 15
+smallnumhid = 3
+relatedView = 'task1, task2, task3, task7'
 urView = 'task1, task2, task4, task5'
 primTask = 1
 
