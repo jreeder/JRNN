@@ -18,7 +18,7 @@ namespace JRNN {
 	class CCTrainer {
 	public:
 		CCTrainer(CCNetworkPtr network, DatasetPtr data, int numCandidates, ints primaryIndexes = ints(0));
-		~CCTrainer();
+		virtual ~CCTrainer();
 
 		enum ErrorType {
 			BITS,
@@ -81,7 +81,7 @@ namespace JRNN {
 			int nCand;
 		} parms;
 		
-	private:
+	protected:
 		//Members
 		CCNetworkPtr network;
 		DatasetPtr data;

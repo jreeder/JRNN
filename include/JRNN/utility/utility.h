@@ -165,6 +165,19 @@ namespace JRNN {
 		return outstring;
 	}
 
+	//This is fine for small vectors but would probably not be ideal for large vectors. 
+	//Though the only way to get faster would be to use a sorted vector.
+	template<class T, class V>
+	inline bool InVector(T &inVector, V& inItem){
+		bool retBool = false;
+		BOOST_FOREACH(V item, inVector){
+			if (item == inItem){
+				retBool = true;
+			}
+		}
+		return retBool;
+	}
+
 	class RandomGenerator01 : public StaticRange {
 	public:
 		RandomGenerator01() : dist(), randgen(gen,dist) {}

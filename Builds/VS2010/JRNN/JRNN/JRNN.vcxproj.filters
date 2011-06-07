@@ -84,6 +84,9 @@
     <ClCompile Include="..\..\..\..\src\JRNN\utility\csmtldataset.cpp">
       <Filter>Source Files\utility</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\src\JRNN\trainers\MTLCCTrainer.cpp">
+      <Filter>Source Files\trainers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\include\JRNN\JRNN.h">
@@ -133,6 +136,9 @@
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\JRNN\utility\csmtldataset.h">
       <Filter>Header Files\utility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\JRNN\trainers\MTLCCTrainer.h">
+      <Filter>Header Files\trainers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
