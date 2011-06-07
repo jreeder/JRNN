@@ -270,6 +270,7 @@ void BPWorker(RPropTrainer& trainer, int numHid, strings* results, int numRuns, 
 		output.str("");
 		output.clear();
 		trainer.Reset();
+		trainer.RedistData();
 	}
 }
 
@@ -319,5 +320,6 @@ void CCWorker(CCTrainer& trainer, strings* results, int numRuns, bool useValidat
 		output.str("");
 		output.clear();
 		trainer.Reset();
+		trainer.RedistData();
 	}
 }

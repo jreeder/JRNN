@@ -19,6 +19,7 @@ namespace JRNN {
 		
 	public:
 		MTLDataset();
+		MTLDataset(const MTLDataset& orig);
 		void SetView(strings view);
 		strings GetView();
 		ints GetIndexes(string taskName);
@@ -57,10 +58,12 @@ namespace JRNN {
 		MTLDataStore dataStore;
 		Tasks taskList;
 		int numImpTrain;
+		int primaryTask;
+		bool impoverish;
 		strings view;
 		strings inputStrings;
 		void GenerateDS();
-		void DistributeImp(unsigned int primaryt);
+		virtual void Distribute();
 		//void FillSubset( matDouble& trainIns, matDouble& trainOuts, int numTrain, hashedIntsMap& indexQueues );
 	};
  	

@@ -70,6 +70,10 @@ namespace JRNN {
 		delta_last.clear();
 	}
 
+	void RPropTrainer::RedistData(){
+		data->RedistData();
+	}
+
 	double RPropTrainer::TrainEpoch(){
 		matDouble trainingIns = data->GetInputs(Dataset::TRAIN);
 		matDouble trainingOuts = data->GetOutputs(Dataset::TRAIN);

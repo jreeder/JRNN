@@ -14,6 +14,19 @@ namespace JRNN {
 	{
 		firstLoad = true;
 		numImpTrain = 0;
+		impoverish = false;
+		primaryTask = 0;
+	}
+
+	MTLDataset::MTLDataset(const MTLDataset& orig) : Dataset(orig){
+		this->firstLoad = orig.firstLoad;
+		this->numImpTrain = orig.numImpTrain;
+		this->impoverish = orig.impoverish;
+		this->primaryTask = orig.primaryTask;
+		this->dataStore = orig.dataStore;
+		this->taskList = orig.taskList;
+		this->view = orig.view;
+		this->inputStrings = orig.inputStrings;
 	}
 
 	void MTLDataset::AddTaskFromNet( NetworkPtr net, string taskName, ints primaryOuts )
@@ -190,34 +203,31 @@ namespace JRNN {
 
 	DatasetPtr MTLDataset::SpawnDS()
 	{
-		DatasetPtr ds(new Dataset(*this));
+		DatasetPtr ds(new MTLDataset(*this));
 		return ds;
 	}
 
 	void MTLDataset::DistData( int numTrain, int numVal, int numTest, bool impoverish /*= false*/, int impTrainNum /*= 0*/, unsigned int primaryTask /*= 0*/ )
 	{
-		if (!impoverish){
-			Dataset::DistData(numTrain, numVal, numTest);
+		this->numImpTrain = impTrainNum;
+		this->numTrain = numTrain;
+		this->numVal = numVal;
+		this->numTest = numTest;
+		this->primaryTask = primaryTask;
+		this->impoverish = impoverish;
+		trainIns.clear();
+		trainOuts.clear();
+		valIns.clear();
+		valOuts.clear();
+		testIns.clear();
+		testOuts.clear();
+		if (!dsAnalyzed){
+			AnalyzeDS();
 		}
-		else {
-			this->numImpTrain = impTrainNum;
-			this->numTrain = numTrain;
-			this->numVal = numVal;
-			this->numTest = numTest;
-			trainIns.clear();
-			trainOuts.clear();
-			valIns.clear();
-			valOuts.clear();
-			testIns.clear();
-			testOuts.clear();
-			if (!dsAnalyzed){
-				AnalyzeDS();
-			}
-			DistributeImp(primaryTask);
-		}
+		Distribute();
 	}
 
-	void MTLDataset::DistributeImp( unsigned int primaryTask )
+	void MTLDataset::Distribute()
 	{
 		assert(size > (numTrain + numVal + numTest) && numImpTrain < numTrain && view.size() > 0 && primaryTask < view.size());
 		//int totalTr = 0, totalVal = 0, totalTest = 0;
@@ -225,15 +235,21 @@ namespace JRNN {
 		hashedIntsMap indexQueues = outClassIndexes;
 		string primTask = view[primaryTask];
 		ints primIndexes = taskList[primTask]->indexes;
-		int numFirstTrains = numTrain - numImpTrain;
-
-		FillSubset(trainIns, trainOuts, numFirstTrains, indexQueues);
-		BOOST_FOREACH(vecDouble& outVec, trainOuts){
-			BOOST_FOREACH(int ind, primIndexes){
-				outVec[ind] = UNKNOWN;
+		if (impoverish)
+		{
+			int numFirstTrains = numTrain - numImpTrain;
+	
+			FillSubset(trainIns, trainOuts, numFirstTrains, indexQueues);
+			BOOST_FOREACH(vecDouble& outVec, trainOuts){
+				BOOST_FOREACH(int ind, primIndexes){
+					outVec[ind] = UNKNOWN;
+				}
 			}
+			FillSubset(trainIns, trainOuts, numImpTrain, indexQueues);
 		}
-		FillSubset(trainIns, trainOuts, numImpTrain, indexQueues);
+		else {
+			FillSubset(trainIns, trainOuts, numTrain, indexQueues);
+		}
 		FillSubset(valIns, valOuts, numVal, indexQueues);
 		FillSubset(testIns, testOuts, numTest, indexQueues);
 		

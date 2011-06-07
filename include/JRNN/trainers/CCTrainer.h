@@ -27,6 +27,7 @@ namespace JRNN {
 
 		void ResetVars();
 		void Reset();
+		void RedistData();
 		void TrainToValConv(int maxEpochs);
 		void TrainToConvergence(int maxEpochs, bool validate = false);
 		double TestOnData(Dataset::datatype type);
@@ -174,7 +175,7 @@ namespace JRNN {
 
 		status ValidationEpoch();
 		status TestImprovement();
-
+		
 
 
 	};

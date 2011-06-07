@@ -5,9 +5,9 @@ import scipy.stats as scistats
 import numpy as np
 
 #Lab Computer
-basepath = r"C:/Users/John/Documents/Source/JRNN"
+#basepath = r"C:/Users/John/Documents/Source/JRNN"
 #Home Computer
-#basepath = r"C:/Users/John Reeder/Code/JRNN"
+basepath = r"C:/Users/John Reeder/Code/JRNN"
 
 #Windows Values
 jrnn_exe = basepath + r"/Builds/VS2010/JRNN/Release/JRNN_test.exe"

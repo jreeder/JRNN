@@ -153,6 +153,10 @@ namespace JRNN {
 		network->Reset();
 	}
 
+	void CCTrainer::RedistData(){
+		data->RedistData();
+	}
+
 	void CCTrainer::ResetVars()
 	{
 		epoch = 0;

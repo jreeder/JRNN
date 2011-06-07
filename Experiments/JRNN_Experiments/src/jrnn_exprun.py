@@ -9,8 +9,8 @@ from subprocess import *
 from multiprocessing import *
 from config import *
 
-verbose = Falsetest = False
-real = True
+verbose = Truetest = True
+real = False
 
 def ProcessExp(expparams):
     global verbose
@@ -80,7 +80,7 @@ if __name__=='__main__':
         
     os.chdir(outpath3)
     if test:
-        ProcessExp(experiments[19])
+        ProcessExp(experiments[0])
     else:
         pool = Pool(7)
         pool.map(ProcessExp, experiments)
