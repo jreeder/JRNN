@@ -158,7 +158,7 @@ void Dataset::LoadFromFile(string filepath, int numInputs, int numOutputs){
 			double tmpPerc = it->second.size() / (double)size;
 			outClassPercentage[it->first] = tmpPerc;
 			outClassNames.push_back(it->first);
-			Shuffle(it->second);
+			//Shuffle(it->second);Removed so that the datasets are always the same for the first load
 			it++;
 		}
 		dsAnalyzed = true;
@@ -195,6 +195,12 @@ void Dataset::RedistData(){
     randSeed++;
     //GenRandRange();
 	Reshuffle();
+	trainIns.clear();
+	trainOuts.clear();
+	valIns.clear();
+	valOuts.clear();
+	testIns.clear();
+	testOuts.clear();
     Distribute();
 }
 
@@ -213,7 +219,7 @@ void Dataset::AnalyzeDS(){
 		double tmpPerc = it->second.size() / (double)size;
 		outClassPercentage[it->first] = tmpPerc;
 		outClassNames.push_back(it->first);
-		Shuffle(it->second);
+		//Shuffle(it->second); Removed so that the datasets are always the same for the first load
 		it++;
 	}
 }
