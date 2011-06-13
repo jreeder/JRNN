@@ -21,8 +21,8 @@ largenvpath = 'glass/LargeSizeNV'
 smallnvpath = 'glass/SmallSizeNV'
 largenumhid = 10
 smallnumhid = 2
-relatedView = 'task1, task2, task3, task6'
-urView = 'task1, task2, task4, task5'
+relatedView = 'task1,task2,task3,task6'
+urView = 'task1,task2,task4,task5'
 primTask = 1
 
 

@@ -21,8 +21,8 @@ largenvpath = 'smallcovtype/LargeSizeNV'
 smallnvpath = 'smallcovtype/SmallSizeNV'
 largenumhid = 15
 smallnumhid = 3
-relatedView = 'task1, task2, task3, task7'
-urView = 'task1, task2, task4, task5'
+relatedView = 'task1,task2,task3,task7'
+urView = 'task1,task2,task4,task5'
 primTask = 1
 
 

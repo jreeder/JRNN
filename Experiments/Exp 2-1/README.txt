@@ -18,3 +18,7 @@ Round 6 same values as Round 5 but uses full of 100.
 	Also turned on max weights for rprop, and changed scale and offset for rProp to .5 and .25 and cc to 1 and .5
 	Also using new impoverish function. 
 	This test was done using jrnn_exprun.  
+
+Round 7 Same Values as 6. Changed so that dataset is shuffled after each run. --INVALID-- Data shuffling didn't clear last rounds subsets. 
+
+Round 8 Fixed an issue that messed up the data shuffling. 

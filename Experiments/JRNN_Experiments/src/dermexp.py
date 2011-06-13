@@ -22,8 +22,8 @@ largenvpath = 'derm/LargeSizeNV'
 smallnvpath = 'derm/SmallSizeNV'
 largenumhid = 10
 smallnumhid = 1
-relatedView = 'task1, task2, task3, task5'
-urView = 'task1, task2, task4, task6'
+relatedView = 'task1,task2,task3,task5'
+urView = 'task1,task2,task4,task6'
 primTask = 1
 
 

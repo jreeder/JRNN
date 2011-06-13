@@ -9,8 +9,11 @@ from subprocess import *
 from multiprocessing import *
 from config import *
 
-verbose = Truetest = True
-real = False
+verbose = Falsetest = False
+real = True
+dsinpath1 = ['linear', 'CirInSq', 'band']
+dsinpath2 = ['smallcovtype', 'glass', 'derm', 'heart']
+
 
 def ProcessExp(expparams):
     global verbose
@@ -31,7 +34,7 @@ def ProcessExp(expparams):
     primTask = expparams['primTask']
     netType = expparams['netType']
     expFold = expparams['expFold']
-    path = datapath
+    path = datapath if dsname in dsinpath1 else datapath2
     outfilepath = os.path.join(outpath3, expFold)
     useValStr = "T" if useValidation else "F"
     exe = jrnn_exprun

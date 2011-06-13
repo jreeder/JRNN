@@ -11,16 +11,18 @@ import matplotlib.pyplot as plt
 from matplotlib.backends.backend_pdf import PdfPages
 from config import *
 
-expfigpath = figpath + "Exp 2-1/INDEX 5/"
+expfigpath = figpath + "Exp 2-1/INDEX 8/"
 usesave=True
+fignum = 0
 
 def Save(name):
     plt.savefig(expfigpath + name + ".pdf")
     plt.savefig(expfigpath + name + ".eps")
     plt.savefig(pp, format="pdf")
 
-def MakeGraphs(title, fignum, folder):
-    print "StartFile"
+def MakeGraphs(title, folder, graph1, graph2):
+    print "Start " + title
+    global fignum
     data = {}
     os.chdir(outpath3 + folder)
     filelist = os.listdir(os.curdir)
@@ -28,11 +30,13 @@ def MakeGraphs(title, fignum, folder):
         tmpBundle = pe.ParseFile(file)
         data[tmpBundle.name] = tmpBundle
     
-    MakeGraph1(title, fignum, data)
-    MakeGraph2(title, fignum + 3, data)
+    if graph1: MakeGraph1(title, data)
+    if graph2: MakeGraph2(title, data)
 
     
-def MakeGraph1(title, fignum, data):
+def MakeGraph1(title, data):
+    global fignum
+    fignum += 1
     title = title + " Impoverished Primary Task"
     bpstlerr = np.array([v['task-0'] for v in data['BP_STL'].errors])
     bpstlepochs = np.array(data['BP_STL'].epochs)
@@ -113,7 +117,8 @@ def MakeGraph1(title, fignum, data):
 
     if usesave: Save(title + " Error")
 
-    plt.figure(fignum+1)
+    fignum += 1
+    plt.figure(fignum)
 
     stlepochsavgs = [bpstlepochavg, ccstlepochavg]
     stlepochserr = [bpstlepocherr, ccstlepochserr]
@@ -140,7 +145,8 @@ def MakeGraph1(title, fignum, data):
     
     if usesave: Save(title + " Epochs")
 
-    plt.figure(fignum+2)
+    fignum += 1
+    plt.figure(fignum)
 
     stltimesavgs = [bpstltimesavg, ccstltimesavg]
     stltimeserr = [bpstltimeserr, ccstltimeserr]
@@ -168,8 +174,10 @@ def MakeGraph1(title, fignum, data):
     if usesave: Save(title + " Times")
     
     
-def MakeGraph2(title, fignum, data):
+def MakeGraph2(title, data):
     title = title + " All Tasks"
+    global fignum
+    fignum += 1
     plt.figure(fignum)
 
     xticks = ["Task 1", "Task 2", "Task 3", "Task 4"]
@@ -255,17 +263,28 @@ if __name__ == "__main__":
         os.makedirs(expfigpath)
 
     if usesave: pp = PdfPages(expfigpath + "Collected Figures.pdf")
-    MakeGraphs("Linear (NS)", 1, "linear/NormSize")
-    MakeGraphs("Linear (SS NV)", 5, "linear/SmallSizeNV")
-    MakeGraphs("Linear (LS NV)", 9, "linear/LargeSizeNV")
-    MakeGraphs("Band (NS)", 13, "band/NormSize")
-    MakeGraphs("Band (SS NV)", 17, "band/SmallSizeNV")
-    MakeGraphs("Band (LS NV)", 21, "band/LargeSizeNV")
-    MakeGraphs("CirInSq (NS)", 25, "CirInSq/NormSize")
-    MakeGraphs("CirInSq (SS NV)", 29, "CirInSq/SmallSizeNV")
-    MakeGraphs("CirInSq (LS NV)", 33, "CirInSq/LargeSizeNV")
+    MakeGraphs("Linear (NS)", "linear/NormSize", True, True)
+    MakeGraphs("Linear (SS NV)", "linear/SmallSizeNV", True, True)
+    MakeGraphs("Linear (LS NV)", "linear/LargeSizeNV", True, True)
+    MakeGraphs("Band (NS)", "band/NormSize", True, True)
+    MakeGraphs("Band (SS NV)", "band/SmallSizeNV", True, True)
+    MakeGraphs("Band (LS NV)", "band/LargeSizeNV", True, True)
+    MakeGraphs("CirInSq (NS)", "CirInSq/NormSize", True, True)
+    MakeGraphs("CirInSq (SS NV)", "CirInSq/SmallSizeNV", True, True)
+    MakeGraphs("CirInSq (LS NV)", "CirInSq/LargeSizeNV", True, True)
+    MakeGraphs("Glass (NS)", "glass/NormSize", True, False)
+    MakeGraphs("Glass (SS NV)", "glass/SmallSizeNV", True, False)
+    MakeGraphs("Glass (LS NV)", "glass/LargeSizeNV", True, False)
+    MakeGraphs("Dermatology (NS)", "derm/NormSize", True, False)
+    MakeGraphs("Dermatology (SS NV)", "derm/SmallSizeNV", True, False)
+    MakeGraphs("Dermatology (LS NV)", "derm/LargeSizeNV", True, False)
+    MakeGraphs("Cover Type (NS)", "smallcovtype/NormSize", True, False)
+    MakeGraphs("Cover Type (SS NV)", "smallcovtype/SmallSizeNV", True, False)
+    MakeGraphs("Cover Type (LS NV)", "smallcovtype/LargeSizeNV", True, False)
     #MakeGraphs(" (NS NV)", 10, "NormSizeNoVal")
     #MakeGraphs(" (SS NV)", 13, "SmallSizeNoVal")
     #MakeGraphs(" (LS NV)", 16, "LargeSizeNoVal")
     if usesave: pp.close()
     if not usesave: plt.show()
+    
+    print "Done"

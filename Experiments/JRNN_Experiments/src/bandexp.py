@@ -4,6 +4,27 @@
 # Purpose: Holds band experiments
 # Created: 5/31/2011
 
+def cau(source, upd):
+    dictcopy = source.copy()
+    dictcopy.update(upd)
+    return dictcopy
+
+standardvars = {'dsname':'band','numRuns':60, 'numInputs':2,'numOutputs':1,\
+                'numVal':100, 'numTest':200, 'numTrain':100, \
+                'numHidPerTask':4,'useValidation':True, 'primTask':0, \
+                'numTasks':1, 'viewString':'task1', 'expFold':'band/NormSize', \
+                'outfile':'results.txt', 'netType':'BP', 'impNumTrain':0}
+
+impNumTrain = 20
+normnvpath = 'band/NormSizeNV'
+largenvpath = 'band/LargeSizeNV'
+smallnvpath = 'band/SmallSizeNV'
+largenumhid = 10
+smallnumhid = 2
+relatedView = 'task1,task2,task3,task4'
+urView = 'task1,task2,task5,task6'
+primTask = 1
+
 bandnorm = [\
     #BP Tests
     #STL Full Results
@@ -401,3 +422,9 @@ bandlargenv = [\
      'useValidation':False, 'viewString':'task1,task2,task5,task6', 'primTask':1,\
      'netType':'CC', 'expFold':'band/LargeSizeNV', 'outfile':'ccmtlurresults.txt'}\
     ]    
+
+
+
+standardvars.update({'viewString':'task1,task2,task3,task4'})
+ccmtl = []
+    
