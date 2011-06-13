@@ -13,6 +13,7 @@
 #include "utility/mtldataset.h"
 #include "trainers/RPropTrainer.h"
 #include "trainers/CCTrainer.h"
+#include "trainers/MTLCCTrainer.h"
 #include <iostream>
 #include <sstream>
 #include <fstream>
@@ -52,6 +53,7 @@ int main(int argc, char* argv[]){
 	int primarytask = 0;
 	bool useCC = false;
 	bool useBP = false;
+	bool useCCMTL = false;
 
 	//RProp parameters
 	double rPropEtaPlus = 1.2;
@@ -88,7 +90,12 @@ int main(int argc, char* argv[]){
 		ValueArg<int> inPrimaryTask("", "primtask", "The primary task, ex: 1", false, 0, "int", cmd);
 		SwitchArg inCC("","CC", "Use Cascade Correlation", false);
 		SwitchArg inBP("","BP", "Use Back Propagation", false);
-		cmd.xorAdd(inCC, inBP);
+		SwitchArg inCCMTL("", "CCMTL", "Use MTL Cascade Correlation", false);
+		vector<Arg*> xorlist;
+		xorlist.push_back(&inCCMTL);
+		xorlist.push_back(&inCC);
+		xorlist.push_back(&inBP);
+		cmd.xorAdd(xorlist);
 
 		cmd.parse(argc,argv);
 
@@ -110,6 +117,7 @@ int main(int argc, char* argv[]){
 		primarytask = inPrimaryTask.getValue();
 		useCC = inCC.getValue();
 		useBP = inBP.getValue();
+		useCCMTL = inCCMTL.getValue();
 		numNetOutputs = numTasks * numOutputs;
 	}
 	catch (TCLAP::ArgException &e) {
@@ -200,7 +208,14 @@ int main(int argc, char* argv[]){
 			}
 		}
 		ccnet->Build(numInputs, numNetOutputs);
-		CCTrainer cc(ccnet,ds,ccNumCands,primaryIndexes);
+		CCTrainer* cctemp;
+		if (useCC){
+			cctemp = new CCTrainer(ccnet,ds,ccNumCands,primaryIndexes);
+		}
+		else {
+			cctemp = new MTLCCTrainer(ccnet,ds,ccNumCands, primaryIndexes);
+		}
+		CCTrainer cc = (*cctemp);
 		if (xmlLoaded) {
 			params.GetVar("CC.params@valPatience", cc.parms.valPatience, parmsOptional);
 			params.GetVar("CC.params@impPatience", cc.parms.impPatience, parmsOptional);

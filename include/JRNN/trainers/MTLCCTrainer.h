@@ -13,7 +13,7 @@
 
 
 namespace JRNN {
-	class MTLCCTrainer : CCTrainer
+	class MTLCCTrainer : public CCTrainer
 	{
 	public:
 		MTLCCTrainer(CCNetworkPtr network, DatasetPtr data, int numCandidates, ints primaryIndexes = ints(0));

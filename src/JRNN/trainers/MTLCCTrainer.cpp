@@ -19,6 +19,8 @@ namespace JRNN {
 		mtlparams.weightCandScore = true;
 	}
 
+	MTLCCTrainer::~MTLCCTrainer(){}
+
 	void MTLCCTrainer::UpdateCorrelations(){
 		double avgValue;
 		double score;
