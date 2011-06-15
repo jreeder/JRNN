@@ -425,6 +425,11 @@ bandlargenv = [\
 
 
 
-standardvars.update({'viewString':'task1,task2,task3,task4'})
-ccmtl = []
+
+standardvars.update({'viewString':urView,'primTask':primTask,'numTasks':4,\
+                     'impNumTrain':impNumTrain, 'expFold':'band/CCMTLTest'})
+ccmtl = [\
+    cau(standardvars, {'netType':'CC', 'outfile':'ccurresult.txt'}),\
+    cau(standardvars, {'netType':'CCMTL', 'outfile':'ccmtlurresult.txt'})\
+]
     

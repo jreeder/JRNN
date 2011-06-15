@@ -4,6 +4,26 @@
 # Purpose: Hold cirinsq experiments
 # Created: 5/31/2011
 
+def cau(source, upd):
+    dictcopy = source.copy()
+    dictcopy.update(upd)
+    return dictcopy
+
+standardvars = {'dsname':'CirInSq','numRuns':60, 'numInputs':2,'numOutputs':1,\
+                'numVal':100, 'numTest':200, 'numTrain':100, \
+                'numHidPerTask':6,'useValidation':True, 'primTask':0, \
+                'numTasks':1, 'viewString':'task1', 'expFold':'CirInSq/NormSize', \
+                'outfile':'results.txt', 'netType':'BP', 'impNumTrain':0}
+
+impNumTrain = 20
+normnvpath = 'CirInSq/NormSizeNV'
+largenvpath = 'CirInSq/LargeSizeNV'
+smallnvpath = 'CirInSq/SmallSizeNV'
+largenumhid = 12
+smallnumhid = 2
+relatedView = 'task1,task2,task7,task8'
+urView = 'task1,task2,task5,task6'
+primTask = 1
 
 cirinsqnorm = [\
     #BP Tests
@@ -400,4 +420,12 @@ cirinsqlargenv = [\
      'impNumTrain':20,'numTrain':100, 'numVal':200, 'numTest':200, 'numHidPerTask':12,\
      'useValidation':False, 'viewString':'task1,task2,task5,task6', 'primTask':1,\
      'netType':'CC', 'expFold':'CirInSq/LargeSizeNV', 'outfile':'ccmtlurresults.txt'}\
+    ]    
+
+standardvars.update({'viewString':urView,'numTasks':4,'primTask':primTask, \
+                     'impNumTrain':impNumTrain, 'expFold':'CirInSq/CCMTLTest'})
+
+ccmtl = [\
+    cau(standardvars, {'netType':'CC', 'outfile':'ccurresult.txt'}),\
+    cau(standardvars, {'netType':'CCMTL', 'outfile':'ccmtlurresult.txt'})\
     ]

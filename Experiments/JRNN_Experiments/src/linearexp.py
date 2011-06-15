@@ -4,6 +4,28 @@
 # Purpose: Hold linear experiments
 # Created: 5/31/2011
 
+
+def cau(source, upd):
+    dictcopy = source.copy()
+    dictcopy.update(upd)
+    return dictcopy
+
+standardvars = {'dsname':'linear','numRuns':60, 'numInputs':2,'numOutputs':1,\
+                'numVal':100, 'numTest':200, 'numTrain':100, \
+                'numHidPerTask':4,'useValidation':True, 'primTask':0, \
+                'numTasks':1, 'viewString':'task1', 'expFold':'linear/NormSize', \
+                'outfile':'results.txt', 'netType':'BP', 'impNumTrain':0}
+
+impNumTrain = 10
+normnvpath = 'linear/NormSizeNV'
+largenvpath = 'linear/LargeSizeNV'
+smallnvpath = 'linear/SmallSizeNV'
+largenumhid = 8
+smallnumhid = 2
+relatedView = 'task1,task2,task3,task5'
+urView = 'task1,task2,task4,task6'
+primTask = 1
+
 linearnorm = [\
     #BP Tests
     #STL Full Results
@@ -400,4 +422,14 @@ linearlargenv = [\
      'impNumTrain':10,'numTrain':100, 'numVal':200, 'numTest':200, 'numHidPerTask':8,\
      'useValidation':False, 'viewString':'task1,task2,task4,task6', 'primTask':1,\
      'netType':'CC', 'expFold':'linear/LargeSizeNV', 'outfile':'ccmtlurresults.txt'}\
-    ]    
+    ]        
+
+
+
+standardvars.update({'viewString':urView,'numTasks':4,'primTask':primTask, \
+                     'impNumTrain':impNumTrain, 'expFold':'linear/CCMTLTest'})
+
+ccmtl = [\
+    cau(standardvars, {'netType':'CC', 'outfile':'ccurresult.txt'}),\
+    cau(standardvars, {'netType':'CCMTL', 'outfile':'ccmtlurresult.txt'})\
+    ]
