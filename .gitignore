@@ -3,6 +3,7 @@
 build/
 dist/
 private/
+Results/
 *.swp
 Debug/
 Release/
