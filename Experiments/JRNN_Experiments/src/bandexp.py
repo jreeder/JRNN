@@ -432,4 +432,10 @@ ccmtl = [\
     cau(standardvars, {'netType':'CC', 'outfile':'ccurresult.txt'}),\
     cau(standardvars, {'netType':'CCMTL', 'outfile':'ccmtlurresult.txt'})\
 ]
-    
+
+standardvars.update({'viewString':relatedView, 'expFold':'band/CSMTLTest', 'useCSMTLDS':True})
+
+csmtl = [\
+    cau(standardvars, {'netType':'BP', 'outfile':'bpcsmtlresult.txt'}),\
+    cau(standardvars, {'netType':'CC', 'outfile':'cccsmtlresult.txt'})\
+    ]

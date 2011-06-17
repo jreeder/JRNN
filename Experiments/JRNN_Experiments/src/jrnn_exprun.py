@@ -34,6 +34,7 @@ def ProcessExp(expparams):
     primTask = expparams['primTask']
     netType = expparams['netType']
     expFold = expparams['expFold']
+    useCSMTL = expparams.get('useCSMTL')
     path = datapath if dsname in dsinpath1 else datapath2
     outfilepath = os.path.join(outpath3, expFold)
     useValStr = "T" if useValidation else "F"
@@ -65,6 +66,9 @@ def ProcessExp(expparams):
     if useValidation:
         cmd += " -V"
         
+    if useCSMTL:
+        cmd += " --CSMTLDS"
+    
     cmd += " --params \"%s\"" % paramspath
     
     if verbose: print cmd

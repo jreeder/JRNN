@@ -57,7 +57,7 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(TargetDir);</AdditionalLibraryDirectories>
-      <AdditionalDependencies>JRNN.lib;libboost_thread-vc100-mt-gd-1_45.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>JRNN.lib;libboost_thread-vc100-mt-gd-1_43.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
