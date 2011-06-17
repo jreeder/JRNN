@@ -11,6 +11,7 @@
 
 
 #include "utility/mtldataset.h"
+#include "utility/csmtldataset.h"
 #include "trainers/RPropTrainer.h"
 #include "trainers/CCTrainer.h"
 #include "trainers/MTLCCTrainer.h"
@@ -31,7 +32,10 @@ using namespace xmlconfig;
 void CCWorker(CCTrainer& trainer, strings* results, int numRuns, bool useValidation = true, int maxEpochs = 3000);
 void BPWorker(RPropTrainer& trainer, int numHid, strings* results, int numRuns, bool useValidation = true, int maxEpochs = 3000, double minError = 0.04);
 
+DatasetPtr LoadData( string viewString, string basepath, string dsname, int numInputs, int numOutputs, int primarytask, int impNumTrain, int numTrain, int numVal, int numTest, ints& primaryIndexes, bool useCSMTLDS );
+
 int main(int argc, char* argv[]){
+	
 	//experiment parameters
 	string basepath = "";
 	string dsname = "";
@@ -45,15 +49,18 @@ int main(int argc, char* argv[]){
 	int numTest = 500;
 	int numHidPerTask = 4;
 	int numNetOutputs = 1;
+	int numNetInputs = 2;
+	ints primaryIndexes = ints(0);
 	bool useValidation = true;
 	string viewString = "";
-	strings view;
 	string outfile;
 	string paramspath;
 	int primarytask = 0;
 	bool useCC = false;
 	bool useBP = false;
 	bool useCCMTL = false;
+	bool useCSMTLDS = false;
+	DatasetPtr ds;
 
 	//RProp parameters
 	double rPropEtaPlus = 1.2;
@@ -91,6 +98,7 @@ int main(int argc, char* argv[]){
 		SwitchArg inCC("","CC", "Use Cascade Correlation", false);
 		SwitchArg inBP("","BP", "Use Back Propagation", false);
 		SwitchArg inCCMTL("", "CCMTL", "Use MTL Cascade Correlation", false);
+		SwitchArg inCSMTLDS("", "CSMTLDS" "Use the CSMTL Dataset instead of MTL", false);
 		vector<Arg*> xorlist;
 		xorlist.push_back(&inCCMTL);
 		xorlist.push_back(&inCC);
@@ -118,7 +126,7 @@ int main(int argc, char* argv[]){
 		useCC = inCC.getValue();
 		useBP = inBP.getValue();
 		useCCMTL = inCCMTL.getValue();
-		numNetOutputs = numTasks * numOutputs;
+		useCSMTLDS = inCSMTLDS.getValue();
 	}
 	catch (TCLAP::ArgException &e) {
 		cout << "error: " << e.error() << " for arg " << e.argId() << endl;
@@ -138,48 +146,23 @@ int main(int argc, char* argv[]){
 		xmlLoaded = true;
 	}
 
-	MTLDataset* mds = new MTLDataset();
+	ds = LoadData(viewString, basepath, dsname, numInputs, numOutputs, primarytask, impNumTrain, numTrain, numVal, numTest, primaryIndexes, useCSMTLDS);
 
-	/*for (int i = 0; i < numTasks; i++)
-	{
-		string tasknum = lexical_cast<string>(i+1);
-		string filename = basepath + dsname + "-task" + tasknum + ".txt";
-		string taskname = "task-" + tasknum;
-		mds->AddTaskFromFile(filename,taskname,numInputs,numOutputs);
-	}*/
-
-	view = splitString(viewString, ",");
-	
-	BOOST_FOREACH(string taskname, view){
-		string filename = basepath + dsname + "-" + taskname + ".txt";
-		mds->AddTaskFromFile(filename, taskname, numInputs, numOutputs);
-	}
-
-	
-	mds->SetView(view);
-	//mds->DistData(numTrain,numVal,numTest);
-	
-	ints primaryIndexes = ints(0);
-	if (primarytask > 0){
-		string taskname = view[primarytask-1];
-		primaryIndexes = mds->GetIndexes(taskname);
-	}
-	if (impNumTrain > 0 && primarytask > 0) {
-		/*int numImpoverished = numTrain - impNumTrain;
-		mds->ImpoverishPrimaryTaskTraining(numImpoverished,(primarytask - 1));*/
-		mds->DistData(numTrain,numVal,numTest, true, impNumTrain, (primarytask - 1));
+	if(!useCSMTLDS){
+		numNetOutputs = numTasks * numOutputs;
+		numNetInputs = numInputs;
 	}
 	else {
-		mds->DistData(numTrain, numVal, numTest);
+		numNetOutputs = numOutputs;
+		numNetInputs = numInputs + numTasks;
 	}
-	
-	DatasetPtr ds = mds->SpawnDS();
+
 	strings results;
 	
 	if (useBP) {
 		FFMLPNetPtr ffnet = FFMLPNetwork::Create();
 		int numHid = numHidPerTask * numTasks;
-		ffnet->Build(numInputs, numHid, numNetOutputs);
+		ffnet->Build(numNetInputs, numHid, numNetOutputs);
 		double scale, offset;
 		if (xmlLoaded) {
 			bool success = true;
@@ -207,7 +190,7 @@ int main(int argc, char* argv[]){
 				ccnet->SetScaleAndOffset(scale, offset);
 			}
 		}
-		ccnet->Build(numInputs, numNetOutputs);
+		ccnet->Build(numNetInputs, numNetOutputs);
 		CCTrainer* cctemp;
 		if (useCC){
 			cctemp = new CCTrainer(ccnet,ds,ccNumCands,primaryIndexes);
@@ -337,4 +320,69 @@ void CCWorker(CCTrainer& trainer, strings* results, int numRuns, bool useValidat
 		trainer.Reset();
 		trainer.RedistData();
 	}
+}
+
+JRNN::DatasetPtr LoadData( string viewString, string basepath, string dsname, int numInputs, int numOutputs, int primarytask, int impNumTrain, int numTrain, int numVal, int numTest, ints& primaryIndexes, bool useCSMTLDS)
+{
+	DatasetPtr retDS;
+
+	if (!useCSMTLDS) {
+		MTLDatasetPtr mds(new MTLDataset());
+		/*for (int i = 0; i < numTasks; i++)
+		{
+		string tasknum = lexical_cast<string>(i+1);
+		string filename = basepath + dsname + "-task" + tasknum + ".txt";
+		string taskname = "task-" + tasknum;
+		mds->AddTaskFromFile(filename,taskname,numInputs,numOutputs);
+		}*/
+	
+		strings view = splitString(viewString, ",");
+	
+		BOOST_FOREACH(string taskname, view){
+			string filename = basepath + dsname + "-" + taskname + ".txt";
+			mds->AddTaskFromFile(filename, taskname, numInputs, numOutputs);
+		}
+	
+	
+		mds->SetView(view);
+		//mds->DistData(numTrain,numVal,numTest);
+	
+		primaryIndexes = ints(0);
+		if (primarytask > 0){
+			string taskname = view[primarytask-1];
+			primaryIndexes = mds->GetIndexes(taskname);
+		}
+		if (impNumTrain > 0 && primarytask > 0) {
+			/*int numImpoverished = numTrain - impNumTrain;
+			mds->ImpoverishPrimaryTaskTraining(numImpoverished,(primarytask - 1));*/
+			mds->DistData(numTrain,numVal,numTest, true, impNumTrain, (primarytask - 1));
+		}
+		else {
+			mds->DistData(numTrain, numVal, numTest);
+		}
+	
+		retDS = mds->SpawnDS();	
+	}
+	else {
+		CSMTLDatasetPtr cds(new CSMTLDataset());
+		strings view = splitString(viewString, ",");
+
+		BOOST_FOREACH(string taskname, view){
+			string filename = basepath + dsname + "-" + taskname + ".txt";
+			cds->AddTaskFromFile(filename, taskname, numInputs, numOutputs);
+		}
+
+		cds->SetView(view);
+
+		if (impNumTrain > 0 && primarytask > 0){
+			cds->DistData(numTrain, numVal, numTest, true, impNumTrain, (primarytask - 1));
+		}
+		else {
+			cds->DistData(numTrain, numVal, numTest);
+		}
+
+		retDS = cds->SpawnDS();
+	}
+	
+	return retDS;
 }

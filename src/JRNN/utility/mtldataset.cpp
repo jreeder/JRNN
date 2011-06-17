@@ -229,7 +229,8 @@ namespace JRNN {
 
 	void MTLDataset::Distribute()
 	{
-		assert(size > (numTrain + numVal + numTest) && numImpTrain < numTrain && view.size() > 0 && primaryTask < view.size());
+		int viewSize = view.size();
+		assert(size > (numTrain + numVal + numTest) && numImpTrain < numTrain && viewSize > 0 && primaryTask < viewSize);
 		//int totalTr = 0, totalVal = 0, totalTest = 0;
 		int numClasses = outClassNames.size();
 		hashedIntsMap indexQueues = outClassIndexes;

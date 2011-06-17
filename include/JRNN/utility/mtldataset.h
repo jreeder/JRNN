@@ -14,7 +14,9 @@
 #include "structure/network.h"
 
 namespace JRNN {
-	
+	class MTLDataset;
+	typedef boost::shared_ptr<MTLDataset> MTLDatasetPtr;
+
 	class MTLDataset : public Dataset {
 		
 	public:

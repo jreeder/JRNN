@@ -14,6 +14,9 @@ namespace JRNN {
 	CSMTLDataset::CSMTLDataset()
 	{
 		newData = true;
+		impoverish = false;
+		primaryTask = -1;
+		numImpTrain = 0;
 	}
 
 	CSMTLDataset::CSMTLDataset(const CSMTLDataset& orig ) : Dataset(orig)
@@ -22,11 +25,12 @@ namespace JRNN {
 		this->impoverish = orig.impoverish;
 		this->inputStrings = orig.inputStrings;
 		this->newData = orig.newData;
-		this->numImpoverish = orig.numImpoverish;
+		this->numImpTrain = orig.numImpTrain;
 		this->primaryTask = orig.primaryTask;
 		this->realInputs = orig.realInputs;
 		this->taskList = orig.taskList;
 		this->view = orig.view;
+		this->numRealInputs = orig.numRealInputs;
 	}
 
 	void CSMTLDataset::SetView(strings view)
@@ -165,11 +169,136 @@ namespace JRNN {
 	vecDouble CSMTLDataset::VecDoubleFromDoubles( const doubles& inDoubles )
 	{
 		vecDouble retVec(inDoubles.size());
-		for (int i = 0; i < inDoubles.size(); i++){
+		for (unsigned int i = 0; i < inDoubles.size(); i++){
 			retVec[i] = inDoubles[i];
 		}
 		return retVec;
 	}
+
+	void CSMTLDataset::DistData( int numTrain, int numVal, int numTest, bool impoverish /*= false*/, int primaryTask /*= 0*/, int numImpTrain /*= 0*/ )
+	{
+		this->numImpTrain = numImpTrain;
+		this->numTrain = numTrain;
+		this->numVal = numVal;
+		this->numTest = numTest;
+		this->primaryTask = primaryTask;
+		this->impoverish = impoverish;
+		trainIns.clear();
+		trainOuts.clear();
+		valIns.clear();
+		valOuts.clear();
+		testIns.clear();
+		testOuts.clear();
+		if (!dsAnalyzed){
+			AnalyzeDS();
+		}
+		Distribute();
+	}
+
+	void CSMTLDataset::AnalyzeDS()
+	{
+		outClassIndexes.clear();
+		outClassPercentage.clear();
+		outClassNames.clear();
+		BOOST_FOREACH(string taskName, view){
+			TaskPtr task = taskList[taskName];
+			task->outClassIndexes.clear();
+			task->outClassPercentages.clear();
+			task->outClassNames.clear();
+			int taskSize = task->indexes.size();
+			for (int i = 0; i < taskSize; i++){
+				string outname = StringFromVector(outputs[task->indexes[i]]);
+				task->outClassIndexes[outname].push_back(task->indexes[i]);
+				outClassIndexes[outname].push_back(task->indexes[i]);
+			}
+			hashedIntsMap::iterator it = task->outClassIndexes.begin();
+
+			while(it != task->outClassIndexes.end()){
+				double tmpPerc = it->second.size() / (double)taskSize;
+				task->outClassPercentages[it->first] = tmpPerc;
+				task->outClassNames.push_back(it->first);
+				it++;
+			}
+		}
+		hashedIntsMap::iterator it = outClassIndexes.begin();
+		//calculate the percentage of each outclass to the whole.
+		while(it != outClassIndexes.end()){
+			double tmpPerc = it->second.size() / (double)size;
+			outClassPercentage[it->first] = tmpPerc;
+			outClassNames.push_back(it->first);
+			//Shuffle(it->second); Removed so that the datasets are always the same for the first load
+			it++;
+		}
+	}
+
+	void CSMTLDataset::FillSubset( matDouble& ins, matDouble& outs, int numExamples, hashedIntsMap& indexQueues, TaskPtr inTask, int numRepeats /*= 0*/ )
+	{
+		int i = 0, total = 0;
+		int numClasses = inTask->outClassNames.size();
+		ints usedIndexes;
+		while (total < numExamples){
+			int classIndex = i++ %numClasses;
+			string className = inTask->outClassNames[classIndex];
+			double tmpPerc = inTask->outClassPercentages[className];
+			int tmpCount = 0;
+			tmpCount = (int)floor((numExamples * tmpPerc) + 0.5);
+			if (tmpCount > (numExamples - total)){
+				tmpCount = numExamples - total;
+			}
+			while (!indexQueues[className].empty() && tmpCount-- > 0){
+				int index = indexQueues[className].back();
+				ins.push_back(inputs[index]);
+				outs.push_back(outputs[index]);
+				total++;
+				usedIndexes.push_back(index);
+				indexQueues[className].pop_back();
+			}
+		}
+		if (numRepeats > 0){
+			for (int i = 0; i < numRepeats; i++){
+				BOOST_FOREACH(int index, usedIndexes){
+					ins.push_back(inputs[index]);
+					outs.push_back(outputs[index]);
+				}
+			}
+		}
+	}
+
+	void CSMTLDataset::Distribute()
+	{
+		int viewSize = view.size();
+		int numToDist = viewSize*numTrain + viewSize * numVal + viewSize * numTest;
+		assert(size > numToDist && numImpTrain < numTrain && viewSize > 0 && primaryTask <viewSize);
+		for(int i = 0; i < viewSize; i++){
+			hashedIntsMap indexQueues = taskList[view[i]]->outClassIndexes;
+			TaskPtr task = taskList[view[i]];
+			if (impoverish && primaryTask == i){
+				int numRepeats = numTrain / numImpTrain;
+				FillSubset(trainIns, trainOuts, numImpTrain, indexQueues, task, numRepeats);
+			}
+			else{
+				FillSubset(trainIns, trainOuts, numTrain, indexQueues, task);
+			}
+			if (primaryTask == -1 || primaryTask == i){
+				FillSubset(valIns, valOuts, numVal, indexQueues, task);
+				FillSubset(testIns, testOuts, numTest, indexQueues, task);
+			}
+		}
+		ShuffleSubsets();
+		CalcStdDevs();
+	}
+
+	void CSMTLDataset::Reshuffle()
+	{
+		BOOST_FOREACH(string className, outClassNames){
+			Shuffle(outClassIndexes[className]);
+			BOOST_FOREACH(string taskName, view){
+				TaskPtr task = taskList[taskName];
+				Shuffle(task->outClassIndexes[className]);
+			}
+		}
+	}
+
 
 	vecDouble CSMTLDataset::Task::getNetOuts( vecDouble inputs )
 	{

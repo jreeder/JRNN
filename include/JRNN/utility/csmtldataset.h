@@ -16,6 +16,8 @@
 #include "structure/network.h"
 
 namespace JRNN {
+	class CSMTLDataset;
+	typedef boost::shared_ptr<CSMTLDataset> CSMTLDatasetPtr;
 
 	class CSMTLDataset : public Dataset {
 
@@ -26,7 +28,7 @@ namespace JRNN {
 		void AddTaskFromFile(string fileName, string taskName, int numIn, int numOut);
 		void AddTaskFromNet(NetworkPtr net, string taskName);
 		DatasetPtr SpawnDS();
-		virtual void DistData(int numTrain, int numVal, int numTest, bool impoverish = false, int primaryTask = 0, int numImpoverish = 0);
+		virtual void DistData(int numTrain, int numVal, int numTest, bool impoverish = false, int primaryTask = -1, int numImpTrain = 0);
 		
 
 		class Task {
@@ -38,6 +40,9 @@ namespace JRNN {
 			int numOuts;
 			NetworkPtr net;
 			bool hasNet;
+			hashedIntsMap outClassIndexes;
+			hashedDoubleMap outClassPercentages;
+			strings outClassNames;
 			Task(){
 				name = "";
 				numOuts = 0;
@@ -55,7 +60,7 @@ namespace JRNN {
 		bool newData;
 		bool impoverish; 
 		int primaryTask; 
-		int numImpoverish;
+		int numImpTrain;
 		CSMTLDataStore dataStore;
 		Tasks taskList;
 		strings view;
@@ -64,6 +69,9 @@ namespace JRNN {
 		int numRealInputs;
 		void GenerateDS();
 		virtual void Distribute();
+		virtual void AnalyzeDS();
+		virtual void FillSubset( matDouble& ins, matDouble& outs, int numExamples, hashedIntsMap& indexQueues, TaskPtr inTask, int numRepeats = 0);
+		virtual void Reshuffle();
 		vecDouble CreateContextIn(int taskNum);
 		vecDouble ConcatVec(vecDouble first, vecDouble second);
 		vecDouble VecDoubleFromDoubles( const doubles& inDoubles );

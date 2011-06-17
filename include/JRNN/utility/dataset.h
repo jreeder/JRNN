@@ -70,13 +70,13 @@ namespace JRNN {
 		strings outClassNames;
         void GenRandRange();
         virtual void Distribute();
-		void FillSubset( matDouble& ins, matDouble& outs, int numExamples, hashedIntsMap& indexQueues );
+		virtual void FillSubset( matDouble& ins, matDouble& outs, int numExamples, hashedIntsMap& indexQueues );
 		void CalcStdDevs();
 		double CalcStdDev(datatype type);
 		void Shuffle(ints &indexes);
 		void ShuffleSubsets();
-		void Reshuffle();
-		void AnalyzeDS();
+		virtual void Reshuffle();
+		virtual void AnalyzeDS();
 		ints ARange(int start, int end);
 
     };
