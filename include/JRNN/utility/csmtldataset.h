@@ -21,10 +21,13 @@ namespace JRNN {
 
 	public:
 		CSMTLDataset();
+		CSMTLDataset(const CSMTLDataset& orig);
 		void SetView(strings view);
 		void AddTaskFromFile(string fileName, string taskName, int numIn, int numOut);
 		void AddTaskFromNet(NetworkPtr net, string taskName);
 		DatasetPtr SpawnDS();
+		virtual void DistData(int numTrain, int numVal, int numTest, bool impoverish = false, int primaryTask = 0, int numImpoverish = 0);
+		
 
 		class Task {
 		public:
@@ -50,12 +53,20 @@ namespace JRNN {
 
 	private:
 		bool newData;
+		bool impoverish; 
+		int primaryTask; 
+		int numImpoverish;
 		CSMTLDataStore dataStore;
 		Tasks taskList;
 		strings view;
 		StringSet inputStrings;
 		matDouble realInputs;
+		int numRealInputs;
 		void GenerateDS();
+		virtual void Distribute();
+		vecDouble CreateContextIn(int taskNum);
+		vecDouble ConcatVec(vecDouble first, vecDouble second);
+		vecDouble VecDoubleFromDoubles( const doubles& inDoubles );
 	};
 }
 
