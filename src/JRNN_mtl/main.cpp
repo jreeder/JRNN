@@ -98,7 +98,7 @@ int main(int argc, char* argv[]){
 		SwitchArg inCC("","CC", "Use Cascade Correlation", false);
 		SwitchArg inBP("","BP", "Use Back Propagation", false);
 		SwitchArg inCCMTL("", "CCMTL", "Use MTL Cascade Correlation", false);
-		SwitchArg inCSMTLDS("", "CSMTLDS" "Use the CSMTL Dataset instead of MTL", false);
+		SwitchArg inCSMTLDS("", "CSMTLDS", "Use the CSMTL Dataset instead of MTL", cmd, false);
 		vector<Arg*> xorlist;
 		xorlist.push_back(&inCCMTL);
 		xorlist.push_back(&inCC);

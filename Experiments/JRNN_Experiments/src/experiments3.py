@@ -24,10 +24,11 @@ testdicts = [{'dsname':'band','numRuns':60, 'numInputs':2,'numOutputs':1,\
 
 
 
-experiments = g.normimp + g.smallimpnv + g.largeimpnv + g.normimpnv \
-            + d.normimp + d.smallimpnv + d.largeimpnv + d.normimpnv \
-            + s.normimp + s.smallimpnv + s.largeimpnv + s.normimpnv
+#experiments = g.normimp + g.smallimpnv + g.largeimpnv + g.normimpnv \
+            #+ d.normimp + d.smallimpnv + d.largeimpnv + d.normimpnv \
+            #+ s.normimp + s.smallimpnv + s.largeimpnv + s.normimpnv
 
+experiments = b.ccmtl + b.csmtl + l.ccmtl + c.ccmtl
 
 #experiments = d.largeimpnv + d.normimpnv
 
