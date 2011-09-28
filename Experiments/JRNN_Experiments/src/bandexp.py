@@ -428,6 +428,8 @@ bandlargenv = [\
 
 standardvars.update({'viewString':urView,'primTask':primTask,'numTasks':4,\
                      'impNumTrain':impNumTrain, 'expFold':'band/CCMTLTest'})
+
+#Test of whether the focusing the correlation on the primary task worked or not. 
 ccmtl = [\
     cau(standardvars, {'netType':'CC', 'outfile':'ccurresult.txt'}),\
     cau(standardvars, {'netType':'CCMTL', 'outfile':'ccmtlurresult.txt'})\
@@ -435,6 +437,7 @@ ccmtl = [\
 
 standardvars.update({'viewString':relatedView, 'expFold':'band/CSMTLTest', 'useCSMTLDS':True})
 
+#Test of the csmtl paradymn
 csmtl = [\
     cau(standardvars, {'netType':'BP', 'outfile':'bpcsmtlresult.txt'}),\
     cau(standardvars, {'netType':'CC', 'outfile':'cccsmtlresult.txt'})\

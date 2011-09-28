@@ -86,7 +86,7 @@ def MakeGraph1(title, data):
     ccmtlurepochsavg, ccmtlurepochserr = CalcMeanAndError(ccmtlurepochs)
     ccmtlurtimesavg, ccmtlurtimeserr = CalcMeanAndError(ccmtlurtimes)
 
-    xticks = ["BP", "CC"]
+    xticks = ["Static", "CC"]
 
     plt.figure(fignum)
 
