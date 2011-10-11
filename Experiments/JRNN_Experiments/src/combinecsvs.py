@@ -7,10 +7,10 @@
 import sys
 import os
 
-folder = r"C:\Users\John\Documents\Source\JRNN\Experiments\Results\csvresults\EXP 2-1 Round 8\No Outliers"
-filter1 = "LS NV"
+folder = r"C:\Users\John\Documents\Source\JRNN\Experiments\Results\csvresults\EXP 2-1 Round 8\With Outliers"
+filter1 = "SS NV"
 filter2 = "Error"
-outfilename = "combined/LS NV - Error.csv"
+outfilename = "combined/" + filter1 + " - " + filter2 + ".csv"
 test = True
 if __name__=='__main__':
     if not test:

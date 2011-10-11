@@ -4,11 +4,13 @@
 import scipy.stats as scistats
 import numpy as np
 from math import modf, floor
+from localvars import *
 
+#moved base path to local non repository file called localvars.py
 #Lab Computer
 #basepath = r"C:/Users/John/Documents/Source/JRNN"
 #Home Computer
-basepath = r"D:/Users/John Reeder/Code/JRNN"
+#basepath = r"D:/Users/John Reeder/Code/JRNN"
 
 #Windows Values
 jrnn_exe = basepath + r"/Builds/VS2010/JRNN/Release/JRNN_test.exe"
@@ -16,7 +18,7 @@ datapath = basepath + r"/Experiments/Data/Tabbed Data/New Binary Tasks/"
 datapath2 = basepath + r"/Experiments/Data/Tabbed Data/UCI Data/"
 outpath = basepath + r"/Experiments/Results/Exp 1-1/Round-4/"
 outpath2 = basepath + r"/Experiments/Results/Exp 2-1/Round 5/"
-outpath3 = basepath + r"/Experiments/Results/Exp 2-1/Round 8/" #8 is best run 9 is new csmtl stuff
+outpath3 = basepath + r"/Experiments/Results/Exp 2-1/Round 9/" #8 is best run 9 is new csmtl stuff
 jrnn_exe2 = basepath + r"/Builds/VS2010/JRNN/Release/JRNN_test2.exe"
 jrnn_exprun = basepath + r"/Builds/VS2010/JRNN/Release/JRNN_exprun.exe"
 figpath = basepath + r"/Experiments/Results/Figures/"
