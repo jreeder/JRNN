@@ -16,3 +16,4 @@ ipch/
 *.pyc
 ~*
 Thumbs.db
+localvars.py
