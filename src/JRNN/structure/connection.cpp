@@ -153,13 +153,13 @@ double Connection::GetWeight() const {
 }
 
 Connection Connection::operator +(const Connection& rhs) {
-    Connection tmp;
+    Connection tmp = *this;
     tmp.weight = weight + rhs.weight;
     return tmp;
 }
 
 Connection Connection::operator *(const Connection& rhs) {
-    Connection tmp;
+    Connection tmp =  *this;
     tmp.weight = weight * rhs.weight;
     return tmp;
 }
