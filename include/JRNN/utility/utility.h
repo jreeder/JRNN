@@ -56,6 +56,21 @@ namespace JRNN {
 		return result;
 	}
 
+	inline double VecDistance(vecDouble& primary, vecDouble& secondary){
+		assert(primary.size() == secondary.size());
+		vecDouble diffVec(primary.size());
+
+		vecDouble::iterator dif = diffVec.begin();
+		vecDouble::iterator pri = primary.begin();	
+		vecDouble::iterator sec = secondary.begin();
+
+		for(; dif != diffVec.end(); dif++, pri++, sec++){
+			(*dif) = (*pri) - (*sec);
+		}
+		double retVal = ublas::norm_2(diffVec);
+		return retVal;
+	}
+
 	inline void FillVec(vecDouble& vector, double value){
 		vecDouble::iterator it = vector.begin();
 		for (; it != vector.end(); it++){
