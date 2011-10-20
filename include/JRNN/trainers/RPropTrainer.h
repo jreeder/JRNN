@@ -17,6 +17,7 @@ namespace JRNN {
 
 	class RPropTrainer {
 		//TODO: need to abstract this class and backproptrainer and use inheritance
+		//TODO: need to pull MTL specific stuff out into a parent class so all trainers can share. 
 	public:
 		RPropTrainer(FFMLPNetPtr network, DatasetPtr inDataSet, double etaPlus, double etaMinus, ints primaryIndexes = ints(0));
 		//RPropTrainer(const RPropTrainer& orig);

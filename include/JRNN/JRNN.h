@@ -25,7 +25,7 @@
 #include <boost/generator_iterator.hpp>
 #include <iostream>
 #include <limits>
-#include <math.h>
+#include <cmath>
 #include <string>
 #include <stdlib.h>
 #include <time.h>

@@ -56,6 +56,18 @@ namespace JRNN {
 		return result;
 	}
 
+	inline vecDouble VecDivide(vecDouble& v1, vecDouble& v2){
+		assert(v1.size() == v2.size());
+		vecDouble result(v1.size());
+		vecDouble::iterator it1 = v1.begin();
+		vecDouble::iterator it2 = v2.begin();
+		vecDouble::iterator res = result.begin();
+		for (; it1 != v1.end(); it1++, it2++, res++){
+			(*res) = (*it1) / (*it2);
+		}
+		return result;
+	}
+
 	inline double VecDistance(vecDouble& primary, vecDouble& secondary){
 		assert(primary.size() == secondary.size());
 		vecDouble diffVec(primary.size());
