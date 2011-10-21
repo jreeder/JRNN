@@ -90,6 +90,9 @@
     <ClCompile Include="..\..\..\..\src\JRNN\utility\etamtlhelper.cpp">
       <Filter>Source Files\utility</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\src\JRNN\trainers\EtaMTLRPropTrainer.cpp">
+      <Filter>Source Files\trainers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\include\JRNN\JRNN.h">
@@ -145,6 +148,9 @@
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\JRNN\utility\etamtlhelper.h">
       <Filter>Header Files\utility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\JRNN\trainers\EtaMTLRPropTrainer.h">
+      <Filter>Header Files\trainers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
