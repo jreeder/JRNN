@@ -28,5 +28,6 @@ namespace JRNN {
 		
 	private:
 		virtual void UpdateCorrelations();
+		virtual void ComputeCandSlopes();
 	};
 }

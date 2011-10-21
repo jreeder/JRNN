@@ -168,7 +168,7 @@ namespace JRNN {
 		void UpdateCandWeights();
 		virtual void UpdateCorrelations();
 		void ComputeCorrelations();
-		void ComputeCandSlopes();
+		virtual void ComputeCandSlopes();
 		void InsertCandidate();
 
 		//Validation Methods

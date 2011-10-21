@@ -73,4 +73,50 @@ namespace JRNN {
 			bestCand = candNodes[0];
 		}
 	}
+
+	void MTLCCTrainer::ComputeCandSlopes()
+	{
+		double	change,
+			actPrime,
+			error,
+			value,
+			direction;
+
+		vecDouble	*cCorr,
+			*cPCorr;
+
+		NodeList candNodes = network->GetCandLayer()->GetNodes();
+		network->GetCandLayer()->Activate();
+		int nOuts = network->GetNumOut();
+		BOOST_FOREACH(NodePtr candidate, candNodes){
+			string name = candidate->GetName();
+			value = candidate->GetOut();
+			actPrime = candidate->GetPrime();
+			change = 0.0;
+			cCorr = &candCorr[name];
+			cPCorr = &candPCorr[name];
+
+			candSumVals[name] += value;
+			actPrime /= err.sumSqErr; //This is a slight modification to the original. 
+			//It's equivalent, but I'm not sure why I did this maybe optimizing. 
+
+			//TODO need to look into making changes here for eta MTL style focusing. 
+
+			//compute correlations to each output
+			for (int j = 0; j < nOuts; j++){
+				error = err.errors[j];
+				direction = ((*cPCorr)[j] < 0.0) ? -1.0 : 1.0;
+				change -= direction * actPrime * (error - err.sumErrs[j]); //Probably could add eta mtl change here if need be. 
+				(*cCorr)[j] += error * value;
+			}
+
+			//use change to compute new slopes
+
+			ConList cons = candidate->GetConnections(IN);
+			BOOST_FOREACH(ConPtr con, cons){
+				cand.conSlopes[con->GetName()] += change * con->GetValue();
+			}
+		}
+
+	}
 }
