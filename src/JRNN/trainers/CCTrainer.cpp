@@ -344,7 +344,7 @@ namespace JRNN {
 		resetCandValues();
 	}
 
-	void CCTrainer::CorrelationEpoch()
+	void CCTrainer::CorrelationEpoch() //this function I will bootstrap to calculate the eta mtl parameters. 
 	{
 		matDouble ins = data->GetInputs(Dataset::TRAIN);
 		matDouble outs = data->GetOutputs(Dataset::TRAIN);

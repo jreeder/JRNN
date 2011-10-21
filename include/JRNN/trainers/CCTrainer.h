@@ -163,7 +163,7 @@ namespace JRNN {
 		status TrainCandidates();
 		void resetTrainCandidates();
 		void resetCandValues();
-		void CorrelationEpoch();
+		virtual void CorrelationEpoch();
 		void CandEpoch();
 		void UpdateCandWeights();
 		virtual void UpdateCorrelations();

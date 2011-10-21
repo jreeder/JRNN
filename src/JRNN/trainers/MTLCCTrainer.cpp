@@ -119,4 +119,28 @@ namespace JRNN {
 		}
 
 	}
+
+	void MTLCCTrainer::CorrelationEpoch() //this function I will bootstrap to calculate the eta mtl parameters. 
+	{
+		matDouble ins = data->GetInputs(Dataset::TRAIN);
+		matDouble outs = data->GetOutputs(Dataset::TRAIN);
+		matDouble::iterator itIns = ins.begin();
+		matDouble::iterator itOuts = outs.begin();
+		NodeList outNodes = network->GetLayer("out")->GetNodes();
+		//double SSE = 0;
+		while(itIns != ins.end()){
+			vecDouble input = (*itIns);
+			vecDouble desiredOut = (*itOuts);
+			network->Activate(input);
+			ComputeError(desiredOut, err, outNodes, false, false);
+
+			ComputeCorrelations();
+
+			itIns++;
+			itOuts++;
+		}
+
+		UpdateCorrelations();
+		epoch++;
+	}
 }
