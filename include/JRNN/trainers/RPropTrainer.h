@@ -30,7 +30,7 @@ namespace JRNN {
 		int GetEpochs();
 		void TrainToConvergence(double maxSSE, int maxEpoch);
 		void TrainToValConv(int maxEpoch);
-		void Reset();
+		virtual void Reset();
 		void RedistData();
 		int GetNumResets();
 		bool useMaxWeight;

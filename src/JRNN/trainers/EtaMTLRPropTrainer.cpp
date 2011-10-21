@@ -121,4 +121,11 @@ namespace JRNN {
 		FillVec(outSSEs, 0.0);
 	}
 
+	void EtaMTLRPropTrainer::Reset()
+	{
+		FillVec(outSSEs, 0.0);
+		FillVec(Rks, 1.0);
+		RPropTrainer::Reset();
+	}
+
 }

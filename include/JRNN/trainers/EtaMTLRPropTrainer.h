@@ -22,6 +22,7 @@ namespace JRNN {
 		EtaMTLRPropTrainer(FFMLPNetPtr network, DatasetPtr inDataSet, double etaPlus, double etaMinus, ints primaryIndexes = ints(0));
 		virtual ~EtaMTLRPropTrainer();
 		virtual double TrainEpoch();
+		virtual void Reset();
 
 	protected:
 		virtual void CalcWeightUpdates(LayerPtr layer, vecDouble desiredOut = vecDouble());
