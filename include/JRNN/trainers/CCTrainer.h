@@ -166,7 +166,7 @@ namespace JRNN {
 		void CorrelationEpoch();
 		void CandEpoch();
 		void UpdateCandWeights();
-		void UpdateCorrelations();
+		virtual void UpdateCorrelations();
 		void ComputeCorrelations();
 		void ComputeCandSlopes();
 		void InsertCandidate();

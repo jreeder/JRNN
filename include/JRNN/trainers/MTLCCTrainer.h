@@ -27,6 +27,6 @@ namespace JRNN {
 	protected:
 		
 	private:
-		void UpdateCorrelations();
+		virtual void UpdateCorrelations();
 	};
 }
