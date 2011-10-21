@@ -86,23 +86,25 @@ namespace JRNN {
 		d = vars.conDeltas[conName];
 		p = vars.conPSlopes[conName];
 
-		if (d < 0.0){
-			if (s > 0.0)
-				dw -= epsilon * s;
+		 /* The step must always be in direction opposite to the slope. */
 
-			if (s >= (shrinkFactor * p))
-				dw += mu * d;
+		if (d < 0.0){ /* If last step was negative...  */  
+			if (s > 0.0) 
+				dw -= epsilon * s; /*  Add in linear term if current slope is still positive.*/
+
+			if (s >= (shrinkFactor * p))/*If current slope is close to or larger than prev slope...  */
+				dw += mu * d; /* Take maximum size negative step. */
 
 			else
-				dw += d * s / (p - s);
+				dw += d * s / (p - s); /* Else, use quadratic estimate. */
 		}
-		else if ( d > 0.0){
-			if ( s < 0.0 )
-				dw -= epsilon * s;
-			if ( s <= (shrinkFactor * p))
-				dw += mu * d;
+		else if ( d > 0.0){ /* If last step was positive...  */
+			if ( s < 0.0 ) 
+				dw -= epsilon * s; /*  Add in linear term if current slope is still negative.*/
+			if ( s <= (shrinkFactor * p))  /* If current slope is close to or more neg than prev slope... */
+				dw += mu * d; /* Take maximum size positive step. */
 			else
-				dw += d * s / (p - s);
+				dw += d * s / (p - s); /* Else, use quadratic estimate. */
 		}
 		else
 			dw -= epsilon * s; //Last step was zero
@@ -289,7 +291,7 @@ namespace JRNN {
 		double lastScore = 0.0;
 		int quitEpoch = 0;
 		int startEpoch = epoch;
-		err.sumErrs /= (double)data->GetSize(Dataset::TRAIN); //TODO Might be causing some issues here. Needs to be cast to double. 
+		err.sumErrs /= (double)data->GetSize(Dataset::TRAIN); 
 		CorrelationEpoch();
 		for (int i = 0; i < parms.cand.epochs; i ++){
 			
@@ -508,7 +510,8 @@ namespace JRNN {
 			cPCorr = &candPCorr[name];
 
 			candSumVals[name] += value;
-			actPrime /= err.sumSqErr;
+			actPrime /= err.sumSqErr; //This is a slight modification to the original. 
+									//It's equivalent, but I'm not sure why I did this maybe optimizing. 
 
 			//TODO need to look into making changes here for eta MTL style focusing. 
 
@@ -516,7 +519,7 @@ namespace JRNN {
 			for (int j = 0; j < nOuts; j++){
 				error = err.errors[j];
 				direction = ((*cPCorr)[j] < 0.0) ? -1.0 : 1.0;
-				change -= direction * actPrime * (error - err.sumErrs[j]);
+				change -= direction * actPrime * (error - err.sumErrs[j]); //Probably could add eta mtl change here if need be. 
 				(*cCorr)[j] += error * value;
 			}
 
