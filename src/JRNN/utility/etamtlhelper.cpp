@@ -13,22 +13,39 @@
 
 namespace JRNN {
 
-	typedef unsigned int uint;
+	EtaMTLHelper::EtaMTLHelper(){
+		//default values. 
+		this->Psi = 0.000001;
+		this->RELMIN = 0.05;
+		this->primIndex = 0;
+		FillVec(Rks, 1.0);
+		FillVec(outSSEs, 0.0);
+	}
 
-	double EtaMTLHelper::getRk(int secIndex){
+	EtaMTLHelper::~EtaMTLHelper(){
+		//nothing to destruct. 
+	}
+
+	void EtaMTLHelper::SetEtaVars(int primindex, double psi, double relmin){
+		this->primIndex = primindex;
+		this->Psi = psi;
+		this->RELMIN = relmin;
+	}
+
+	double EtaMTLHelper::GetRk(int secIndex){
 		double retVal = 0;
 		retVal = std::tanh((ak[secIndex]/(std::pow(dk[secIndex],2) + Psi)) * (1/RELMIN));
 		return retVal;
 	}
 
-	void EtaMTLHelper::calcAks(vecDouble outsSSE){
+	void EtaMTLHelper::CalcAks(){
 		FillVec(ak, 1.0);
-		ak = VecDivide(ak, outsSSE);
+		ak = VecDivide(ak, outSSEs);
 	}
 
-	void EtaMTLHelper::calcDks(NodeList outNodes){
+	void EtaMTLHelper::CalcDks(NodeList& outNodes){
 		vecDouble primConWeights = GetInWeights(outNodes[primIndex]);
-		for (int i = 0; i < outNodes.size(); i++){
+		for (uint i = 0; i < outNodes.size(); i++){
 			if (i != primIndex){
 				vecDouble secConWeights = GetInWeights(outNodes[i]);
 				dk[i] = VecDistance(primConWeights, secConWeights);
@@ -40,6 +57,14 @@ namespace JRNN {
 
 	}
 
+	void EtaMTLHelper::CalcRks(NodeList& outNodes){
+		CalcAks();
+		CalcDks(outNodes);
+		for (uint i = 0; i < Rks.size(); i++){
+			Rks[i] = GetRk(i);
+		}
+	}
+
 	vecDouble EtaMTLHelper::GetInWeights(NodePtr node){
 		ConList cons = node->GetConnections(IN);
 		vecDouble retVec(cons.size());
@@ -48,4 +73,5 @@ namespace JRNN {
 		}
 		return retVec;
 	}
+
 }

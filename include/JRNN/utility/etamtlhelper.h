@@ -22,22 +22,24 @@ namespace JRNN {
 	public:
 		//TODO for now this will be specific to only one primary index. Will need to expand this later for generality sake. 
 
-		EtaMTLHelper(int primindex, double psi, double relmin): 
-		  primIndex(primindex),Psi(psi), RELMIN(relmin){};
+		EtaMTLHelper();
 		~EtaMTLHelper();
-
-		double getRk(int secIndex);
-		void calcAks(vecDouble outsSSE);
-		void calcDks(NodeList outNodes);
-
+		void SetEtaVars(int primindex, double psi, double relmin);	
+	
 	protected:
 		int primIndex;
 		double Psi;
 		double RELMIN;
 		vecDouble ak;
 		vecDouble dk;
+		vecDouble Rks;
+		vecDouble outSSEs;
 
-		vecDouble GetInWeights(NodePtr node);
+		vecDouble GetInWeights(NodePtr node);			
+		double GetRk(int secIndex);
+		void CalcAks();
+		void CalcDks(NodeList& outNodes);
+		void CalcRks(NodeList& outNodes);
 	};
 	
 }

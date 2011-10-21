@@ -22,7 +22,7 @@ namespace JRNN {
 		RPropTrainer(FFMLPNetPtr network, DatasetPtr inDataSet, double etaPlus, double etaMinus, ints primaryIndexes = ints(0));
 		//RPropTrainer(const RPropTrainer& orig);
 		virtual ~RPropTrainer();
-		double TrainEpoch();
+		virtual double TrainEpoch();
 		double TestOnData(Dataset::datatype type);
 		hashedDoubleMap TestWiClass(Dataset::datatype type);
 		doubles& GetMSERec();
@@ -38,7 +38,7 @@ namespace JRNN {
 		//void SetUseMaxWeight(bool inUseMaxWeight);
 		//void SetMaxWeight(double inMaxWeight);
 
-	private:
+	protected:
 		FFMLPNetPtr mNetwork;
 		int epochCount;
 		int numResets;
@@ -66,7 +66,7 @@ namespace JRNN {
 		hashedDoubleMap taskErrorRate;
 		int nTrainOutVals;
 		void RPropUpdate(ConPtr con);
-		void CalcWeightUpdates(LayerPtr layer, vecDouble desiredOut = vecDouble());
+		virtual void CalcWeightUpdates(LayerPtr layer, vecDouble desiredOut = vecDouble());
 	};
 
 }
