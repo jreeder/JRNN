@@ -75,6 +75,7 @@ namespace JRNN {
 	typedef boost::uniform_int<long> UniformDistInt;
 	typedef boost::variate_generator<rangeType&, UniformDist01> RandGenerator01;
 	typedef boost::variate_generator<rangeType&, UniformDistInt> RandGeneratorInt;
+	typedef unsigned int uint;
 
 	class StaticRange {
 	public:
