@@ -10,10 +10,10 @@
 
 #include "JRNN.h"
 #include "trainers/CCTrainer.h"
-
+#include "utility/etamtlhelper.h"
 
 namespace JRNN {
-	class MTLCCTrainer : public CCTrainer
+	class MTLCCTrainer : public CCTrainer, public EtaMTLHelper
 	{
 	public:
 		MTLCCTrainer(CCNetworkPtr network, DatasetPtr data, int numCandidates, ints primaryIndexes = ints(0));
@@ -23,12 +23,16 @@ namespace JRNN {
 			double primaryWeight;
 			double secondaryWeight;
 			bool weightCandScore;
+			bool weightCandSlopes;
+			bool useEtaMTL;
 		} mtlparams;
-	protected:
 		
 	private:
+		bool usePrimary;
+
 		virtual void UpdateCorrelations();
 		virtual void ComputeCandSlopes();
 		virtual void CorrelationEpoch();
+		double CalcWeight(bool primary, int index);
 	};
 }

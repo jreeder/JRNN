@@ -16,7 +16,7 @@
 
 namespace JRNN {
 
-	class EtaMTLRPropTrainer : public EtaMTLHelper, public RPropTrainer {
+	class EtaMTLRPropTrainer : public RPropTrainer, public EtaMTLHelper  {
 
 	public:
 		EtaMTLRPropTrainer(FFMLPNetPtr network, DatasetPtr inDataSet, double etaPlus, double etaMinus, ints primaryIndexes = ints(0));

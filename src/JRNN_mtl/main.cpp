@@ -15,6 +15,7 @@
 #include "trainers/RPropTrainer.h"
 #include "trainers/CCTrainer.h"
 #include "trainers/MTLCCTrainer.h"
+#include "trainers/EtaMTLRPropTrainer.h"
 #include <iostream>
 #include <sstream>
 #include <fstream>
@@ -60,6 +61,9 @@ int main(int argc, char* argv[]){
 	bool useBP = false;
 	bool useCCMTL = false;
 	bool useCSMTLDS = false;
+	bool useEtaMTL = false;
+	bool useCandSlope = false;
+	bool useCandScore = false;
 	DatasetPtr ds;
 
 	//RProp parameters
@@ -99,6 +103,10 @@ int main(int argc, char* argv[]){
 		SwitchArg inBP("","BP", "Use Back Propagation", false);
 		SwitchArg inCCMTL("", "CCMTL", "Use MTL Cascade Correlation", false);
 		SwitchArg inCSMTLDS("", "CSMTLDS", "Use the CSMTL Dataset instead of MTL", cmd, false);
+		SwitchArg inEtaMTL("", "ETAMTL", "Use Eta MTL this will require CCMTL instead of CC", cmd, false);
+		SwitchArg inUseCandScore("", "CandScore", "Use the Candidate score adjustment in CCMTL", cmd, false);
+		SwitchArg inUseCandSlope("", "CandSlope", "Use the Candidate slope adjustment in CCMTL", cmd, false);
+
 		vector<Arg*> xorlist;
 		xorlist.push_back(&inCCMTL);
 		xorlist.push_back(&inCC);
@@ -127,6 +135,9 @@ int main(int argc, char* argv[]){
 		useBP = inBP.getValue();
 		useCCMTL = inCCMTL.getValue();
 		useCSMTLDS = inCSMTLDS.getValue();
+		useEtaMTL = inEtaMTL.getValue();
+		useCandScore = inUseCandScore.getValue();
+		useCandSlope = inUseCandSlope.getValue();
 	}
 	catch (TCLAP::ArgException &e) {
 		cout << "error: " << e.error() << " for arg " << e.argId() << endl;
@@ -172,7 +183,15 @@ int main(int argc, char* argv[]){
 				ffnet->SetScaleAndOffset(scale, offset);
 			}
 		}
-		RPropTrainer bp(ffnet, ds, rPropEtaPlus, rPropEtaMinus,primaryIndexes);
+		RPropTrainer* bptemp;
+		if (useEtaMTL) {
+			bptemp = new EtaMTLRPropTrainer(ffnet, ds, rPropEtaPlus, rPropEtaMinus,primaryIndexes);
+		}
+		else {
+			bptemp = new RPropTrainer(ffnet, ds, rPropEtaPlus, rPropEtaMinus,primaryIndexes);
+		}
+		//RPropTrainer bp(ffnet, ds, rPropEtaPlus, rPropEtaMinus,primaryIndexes);
+		RPropTrainer bp = (*bptemp);
 		if (xmlLoaded){
 			params.GetVar("rProp.params@maxWeight", bp.maxWeight, parmsOptional);
 			params.GetVar("rProp.params@useMaxWeight", bp.useMaxWeight, parmsOptional);
@@ -197,6 +216,13 @@ int main(int argc, char* argv[]){
 		}
 		else {
 			cctemp = new MTLCCTrainer(ccnet,ds,ccNumCands, primaryIndexes);
+			if (useEtaMTL){
+				static_cast<MTLCCTrainer*>(cctemp)->mtlparams.useEtaMTL = true;
+				if (useCandSlope){
+					static_cast<MTLCCTrainer*>(cctemp)->mtlparams.weightCandSlopes = true;
+					static_cast<MTLCCTrainer*>(cctemp)->mtlparams.weightCandScore = false;
+				}
+			}
 		}
 		CCTrainer cc = (*cctemp);
 		if (xmlLoaded) {

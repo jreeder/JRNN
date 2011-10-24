@@ -17,6 +17,9 @@ namespace JRNN {
 		mtlparams.primaryWeight = 1.0;
 		mtlparams.secondaryWeight = 0.5;
 		mtlparams.weightCandScore = true;
+		mtlparams.weightCandSlopes = false;
+		mtlparams.useEtaMTL = false;
+		usePrimary = (primaryIndexes.size() > 0) ? true : false;
 	}
 
 	MTLCCTrainer::~MTLCCTrainer(){}
@@ -27,7 +30,6 @@ namespace JRNN {
 		double cor;
 		vecDouble *curCorr;
 		vecDouble *prevCorr;
-		bool usePrimary = (primaryIndexes.size() > 0) ? true : false;
 		candBestScore = 0.0;
 		bestCand.reset();
 		int nTrainPts = data->GetSize(Dataset::TRAIN);
@@ -49,7 +51,8 @@ namespace JRNN {
 				(*curCorr)[j] = 0.0;
 				if (usePrimary && mtlparams.weightCandScore){
 					bool prim = InVector(primaryIndexes, j);
-					double weight = prim ? mtlparams.primaryWeight : mtlparams.secondaryWeight;
+					//double weight = prim ? mtlparams.primaryWeight : mtlparams.secondaryWeight;
+					double weight = CalcWeight(prim, j);
 					score += (fabs (cor) * weight);
 				}
 				else {
@@ -106,7 +109,14 @@ namespace JRNN {
 			for (int j = 0; j < nOuts; j++){
 				error = err.errors[j];
 				direction = ((*cPCorr)[j] < 0.0) ? -1.0 : 1.0;
-				change -= direction * actPrime * (error - err.sumErrs[j]); //Probably could add eta mtl change here if need be. 
+				if (usePrimary && mtlparams.weightCandSlopes){
+					bool prim = InVector(primaryIndexes, j);
+					double weight = CalcWeight(prim, j);
+					change -= direction * actPrime * (error - err.sumErrs[j]) * weight;
+				}
+				else {
+					change -= direction * actPrime * (error - err.sumErrs[j]);
+				}
 				(*cCorr)[j] += error * value;
 			}
 
@@ -128,11 +138,16 @@ namespace JRNN {
 		matDouble::iterator itOuts = outs.begin();
 		NodeList outNodes = network->GetLayer("out")->GetNodes();
 		//double SSE = 0;
+		FillVec(outSSEs, 0.0);
+		FillVec(Rks, 1.0);
+
 		while(itIns != ins.end()){
 			vecDouble input = (*itIns);
 			vecDouble desiredOut = (*itOuts);
 			network->Activate(input);
 			ComputeError(desiredOut, err, outNodes, false, false);
+
+			outSSEs += SquareVec(err.errors);
 
 			ComputeCorrelations();
 
@@ -140,7 +155,25 @@ namespace JRNN {
 			itOuts++;
 		}
 
+		if (mtlparams.useEtaMTL) {
+			//necessary because etaMTL isn't generalized to multiple outs yet. 
+			assert(primaryIndexes.size() == 1);
+			primIndex = primaryIndexes[0];
+			CalcRks(outNodes);
+		}
+
 		UpdateCorrelations();
 		epoch++;
 	}
+
+	double MTLCCTrainer::CalcWeight( bool primary, int index )
+	{
+		if (mtlparams.useEtaMTL){
+			return primary ? mtlparams.primaryWeight : mtlparams.primaryWeight * Rks[index];
+		}
+		else {
+			return primary ? mtlparams.primaryWeight : mtlparams.secondaryWeight;
+		}
+	}
+
 }

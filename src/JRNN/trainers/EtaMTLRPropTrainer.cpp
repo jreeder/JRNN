@@ -119,6 +119,12 @@ namespace JRNN {
 	{
 		globalLearningRate = 1.0;
 		FillVec(outSSEs, 0.0);
+		assert(primaryIndexes.size() == 1);
+		primIndex = primaryIndexes[0];
+	}
+
+	EtaMTLRPropTrainer::~EtaMTLRPropTrainer(){
+
 	}
 
 	void EtaMTLRPropTrainer::Reset()

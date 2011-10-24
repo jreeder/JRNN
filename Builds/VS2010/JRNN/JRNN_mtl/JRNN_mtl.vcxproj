@@ -79,6 +79,9 @@
   <ItemGroup>
     <ClCompile Include="..\..\..\..\src\JRNN_mtl\main.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\..\..\Experiments\config\Parameters.xml" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
