@@ -426,6 +426,7 @@ bandlargenv = [\
 
 
 
+
 standardvars.update({'viewString':urView,'primTask':primTask,'numTasks':4,\
                      'impNumTrain':impNumTrain, 'expFold':'band/CCMTLTest'})
 
@@ -433,6 +434,15 @@ standardvars.update({'viewString':urView,'primTask':primTask,'numTasks':4,\
 ccmtl = [\
     cau(standardvars, {'netType':'CC', 'outfile':'ccurresult.txt'}),\
     cau(standardvars, {'netType':'CCMTL', 'outfile':'ccmtlurresult.txt'})\
+]
+
+standardvars.update({'expFold':'band/ETAMTLTest', 'useEtaMTL':True})
+
+#Eta MTL tests. Need to compare these against other unrelated bp and cc tests.
+etamtl = [\
+    cau(standardvars, {'netType':'BP', 'outfile':'bpetamtlurresult.txt'}),\
+    cau(standardvars, {'netType':'CCMTL', 'outfile':'ccetamtlscoreurresult.txt'}),\
+    cau(standardvars, {'netType':'CCMTL', 'useCandSlope':True, 'outfile':'ccetamtlslopeurresult.txt'})\
 ]
 
 standardvars.update({'viewString':relatedView, 'expFold':'band/CSMTLTest', 'useCSMTLDS':True})

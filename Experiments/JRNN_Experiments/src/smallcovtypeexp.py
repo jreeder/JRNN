@@ -69,3 +69,30 @@ smallimpnv = [cau(standardvars, {'numTasks':4, 'impNumTrain':impNumTrain, 'viewS
            cau(standardvars, {'numTasks':1, 'numTrain':impNumTrain, 'viewString':'task1', 'outfile':'ccstlresults.txt','netType':'CC'}),\
            cau(standardvars, {'numTasks':4, 'impNumTrain':impNumTrain, 'viewString':urView, 'primTask':primTask, 'outfile':'ccmtlurresults.txt','netType':'CC'}),\
            ]           
+
+#Extra Tests
+standardvars.update({'viewString':urView,'primTask':primTask,'numTasks':4, 'useValidation':True,\
+                    'numHidPerTask':regnumhid, 'expFold':'smallcovtype/CCMTLTest'})
+
+#Test of whether the focusing the correlation on the primary task worked or not. 
+ccmtl = [\
+    cau(standardvars, {'netType':'CC', 'outfile':'ccurresult.txt'}),\
+    cau(standardvars, {'netType':'CCMTL', 'outfile':'ccmtlurresult.txt'})\
+]
+
+standardvars.update({'expFold':'smallcovtype/ETAMTLTest', 'useEtaMTL':True})
+
+#Eta MTL tests. Need to compare these against other unrelated bp and cc tests.
+etamtl = [\
+    cau(standardvars, {'netType':'BP', 'outfile':'bpetamtlurresult.txt'}),\
+    cau(standardvars, {'netType':'CCMTL', 'outfile':'ccetamtlscoreurresult.txt'}),\
+    cau(standardvars, {'netType':'CCMTL', 'useCandSlope':True, 'outfile':'ccetamtlslopeurresult.txt'})\
+]
+
+standardvars.update({'viewString':relatedView, 'expFold':'smallcovtype/CSMTLTest', 'useCSMTLDS':True})
+
+#Test of the csmtl paradymn
+csmtl = [\
+    cau(standardvars, {'netType':'BP', 'outfile':'bpcsmtlresult.txt'}),\
+    cau(standardvars, {'netType':'CC', 'outfile':'cccsmtlresult.txt'})\
+    ]

@@ -34,7 +34,9 @@ def ProcessExp(expparams):
     primTask = expparams['primTask']
     netType = expparams['netType']
     expFold = expparams['expFold']
-    useCSMTL = expparams.get('useCSMTL')
+    useCSMTL = expparams.get('useCSMTL', False)
+    useEtaMTL = expparams.get('useEtaMTL', False)
+    useCandSlope = expparams.get('useCandSlope', False)
     path = datapath if dsname in dsinpath1 else datapath2
     outfilepath = os.path.join(outpath3, expFold)
     useValStr = "T" if useValidation else "F"
@@ -68,6 +70,12 @@ def ProcessExp(expparams):
         
     if useCSMTL:
         cmd += " --CSMTLDS"
+        
+    if useEtaMTL:
+        cmd += " --ETAMTL"
+    
+    if useCandSlope:
+        cmd += " --CandSlope" #only used if CCMTL is the nettype. 
     
     cmd += " --params \"%s\"" % paramspath
     

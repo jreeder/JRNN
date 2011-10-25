@@ -21,6 +21,7 @@ normnvpath = 'derm/NormSizeNV'
 largenvpath = 'derm/LargeSizeNV'
 smallnvpath = 'derm/SmallSizeNV'
 largenumhid = 10
+regnumhid = 3
 smallnumhid = 1
 relatedView = 'task1,task2,task3,task5'
 urView = 'task1,task2,task4,task6'
@@ -70,3 +71,31 @@ smallimpnv = [cau(standardvars, {'numTasks':4, 'impNumTrain':impNumTrain, 'viewS
            cau(standardvars, {'numTasks':1, 'numTrain':impNumTrain, 'viewString':'task1', 'outfile':'ccstlresults.txt','netType':'CC'}),\
            cau(standardvars, {'numTasks':4, 'impNumTrain':impNumTrain, 'viewString':urView, 'primTask':primTask, 'outfile':'ccmtlurresults.txt','netType':'CC'}),\
            ]           
+
+
+#Extra Tests
+standardvars.update({'viewString':urView,'primTask':primTask,'numTasks':4, 'useValidation':True,\
+                    'numHidPerTask':regnumhid, 'expFold':'derm/CCMTLTest'})
+
+#Test of whether the focusing the correlation on the primary task worked or not. 
+ccmtl = [\
+    cau(standardvars, {'netType':'CC', 'outfile':'ccurresult.txt'}),\
+    cau(standardvars, {'netType':'CCMTL', 'outfile':'ccmtlurresult.txt'})\
+]
+
+standardvars.update({'expFold':'derm/ETAMTLTest', 'useEtaMTL':True})
+
+#Eta MTL tests. Need to compare these against other unrelated bp and cc tests.
+etamtl = [\
+    cau(standardvars, {'netType':'BP', 'outfile':'bpetamtlurresult.txt'}),\
+    cau(standardvars, {'netType':'CCMTL', 'outfile':'ccetamtlscoreurresult.txt'}),\
+    cau(standardvars, {'netType':'CCMTL', 'useCandSlope':True, 'outfile':'ccetamtlslopeurresult.txt'})\
+]
+
+standardvars.update({'viewString':relatedView, 'expFold':'derm/CSMTLTest', 'useCSMTLDS':True})
+
+#Test of the csmtl paradymn
+csmtl = [\
+    cau(standardvars, {'netType':'BP', 'outfile':'bpcsmtlresult.txt'}),\
+    cau(standardvars, {'netType':'CC', 'outfile':'cccsmtlresult.txt'})\
+    ]

@@ -429,3 +429,20 @@ ccmtl = [\
     cau(standardvars, {'netType':'CC', 'outfile':'ccurresult.txt'}),\
     cau(standardvars, {'netType':'CCMTL', 'outfile':'ccmtlurresult.txt'})\
     ]
+
+standardvars.update({'expFold':'CirInSq/ETAMTLTest', 'useEtaMTL':True})
+
+#Eta MTL tests. Need to compare these against other unrelated bp and cc tests. 
+etamtl = [\
+    cau(standardvars, {'netType':'BP', 'outfile':'bpetamtlurresult.txt'}),\
+    cau(standardvars, {'netType':'CCMTL', 'outfile':'ccetamtlscoreurresult.txt'}),\
+    cau(standardvars, {'netType':'CCMTL', 'useCandSlope':True, 'outfile':'ccetamtlslopeurresult.txt'})\
+]
+
+standardvars.update({'viewString':relatedView, 'expFold':'CirInSq/CSMTLTest', 'useCSMTLDS':True})
+
+#Test of the csmtl paradymn
+csmtl = [\
+    cau(standardvars, {'netType':'BP', 'outfile':'bpcsmtlresult.txt'}),\
+    cau(standardvars, {'netType':'CC', 'outfile':'cccsmtlresult.txt'})\
+    ]

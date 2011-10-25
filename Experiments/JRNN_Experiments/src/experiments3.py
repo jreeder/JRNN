@@ -28,7 +28,14 @@ testdicts = [{'dsname':'band','numRuns':60, 'numInputs':2,'numOutputs':1,\
             #+ d.normimp + d.smallimpnv + d.largeimpnv + d.normimpnv \
             #+ s.normimp + s.smallimpnv + s.largeimpnv + s.normimpnv
 
-experiments = b.ccmtl + b.csmtl + l.ccmtl + c.ccmtl
+#experiments = b.ccmtl + b.csmtl + l.ccmtl + c.ccmtl
+
+experiments = b.ccmtl + b.csmtl + b.etamtl \
+    + c.ccmtl + c.csmtl + c.etamtl \
+    + l.ccmtl + l.csmtl + l.etamtl \
+    + g.ccmtl + g.csmtl + g.etamtl \
+    + d.ccmtl + d.csmtl + d.etamtl \ 
+    + s.ccmtl + s.csmtl + s.etamtl
 
 #experiments = d.largeimpnv + d.normimpnv
 
