@@ -452,3 +452,13 @@ csmtl = [\
     cau(standardvars, {'netType':'BP', 'outfile':'bpcsmtlresult.txt'}),\
     cau(standardvars, {'netType':'CC', 'outfile':'cccsmtlresult.txt'})\
     ]
+
+#Test of csmtl with odd fixed sizes. 
+
+standardvars.update({'useValidation':False})
+
+csmtlos = [\
+    cau(standardvars, {'netType':'BP', 'numHidPerTask':largenumhid, 'outfile':'bpcsmtllsresult.txt'}),\
+    cau(standardvars, {'netType':'CC', 'numHidPerTask':largenumhid, 'outfile':'cccsmtlnvresult.txt'}),\
+    cau(standardvars, {'netType':'BP', 'numHidPerTask':smallnumhid, 'outfile':'bpcsmtlssresult.txt'})\
+    ]

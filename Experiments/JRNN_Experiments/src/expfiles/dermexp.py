@@ -1,29 +1,30 @@
 #!/usr/bin/env python
 #coding:utf-8
 # Author:  jreeder --<>
-# Purpose: file for glass experiments
-# Created: 6/1/2011
+# Purpose: derm experiments
+# Created: 6/5/2011
+
 
 def cau(source, upd):
     dictcopy = source.copy()
     dictcopy.update(upd)
     return dictcopy
 
-standardvars = {'dsname':'glass','numRuns':60, 'numInputs':9,'numOutputs':1,\
-                'numVal':50, 'numTest':100, 'numTrain':50, \
-                'numHidPerTask':5,'useValidation':True, 'primTask':0, \
-                'numTasks':1, 'viewString':'task1', 'expFold':'glass/NormSize', \
+standardvars = {'dsname':'derm','numRuns':60, 'numInputs':33,'numOutputs':1,\
+                'numVal':100, 'numTest':200, 'numTrain':50, \
+                'numHidPerTask':3,'useValidation':True, 'primTask':0, \
+                'numTasks':1, 'viewString':'task1', 'expFold':'derm/NormSize', \
                 'outfile':'results.txt', 'netType':'BP', 'impNumTrain':0}
 
-impNumTrain = 20
-normnvpath = 'glass/NormSizeNV'
-largenvpath = 'glass/LargeSizeNV'
-smallnvpath = 'glass/SmallSizeNV'
+impNumTrain = 10
+normnvpath = 'derm/NormSizeNV'
+largenvpath = 'derm/LargeSizeNV'
+smallnvpath = 'derm/SmallSizeNV'
 largenumhid = 10
-regnumhid = 5
-smallnumhid = 2
-relatedView = 'task1,task2,task3,task6'
-urView = 'task1,task2,task4,task5'
+regnumhid = 3
+smallnumhid = 1
+relatedView = 'task1,task2,task3,task5'
+urView = 'task1,task2,task4,task6'
 primTask = 1
 
 
@@ -71,9 +72,10 @@ smallimpnv = [cau(standardvars, {'numTasks':4, 'impNumTrain':impNumTrain, 'viewS
            cau(standardvars, {'numTasks':4, 'impNumTrain':impNumTrain, 'viewString':urView, 'primTask':primTask, 'outfile':'ccmtlurresults.txt','netType':'CC'}),\
            ]           
 
+
 #Extra Tests
 standardvars.update({'viewString':urView,'primTask':primTask,'numTasks':4, 'useValidation':True,\
-                    'numHidPerTask':regnumhid, 'expFold':'glass/CCMTLTest'})
+                    'numHidPerTask':regnumhid, 'expFold':'derm/CCMTLTest'})
 
 #Test of whether the focusing the correlation on the primary task worked or not. 
 ccmtl = [\
@@ -81,7 +83,7 @@ ccmtl = [\
     cau(standardvars, {'netType':'CCMTL', 'outfile':'ccmtlurresult.txt'})\
 ]
 
-standardvars.update({'expFold':'glass/ETAMTLTest', 'useEtaMTL':True})
+standardvars.update({'expFold':'derm/ETAMTLTest', 'useEtaMTL':True})
 
 #Eta MTL tests. Need to compare these against other unrelated bp and cc tests.
 etamtl = [\
@@ -90,10 +92,20 @@ etamtl = [\
     cau(standardvars, {'netType':'CCMTL', 'useCandSlope':True, 'outfile':'ccetamtlslopeurresult.txt'})\
 ]
 
-standardvars.update({'viewString':relatedView, 'expFold':'glass/CSMTLTest', 'useCSMTLDS':True})
+standardvars.update({'viewString':relatedView, 'expFold':'derm/CSMTLTest', 'useCSMTLDS':True})
 
 #Test of the csmtl paradymn
 csmtl = [\
     cau(standardvars, {'netType':'BP', 'outfile':'bpcsmtlresult.txt'}),\
     cau(standardvars, {'netType':'CC', 'outfile':'cccsmtlresult.txt'})\
+    ]
+
+#Test of csmtl with odd fixed sizes. 
+
+standardvars.update({'useValidation':False})
+
+csmtlos = [\
+    cau(standardvars, {'netType':'BP', 'numHidPerTask':largenumhid, 'outfile':'bpcsmtllsresult.txt'}),\
+    cau(standardvars, {'netType':'CC', 'numHidPerTask':largenumhid, 'outfile':'cccsmtlnvresult.txt'}),\
+    cau(standardvars, {'netType':'BP', 'numHidPerTask':smallnumhid, 'outfile':'bpcsmtlssresult.txt'})\
     ]

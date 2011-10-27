@@ -3,12 +3,12 @@
 # Purpose: Holds experiments defs for jrnn_exprun 
 # Created: 5/27/2011
 
-import bandexp as b
-import cirinsqexp as c
-import linearexp as l
-import glassexp as g
-import dermexp as d
-import smallcovtypeexp as s
+from expfiles import bandexp as b
+from expfiles import cirinsqexp as c
+from expfiles import linearexp as l
+from expfiles import glassexp as g
+from expfiles import dermexp as d
+from expfiles import smallcovtypeexp as s
 
 
 testdicts = [{'dsname':'band','numRuns':60, 'numInputs':2,'numOutputs':1,\
@@ -30,12 +30,14 @@ testdicts = [{'dsname':'band','numRuns':60, 'numInputs':2,'numOutputs':1,\
 
 #experiments = b.ccmtl + b.csmtl + l.ccmtl + c.ccmtl
 
-experiments = b.ccmtl + b.csmtl + b.etamtl \
-    + c.ccmtl + c.csmtl + c.etamtl \
-    + l.ccmtl + l.csmtl + l.etamtl \
-    + g.ccmtl + g.csmtl + g.etamtl \
-    + d.ccmtl + d.csmtl + d.etamtl \
-    + s.ccmtl + s.csmtl + s.etamtl
+#experiments = b.ccmtl + b.csmtl + b.etamtl \
+#    + c.ccmtl + c.csmtl + c.etamtl \
+#    + l.ccmtl + l.csmtl + l.etamtl \
+#    + g.ccmtl + g.csmtl + g.etamtl \
+#    + d.ccmtl + d.csmtl + d.etamtl \
+#    + s.ccmtl + s.csmtl + s.etamtl
+
+experiments = b.csmtlos + c.csmtlos + l.csmtlos + g.csmtlos + d.csmtlos + s.csmtlos
 
 #experiments = d.largeimpnv + d.normimpnv
 
