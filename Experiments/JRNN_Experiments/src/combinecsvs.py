@@ -7,8 +7,8 @@
 import sys
 import os
 
-folder = r"C:\Users\John\Documents\Source\JRNN\Experiments\Results\csvresults\EXP 2-1 Round 10"
-filter1 = "ETAMTL"
+folder = r"C:\Users\John\Documents\Source\JRNN\Experiments\Results\csvresults\EXP 2-1 Round 10-1"
+filter1 = "CSMTL"
 filter2 = "Error"
 outfilename = "combined/" + filter1 + " - " + filter2 + ".csv"
 test = True

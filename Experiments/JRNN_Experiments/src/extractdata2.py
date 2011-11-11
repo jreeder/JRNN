@@ -102,12 +102,12 @@ if __name__=='__main__':
     if not os.path.exists(csvpath):
         os.makedirs(csvpath)
         
-    extractdata("Linear CCMTL", "linear/CCMTLTest")
-    extractdata("Band CCMTL", "band/CCMTLTest")
-    extractdata("CirInSq CCMTL", "CirInSq/CCMTLTest")
-    extractdata("Derm CCMTL", "derm/CCMTLTest")
-    extractdata("Glass CCMTL", "glass/CCMTLTest")
-    extractdata("CoverType CCMTL", "smallcovtype/CCMTLTest")
+    #extractdata("Linear CCMTL", "linear/CCMTLTest")
+    #extractdata("Band CCMTL", "band/CCMTLTest")
+    #extractdata("CirInSq CCMTL", "CirInSq/CCMTLTest")
+    #extractdata("Derm CCMTL", "derm/CCMTLTest")
+    #extractdata("Glass CCMTL", "glass/CCMTLTest")
+    #extractdata("CoverType CCMTL", "smallcovtype/CCMTLTest")
     
     extractdata("Linear CSMTL", "linear/CSMTLTest")
     extractdata("Band CSMTL", "band/CSMTLTest")
@@ -116,11 +116,11 @@ if __name__=='__main__':
     extractdata("Glass CSMTL", "glass/CSMTLTest")
     extractdata("CoverType CSMTL", "smallcovtype/CSMTLTest")
     
-    extractdata("Linear ETAMTL", "linear/ETAMTLTest")
-    extractdata("Band ETAMTL", "band/ETAMTLTest")
-    extractdata("CirInSq ETAMTL", "CirInSq/ETAMTLTest")
-    extractdata("Derm ETAMTL", "derm/ETAMTLTest")
-    extractdata("Glass ETAMTL", "glass/ETAMTLTest")
-    extractdata("CoverType ETAMTL", "smallcovtype/ETAMTLTest")
+    #extractdata("Linear ETAMTL", "linear/ETAMTLTest")
+    #extractdata("Band ETAMTL", "band/ETAMTLTest")
+    #extractdata("CirInSq ETAMTL", "CirInSq/ETAMTLTest")
+    #extractdata("Derm ETAMTL", "derm/ETAMTLTest")
+    #extractdata("Glass ETAMTL", "glass/ETAMTLTest")
+    #extractdata("CoverType ETAMTL", "smallcovtype/ETAMTLTest")
     
     print "Finished" 
