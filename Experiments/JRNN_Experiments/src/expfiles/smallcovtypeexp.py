@@ -37,6 +37,25 @@ normimp = [cau(standardvars, {'numTasks':4, 'impNumTrain':impNumTrain, 'viewStri
            ]
 
 
+standardvars.update({'expFold':'glass/stltests'})
+
+stltests = [cau(standardvars, {'viewString':'task1', 'outfile':'bpstltask1.txt'}),\
+            cau(standardvars, {'viewString':'task2', 'outfile':'bpstltask2.txt'}),\
+            cau(standardvars, {'viewString':'task3', 'outfile':'bpstltask3.txt'}),\
+            cau(standardvars, {'viewString':'task4', 'outfile':'bpstltask4.txt'}),\
+            cau(standardvars, {'viewString':'task5', 'outfile':'bpstltask5.txt'}),\
+            cau(standardvars, {'viewString':'task6', 'outfile':'bpstltask6.txt'}),\
+            cau(standardvars, {'viewString':'task7', 'outfile':'bpstltask7.txt'}),\
+            #CC
+            cau(standardvars, {'viewString':'task1', 'outfile':'ccstltask1.txt', 'netType':'CC'}),\
+            cau(standardvars, {'viewString':'task2', 'outfile':'ccstltask2.txt', 'netType':'CC'}),\
+            cau(standardvars, {'viewString':'task3', 'outfile':'ccstltask3.txt', 'netType':'CC'}),\
+            cau(standardvars, {'viewString':'task4', 'outfile':'ccstltask4.txt', 'netType':'CC'}),\
+            cau(standardvars, {'viewString':'task5', 'outfile':'ccstltask5.txt', 'netType':'CC'}),\
+            cau(standardvars, {'viewString':'task6', 'outfile':'ccstltask6.txt', 'netType':'CC'}),\
+            cau(standardvars, {'viewString':'task7', 'outfile':'ccstltask7.txt', 'netType':'CC'}),\
+            ]
+
 standardvars.update({'useValidation':False, 'expFold':normnvpath})
 
 normimpnv = [cau(standardvars, {'numTasks':4, 'impNumTrain':impNumTrain, 'viewString':relatedView, 'primTask':primTask, 'outfile':'bpmtlresults.txt'}),\
@@ -89,6 +108,8 @@ etamtl = [\
     cau(standardvars, {'netType':'CCMTL', 'outfile':'ccetamtlscoreurresult.txt'}),\
     cau(standardvars, {'netType':'CCMTL', 'useCandSlope':True, 'outfile':'ccetamtlslopeurresult.txt'})\
 ]
+
+standardvars.update({'useEtaMTL':False})
 
 standardvars.update({'viewString':relatedView, 'expFold':'smallcovtype/CSMTLTest', 'useCSMTLDS':True})
 

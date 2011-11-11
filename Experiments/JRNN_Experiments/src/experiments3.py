@@ -9,6 +9,7 @@ from expfiles import linearexp as l
 from expfiles import glassexp as g
 from expfiles import dermexp as d
 from expfiles import smallcovtypeexp as s
+from expfiles import heartexp as h
 
 
 testdicts = [{'dsname':'band','numRuns':60, 'numInputs':2,'numOutputs':1,\
@@ -37,7 +38,9 @@ testdicts = [{'dsname':'band','numRuns':60, 'numInputs':2,'numOutputs':1,\
 #    + d.ccmtl + d.csmtl + d.etamtl \
 #    + s.ccmtl + s.csmtl + s.etamtl
 
-experiments = b.csmtlos + c.csmtlos + l.csmtlos + g.csmtlos + d.csmtlos + s.csmtlos
+#experiments = b.csmtlos + c.csmtlos + l.csmtlos + g.csmtlos + d.csmtlos + s.csmtlos
+
+experiments = b.stltests + c.stltests + l.stltests + g.stltests + d.stltests + s.stltests + h.stltests
 
 #experiments = d.largeimpnv + d.normimpnv
 

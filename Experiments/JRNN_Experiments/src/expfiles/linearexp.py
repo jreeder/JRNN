@@ -425,7 +425,22 @@ linearlargenv = [\
     ]        
 
 
+standardvars.update({'expFold':'band/stltests'})
 
+stltests = [cau(standardvars, {'viewString':'task1', 'outfile':'bpstltask1.txt'}),\
+            cau(standardvars, {'viewString':'task2', 'outfile':'bpstltask2.txt'}),\
+            cau(standardvars, {'viewString':'task3', 'outfile':'bpstltask3.txt'}),\
+            cau(standardvars, {'viewString':'task4', 'outfile':'bpstltask4.txt'}),\
+            cau(standardvars, {'viewString':'task5', 'outfile':'bpstltask5.txt'}),\
+            cau(standardvars, {'viewString':'task6', 'outfile':'bpstltask6.txt'}),\
+            #CC
+            cau(standardvars, {'viewString':'task1', 'outfile':'ccstltask1.txt', 'netType':'CC'}),\
+            cau(standardvars, {'viewString':'task2', 'outfile':'ccstltask2.txt', 'netType':'CC'}),\
+            cau(standardvars, {'viewString':'task3', 'outfile':'ccstltask3.txt', 'netType':'CC'}),\
+            cau(standardvars, {'viewString':'task4', 'outfile':'ccstltask4.txt', 'netType':'CC'}),\
+            cau(standardvars, {'viewString':'task5', 'outfile':'ccstltask5.txt', 'netType':'CC'}),\
+            cau(standardvars, {'viewString':'task6', 'outfile':'ccstltask6.txt', 'netType':'CC'}),\
+            ]
 
 standardvars.update({'viewString':urView,'numTasks':4,'primTask':primTask, \
                      'impNumTrain':impNumTrain, 'expFold':'linear/CCMTLTest'})
@@ -443,6 +458,8 @@ etamtl = [\
     cau(standardvars, {'netType':'CCMTL', 'outfile':'ccetamtlscoreurresult.txt'}),\
     cau(standardvars, {'netType':'CCMTL', 'useCandSlope':True, 'outfile':'ccetamtlslopeurresult.txt'})\
 ]
+
+standardvars.update({'useEtaMTL':False})
 
 standardvars.update({'viewString':relatedView, 'expFold':'linear/CSMTLTest', 'useCSMTLDS':True})
 

@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 #coding:utf-8
 # Author:  jreeder --<>
-# Purpose: derm experiments
+# Purpose: heart experiments
 # Created: 6/5/2011
 
 
@@ -10,21 +10,22 @@ def cau(source, upd):
     dictcopy.update(upd)
     return dictcopy
 
-standardvars = {'dsname':'derm','numRuns':60, 'numInputs':33,'numOutputs':1,\
-                'numVal':100, 'numTest':200, 'numTrain':50, \
-                'numHidPerTask':3,'useValidation':True, 'primTask':0, \
-                'numTasks':1, 'viewString':'task1', 'expFold':'derm/NormSize', \
+standardvars = {'dsname':'heart','numRuns':60, 'numInputs':13,'numOutputs':1,\
+                'numVal':100, 'numTest':200, 'numTrain':80, \
+                'numHidPerTask':5,'useValidation':True, 'primTask':0, \
+                'numTasks':1, 'viewString':'task1', 'expFold':'heart/NormSize', \
                 'outfile':'results.txt', 'netType':'BP', 'impNumTrain':0}
 
 impNumTrain = 10
-normnvpath = 'derm/NormSizeNV'
-largenvpath = 'derm/LargeSizeNV'
-smallnvpath = 'derm/SmallSizeNV'
+regNumTrain = 80
+normnvpath = 'heart/NormSizeNV'
+largenvpath = 'heart/LargeSizeNV'
+smallnvpath = 'heart/SmallSizeNV'
 largenumhid = 10
-regnumhid = 3
-smallnumhid = 1
-relatedView = 'task1,task2,task3,task5'
-urView = 'task1,task2,task4,task6'
+regnumhid = 5
+smallnumhid = 2
+relatedView = 'task1,task2,task3,task4'
+urView = 'task1,task2,task4,task5'
 primTask = 1
 
 
@@ -37,22 +38,19 @@ normimp = [cau(standardvars, {'numTasks':4, 'impNumTrain':impNumTrain, 'viewStri
            cau(standardvars, {'numTasks':4, 'impNumTrain':impNumTrain, 'viewString':urView, 'primTask':primTask, 'outfile':'ccmtlurresults.txt','netType':'CC'}),\
            ]
 
-
-standardvars.update({'expFold':'derm/stltests'})
+standardvars.update({'expFold':'heart/stltests'})
 
 stltests = [cau(standardvars, {'viewString':'task1', 'outfile':'bpstltask1.txt'}),\
             cau(standardvars, {'viewString':'task2', 'outfile':'bpstltask2.txt'}),\
             cau(standardvars, {'viewString':'task3', 'outfile':'bpstltask3.txt'}),\
             cau(standardvars, {'viewString':'task4', 'outfile':'bpstltask4.txt'}),\
             cau(standardvars, {'viewString':'task5', 'outfile':'bpstltask5.txt'}),\
-            cau(standardvars, {'viewString':'task6', 'outfile':'bpstltask6.txt'}),\
             #CC
             cau(standardvars, {'viewString':'task1', 'outfile':'ccstltask1.txt', 'netType':'CC'}),\
             cau(standardvars, {'viewString':'task2', 'outfile':'ccstltask2.txt', 'netType':'CC'}),\
             cau(standardvars, {'viewString':'task3', 'outfile':'ccstltask3.txt', 'netType':'CC'}),\
             cau(standardvars, {'viewString':'task4', 'outfile':'ccstltask4.txt', 'netType':'CC'}),\
             cau(standardvars, {'viewString':'task5', 'outfile':'ccstltask5.txt', 'netType':'CC'}),\
-            cau(standardvars, {'viewString':'task6', 'outfile':'ccstltask6.txt', 'netType':'CC'}),\
             ]
 
 standardvars.update({'useValidation':False, 'expFold':normnvpath})
@@ -92,7 +90,7 @@ smallimpnv = [cau(standardvars, {'numTasks':4, 'impNumTrain':impNumTrain, 'viewS
 
 #Extra Tests
 standardvars.update({'viewString':urView,'primTask':primTask,'numTasks':4, 'useValidation':True,\
-                    'numHidPerTask':regnumhid, 'expFold':'derm/CCMTLTest'})
+                    'numHidPerTask':regnumhid, 'expFold':'heart/CCMTLTest'})
 
 #Test of whether the focusing the correlation on the primary task worked or not. 
 ccmtl = [\
@@ -100,7 +98,7 @@ ccmtl = [\
     cau(standardvars, {'netType':'CCMTL', 'outfile':'ccmtlurresult.txt'})\
 ]
 
-standardvars.update({'expFold':'derm/ETAMTLTest', 'useEtaMTL':True})
+standardvars.update({'expFold':'heart/ETAMTLTest', 'useEtaMTL':True})
 
 #Eta MTL tests. Need to compare these against other unrelated bp and cc tests.
 etamtl = [\
@@ -111,7 +109,7 @@ etamtl = [\
 
 standardvars.update({'useEtaMTL':False})
 
-standardvars.update({'viewString':relatedView, 'expFold':'derm/CSMTLTest', 'useCSMTLDS':True})
+standardvars.update({'viewString':relatedView, 'expFold':'heart/CSMTLTest', 'useCSMTLDS':True})
 
 #Test of the csmtl paradymn
 csmtl = [\
