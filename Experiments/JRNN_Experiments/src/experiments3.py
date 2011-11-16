@@ -40,7 +40,7 @@ testdicts = [{'dsname':'band','numRuns':60, 'numInputs':2,'numOutputs':1,\
 
 #experiments = b.csmtlos + c.csmtlos + l.csmtlos + g.csmtlos + d.csmtlos + s.csmtlos
 
-experiments = b.stltests + c.stltests + l.stltests + g.stltests + d.stltests + s.stltests + h.stltests
+experiments = b.stltests + c.stltests + l.stltests + g.stltests + d.stltests + s.stltests #+ h.stltests
 
 #experiments = d.largeimpnv + d.normimpnv
 

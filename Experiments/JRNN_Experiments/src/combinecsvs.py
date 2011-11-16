@@ -8,10 +8,15 @@ import sys
 import os
 
 folder = r"C:\Users\John\Documents\Source\JRNN\Experiments\Results\csvresults\EXP 2-1 Round 10-1"
-filter1 = "CSMTL"
+filter1 = "STL"
 filter2 = "Error"
 outfilename = "combined/" + filter1 + " - " + filter2 + ".csv"
 test = True
+
+table = {}
+dsnames = []
+
+
 if __name__=='__main__':
     if not test:
         folder = sys.argv[1]
@@ -27,14 +32,28 @@ if __name__=='__main__':
     with open(outfilename, "w") as outfile:
         for filename in filterlist:
             dsname = filename.split(" ")[0]
+            dsnames.append(dsname)
             with open(filename, 'r') as infile:
                 lines = infile.readlines()
-                if not headerwritten:
-                    headerline = " ," + lines[0]
-                    outfile.write(headerline)
-                    headerwritten = True
-                newline = dsname + ", " + lines[1]
-                outfile.write(newline)
+                headings = lines[0][:-1].split(',')
+                values = lines[1][:-1].split(',')
+                for heading, value in zip(headings,values):
+                    if heading not in table:
+                        table[heading] = {}
+                    table[heading][dsname] = value
+        
+        headers = table.keys();
+        headers.sort()
+        headerline = ' ,' + ','.join(headers)
+        print >>outfile, headerline
+        
+        for dsname in dsnames:
+            line = dsname + ', '
+            values = []
+            for header in headers:
+                values.append(table[header].get(dsname, ' '))
+            line += ','.join(values)
+            print >>outfile, line
                 
                 
                 

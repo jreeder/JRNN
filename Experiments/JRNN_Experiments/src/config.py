@@ -19,6 +19,7 @@ datapath2 = basepath + r"/Experiments/Data/Tabbed Data/UCI Data/"
 outpath = basepath + r"/Experiments/Results/Exp 1-1/Round-4/"
 outpath2 = basepath + r"/Experiments/Results/Exp 2-1/Round 5/"
 outpath3 = basepath + r"/Experiments/Results/Exp 2-1/Round 10/" #8 is best run 9 is new csmtl stuff 10 is all ds with csmtl ccmtl and etamtl and stltests
+genericout = basepath + r"/Experiments/Results/"
 jrnn_exe2 = basepath + r"/Builds/VS2010/JRNN/Release/JRNN_test2.exe"
 jrnn_exprun = basepath + r"/Builds/VS2010/JRNN/Release/JRNN_exprun.exe"
 figpath = basepath + r"/Experiments/Results/Figures/"

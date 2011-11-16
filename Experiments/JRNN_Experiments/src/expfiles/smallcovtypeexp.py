@@ -37,7 +37,7 @@ normimp = [cau(standardvars, {'numTasks':4, 'impNumTrain':impNumTrain, 'viewStri
            ]
 
 
-standardvars.update({'expFold':'glass/stltests'})
+standardvars.update({'expFold':'smallcovtype/stltests'})
 
 stltests = [cau(standardvars, {'viewString':'task1', 'outfile':'bpstltask1.txt'}),\
             cau(standardvars, {'viewString':'task2', 'outfile':'bpstltask2.txt'}),\

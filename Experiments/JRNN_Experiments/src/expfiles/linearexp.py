@@ -425,7 +425,7 @@ linearlargenv = [\
     ]        
 
 
-standardvars.update({'expFold':'band/stltests'})
+standardvars.update({'expFold':'linear/stltests'})
 
 stltests = [cau(standardvars, {'viewString':'task1', 'outfile':'bpstltask1.txt'}),\
             cau(standardvars, {'viewString':'task2', 'outfile':'bpstltask2.txt'}),\
