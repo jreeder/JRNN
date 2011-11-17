@@ -28,7 +28,7 @@ def ProcessFile(file):
     
     perc = classcounts[1] / float(total)
     
-    print datasetname + " " + str(perc)
+    print dataset + " " + str(perc)
     
 if __name__=='__main__':
     
