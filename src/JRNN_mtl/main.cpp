@@ -404,7 +404,7 @@ JRNN::DatasetPtr LoadData( string viewString, string basepath, string dsname, in
 			cds->DistData(numTrain, numVal, numTest, true, impNumTrain, (primarytask - 1));
 		}
 		else {
-			cds->DistData(numTrain, numVal, numTest);
+			cds->DistData(numTrain, numVal, numTest, false, 0, (primarytask - 1));
 		}
 
 		retDS = cds->SpawnDS();
