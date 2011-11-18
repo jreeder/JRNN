@@ -15,10 +15,22 @@ standardvars = {'dsname':'glass','numRuns':60, 'numInputs':9,'numOutputs':1,\
                 'numTasks':1, 'viewString':'task1', 'expFold':'glass/NormSize', \
                 'outfile':'results.txt', 'netType':'BP', 'impNumTrain':0}
 
-impNumTrain = 20
+impNumTrain = 15
 normnvpath = 'glass/NormSizeNV'
 largenvpath = 'glass/LargeSizeNV'
 smallnvpath = 'glass/SmallSizeNV'
+
+stlpath = 'glass/stltests'
+ccmtlpath = 'glass/CCMTLTest'
+etamtlpath = 'glass/ETAMTLTest'
+csmtlpath = 'glass/CSMTLTest'
+gradurpath = 'glass/GRADURTest'
+
+gradurview1 = 'task1,task1,task1,task1,task1,task1'
+gradurview2 = 'task1,task1,task1,task1,task1,task2'
+gradurview3 = 'task1,task1,task1,task1,task2,task3'
+gradurview4 = 'task1,task1,task1,task2,task3,task6'
+
 largenumhid = 10
 regnumhid = 5
 smallnumhid = 2
@@ -36,7 +48,7 @@ normimp = [cau(standardvars, {'numTasks':4, 'impNumTrain':impNumTrain, 'viewStri
            cau(standardvars, {'numTasks':4, 'impNumTrain':impNumTrain, 'viewString':urView, 'primTask':primTask, 'outfile':'ccmtlurresults.txt','netType':'CC'}),\
            ]
 
-standardvars.update({'expFold':'glass/stltests'})
+standardvars.update({'expFold':stlpath})
 
 stltests = [cau(standardvars, {'viewString':'task1', 'outfile':'bpstltask1.txt'}),\
             cau(standardvars, {'viewString':'task2', 'outfile':'bpstltask2.txt'}),\
@@ -52,6 +64,7 @@ stltests = [cau(standardvars, {'viewString':'task1', 'outfile':'bpstltask1.txt'}
             cau(standardvars, {'viewString':'task5', 'outfile':'ccstltask5.txt', 'netType':'CC'}),\
             cau(standardvars, {'viewString':'task6', 'outfile':'ccstltask6.txt', 'netType':'CC'}),\
             ]
+
 
 standardvars.update({'useValidation':False, 'expFold':normnvpath})
 
@@ -87,19 +100,19 @@ smallimpnv = [cau(standardvars, {'numTasks':4, 'impNumTrain':impNumTrain, 'viewS
            cau(standardvars, {'numTasks':4, 'impNumTrain':impNumTrain, 'viewString':urView, 'primTask':primTask, 'outfile':'ccmtlurresults.txt','netType':'CC'}),\
            ]           
 
-#Extra Tests
-standardvars.update({'viewString':urView,'primTask':primTask,'numTasks':4, 'useValidation':True,\
-                    'numHidPerTask':regnumhid, 'expFold':'glass/CCMTLTest'})
 
-#Test of whether the focusing the correlation on the primary task worked or not. 
+
+standardvars.update({'viewString':urView,'numTasks':4,'primTask':primTask, 'useValidation':True, \
+                     'impNumTrain':impNumTrain, 'numHidPerTask':regnumhid, 'expFold':ccmtlpath})
+
 ccmtl = [\
     cau(standardvars, {'netType':'CC', 'outfile':'ccurresult.txt'}),\
     cau(standardvars, {'netType':'CCMTL', 'outfile':'ccmtlurresult.txt'})\
-]
+    ]
 
-standardvars.update({'expFold':'glass/ETAMTLTest', 'useEtaMTL':True})
+standardvars.update({'expFold':etamtlpath, 'useEtaMTL':True})
 
-#Eta MTL tests. Need to compare these against other unrelated bp and cc tests.
+#Eta MTL tests. Need to compare these against other unrelated bp and cc tests. 
 etamtl = [\
     cau(standardvars, {'netType':'BP', 'outfile':'bpetamtlurresult.txt'}),\
     cau(standardvars, {'netType':'CCMTL', 'outfile':'ccetamtlscoreurresult.txt'}),\
@@ -108,7 +121,7 @@ etamtl = [\
 
 standardvars.update({'useEtaMTL':False})
 
-standardvars.update({'viewString':relatedView, 'expFold':'glass/CSMTLTest', 'useCSMTLDS':True})
+standardvars.update({'viewString':relatedView, 'expFold':csmtlpath, 'useCSMTLDS':True})
 
 #Test of the csmtl paradymn
 csmtl = [\
@@ -124,4 +137,35 @@ csmtlos = [\
     cau(standardvars, {'netType':'BP', 'numHidPerTask':largenumhid, 'outfile':'bpcsmtllsresult.txt'}),\
     cau(standardvars, {'netType':'CC', 'numHidPerTask':largenumhid, 'outfile':'cccsmtlnvresult.txt'}),\
     cau(standardvars, {'netType':'BP', 'numHidPerTask':smallnumhid, 'outfile':'bpcsmtlssresult.txt'})\
+    ]
+
+
+#Test Showing What happens in MTL and csMTL when the number of tasks become more and more related. 
+standardvars.update({'useValidation':True, 'numTasks':6, 'numTrain':impNumTrain, 'expFold':gradurpath,\
+                     'impNumTrain':0})
+
+csmtlgur = [\
+    cau(standardvars, {'netType':'BP', 'viewString':gradurview1, 'outfile':'bpcsmtlgurv1result.txt'}),\
+    cau(standardvars, {'netType':'BP', 'viewString':gradurview2, 'outfile':'bpcsmtlgurv1result.txt'}),\
+    cau(standardvars, {'netType':'BP', 'viewString':gradurview3, 'outfile':'bpcsmtlgurv1result.txt'}),\
+    cau(standardvars, {'netType':'BP', 'viewString':gradurview4, 'outfile':'bpcsmtlgurv1result.txt'}),\
+    #CC
+    cau(standardvars, {'netType':'CC', 'viewString':gradurview1, 'outfile':'cccsmtlgurv1result.txt'}),\
+    cau(standardvars, {'netType':'CC', 'viewString':gradurview2, 'outfile':'cccsmtlgurv1result.txt'}),\
+    cau(standardvars, {'netType':'CC', 'viewString':gradurview3, 'outfile':'cccsmtlgurv1result.txt'}),\
+    cau(standardvars, {'netType':'CC', 'viewString':gradurview4, 'outfile':'cccsmtlgurv1result.txt'}),\
+    ]
+
+standardvars.update({'useCSMTLDS':False})
+
+mtlgur = [\
+    cau(standardvars, {'netType':'BP', 'viewString':gradurview1, 'outfile':'bpmtlgurv1result.txt'}),\
+    cau(standardvars, {'netType':'BP', 'viewString':gradurview2, 'outfile':'bpmtlgurv1result.txt'}),\
+    cau(standardvars, {'netType':'BP', 'viewString':gradurview3, 'outfile':'bpmtlgurv1result.txt'}),\
+    cau(standardvars, {'netType':'BP', 'viewString':gradurview4, 'outfile':'bpmtlgurv1result.txt'}),\
+    #CC
+    cau(standardvars, {'netType':'CC', 'viewString':gradurview1, 'outfile':'ccmtlgurv1result.txt'}),\
+    cau(standardvars, {'netType':'CC', 'viewString':gradurview2, 'outfile':'ccmtlgurv1result.txt'}),\
+    cau(standardvars, {'netType':'CC', 'viewString':gradurview3, 'outfile':'ccmtlgurv1result.txt'}),\
+    cau(standardvars, {'netType':'CC', 'viewString':gradurview4, 'outfile':'ccmtlgurv1result.txt'}),\
     ]

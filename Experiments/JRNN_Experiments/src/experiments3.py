@@ -18,6 +18,7 @@ testdicts = [{'dsname':'band','numRuns':60, 'numInputs':2,'numOutputs':1,\
         'numTasks':4, 'viewString':'task1,task2,task3,task4', 'expFold':'band/NormSize', \
         'outfile':'results.txt', 'netType':'BP', 'impNumTrain':20}\
         ]
+experiments = []
 
 # b.bandnorm + b.bandnormnv + b.bandlargenv + b.bandsmallnv 
 #experiments = c.cirinsqnorm + c.cirinsqnormnv + c.cirinsqlargenv + c.cirinsqsmallnv \
@@ -25,22 +26,36 @@ testdicts = [{'dsname':'band','numRuns':60, 'numInputs':2,'numOutputs':1,\
 
 
 
-#experiments = g.normimp + g.smallimpnv + g.largeimpnv + g.normimpnv \
-            #+ d.normimp + d.smallimpnv + d.largeimpnv + d.normimpnv \
-            #+ s.normimp + s.smallimpnv + s.largeimpnv + s.normimpnv
+experiments += g.normimp + g.smallimpnv + g.largeimpnv + g.normimpnv \
+            + d.normimp + d.smallimpnv + d.largeimpnv + d.normimpnv \
+            + s.normimp + s.smallimpnv + s.largeimpnv + s.normimpnv \
+            + b.normimp + b.smallimpnv + b.largeimpnv + b.normimpnv \
+            + c.normimp + c.smallimpnv + c.largeimpnv + c.normimpnv \
+            + l.normimp + l.smallimpnv + l.largeimpnv + l.normimpnv \
+            + h.normimp + h.smallimpnv + h.largeimpnv + h.normimpnv
 
 #experiments = b.ccmtl + b.csmtl + l.ccmtl + c.ccmtl
 
-#experiments = b.ccmtl + b.csmtl + b.etamtl \
-#    + c.ccmtl + c.csmtl + c.etamtl \
-#    + l.ccmtl + l.csmtl + l.etamtl \
-#    + g.ccmtl + g.csmtl + g.etamtl \
-#    + d.ccmtl + d.csmtl + d.etamtl \
-#    + s.ccmtl + s.csmtl + s.etamtl
+experiments += b.ccmtl + b.csmtl + b.etamtl \
+    + c.ccmtl + c.csmtl + c.etamtl \
+    + l.ccmtl + l.csmtl + l.etamtl \
+    + g.ccmtl + g.csmtl + g.etamtl \
+    + d.ccmtl + d.csmtl + d.etamtl \
+    + s.ccmtl + s.csmtl + s.etamtl \
+    + h.ccmtl + h.csmtl + h.etamtl
 
-#experiments = b.csmtlos + c.csmtlos + l.csmtlos + g.csmtlos + d.csmtlos + s.csmtlos
+experiments += b.csmtlos + c.csmtlos + l.csmtlos + g.csmtlos \
+    + d.csmtlos + s.csmtlos + h.csmtlos
 
-experiments = b.stltests + c.stltests + l.stltests + g.stltests + d.stltests + s.stltests #+ h.stltests
+experiments += b.csmtlgur + b.mtlgur \
+    + c.csmtlgur + c.mtlgur \
+    + l.csmtlgur + l.mtlgur \
+    + g.csmtlgur + g.mtlgur \
+    + d.csmtlgur + d.mtlgur \
+    + s.csmtlgur + s.mtlgur \
+    + h.csmtlgur + h.mtlgur 
+
+#experiments = b.stltests + c.stltests + l.stltests + g.stltests + d.stltests + s.stltests #+ h.stltests
 
 #experiments = d.largeimpnv + d.normimpnv
 
