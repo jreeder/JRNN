@@ -26,26 +26,26 @@ experiments = []
 
 
 
-experiments += g.normimp + g.smallimpnv + g.largeimpnv + g.normimpnv \
-            + d.normimp + d.smallimpnv + d.largeimpnv + d.normimpnv \
-            + s.normimp + s.smallimpnv + s.largeimpnv + s.normimpnv \
-            + b.normimp + b.smallimpnv + b.largeimpnv + b.normimpnv \
-            + c.normimp + c.smallimpnv + c.largeimpnv + c.normimpnv \
+#experiments += g.normimp + g.smallimpnv + g.largeimpnv + g.normimpnv \
+experiments += d.normimp + d.smallimpnv + d.largeimpnv + d.normimpnv \
             + l.normimp + l.smallimpnv + l.largeimpnv + l.normimpnv \
             + h.normimp + h.smallimpnv + h.largeimpnv + h.normimpnv
+#+ s.normimp + s.smallimpnv + s.largeimpnv + s.normimpnv \
+            #+ b.normimp + b.smallimpnv + b.largeimpnv + b.normimpnv \
+            #+ c.normimp + c.smallimpnv + c.largeimpnv + c.normimpnv \
 
 #experiments = b.ccmtl + b.csmtl + l.ccmtl + c.ccmtl
 
-experiments += b.ccmtl + b.csmtl + b.etamtl \
-    + c.ccmtl + c.csmtl + c.etamtl \
-    + l.ccmtl + l.csmtl + l.etamtl \
-    + g.ccmtl + g.csmtl + g.etamtl \
+#experiments += b.ccmtl + b.csmtl + b.etamtl \
+    #+ c.ccmtl + c.csmtl + c.etamtl \
+experiments += l.ccmtl + l.csmtl + l.etamtl \
     + d.ccmtl + d.csmtl + d.etamtl \
-    + s.ccmtl + s.csmtl + s.etamtl \
     + h.ccmtl + h.csmtl + h.etamtl
+     #+ g.ccmtl + g.csmtl + g.etamtl \
+     #+ s.ccmtl + s.csmtl + s.etamtl \
 
-experiments += b.csmtlos + c.csmtlos + l.csmtlos + g.csmtlos \
-    + d.csmtlos + s.csmtlos + h.csmtlos
+#experiments += b.csmtlos + c.csmtlos + l.csmtlos + g.csmtlos \
+ #   + d.csmtlos + s.csmtlos + h.csmtlos
 
 experiments += b.csmtlgur + b.mtlgur \
     + c.csmtlgur + c.mtlgur \

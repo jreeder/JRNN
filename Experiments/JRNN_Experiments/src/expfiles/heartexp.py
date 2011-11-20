@@ -16,7 +16,7 @@ standardvars = {'dsname':'heart','numRuns':60, 'numInputs':13,'numOutputs':1,\
                 'numTasks':1, 'viewString':'task1', 'expFold':'heart/NormSize', \
                 'outfile':'results.txt', 'netType':'BP', 'impNumTrain':0}
 
-impNumTrain = 10
+impNumTrain = 15 # was 10 in round 11
 regNumTrain = 80
 normnvpath = 'heart/NormSizeNV'
 largenvpath = 'heart/LargeSizeNV'
@@ -148,26 +148,26 @@ standardvars.update({'useValidation':True, 'numTasks':6, 'numTrain':impNumTrain,
 
 csmtlgur = [\
     cau(standardvars, {'netType':'BP', 'viewString':gradurview1, 'outfile':'bpcsmtlgurv1result.txt'}),\
-    cau(standardvars, {'netType':'BP', 'viewString':gradurview2, 'outfile':'bpcsmtlgurv1result.txt'}),\
-    cau(standardvars, {'netType':'BP', 'viewString':gradurview3, 'outfile':'bpcsmtlgurv1result.txt'}),\
-    cau(standardvars, {'netType':'BP', 'viewString':gradurview4, 'outfile':'bpcsmtlgurv1result.txt'}),\
+    cau(standardvars, {'netType':'BP', 'viewString':gradurview2, 'outfile':'bpcsmtlgurv2result.txt'}),\
+    cau(standardvars, {'netType':'BP', 'viewString':gradurview3, 'outfile':'bpcsmtlgurv3result.txt'}),\
+    cau(standardvars, {'netType':'BP', 'viewString':gradurview4, 'outfile':'bpcsmtlgurv4result.txt'}),\
     #CC
     cau(standardvars, {'netType':'CC', 'viewString':gradurview1, 'outfile':'cccsmtlgurv1result.txt'}),\
-    cau(standardvars, {'netType':'CC', 'viewString':gradurview2, 'outfile':'cccsmtlgurv1result.txt'}),\
-    cau(standardvars, {'netType':'CC', 'viewString':gradurview3, 'outfile':'cccsmtlgurv1result.txt'}),\
-    cau(standardvars, {'netType':'CC', 'viewString':gradurview4, 'outfile':'cccsmtlgurv1result.txt'}),\
+    cau(standardvars, {'netType':'CC', 'viewString':gradurview2, 'outfile':'cccsmtlgurv2result.txt'}),\
+    cau(standardvars, {'netType':'CC', 'viewString':gradurview3, 'outfile':'cccsmtlgurv3result.txt'}),\
+    cau(standardvars, {'netType':'CC', 'viewString':gradurview4, 'outfile':'cccsmtlgurv4result.txt'}),\
     ]
 
 standardvars.update({'useCSMTLDS':False})
 
 mtlgur = [\
     cau(standardvars, {'netType':'BP', 'viewString':gradurview1, 'outfile':'bpmtlgurv1result.txt'}),\
-    cau(standardvars, {'netType':'BP', 'viewString':gradurview2, 'outfile':'bpmtlgurv1result.txt'}),\
-    cau(standardvars, {'netType':'BP', 'viewString':gradurview3, 'outfile':'bpmtlgurv1result.txt'}),\
-    cau(standardvars, {'netType':'BP', 'viewString':gradurview4, 'outfile':'bpmtlgurv1result.txt'}),\
+    cau(standardvars, {'netType':'BP', 'viewString':gradurview2, 'outfile':'bpmtlgurv2result.txt'}),\
+    cau(standardvars, {'netType':'BP', 'viewString':gradurview3, 'outfile':'bpmtlgurv3result.txt'}),\
+    cau(standardvars, {'netType':'BP', 'viewString':gradurview4, 'outfile':'bpmtlgurv4result.txt'}),\
     #CC
     cau(standardvars, {'netType':'CC', 'viewString':gradurview1, 'outfile':'ccmtlgurv1result.txt'}),\
-    cau(standardvars, {'netType':'CC', 'viewString':gradurview2, 'outfile':'ccmtlgurv1result.txt'}),\
-    cau(standardvars, {'netType':'CC', 'viewString':gradurview3, 'outfile':'ccmtlgurv1result.txt'}),\
-    cau(standardvars, {'netType':'CC', 'viewString':gradurview4, 'outfile':'ccmtlgurv1result.txt'}),\
+    cau(standardvars, {'netType':'CC', 'viewString':gradurview2, 'outfile':'ccmtlgurv2result.txt'}),\
+    cau(standardvars, {'netType':'CC', 'viewString':gradurview3, 'outfile':'ccmtlgurv3result.txt'}),\
+    cau(standardvars, {'netType':'CC', 'viewString':gradurview4, 'outfile':'ccmtlgurv4result.txt'}),\
     ]

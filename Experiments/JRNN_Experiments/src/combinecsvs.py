@@ -6,12 +6,12 @@
 
 import sys
 import os
+from config import *
 
-folder = r"C:\Users\John\Documents\Source\JRNN\Experiments\Results\csvresults\EXP 2-1 Round 10-1"
-filter1 = "STL"
+folder = basepath + r"\Experiments\Results\csvresults\EXP 2-1 Round 11"
+filter1 = "NormSize"
 filter2 = "Error"
-outfilename = "combined/" + filter1 + " - " + filter2 + ".csv"
-test = True
+test = False
 
 table = {}
 dsnames = []
@@ -19,11 +19,10 @@ dsnames = []
 
 if __name__=='__main__':
     if not test:
-        folder = sys.argv[1]
-        filter1 = sys.argv[2]
-        filter2 = sys.argv[3]
-        outfilename = sys.argv[4]
+        filter1 = sys.argv[1]
+        filter2 = sys.argv[2]
     
+    outfilename = "combined/" + filter1 + " - " + filter2 + ".csv"
     os.chdir(folder)
     filelist = os.listdir(os.curdir)
     filterlist = [path for path in filelist if (filter1 in path) and (filter2 in path)]
