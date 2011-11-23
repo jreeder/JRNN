@@ -97,7 +97,7 @@ if __name__=='__main__':
     if test:
         ProcessExp(experiments[0])
     else:
-        pool = Pool(7)
+        pool = Pool(3)
         pool.map(ProcessExp, experiments)
         
     print "Finished"

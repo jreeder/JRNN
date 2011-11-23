@@ -131,6 +131,11 @@ csmtl = [\
     cau(standardvars, {'netType':'CC', 'outfile':'cccsmtlresult.txt'})\
     ]
 
+csmtlur = [\
+    cau(standardvars, {'netType':'BP', 'viewString':urView, 'outfile':'bpcsmtlurresult.txt'}),\
+    cau(standardvars, {'netType':'CC', 'viewString':urView, 'outfile':'cccsmtlurresult.txt'})\
+    ]
+
 #Test of csmtl with odd fixed sizes. 
 
 standardvars.update({'useValidation':False})
