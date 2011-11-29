@@ -183,20 +183,20 @@ int main(int argc, char* argv[]){
 				ffnet->SetScaleAndOffset(scale, offset);
 			}
 		}
-		RPropTrainer* bptemp;
+		RPropTrainer* bp;
 		if (useEtaMTL) {
-			bptemp = new EtaMTLRPropTrainer(ffnet, ds, rPropEtaPlus, rPropEtaMinus,primaryIndexes);
+			bp = new EtaMTLRPropTrainer(ffnet, ds, rPropEtaPlus, rPropEtaMinus,primaryIndexes);
 		}
 		else {
-			bptemp = new RPropTrainer(ffnet, ds, rPropEtaPlus, rPropEtaMinus,primaryIndexes);
+			bp = new RPropTrainer(ffnet, ds, rPropEtaPlus, rPropEtaMinus,primaryIndexes);
 		}
 		//RPropTrainer bp(ffnet, ds, rPropEtaPlus, rPropEtaMinus,primaryIndexes);
-		RPropTrainer bp = (*bptemp);
+		//RPropTrainer bp = (*bptemp);
 		if (xmlLoaded){
-			params.GetVar("rProp.params@maxWeight", bp.maxWeight, parmsOptional);
-			params.GetVar("rProp.params@useMaxWeight", bp.useMaxWeight, parmsOptional);
+			params.GetVar("rProp.params@maxWeight", bp->maxWeight, parmsOptional);
+			params.GetVar("rProp.params@useMaxWeight", bp->useMaxWeight, parmsOptional);
 		}
-		BPWorker(bp, numHid, &results, numRuns, useValidation,rPropMaxEpochs,rPropMinError);
+		BPWorker((*bp), numHid, &results, numRuns, useValidation,rPropMaxEpochs,rPropMinError);
 	}
 	else {
 		CCNetworkPtr ccnet = CCNetwork::Create();
@@ -210,45 +210,45 @@ int main(int argc, char* argv[]){
 			}
 		}
 		ccnet->Build(numNetInputs, numNetOutputs);
-		CCTrainer* cctemp;
+		CCTrainer* cc;
 		if (useCC){
-			cctemp = new CCTrainer(ccnet,ds,ccNumCands,primaryIndexes);
+			cc = new CCTrainer(ccnet,ds,ccNumCands,primaryIndexes);
 		}
 		else {
-			cctemp = new MTLCCTrainer(ccnet,ds,ccNumCands, primaryIndexes);
+			cc = new MTLCCTrainer(ccnet,ds,ccNumCands, primaryIndexes);
 			if (useEtaMTL){
-				static_cast<MTLCCTrainer*>(cctemp)->mtlparams.useEtaMTL = true;
+				static_cast<MTLCCTrainer*>(cc)->mtlparams.useEtaMTL = true;
 				if (useCandSlope){
-					static_cast<MTLCCTrainer*>(cctemp)->mtlparams.weightCandSlopes = true;
-					static_cast<MTLCCTrainer*>(cctemp)->mtlparams.weightCandScore = false;
+					static_cast<MTLCCTrainer*>(cc)->mtlparams.weightCandSlopes = true;
+					static_cast<MTLCCTrainer*>(cc)->mtlparams.weightCandScore = false;
 				}
 			}
 		}
-		CCTrainer cc = (*cctemp);
+		//CCTrainer cc = (*cctemp);
 		if (xmlLoaded) {
-			params.GetVar("CC.params@valPatience", cc.parms.valPatience, parmsOptional);
-			params.GetVar("CC.params@impPatience", cc.parms.impPatience, parmsOptional);
-			params.GetVar("CC.params@weightMult", cc.parms.weightMult, parmsOptional);
-			params.GetVar("CC.params@maxWeight", cc.parms.maxWeight, parmsOptional);
-			params.GetVar("CC.params@useMaxWeight", cc.parms.useMaxWeight, parmsOptional);
-			params.GetVar("CC.params@primeOffset", cc.parms.primeOffset, parmsOptional);
-			params.GetVar("CC.params@indexThreshold", cc.parms.indexThreshold, parmsOptional);
-			params.GetVar("CC.params@scoreThreshold", cc.parms.scoreThreshold, parmsOptional);
-			params.GetVar("CC.params@errorMeasure", cc.parms.errorMeasure, parmsOptional);
-			params.GetVar("CC.params.out@epochs", cc.parms.out.epochs, parmsOptional);
-			params.GetVar("CC.params.out@patience", cc.parms.out.patience, parmsOptional);
-			params.GetVar("CC.params.out@epsilon", cc.parms.out.epsilon, parmsOptional);
-			params.GetVar("CC.params.out@decay", cc.parms.out.decay, parmsOptional);
-			params.GetVar("CC.params.out@mu", cc.parms.out.mu, parmsOptional);
-			params.GetVar("CC.params.out@changeThreshold", cc.parms.out.changeThreshold , parmsOptional);
-			params.GetVar("CC.params.cand@epochs", cc.parms.cand.epochs , parmsOptional);
-			params.GetVar("CC.params.cand@patience", cc.parms.cand.patience, parmsOptional);
-			params.GetVar("CC.params.cand@epsilon", cc.parms.cand.epsilon , parmsOptional);
-			params.GetVar("CC.params.cand@decay", cc.parms.cand.decay, parmsOptional);
-			params.GetVar("CC.params.cand@mu", cc.parms.cand.mu, parmsOptional);
-			params.GetVar("CC.params.cand@changeThreshold", cc.parms.cand.changeThreshold, parmsOptional);
+			params.GetVar("CC.params@valPatience", cc->parms.valPatience, parmsOptional);
+			params.GetVar("CC.params@impPatience", cc->parms.impPatience, parmsOptional);
+			params.GetVar("CC.params@weightMult", cc->parms.weightMult, parmsOptional);
+			params.GetVar("CC.params@maxWeight", cc->parms.maxWeight, parmsOptional);
+			params.GetVar("CC.params@useMaxWeight", cc->parms.useMaxWeight, parmsOptional);
+			params.GetVar("CC.params@primeOffset", cc->parms.primeOffset, parmsOptional);
+			params.GetVar("CC.params@indexThreshold", cc->parms.indexThreshold, parmsOptional);
+			params.GetVar("CC.params@scoreThreshold", cc->parms.scoreThreshold, parmsOptional);
+			params.GetVar("CC.params@errorMeasure", cc->parms.errorMeasure, parmsOptional);
+			params.GetVar("CC.params.out@epochs", cc->parms.out.epochs, parmsOptional);
+			params.GetVar("CC.params.out@patience", cc->parms.out.patience, parmsOptional);
+			params.GetVar("CC.params.out@epsilon", cc->parms.out.epsilon, parmsOptional);
+			params.GetVar("CC.params.out@decay", cc->parms.out.decay, parmsOptional);
+			params.GetVar("CC.params.out@mu", cc->parms.out.mu, parmsOptional);
+			params.GetVar("CC.params.out@changeThreshold", cc->parms.out.changeThreshold , parmsOptional);
+			params.GetVar("CC.params.cand@epochs", cc->parms.cand.epochs , parmsOptional);
+			params.GetVar("CC.params.cand@patience", cc->parms.cand.patience, parmsOptional);
+			params.GetVar("CC.params.cand@epsilon", cc->parms.cand.epsilon , parmsOptional);
+			params.GetVar("CC.params.cand@decay", cc->parms.cand.decay, parmsOptional);
+			params.GetVar("CC.params.cand@mu", cc->parms.cand.mu, parmsOptional);
+			params.GetVar("CC.params.cand@changeThreshold", cc->parms.cand.changeThreshold, parmsOptional);
 		}
-		CCWorker(cc, &results, numRuns, useValidation, ccMaxEpochs);
+		CCWorker((*cc), &results, numRuns, useValidation, ccMaxEpochs);
 	}
 
 	ofstream ofile;

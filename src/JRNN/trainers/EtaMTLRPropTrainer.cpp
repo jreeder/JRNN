@@ -115,7 +115,7 @@ namespace JRNN {
 	}
 
 	EtaMTLRPropTrainer::EtaMTLRPropTrainer( FFMLPNetPtr network, DatasetPtr inDataSet, double etaPlus, double etaMinus, ints primaryIndexes /*= ints(0)*/ )
-		: RPropTrainer(network, inDataSet, etaPlus, etaMinus, primaryIndexes)
+		: RPropTrainer(network, inDataSet, etaPlus, etaMinus, primaryIndexes), EtaMTLHelper(network->GetNumOut())
 	{
 		globalLearningRate = 1.0;
 		FillVec(outSSEs, 0.0);

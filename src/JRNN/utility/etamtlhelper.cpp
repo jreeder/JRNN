@@ -13,11 +13,16 @@
 
 namespace JRNN {
 
-	EtaMTLHelper::EtaMTLHelper(){
+	EtaMTLHelper::EtaMTLHelper(int outSize){
 		//default values. 
 		this->Psi = 0.000001;
 		this->RELMIN = 0.05;
 		this->primIndex = 0;
+		this->outSize = outSize;
+		Rks = vecDouble(outSize);
+		outSSEs = vecDouble(outSize);
+		dk = vecDouble(outSize);
+		ak = vecDouble(outSize);
 		FillVec(Rks, 1.0);
 		FillVec(outSSEs, 0.0);
 	}
@@ -35,6 +40,8 @@ namespace JRNN {
 	double EtaMTLHelper::GetRk(int secIndex){
 		double retVal = 0;
 		retVal = std::tanh((ak[secIndex]/(std::pow(dk[secIndex],2) + Psi)) * (1/RELMIN));
+		double ak_ = ak[secIndex];
+		double dk_2 = (std::pow(dk[secIndex],2) + Psi);
 		return retVal;
 	}
 

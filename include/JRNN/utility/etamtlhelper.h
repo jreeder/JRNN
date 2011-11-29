@@ -22,12 +22,13 @@ namespace JRNN {
 	public:
 		//TODO for now this will be specific to only one primary index. Will need to expand this later for generality sake. 
 
-		EtaMTLHelper();
+		EtaMTLHelper(int outSize);
 		~EtaMTLHelper();
 		void SetEtaVars(int primindex, double psi, double relmin);	
 	
 	protected:
 		int primIndex;
+		int outSize;
 		double Psi;
 		double RELMIN;
 		vecDouble ak;

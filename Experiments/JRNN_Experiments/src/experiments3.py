@@ -15,10 +15,12 @@ from expfiles import heartexp as h
 testdicts = [{'dsname':'band','numRuns':60, 'numInputs':2,'numOutputs':1,\
         'numVal':100, 'numTest':200, 'numTrain':100, \
         'numHidPerTask':4,'useValidation':True, 'primTask':1, \
-        'numTasks':4, 'viewString':'task1,task2,task3,task4', 'expFold':'band/NormSize', \
-        'outfile':'results.txt', 'netType':'BP', 'impNumTrain':20}\
+        'numTasks':4, 'viewString':'task1,task2,task5,task6', 'expFold':'band/NormSize', \
+        'outfile':'results.txt', 'netType':'BP', 'impNumTrain':20,'useEtaMTL':True}\
         ]
 experiments = []
+
+experiments += testdicts
 
 # b.bandnorm + b.bandnormnv + b.bandlargenv + b.bandsmallnv 
 #experiments = c.cirinsqnorm + c.cirinsqnormnv + c.cirinsqlargenv + c.cirinsqsmallnv \
@@ -55,7 +57,7 @@ experiments = []
     #+ s.csmtlgur + s.mtlgur \
     #+ h.csmtlgur + h.mtlgur 
 
-experiments += b.csmtlur + c.csmtlur + l.csmtlur + g.csmtlur + d.csmtlur + s.csmtlur + h.csmtlur 
+#experiments += b.csmtlur + c.csmtlur + l.csmtlur + g.csmtlur + d.csmtlur + s.csmtlur + h.csmtlur 
 
 #experiments = b.stltests + c.stltests + l.stltests + g.stltests + d.stltests + s.stltests #+ h.stltests
 

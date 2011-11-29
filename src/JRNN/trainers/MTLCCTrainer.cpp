@@ -12,7 +12,7 @@
 
 namespace JRNN {
 	MTLCCTrainer::MTLCCTrainer(CCNetworkPtr network, DatasetPtr data, int numCandidates, ints primaryIndexes /* = ints */)
-		: CCTrainer(network, data, numCandidates, primaryIndexes)
+		: CCTrainer(network, data, numCandidates, primaryIndexes), EtaMTLHelper(network->GetNumOut())
 	{
 		mtlparams.primaryWeight = 1.0;
 		mtlparams.secondaryWeight = 0.5;
