@@ -89,6 +89,8 @@ namespace JRNN{
 
 		LayerPtr AddHiddenLayer();
 		virtual void RemoveHiddenLayer(LayerPtr layer);
+		ConPtr Connect(NodePtr n1, NodePtr n2);
+		ConPtr Connect(NodePtr n1, NodePtr n2, double conweight);
   //      void FullyConnectFFMLP();
 		//void FullyConnectMinFF();
 		//void FullyConnectBack(LayerPtr layer);
