@@ -9,8 +9,8 @@ from subprocess import *
 from multiprocessing import *
 from config import *
 
-verbose = Truetest = True
-real = False
+verbose = Truetest = False
+real = True
 dsinpath1 = ['linear', 'CirInSq', 'band']
 dsinpath2 = ['smallcovtype', 'glass', 'derm', 'heart']
 
@@ -37,6 +37,7 @@ def ProcessExp(expparams):
     useCSMTL = expparams.get('useCSMTL', False)
     useEtaMTL = expparams.get('useEtaMTL', False)
     useCandSlope = expparams.get('useCandSlope', False)
+    useRelmin = expparams.get('RELMIN', False)
     path = datapath if dsname in dsinpath1 else datapath2
     outfilepath = os.path.join(outpath3, expFold)
     useValStr = "T" if useValidation else "F"
@@ -73,6 +74,9 @@ def ProcessExp(expparams):
         
     if useEtaMTL:
         cmd += " --ETAMTL"
+        
+    if useRelmin:
+        cmd += " --relmin %(useRelmin)d" % useRelmin
     
     if useCandSlope:
         cmd += " --CandSlope" #only used if CCMTL is the nettype. 
@@ -97,7 +101,7 @@ if __name__=='__main__':
     if test:
         ProcessExp(experiments[0])
     else:
-        pool = Pool(3)
+        pool = Pool(numProcesses)
         pool.map(ProcessExp, experiments)
         
     print "Finished"
