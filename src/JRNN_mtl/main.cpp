@@ -75,6 +75,8 @@ int main(int argc, char* argv[]){
 	int ccMaxEpochs = 3000;
 	int ccNumCands = 8;
 	
+	//EtaMTL Parameter
+	double RELMIN;
 
 	//XML Parameter options
 	bool xmlLoaded = false;
@@ -99,6 +101,7 @@ int main(int argc, char* argv[]){
 		ValueArg<string> inOutFilename("", "outfile", "The name of the output file", true, "", "string", cmd);
 		ValueArg<string> inParamsPath("", "params", "The path to the parameters xml file", false, "", "string", cmd);
 		ValueArg<int> inPrimaryTask("", "primtask", "The primary task, ex: 1", false, 0, "int", cmd);
+		ValueArg<double> inEtaRelmin("", "relmin", "The RELMIN parameter", false, 0.05, "double", cmd);
 		SwitchArg inCC("","CC", "Use Cascade Correlation", false);
 		SwitchArg inBP("","BP", "Use Back Propagation", false);
 		SwitchArg inCCMTL("", "CCMTL", "Use MTL Cascade Correlation", false);
@@ -131,6 +134,7 @@ int main(int argc, char* argv[]){
 		outfile = inOutFilename.getValue();
 		paramspath = inParamsPath.getValue();
 		primarytask = inPrimaryTask.getValue();
+		RELMIN = inEtaRelmin.getValue();
 		useCC = inCC.getValue();
 		useBP = inBP.getValue();
 		useCCMTL = inCCMTL.getValue();
@@ -173,7 +177,6 @@ int main(int argc, char* argv[]){
 	if (useBP) {
 		FFMLPNetPtr ffnet = FFMLPNetwork::Create();
 		int numHid = numHidPerTask * numTasks;
-		ffnet->Build(numNetInputs, numHid, numNetOutputs);
 		double scale, offset;
 		if (xmlLoaded) {
 			bool success = true;
@@ -183,9 +186,13 @@ int main(int argc, char* argv[]){
 				ffnet->SetScaleAndOffset(scale, offset);
 			}
 		}
+		
+		ffnet->Build(numNetInputs, numHid, numNetOutputs,useEtaMTL); //when etamtl is true we want to use cloneouts 
+		
 		RPropTrainer* bp;
 		if (useEtaMTL) {
 			bp = new EtaMTLRPropTrainer(ffnet, ds, rPropEtaPlus, rPropEtaMinus,primaryIndexes);
+			static_cast<EtaMTLRPropTrainer*>(bp)->SetRELMIN(RELMIN);
 		}
 		else {
 			bp = new RPropTrainer(ffnet, ds, rPropEtaPlus, rPropEtaMinus,primaryIndexes);
@@ -209,7 +216,7 @@ int main(int argc, char* argv[]){
 				ccnet->SetScaleAndOffset(scale, offset);
 			}
 		}
-		ccnet->Build(numNetInputs, numNetOutputs);
+		ccnet->Build(numNetInputs, numNetOutputs, useEtaMTL); //when etamtl is true we want to use cloneouts 
 		CCTrainer* cc;
 		if (useCC){
 			cc = new CCTrainer(ccnet,ds,ccNumCands,primaryIndexes);
@@ -218,6 +225,7 @@ int main(int argc, char* argv[]){
 			cc = new MTLCCTrainer(ccnet,ds,ccNumCands, primaryIndexes);
 			if (useEtaMTL){
 				static_cast<MTLCCTrainer*>(cc)->mtlparams.useEtaMTL = true;
+				static_cast<MTLCCTrainer*>(cc)->SetRELMIN(RELMIN);
 				if (useCandSlope){
 					static_cast<MTLCCTrainer*>(cc)->mtlparams.weightCandSlopes = true;
 					static_cast<MTLCCTrainer*>(cc)->mtlparams.weightCandScore = false;
