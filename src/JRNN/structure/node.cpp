@@ -64,7 +64,7 @@ Node::Node(const Node& orig) {
     out = orig.out;
     sumOfIn = orig.sumOfIn;
     sigSteepness = orig.sigSteepness;
-	numConnections = orig.numConnections;
+	//numConnections = orig.numConnections;
     name = orig.name;
 //    nextIn = orig.nextIn;
 //    nextOut = orig.nextOut;
@@ -252,6 +252,7 @@ void Node::Disconnect()
 	}
 	inConnections.clear();
 	outConnections.clear();
+	numConnections = 0;
 }
 
 ConList& Node::GetConnections(conType type){
