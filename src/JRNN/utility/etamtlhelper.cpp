@@ -39,9 +39,11 @@ namespace JRNN {
 
 	double EtaMTLHelper::GetRk(int secIndex){
 		double retVal = 0;
-		retVal = std::tanh((ak[secIndex]/(std::pow(dk[secIndex],2) + Psi)) * (1/RELMIN));
-		double ak_ = ak[secIndex];
-		double dk_2 = (std::pow(dk[secIndex],2) + Psi);
+		double a = ak[secIndex] <= 1 ? ak[secIndex] : 1;
+		double d = dk[secIndex];
+		retVal = std::tanh((a/(std::pow(d,2) + Psi)) * (1/RELMIN));
+		//double ak_ = ak[secIndex];
+		//double dk_2 = (std::pow(dk[secIndex],2) + Psi);
 		return retVal;
 	}
 
@@ -80,5 +82,21 @@ namespace JRNN {
 		}
 		return retVec;
 	}
+
+	void EtaMTLHelper::SetRELMIN( double relmin )
+	{
+		this->RELMIN = relmin;
+	}
+
+	void EtaMTLHelper::SetPrimeIndex( int ind )
+	{
+		this->primIndex = ind;
+	}
+
+	void EtaMTLHelper::SetPsi( double psi )
+	{
+		this->Psi = psi;
+	}
+
 
 }

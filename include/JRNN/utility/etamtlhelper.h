@@ -24,7 +24,10 @@ namespace JRNN {
 
 		EtaMTLHelper(int outSize);
 		~EtaMTLHelper();
-		void SetEtaVars(int primindex, double psi, double relmin);	
+		void SetEtaVars(int primindex, double psi, double relmin);
+		void SetRELMIN(double relmin);
+		void SetPrimeIndex(int ind);
+		void SetPsi(double psi);
 	
 	protected:
 		int primIndex;
