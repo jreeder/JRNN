@@ -24,7 +24,8 @@ namespace JRNN {
         static ConPtr Connect(NodePtr newInNode, NodePtr newOutNode, double weight);
 		static ConPtr Clone(ConPtr con, NodePtr inNode, NodePtr outNode);
         static void SetRandomSeed();
-        Connection(const Connection& orig);
+		static double GetRandWeight(double inScale, double inOffset);
+		Connection(const Connection& orig);
         Connection(double newDouble);
         virtual ~Connection();
         void Update();

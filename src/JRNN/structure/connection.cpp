@@ -194,3 +194,11 @@ void JRNN::Connection::SetScaleAndOffset( double scale, double offset )
 	this->scale = scale;
 	this->offset = offset;
 }
+
+//Static Function to get a random weight using the connection random generator
+double JRNN::Connection::GetRandWeight(double inScale, double inOffset)
+{
+	double tmpDouble;
+	tmpDouble = ((cRand() * inScale)) - inOffset;
+	return tmpDouble;
+}
