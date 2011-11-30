@@ -22,14 +22,14 @@ namespace JRNN {
 		FFMLPNetwork();
 		~FFMLPNetwork(){};
 		static FFMLPNetPtr Create();
-		void Build(int numIn, int numHid, int numOut);
+		void Build(int numIn, int numHid, int numOut, bool cloneouts = false);
 		static FFMLPNetPtr Clone( FFMLPNetPtr net);
 		virtual NetworkPtr Clone();
 
 	private:
 		int numHid;
 
-		void FullyConnect();
+		void FullyConnect(bool cloneouts);
 		
 	};
 

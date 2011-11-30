@@ -32,7 +32,7 @@ namespace JRNN {
 		const LayerPtr GetCandLayer();
 		void CreateCandLayer(int numCand);
 		void InstallCandidate(NodePtr node, vecDouble outWeights = vecDouble(0));
-		void Build(int numIn, int numOut);
+		void Build(int numIn, int numOut, bool cloneouts = false);
 		virtual void Reset();
 		virtual void SetWeights(hashedDoubleMap weights);
 		int GetNumUnits();
@@ -44,6 +44,7 @@ namespace JRNN {
 		ConList candConnections;
 		LayerPtr candLayer;
 		LayerList hiddenLayers;
+		bool cloneOuts;
 		void CandFullyConnectBack(LayerPtr layer);
 		//LayerPtr AddHiddenLayer(); Moved to parent
 		void FullyConnectOut(LayerPtr layer);

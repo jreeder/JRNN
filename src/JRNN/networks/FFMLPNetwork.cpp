@@ -23,7 +23,8 @@ namespace JRNN {
 		return np;
 	}
 
-	void FFMLPNetwork::Build(int numIn, int numHid, int numOut){
+	void FFMLPNetwork::Build( int numIn, int numHid, int numOut, bool cloneouts /*= false*/ )
+	{
 		this->numIn = numIn;
 		this->numOut = numOut;
 		this->numHid = numHid;
@@ -40,7 +41,7 @@ namespace JRNN {
 		layers["hidden"]->BuildLayer<ASigmoid>();
 		layers["out"]->BuildLayer<ASigmoid>();
 		layers["bias"]->BuildLayer<Bias>();
-		FullyConnect();
+		FullyConnect(cloneouts);
 		SetLocked(true);
 	}
 
@@ -79,7 +80,7 @@ namespace JRNN {
 		return FFMLPNetwork::Clone(oldP);
 	}
 
-	void FFMLPNetwork::FullyConnect()
+	void FFMLPNetwork::FullyConnect( bool cloneouts )
 	{
 		NodeList inputNodes = layers["input"]->GetNodes();
 		NodeList hidNodes = layers["hidden"]->GetNodes();
@@ -95,23 +96,42 @@ namespace JRNN {
 
 		BOOST_FOREACH(NodePtr n, inputNodes){
 			BOOST_FOREACH(NodePtr n2, hidNodes){
-				AddConnection(Connection::Connect(n,n2));
+				AddConnection(Connect(n,n2));
 			}
 		}
 
 		BOOST_FOREACH(NodePtr n, hidNodes){
-			BOOST_FOREACH(NodePtr n2, outNodes){
-				AddConnection(Connection::Connect(n,n2));
+			if (cloneouts){ //This is done for etaMTL though it doesn't generalize well if each task has more than one output. 
+				double conweight;
+				conweight = Connection::GetRandWeight(this->conScale, this->conOffset);
+				BOOST_FOREACH(NodePtr n2, outNodes){
+					AddConnection(Connect(n,n2,conweight));
+				}
+			}
+			else {
+				BOOST_FOREACH(NodePtr n2, outNodes){
+					AddConnection(Connect(n,n2));
+				}
 			}
 		}
 
 		BOOST_FOREACH(NodePtr n, biasNodes){
 			BOOST_FOREACH(NodePtr n2, hidNodes){
-				AddConnection(Connection::Connect(n,n2));
+				AddConnection(Connect(n,n2));
 			}
-			BOOST_FOREACH(NodePtr n3, outNodes){
-				AddConnection(Connection::Connect(n,n3));
+			if (cloneouts){
+				double conweight;
+				conweight = Connection::GetRandWeight(this->conScale, this->conOffset);
+				BOOST_FOREACH(NodePtr n3, outNodes){
+					AddConnection(Connect(n,n3,conweight));
+				}
 			}
+			else {
+				BOOST_FOREACH(NodePtr n3, outNodes){
+					AddConnection(Connect(n,n3));
+				}
+			}
+			
 		}
 	}
 

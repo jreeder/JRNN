@@ -74,11 +74,12 @@ namespace JRNN {
 		return CCNetwork::Clone(oldP);
 	}
 
-	void CCNetwork::Build(int numIn, int numOut){
+	void CCNetwork::Build(int numIn, int numOut, bool cloneouts /*= false*/){
 		this->numIn	= numIn;
 		this->numOut = numOut;
 		this->numHidLayers = 0;
 		this->numUnits = numIn;
+		this->cloneOuts = cloneouts;
 		//TODO Added some static strings for input output and bias layers so I don't have
 		//to worry about mistyping errors. 
 		layers.insert(LayerPair("input", Layer::CreateLayer(Layer::input, numIn,0,"input")));
@@ -106,14 +107,30 @@ namespace JRNN {
 		Connection::SetRandomSeed();
 
 		BOOST_FOREACH(NodePtr n, inputNodes){
-			BOOST_FOREACH(NodePtr n2,outNodes){
-				AddConnection(Connection::Connect(n,n2));
+			if (cloneOuts){ //This is done for etaMTL though it doesn't generalize well if each task has more than one output. 
+				double conWeight = Connection::GetRandWeight(this->conScale, this->conOffset);
+				BOOST_FOREACH(NodePtr n2, outNodes){
+					AddConnection(Connect(n,n2,conWeight));
+				}
+			}
+			else {
+				BOOST_FOREACH(NodePtr n2,outNodes){
+					AddConnection(Connect(n,n2));
+				}
 			}
 		}
 
 		BOOST_FOREACH(NodePtr n, biasNodes){
-			BOOST_FOREACH(NodePtr n2, outNodes){
-				AddConnection(Connection::Connect(n,n2));
+			if (cloneOuts){
+				double conWeight = Connection::GetRandWeight(this->conScale, this->conOffset);
+				BOOST_FOREACH(NodePtr n2, outNodes){
+					AddConnection(Connect(n,n2,conWeight));
+				}
+			}
+			else {
+				BOOST_FOREACH(NodePtr n2,outNodes){
+					AddConnection(Connect(n,n2));
+				}
 			}
 		}
 	}
@@ -160,7 +177,7 @@ namespace JRNN {
 			NodeList prevNodes = prevLayer->GetNodes();
 			BOOST_FOREACH(NodePtr n, prevNodes){
 				BOOST_FOREACH(NodePtr n2, layerNodes){
-					candConnections.push_back(Connection::Connect(n,n2));
+					candConnections.push_back(Connect(n,n2));
 				}
 			}
 			prevLayer = prevLayer->GetPrevLayer();
@@ -169,7 +186,7 @@ namespace JRNN {
 		NodeList biasNodes = layers["bias"]->GetNodes();
 		BOOST_FOREACH(NodePtr n, biasNodes){
 			BOOST_FOREACH(NodePtr n2, layerNodes){
-				candConnections.push_back(Connection::Connect(n,n2));
+				candConnections.push_back(Connect(n,n2));
 			}
 		}
 
@@ -198,8 +215,16 @@ namespace JRNN {
 		
 		Connection::SetRandomSeed();
 		BOOST_FOREACH(NodePtr n, layerNodes){
-			BOOST_FOREACH(NodePtr n2, outNodes){
-				AddConnection(Connection::Connect(n,n2));
+			if (cloneOuts){
+				double conWeight = Connection::GetRandWeight(this->conScale, this->conOffset);
+				BOOST_FOREACH(NodePtr n2, outNodes){
+					AddConnection(Connect(n,n2,conWeight));
+				}
+			}
+			else {
+				BOOST_FOREACH(NodePtr n2,outNodes){
+					AddConnection(Connect(n,n2));
+				}
 			}
 		}
 	}
@@ -212,7 +237,7 @@ namespace JRNN {
 		Connection::SetRandomSeed();
 		BOOST_FOREACH(NodePtr n, layerNodes){
 			for (unsigned int i = 0; i < outNodes.size(); i++){
-				AddConnection(Connection::Connect(n,outNodes[i], outWeights[i]));
+				AddConnection(Connect(n,outNodes[i], outWeights[i]));
 			}
 		}
 	}
