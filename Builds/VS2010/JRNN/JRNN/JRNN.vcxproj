@@ -105,6 +105,7 @@
     <ClInclude Include="..\..\..\..\include\JRNN\JRNN.h" />
     <ClInclude Include="..\..\..\..\include\JRNN\networks\CCNetwork.h" />
     <ClInclude Include="..\..\..\..\include\JRNN\networks\FFMLPNetwork.h" />
+    <ClInclude Include="..\..\..\..\include\JRNN\networks\RevCCNetwork.h" />
     <ClInclude Include="..\..\..\..\include\JRNN\structure\connection.h" />
     <ClInclude Include="..\..\..\..\include\JRNN\structure\layer.h" />
     <ClInclude Include="..\..\..\..\include\JRNN\structure\network.h" />

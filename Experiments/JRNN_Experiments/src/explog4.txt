@@ -1,0 +1,1093 @@
+ccmtlresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname derm --numinputs 33 --numoutputs 1 --numtasks 4 --numtrain 50 --numval 100 --numtest 200 --numhid 10 --numruns 60 --view "task1,task2,task3,task5" --outfile "ccmtlresults.txt" --primtask 1 --CC --impnumtrain 10 --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+ccmtlresults.txt Done
+ccstlresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname derm --numinputs 33 --numoutputs 1 --numtasks 1 --numtrain 10 --numval 100 --numtest 200 --numhid 10 --numruns 60 --view "task1" --outfile "ccstlresults.txt" --primtask 0 --CC --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+ccstlresults.txt Done
+ccmtlurresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname derm --numinputs 33 --numoutputs 1 --numtasks 4 --numtrain 50 --numval 100 --numtest 200 --numhid 10 --numruns 60 --view "task1,task2,task4,task6" --outfile "ccmtlurresults.txt" --primtask 1 --CC --impnumtrain 10 --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+ccmtlurresults.txt Done
+bpmtlresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname derm --numinputs 33 --numoutputs 1 --numtasks 4 --numtrain 50 --numval 100 --numtest 200 --numhid 3 --numruns 60 --view "task1,task2,task3,task5" --outfile "bpmtlresults.txt" --primtask 1 --BP --impnumtrain 10 --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpmtlresults.txt Done
+bpstlresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname derm --numinputs 33 --numoutputs 1 --numtasks 1 --numtrain 10 --numval 100 --numtest 200 --numhid 3 --numruns 60 --view "task1" --outfile "bpstlresults.txt" --primtask 0 --BP --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpstlresults.txt Done
+bpmtlurresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname derm --numinputs 33 --numoutputs 1 --numtasks 4 --numtrain 50 --numval 100 --numtest 200 --numhid 3 --numruns 60 --view "task1,task2,task4,task6" --outfile "bpmtlurresults.txt" --primtask 1 --BP --impnumtrain 10 --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpmtlurresults.txt Done
+ccmtlresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname derm --numinputs 33 --numoutputs 1 --numtasks 4 --numtrain 50 --numval 100 --numtest 200 --numhid 3 --numruns 60 --view "task1,task2,task3,task5" --outfile "ccmtlresults.txt" --primtask 1 --CC --impnumtrain 10 --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+ccmtlresults.txt Done
+ccstlresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname derm --numinputs 33 --numoutputs 1 --numtasks 1 --numtrain 10 --numval 100 --numtest 200 --numhid 3 --numruns 60 --view "task1" --outfile "ccstlresults.txt" --primtask 0 --CC --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+ccstlresults.txt Done
+ccmtlurresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Sourccstlresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/" --dsname linear --numinputs 2 --numoutputs 1 --numtasks 1 --numtrain 10 --numval 100 --numtest 200 --numhid 4 --numruns 60 --view "task1" --outfile "ccstlresults.txt" --primtask 0 --CC -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+ccstlresults.txt Done
+ccmtlurresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/" --dsname linear --numinputs 2 --numoutputs 1 --numtasks 4 --numtrain 100 --numval 100 --numtest 200 --numhid 4 --numruns 60 --view "task1,task2,task4,task6" --outfile "ccmtlurresults.txt" --primtask 1 --CC --impnumtrain 10 -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+ccmtlurresults.txt Done
+bpmtlresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/" --dsname linear --numinputs 2 --numoutputs 1 --numtasks 4 --numtrain 100 --numval 100 --numtest 200 --numhid 2 --numruns 60 --view "task1,task2,task3,task5" --outfile "bpmtlresults.txt" --primtask 1 --BP --impnumtrain 10 --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpmtlresults.txt Done
+bpstlresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/" --dsname linear --numinputs 2 --numoutputs 1 --numtasks 1 --numtrain 10 --numval 100 --numtest 200 --numhid 2 --numruns 60 --view "task1" --outfile "bpstlresults.txt" --primtask 0 --BP --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpstlresults.txt Done
+bpmtlurresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/" --dsname linear --numinputs 2 --numoutputs 1 --numtasks 4 --numtrain 100 --numval 100 --numtest 200 --numhid 2 --numruns 60 --view "task1,task2,task4,task6" --outfile "bpmtlurresults.txt" --primtask 1 --BP --impnumtrain 10 --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpmtlurresults.txt Done
+ccmtlresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/" --dsname linear --numinputs 2 --numoutputs 1 --numtasks 4 --numtrain 100 --numval 100 --numtest 200 --numhid 2 --numruns 60 --view "task1,task2,task3,task5" --outfile "ccmtlresults.txt" --primtask 1 --CC --impnumtrain 10 --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+ccmtlresults.txt Done
+ccstlresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/" --dsname linear --numinputs 2 --numoutputs 1 --numtasks 1 --numtrain 10 --numval 100 --numtest 200 --numhid 2 --numruns 60 --view "task1" --outfile "ccstlresults.txt" --primtask 0 --CC --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+ccstlresults.txt Done
+ccmtlurresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/" --dsname linear --numinputs 2 --numoutputs 1 --numtasks 4 --numtrain 100 --numval 100 --numtest 200 --numhid 2 --numruns 60 --view "task1,task2,task4,task6" --outfile "ccmtlurresults.txt" --primtask 1 --CC --impnumtrain 10 --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+ccmtlurresults.txt Done
+bpmtlresults.txt
+C:/Users/John/Documents/Source/JRNNbpmtlurresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname derm --numinputs 33 --numoutputs 1 --numtasks 4 --numtrain 50 --numval 100 --numtest 200 --numhid 3 --numruns 60 --view "task1,task2,task4,task6" --outfile "bpmtlurresults.txt" --primtask 1 --BP --impnumtrain 10 -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpmtlurresults.txt Done
+ccmtlresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname derm --numinputs 33 --numoutputs 1 --numtasks 4 --numtrain 50 --numval 100 --numtest 200 --numhid 3 --numruns 60 --view "task1,task2,task3,task5" --outfile "ccmtlresults.txt" --primtask 1 --CC --impnumtrain 10 -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+ccmtlresults.txt Done
+ccstlresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname derm --numinputs 33 --numoutputs 1 --numtasks 1 --numtrain 10 --numval 100 --numtest 200 --numhid 3 --numruns 60 --view "task1" --outfile "ccstlresults.txt" --primtask 0 --CC -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+ccstlresults.txt Done
+ccmtlurresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname derm --numinputs 33 --numoutputs 1 --numtasks 4 --numtrain 50 --numval 100 --numtest 200 --numhid 3 --numruns 60 --view "task1,task2,task4,task6" --outfile "ccmtlurresults.txt" --primtask 1 --CC --impnumtrain 10 -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+ccmtlurresults.txt Done
+bpmtlresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname derm --numinputs 33 --numoutputs 1 --numtasks 4 --numtrain 50 --numval 100 --numtest 200 --numhid 1 --numruns 60 --view "task1,task2,task3,task5" --outfile "bpmtlresults.txt" --primtask 1 --BP --impnumtrain 10 --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpmtlresults.txt Done
+bpstlresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname derm --numinputs 33 --numoutputs 1 --numtasks 1 --numtrain 10 --numval 100 --numtest 200 --numhid 1 --numruns 60 --view "task1" --outfile "bpstlresults.txt" --primtask 0 --BP --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpstlresults.txt Done
+bpmtlurresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname derm --numinputs 33 --numoutputs 1 --numtasks 4 --numtrain 50 --numval 100 --numtest 200 --numhid 1 --numruns 60 --view "task1,task2,task4,task6" --outfile "bpmtlurresults.txt" --primtask 1 --BP --impnumtrain 10 --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpmtlurresults.txt Done
+ccmtlresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname derm --numinputs 33 --numoutputs 1 --numtasks 4 --numtrain 50 --numval 100 --numtest 200 --numhid 1 --numruns 60 --view "task1,task2,task3,task5" --outfile "ccmtlresults.txt" --primtask 1 --CC --impnumtrain 10 --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+ccmtlresults.txt Done
+ccstlresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exp/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/" --dsname linear --numinputs 2 --numoutputs 1 --numtasks 4 --numtrain 100 --numval 100 --numtest 200 --numhid 8 --numruns 60 --view "task1,task2,task3,task5" --outfile "bpmtlresults.txt" --primtask 1 --BP --impnumtrain 10 --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpmtlresults.txt Done
+bpstlresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/" --dsname linear --numinputs 2 --numoutputs 1 --numtasks 1 --numtrain 10 --numval 100 --numtest 200 --numhid 8 --numruns 60 --view "task1" --outfile "bpstlresults.txt" --primtask 0 --BP --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpstlresults.txt Done
+bpmtlurresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/" --dsname linear --numinputs 2 --numoutputs 1 --numtasks 4 --numtrain 100 --numval 100 --numtest 200 --numhid 8 --numruns 60 --view "task1,task2,task4,task6" --outfile "bpmtlurresults.txt" --primtask 1 --BP --impnumtrain 10 --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpmtlurresults.txt Done
+ccmtlresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/" --dsname linear --numinputs 2 --numoutputs 1 --numtasks 4 --numtrain 100 --numval 100 --numtest 200 --numhid 8 --numruns 60 --view "task1,task2,task3,task5" --outfile "ccmtlresults.txt" --primtask 1 --CC --impnumtrain 10 --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+ccmtlresults.txt Done
+ccstlresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/" --dsname linear --numinputs 2 --numoutputs 1 --numtasks 1 --numtrain 10 --numval 100 --numtest 200 --numhid 8 --numruns 60 --view "task1" --outfile "ccstlresults.txt" --primtask 0 --CC --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+ccstlresults.txt Done
+bpstlresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname heart --numinputs 13 --numoutputs 1 --numtasks 1 --numtrain 15 --numval 100 --numtest 200 --numhid 5 --numruns 60 --view "task1" --outfile "bpstlresults.txt" --primtask 0 --BP --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpstlresults.txt Done
+bpmtlurresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname heart --numinputs 13 --numoutputs 1 --numtasks 4 --numtrain 80 --numval 100 --numtest 200 --numhid 5 --numruns 60 --view "task1,task2,task4,task5" --outfile "bpmtlurresults.txt" --primtask 1 --BP --impnumtrain 15 --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpmtlurresults.txt Done
+ccmtlresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname heart --numinputs 13 --numoutputs 1 --numtasks 4 --numtrain 80 --numval 100 --numtest 200 --numhid 5 --numruns 60 --view "task1,task2,task3,task4" --outfile "ccmtlresults.txt" --primtask 1 --CC --impnumtrain 15 --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+ccmtlresults.txt Done
+ccstlresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNccmtlurresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/" --dsname linear --numinputs 2 --numoutputs 1 --numtasks 4 --numtrain 100 --numval 100 --numtest 200 --numhid 8 --numruns 60 --view "task1,task2,task4,task6" --outfile "ccmtlurresults.txt" --primtask 1 --CC --impnumtrain 10 --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+ccmtlurresults.txt Done
+bpmtlresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/" --dsname linear --numinputs 2 --numoutputs 1 --numtasks 4 --numtrain 100 --numval 100 --numtest 200 --numhid 4 --numruns 60 --view "task1,task2,task3,task5" --outfile "bpmtlresults.txt" --primtask 1 --BP --impnumtrain 10 --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpmtlresults.txt Done
+bpstlresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/" --dsname linear --numinputs 2 --numoutputs 1 --numtasks 1 --numtrain 10 --numval 100 --numtest 200 --numhid 4 --numruns 60 --view "task1" --outfile "bpstlresults.txt" --primtask 0 --BP --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpstlresults.txt Done
+bpmtlurresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/" --dsname linear --numinputs 2 --numoutputs 1 --numtasks 4 --numtrain 100 --numval 100 --numtest 200 --numhid 4 --numruns 60 --view "task1,task2,task4,task6" --outfile "bpmtlurresults.txt" --primtask 1 --BP --impnumtrain 10 --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpmtlurresults.txt Done
+ccmtlresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/" --dsname linear --numinputs 2 --numoutputs 1 --numtasks 4 --numtrain 100 --numval 100 --numtest 200 --numhid 4 --numruns 60 --view "task1,task2,task3,task5" --outfile "ccmtlresults.txt" --primtask 1 --CC --impnumtrain 10 --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+ccmtlresults.txt Done
+ccstlresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/" --dsname linear --numinputs 2 --numoutputs 1 --numtasks 1 --numtrain 10 --numval 100 --numtest 200 --numhid 4 --numruns 60 --view "task1" --outfile "ccstlresults.txt" --primtask 0 --CC --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+ccstlresults.txt Done
+ccmtlurresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/" --dsname linear --numinputs 2 --numoutputs 1 --numtasks 4 --numtrain 100 --numval 100 --numtest 200 --numhid 4 --numruns 60 --view "task1,task2,task4,task6" --outfile "ccmtlurresults.txt" --primtask 1 --CC --impnumtrain 10 --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+ccmtlurresults.txt Done
+bpmtlresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname heart --numinputs 13 --numoutputs 1 --numtasks 4 --numtrain 80 --numval 100 --numtest 200 --numhid 5 --numruns 60 --view "task1,task2,task3,task4" --outfile "bpmtlresults.txt" --primtask 1 --BP --impnumtrain 15 -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpmtlresults.txt Done
+bpstlresults.txt
+C:/Users/Jobpmtlresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname heart --numinputs 13 --numoutputs 1 --numtasks 4 --numtrain 80 --numval 100 --numtest 200 --numhid 2 --numruns 60 --view "task1,task2,task3,task4" --outfile "bpmtlresults.txt" --primtask 1 --BP --impnumtrain 15 --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpmtlresults.txt Done
+bpstlresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname heart --numinputs 13 --numoutputs 1 --numtasks 1 --numtrain 15 --numval 100 --numtest 200 --numhid 2 --numruns 60 --view "task1" --outfile "bpstlresults.txt" --primtask 0 --BP --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpstlresults.txt Done
+bpmtlurresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname heart --numinputs 13 --numoutputs 1 --numtasks 4 --numtrain 80 --numval 100 --numtest 200 --numhid 2 --numruns 60 --view "task1,task2,task4,task5" --outfile "bpmtlurresults.txt" --primtask 1 --BP --impnumtrain 15 --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpmtlurresults.txt Done
+ccmtlresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname heart --numinputs 13 --numoutputs 1 --numtasks 4 --numtrain 80 --numval 100 --numtest 200 --numhid 2 --numruns 60 --view "task1,task2,task3,task4" --outfile "ccmtlresults.txt" --primtask 1 --CC --impnumtrain 15 --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+ccmtlresults.txt Done
+ccstlresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname heart --numinputs 13 --numoutputs 1 --numtasks 1 --numtrain 15 --numval 100 --numtest 200 --numhid 2 --numruns 60 --view "task1" --outfile "ccstlresults.txt" --primtask 0 --CC --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+ccstlresults.txt Done
+ccmtlurresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname heart --numinputs 13 --numoutputs 1 --numtasks 4 --numtrain 80 --numval 100 --numtest 200 --numhid 2 --numruns 60 --view "task1,task2,task4,task5" --outfile "ccmtlurresults.txt" --primtask 1 --CC --impnumtrain 15 --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+ccmtlurresults.txt Done
+bpmtlresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname heart --numinputs 13 --numoutputs 1 --numtasks 4 --numtrain 80 --numval 100 --numtest 200 --numhid 10 --numruns 60 --view "task1,task2,task3,task4" --outfile "bpmtlresults.txt" --primtask 1 --BP --impnumtrain 15 --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpmtlresults.txt Done
+bpstlresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname heart --numinputs 13 --numoutputs 1 --numtasks 1 --numtrain 15 --numval 100 --numtest 200 --numhid 10 --numruns 60 --view "task1" --outfile "bpstlresults.txt" --primtask 0 --BP --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpstlresults.txt Done
+bpmtlurresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documenbpmtlresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname glass --numinputs 9 --numoutputs 1 --numtasks 4 --numtrain 50 --numval 50 --numtest 100 --numhid 5 --numruns 60 --view "task1,task2,task3,task6" --outfile "bpmtlresults.txt" --primtask 1 --BP --impnumtrain 15 -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpmtlresults.txt Done
+bpstlresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname glass --numinputs 9 --numoutputs 1 --numtasks 1 --numtrain 15 --numval 50 --numtest 100 --numhid 5 --numruns 60 --view "task1" --outfile "bpstlresults.txt" --primtask 0 --BP -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpstlresults.txt Done
+bpmtlurresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname glass --numinputs 9 --numoutputs 1 --numtasks 4 --numtrain 50 --numval 50 --numtest 100 --numhid 5 --numruns 60 --view "task1,task2,task4,task5" --outfile "bpmtlurresults.txt" --primtask 1 --BP --impnumtrain 15 -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpmtlurresults.txt Done
+ccmtlresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname glass --numinputs 9 --numoutputs 1 --numtasks 4 --numtrain 50 --numval 50 --numtest 100 --numhid 5 --numruns 60 --view "task1,task2,task3,task6" --outfile "ccmtlresults.txt" --primtask 1 --CC --impnumtrain 15 -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+ccmtlresults.txt Done
+ccstlresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname glass --numinputs 9 --numoutputs 1 --numtasks 1 --numtrain 15 --numval 50 --numtest 100 --numhid 5 --numruns 60 --view "task1" --outfile "ccstlresults.txt" --primtask 0 --CC -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+ccstlresults.txt Done
+ccmtlurresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname glass --numinputs 9 --numoutputs 1 --numtasks 4 --numtrain 50 --numval 50 --numtest 100 --numhid 5 --numruns 60 --view "task1,task2,task4,task5" --outfile "ccmtlurresults.txt" --primtask 1 --CC --impnumtrain 15 -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+ccmtlurresults.txt Done
+bpmtlresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname glass --numinputs 9 --numoutputs 1 --numtasks 4 --numtrain 50 --numval 50 --numtest 100 --numhid 2 --numruns 60 --view "task1,task2,task3,task6" --outfile "bpmtlresults.txt" --primtask 1 --BP --impnumtrain 15 --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpmtlresults.txt Done
+bpstlresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname glass --numinputs 9 --numoutputs 1 --numtasks 1 --numtrain 15 --numval 50 --numtest 100 --numhid 2 --numruns 60 --view "task1" --outfile "bpstlresults.txt" --primtask 0 --BP --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpstlresults.txt Done
+bpmtlurresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documenbpstlresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname glass --numinputs 9 --numoutputs 1 --numtasks 1 --numtrain 15 --numval 50 --numtest 100 --numhid 10 --numruns 60 --view "task1" --outfile "bpstlresults.txt" --primtask 0 --BP --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpstlresults.txt Done
+bpmtlurresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname glass --numinputs 9 --numoutputs 1 --numtasks 4 --numtrain 50 --numval 50 --numtest 100 --numhid 10 --numruns 60 --view "task1,task2,task4,task5" --outfile "bpmtlurresults.txt" --primtask 1 --BP --impnumtrain 15 --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpmtlurresults.txt Done
+ccmtlresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname glass --numinputs 9 --numoutputs 1 --numtasks 4 --numtrain 50 --numval 50 --numtest 100 --numhid 10 --numruns 60 --view "task1,task2,task3,task6" --outfile "ccmtlresults.txt" --primtask 1 --CC --impnumtrain 15 --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+ccmtlresults.txt Done
+ccstlresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname glass --numinputs 9 --numoutputs 1 --numtasks 1 --numtrain 15 --numval 50 --numtest 100 --numhid 10 --numruns 60 --view "task1" --outfile "ccstlresults.txt" --primtask 0 --CC --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+ccstlresults.txt Done
+ccmtlurresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname glass --numinputs 9 --numoutputs 1 --numtasks 4 --numtrain 50 --numval 50 --numtest 100 --numhid 10 --numruns 60 --view "task1,task2,task4,task5" --outfile "ccmtlurresults.txt" --primtask 1 --CC --impnumtrain 15 --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+ccmtlurresults.txt Done
+bpmtlresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname glass --numinputs 9 --numoutputs 1 --numtasks 4 --numtrain 50 --numval 50 --numtest 100 --numhid 5 --numruns 60 --view "task1,task2,task3,task6" --outfile "bpmtlresults.txt" --primtask 1 --BP --impnumtrain 15 --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpmtlresults.txt Done
+bpstlresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname glass --numinputs 9 --numoutputs 1 --numtasks 1 --numtrain 15 --numval 50 --numtest 100 --numhid 5 --numruns 60 --view "task1" --outfile "bpstlresults.txt" --primtask 0 --BP --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpstlresults.txt Done
+bpmtlurresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname glass --numinputs 9 --numoutputs 1 --numtasks 4 --numtrain 50 --numval 50 --numtest 100 --numhid 5 --numruns 60 --view "task1,task2,task4,task5" --outfile "bpmtlurresults.txt" --primtask 1 --BP --impnumtrain 15 --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpmtlurresults.txt Done
+ccmtlresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Sourcerun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname derm --numinputs 33 --numoutputs 1 --numtasks 1 --numtrain 10 --numval 100 --numtest 200 --numhid 1 --numruns 60 --view "task1" --outfile "ccstlresults.txt" --primtask 0 --CC --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+ccstlresults.txt Done
+ccmtlurresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname derm --numinputs 33 --numoutputs 1 --numtasks 4 --numtrain 50 --numval 100 --numtest 200 --numhid 1 --numruns 60 --view "task1,task2,task4,task6" --outfile "ccmtlurresults.txt" --primtask 1 --CC --impnumtrain 10 --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+ccmtlurresults.txt Done
+bpmtlresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname derm --numinputs 33 --numoutputs 1 --numtasks 4 --numtrain 50 --numval 100 --numtest 200 --numhid 10 --numruns 60 --view "task1,task2,task3,task5" --outfile "bpmtlresults.txt" --primtask 1 --BP --impnumtrain 10 --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpmtlresults.txt Done
+bpstlresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname derm --numinputs 33 --numoutputs 1 --numtasks 1 --numtrain 10 --numval 100 --numtest 200 --numhid 10 --numruns 60 --view "task1" --outfile "bpstlresults.txt" --primtask 0 --BP --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpstlresults.txt Done
+bpmtlurresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname derm --numinputs 33 --numoutputs 1 --numtasks 4 --numtrain 50 --numval 100 --numtest 200 --numhid 10 --numruns 60 --view "task1,task2,task4,task6" --outfile "bpmtlurresults.txt" --primtask 1 --BP --impnumtrain 10 --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpmtlurresults.txt Done
+bpmtlurresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname smallcovtype --numinputs 10 --numoutputs 1 --numtasks 4 --numtrain 100 --numval 100 --numtest 200 --numhid 3 --numruns 60 --view "task1,task2,task4,task5" --outfile "bpmtlurresults.txt" --primtask 1 --BP --impnumtrain 20 --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpmtlurresults.txt Done
+ccmtlresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname smallcovtype --numinputs 10 --numoutputs 1 --numtasks 4 --numtrain 100 --numval 100 --numtest 200 --numhid 3 --numruns 60 --view "task1,task2,task3,task7" --outfile "ccmtlresults.txt" --primtask 1 --CC --impnumtrain 20 --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+ccmtlresults.txt Done
+ccstlresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname smallcovtype --numinputs 10 --numoutputs 1 --numtasks 1 --numtrain 20 --numval 100 --numtest 200 --numhid 3 --numruns 60 --view "task1" --outfile "ccstlresults.txt" --primtask 0 --CC --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+ccstlresults.txt Done
+ccmtlurresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsnamets/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname heart --numinputs 13 --numoutputs 1 --numtasks 4 --numtrain 80 --numval 100 --numtest 200 --numhid 10 --numruns 60 --view "task1,task2,task4,task5" --outfile "bpmtlurresults.txt" --primtask 1 --BP --impnumtrain 15 --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpmtlurresults.txt Done
+ccmtlresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname heart --numinputs 13 --numoutputs 1 --numtasks 4 --numtrain 80 --numval 100 --numtest 200 --numhid 10 --numruns 60 --view "task1,task2,task3,task4" --outfile "ccmtlresults.txt" --primtask 1 --CC --impnumtrain 15 --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+ccmtlresults.txt Done
+ccstlresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname heart --numinputs 13 --numoutputs 1 --numtasks 1 --numtrain 15 --numval 100 --numtest 200 --numhid 10 --numruns 60 --view "task1" --outfile "ccstlresults.txt" --primtask 0 --CC --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+ccstlresults.txt Done
+ccmtlurresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname heart --numinputs 13 --numoutputs 1 --numtasks 4 --numtrain 80 --numval 100 --numtest 200 --numhid 10 --numruns 60 --view "task1,task2,task4,task5" --outfile "ccmtlurresults.txt" --primtask 1 --CC --impnumtrain 15 --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+ccmtlurresults.txt Done
+bpmtlresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname heart --numinputs 13 --numoutputs 1 --numtasks 4 --numtrain 80 --numval 100 --numtest 200 --numhid 5 --numruns 60 --view "task1,task2,task3,task4" --outfile "bpmtlresults.txt" --primtask 1 --BP --impnumtrain 15 --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpmtlresults.txt Done
+ccstlresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/" --dsname band --numinputs 2 --numoutputs 1 --numtasks 1 --numtrain 15 --numval 100 --numtest 200 --numhid 2 --numruns 60 --view "task1" --outfile "ccstlresults.txt" --primtask 0 --CC --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+ccstlresults.txt Done
+ccmtlurresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/" --dsname band --numinputs 2 --numoutputs 1 --numtasks 4 --numtrain 100 --numval 100 --numtest 200 --numhid 2 --numruns 60 --view "task1,task2,task5,task6" --outfile "ccmtlurresults.txt" --primtask 1 --CC --impnumtrain 15 --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+ccmtlurresults.txt Done
+bpmtlresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/" --dsname band --numinputs 2 --numoutputs 1 --numtasks 4 --numtrain 100 --numval 100 --numtest 200 --numhid 10 --numruns 60 --view "task1,task2,task3,task4" --outfile "bpmtlresults.txt" --primtask 1 --BP --impnumtrain 15 --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpmtlresults.txt Done
+bpstlresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/" --dsnats/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname glass --numinputs 9 --numoutputs 1 --numtasks 4 --numtrain 50 --numval 50 --numtest 100 --numhid 2 --numruns 60 --view "task1,task2,task4,task5" --outfile "bpmtlurresults.txt" --primtask 1 --BP --impnumtrain 15 --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpmtlurresults.txt Done
+ccmtlresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname glass --numinputs 9 --numoutputs 1 --numtasks 4 --numtrain 50 --numval 50 --numtest 100 --numhid 2 --numruns 60 --view "task1,task2,task3,task6" --outfile "ccmtlresults.txt" --primtask 1 --CC --impnumtrain 15 --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+ccmtlresults.txt Done
+ccstlresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname glass --numinputs 9 --numoutputs 1 --numtasks 1 --numtrain 15 --numval 50 --numtest 100 --numhid 2 --numruns 60 --view "task1" --outfile "ccstlresults.txt" --primtask 0 --CC --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+ccstlresults.txt Done
+ccmtlurresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname glass --numinputs 9 --numoutputs 1 --numtasks 4 --numtrain 50 --numval 50 --numtest 100 --numhid 2 --numruns 60 --view "task1,task2,task4,task5" --outfile "ccmtlurresults.txt" --primtask 1 --CC --impnumtrain 15 --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+ccmtlurresults.txt Done
+bpmtlresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname glass --numinputs 9 --numoutputs 1 --numtasks 4 --numtrain 50 --numval 50 --numtest 100 --numhid 10 --numruns 60 --view "task1,task2,task3,task6" --outfile "bpmtlresults.txt" --primtask 1 --BP --impnumtrain 15 --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpmtlresults.txt Done
+bpmtlresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/" --dsname CirInSq --numinputs 2 --numoutputs 1 --numtasks 4 --numtrain 100 --numval 100 --numtest 200 --numhid 12 --numruns 60 --view "task1,task2,task7,task8" --outfile "bpmtlresults.txt" --primtask 1 --BP --impnumtrain 15 --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpmtlresults.txt Done
+bpstlresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/" --dsname CirInSq --numinputs 2 --numoutputs 1 --numtasks 1 --numtrain 15 --numval 100 --numtest 200 --numhid 12 --numruns 60 --view "task1" --outfile "bpstlresults.txt" --primtask 0 --BP --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpstlresults.txt Done
+bpmtlurresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/" --dsname CirInSq --numinputs 2 --numoutputs 1 --numtasks 4 --numtrain 100 --numval 100 --numtest 200 --numhid 12 --numruns 60 --view "task1,task2,task5,task6" --outfile "bpmtlurresults.txt" --primtask 1 --BP --impnumtrain 15 --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpmtlurresults.txt Done
+ccmtlresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/" --dsnamece/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname derm --numinputs 33 --numoutputs 1 --numtasks 4 --numtrain 50 --numval 100 --numtest 200 --numhid 3 --numruns 60 --view "task1,task2,task4,task6" --outfile "ccmtlurresults.txt" --primtask 1 --CC --impnumtrain 10 --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+ccmtlurresults.txt Done
+bpmtlresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/" --dsname linear --numinputs 2 --numoutputs 1 --numtasks 4 --numtrain 100 --numval 100 --numtest 200 --numhid 4 --numruns 60 --view "task1,task2,task3,task5" --outfile "bpmtlresults.txt" --primtask 1 --BP --impnumtrain 10 -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpmtlresults.txt Done
+bpstlresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/" --dsname linear --numinputs 2 --numoutputs 1 --numtasks 1 --numtrain 10 --numval 100 --numtest 200 --numhid 4 --numruns 60 --view "task1" --outfile "bpstlresults.txt" --primtask 0 --BP -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpstlresults.txt Done
+bpmtlurresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/" --dsname linear --numinputs 2 --numoutputs 1 --numtasks 4 --numtrain 100 --numval 100 --numtest 200 --numhid 4 --numruns 60 --view "task1,task2,task4,task6" --outfile "bpmtlurresults.txt" --primtask 1 --BP --impnumtrain 10 -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpmtlurresults.txt Done
+ccmtlresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/" --dsname linear --numinputs 2 --numoutputs 1 --numtasks 4 --numtrain 100 --numval 100 --numtest 200 --numhid 4 --numruns 60 --view "task1,task2,task3,task5" --outfile "ccmtlresults.txt" --primtask 1 --CC --impnumtrain 10 -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+ccmtlresults.txt Done
+ccmtlresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname smallcovtype --numinputs 10 --numoutputs 1 --numtasks 4 --numtrain 100 --numval 100 --numtest 200 --numhid 6 --numruns 60 --view "task1,task2,task3,task7" --outfile "ccmtlresults.txt" --primtask 1 --CC --impnumtrain 20 --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+ccmtlresults.txt Done
+ccstlresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname smallcovtype --numinputs 10 --numoutputs 1 --numtasks 1 --numtrain 20 --numval 100 --numtest 200 --numhid 6 --numruns 60 --view "task1" --outfile "ccstlresults.txt" --primtask 0 --CC --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+ccstlresults.txt Done
+ccmtlurresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname smallcovtype --numinputs 10 --numoutputs 1 --numtasks 4 --numtrain 100 --numval 100 --numtest 200 --numhid 6 --numruns 60 --view "task1,task2,task4,task5" --outfile "ccmtlurresults.txt" --primtask 1 --CC --impnumtrain 20 --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+ccmtlurresults.txt Done
+bpmtlresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/hn/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname heart --numinputs 13 --numoutputs 1 --numtasks 1 --numtrain 15 --numval 100 --numtest 200 --numhid 5 --numruns 60 --view "task1" --outfile "bpstlresults.txt" --primtask 0 --BP -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpstlresults.txt Done
+bpmtlurresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname heart --numinputs 13 --numoutputs 1 --numtasks 4 --numtrain 80 --numval 100 --numtest 200 --numhid 5 --numruns 60 --view "task1,task2,task4,task5" --outfile "bpmtlurresults.txt" --primtask 1 --BP --impnumtrain 15 -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpmtlurresults.txt Done
+ccmtlresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname heart --numinputs 13 --numoutputs 1 --numtasks 4 --numtrain 80 --numval 100 --numtest 200 --numhid 5 --numruns 60 --view "task1,task2,task3,task4" --outfile "ccmtlresults.txt" --primtask 1 --CC --impnumtrain 15 -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+ccmtlresults.txt Done
+ccstlresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname heart --numinputs 13 --numoutputs 1 --numtasks 1 --numtrain 15 --numval 100 --numtest 200 --numhid 5 --numruns 60 --view "task1" --outfile "ccstlresults.txt" --primtask 0 --CC -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+ccstlresults.txt Done
+ccmtlurresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname heart --numinputs 13 --numoutputs 1 --numtasks 4 --numtrain 80 --numval 100 --numtest 200 --numhid 5 --numruns 60 --view "task1,task2,task4,task5" --outfile "ccmtlurresults.txt" --primtask 1 --CC --impnumtrain 15 -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+ccmtlurresults.txt Done
+ccmtlurresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/" --dsname band --numinputs 2 --numoutputs 1 --numtasks 4 --numtrain 100 --numval 100 --numtest 200 --numhid 4 --numruns 60 --view "task1,task2,task5,task6" --outfile "ccmtlurresults.txt" --primtask 1 --CC --impnumtrain 15 --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+ccmtlurresults.txt Done
+bpmtlresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/" --dsname CirInSq --numinputs 2 --numoutputs 1 --numtasks 4 --numtrain 100 --numval 100 --numtest 200 --numhid 6 --numruns 60 --view "task1,task2,task7,task8" --outfile "bpmtlresults.txt" --primtask 1 --BP --impnumtrain 15 -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpmtlresults.txt Done
+bpstlresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/" --dsname CirInSq --numinputs 2 --numoutputs 1 --numtasks 1 --numtrain 15 --numval 100 --numtest 200 --numhid 6 --numruns 60 --view "task1" --outfile "bpstlresults.txt" --primtask 0 --BP -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpstlresults.txt Done
+bpmtlurresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepathme band --numinputs 2 --numoutputs 1 --numtasks 1 --numtrain 15 --numval 100 --numtest 200 --numhid 10 --numruns 60 --view "task1" --outfile "bpstlresults.txt" --primtask 0 --BP --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpstlresults.txt Done
+bpmtlurresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/" --dsname band --numinputs 2 --numoutputs 1 --numtasks 4 --numtrain 100 --numval 100 --numtest 200 --numhid 10 --numruns 60 --view "task1,task2,task5,task6" --outfile "bpmtlurresults.txt" --primtask 1 --BP --impnumtrain 15 --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpmtlurresults.txt Done
+ccmtlresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/" --dsname band --numinputs 2 --numoutputs 1 --numtasks 4 --numtrain 100 --numval 100 --numtest 200 --numhid 10 --numruns 60 --view "task1,task2,task3,task4" --outfile "ccmtlresults.txt" --primtask 1 --CC --impnumtrain 15 --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+ccmtlresults.txt Done
+ccstlresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/" --dsname band --numinputs 2 --numoutputs 1 --numtasks 1 --numtrain 15 --numval 100 --numtest 200 --numhid 10 --numruns 60 --view "task1" --outfile "ccstlresults.txt" --primtask 0 --CC --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+ccstlresults.txt Done
+ccmtlurresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/" --dsname band --numinputs 2 --numoutputs 1 --numtasks 4 --numtrain 100 --numval 100 --numtest 200 --numhid 10 --numruns 60 --view "task1,task2,task5,task6" --outfile "ccmtlurresults.txt" --primtask 1 --CC --impnumtrain 15 --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+ccmtlurresults.txt Done
+bpmtlresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/" --dsname band --numinputs 2 --numoutputs 1 --numtasks 4 --numtrain 100 --numval 100 --numtest 200 --numhid 4 --numruns 60 --view "task1,task2,task3,task4" --outfile "bpmtlresults.txt" --primtask 1 --BP --impnumtrain 15 --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpmtlresults.txt Done
+bpstlresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/" --dsname band --numinputs 2 --numoutputs 1 --numtasks 1 --numtrain 15 --numval 100 --numtest 200 --numhid 4 --numruns 60 --view "task1" --outfile "bpstlresults.txt" --primtask 0 --BP --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpstlresults.txt Done
+bpmtlurresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/" --dsname band --numinputs 2 --numoutputs 1 --numtasks 4 --numtrain 100 --numval 100 --numtest 200 --numhid 4 --numruns 60 --view "task1,task2,task5,task6" --outfile "bpmtlurresults.txt" --primtask 1 --BP --impnumtrain 15 --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpmtlurresults.txt Done
+ccmtlresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/" --dsname band --numinputs 2 --numoutputs 1 --numtasks 4 --numtrain 100 --nu/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname glass --numinputs 9 --numoutputs 1 --numtasks 4 --numtrain 50 --numval 50 --numtest 100 --numhid 5 --numruns 60 --view "task1,task2,task3,task6" --outfile "ccmtlresults.txt" --primtask 1 --CC --impnumtrain 15 --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+ccmtlresults.txt Done
+ccstlresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname glass --numinputs 9 --numoutputs 1 --numtasks 1 --numtrain 15 --numval 50 --numtest 100 --numhid 5 --numruns 60 --view "task1" --outfile "ccstlresults.txt" --primtask 0 --CC --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+ccstlresults.txt Done
+ccmtlurresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname glass --numinputs 9 --numoutputs 1 --numtasks 4 --numtrain 50 --numval 50 --numtest 100 --numhid 5 --numruns 60 --view "task1,task2,task4,task5" --outfile "ccmtlurresults.txt" --primtask 1 --CC --impnumtrain 15 --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+ccmtlurresults.txt Done
+bpmtlresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname derm --numinputs 33 --numoutputs 1 --numtasks 4 --numtrain 50 --numval 100 --numtest 200 --numhid 3 --numruns 60 --view "task1,task2,task3,task5" --outfile "bpmtlresults.txt" --primtask 1 --BP --impnumtrain 10 -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpmtlresults.txt Done
+bpstlresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname derm --numinputs 33 --numoutputs 1 --numtasks 1 --numtrain 10 --numval 100 --numtest 200 --numhid 3 --numruns 60 --view "task1" --outfile "bpstlresults.txt" --primtask 0 --BP -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpstlresults.txt Done
+ccmtlurresult.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/" --dsname band --numinputs 2 --numoutputs 1 --numtasks 4 --numtrain 100 --numval 100 --numtest 200 --numhid 4 --numruns 60 --view "task1,task2,task5,task6" --outfile "ccmtlurresult.txt" --primtask 1 --CCMTL --impnumtrain 15 -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+ccmtlurresult.txt Done
+bpcsmtlresult.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/" --dsname band --numinputs 2 --numoutputs 1 --numtasks 4 --numtrain 100 --numval 100 --numtest 200 --numhid 4 --numruns 60 --view "task1,task2,task3,task4" --outfile "bpcsmtlresult.txt" --primtask 1 --BP --impnumtrain 15 -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpcsmtlresult.txt Done
+cccsmtlresult.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/" --dsname band --numinputs 2 --numoutputs 1 --numtasks 4 --numtrain 100 --numval 100 --numtest 200 --numhid 4 --numruns 60 --view "task1,task2,task3,task4" --outfile "cccsmtlresult.txt" --primtask 1 --CC --impnumtrain 15 -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+cccsmtlresult.txt Done
+bpetamtlurresult.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/" --dsnaN/Experiments/Data/Tabbed Data/UCI Data/" --dsname heart --numinputs 13 --numoutputs 1 --numtasks 1 --numtrain 15 --numval 100 --numtest 200 --numhid 5 --numruns 60 --view "task1" --outfile "ccstlresults.txt" --primtask 0 --CC --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+ccstlresults.txt Done
+ccmtlurresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname heart --numinputs 13 --numoutputs 1 --numtasks 4 --numtrain 80 --numval 100 --numtest 200 --numhid 5 --numruns 60 --view "task1,task2,task4,task5" --outfile "ccmtlurresults.txt" --primtask 1 --CC --impnumtrain 15 --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+ccmtlurresults.txt Done
+bpmtlresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname smallcovtype --numinputs 10 --numoutputs 1 --numtasks 4 --numtrain 100 --numval 100 --numtest 200 --numhid 6 --numruns 60 --view "task1,task2,task3,task7" --outfile "bpmtlresults.txt" --primtask 1 --BP --impnumtrain 20 -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpmtlresults.txt Done
+bpstlresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname smallcovtype --numinputs 10 --numoutputs 1 --numtasks 1 --numtrain 20 --numval 100 --numtest 200 --numhid 6 --numruns 60 --view "task1" --outfile "bpstlresults.txt" --primtask 0 --BP -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpstlresults.txt Done
+bpmtlurresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname smallcovtype --numinputs 10 --numoutputs 1 --numtasks 4 --numtrain 100 --numval 100 --numtest 200 --numhid 6 --numruns 60 --view "task1,task2,task4,task5" --outfile "bpmtlurresults.txt" --primtask 1 --BP --impnumtrain 20 -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpmtlurresults.txt Done
+ccmtlresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname smallcovtype --numinputs 10 --numoutputs 1 --numtasks 4 --numtrain 100 --numval 100 --numtest 200 --numhid 6 --numruns 60 --view "task1,task2,task3,task7" --outfile "ccmtlresults.txt" --primtask 1 --CC --impnumtrain 20 -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+ccmtlresults.txt Done
+ccstlresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname smallcovtype --numinputs 10 --numoutputs 1 --numtasks 1 --numtrain 20 --numval 100 --numtest 200 --numhid 6 --numruns 60 --view "task1" --outfile "ccstlresults.txt" --primtask 0 --CC -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+ccstlresults.txt Done
+ccmtlurresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname smallcovtype --numinputs 10 --numoutputs 1 --numtasks 4 --numtrain 100 --numval 100 --numtest 200 --numhid 6 --numruns 60 --view "task1,task2,task4,task5" --outfile "ccmtlurresults.txt" --primtask 1 --CC --impnumtrain 20 -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+ccmtlurresults.txt Done
+bpmtlresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname smallcovtype CirInSq --numinputs 2 --numoutputs 1 --numtasks 4 --numtrain 100 --numval 100 --numtest 200 --numhid 12 --numruns 60 --view "task1,task2,task7,task8" --outfile "ccmtlresults.txt" --primtask 1 --CC --impnumtrain 15 --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+ccmtlresults.txt Done
+ccstlresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/" --dsname CirInSq --numinputs 2 --numoutputs 1 --numtasks 1 --numtrain 15 --numval 100 --numtest 200 --numhid 12 --numruns 60 --view "task1" --outfile "ccstlresults.txt" --primtask 0 --CC --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+ccstlresults.txt Done
+ccmtlurresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/" --dsname CirInSq --numinputs 2 --numoutputs 1 --numtasks 4 --numtrain 100 --numval 100 --numtest 200 --numhid 12 --numruns 60 --view "task1,task2,task5,task6" --outfile "ccmtlurresults.txt" --primtask 1 --CC --impnumtrain 15 --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+ccmtlurresults.txt Done
+bpmtlresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/" --dsname CirInSq --numinputs 2 --numoutputs 1 --numtasks 4 --numtrain 100 --numval 100 --numtest 200 --numhid 6 --numruns 60 --view "task1,task2,task7,task8" --outfile "bpmtlresults.txt" --primtask 1 --BP --impnumtrain 15 --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpmtlresults.txt Done
+bpstlresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/" --dsname CirInSq --numinputs 2 --numoutputs 1 --numtasks 1 --numtrain 15 --numval 100 --numtest 200 --numhid 6 --numruns 60 --view "task1" --outfile "bpstlresults.txt" --primtask 0 --BP --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpstlresults.txt Done
+bpmtlurresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/" --dsname CirInSq --numinputs 2 --numoutputs 1 --numtasks 4 --numtrain 100 --numval 100 --numtest 200 --numhid 6 --numruns 60 --view "task1,task2,task5,task6" --outfile "bpmtlurresults.txt" --primtask 1 --BP --impnumtrain 15 --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpmtlurresults.txt Done
+ccmtlresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/" --dsname CirInSq --numinputs 2 --numoutputs 1 --numtasks 4 --numtrain 100 --numval 100 --numtest 200 --numhid 6 --numruns 60 --view "task1,task2,task7,task8" --outfile "ccmtlresults.txt" --primtask 1 --CC --impnumtrain 15 --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+ccmtlresults.txt Done
+ccstlresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/" --dsname CirInSq --numinputs 2 --numoutputs 1 --numtasks 1 --numtrain 15 --numval 100 --numtest 200 --numhid 6 --numruns 60 --view "task1" --outfile "ccstlresults.txt" --primtask 0 --CC --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+ccstlresults.txt Done
+ccmtlurresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/" --dsname CirInSq --numinputs 2 --numoutputs 1 --numtasks 4 mval 100 --numtest 200 --numhid 4 --numruns 60 --view "task1,task2,task3,task4" --outfile "ccmtlresults.txt" --primtask 1 --CC --impnumtrain 15 --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+ccmtlresults.txt Done
+ccstlresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/" --dsname band --numinputs 2 --numoutputs 1 --numtasks 1 --numtrain 15 --numval 100 --numtest 200 --numhid 4 --numruns 60 --view "task1" --outfile "ccstlresults.txt" --primtask 0 --CC --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+ccstlresults.txt Done
+ccurresult.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/" --dsname linear --numinputs 2 --numoutputs 1 --numtasks 4 --numtrain 100 --numval 100 --numtest 200 --numhid 4 --numruns 60 --view "task1,task2,task4,task6" --outfile "ccurresult.txt" --primtask 1 --CC --impnumtrain 10 -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+ccurresult.txt Done
+ccmtlurresult.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/" --dsname linear --numinputs 2 --numoutputs 1 --numtasks 4 --numtrain 100 --numval 100 --numtest 200 --numhid 4 --numruns 60 --view "task1,task2,task4,task6" --outfile "ccmtlurresult.txt" --primtask 1 --CCMTL --impnumtrain 10 -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+ccmtlurresult.txt Done
+bpcsmtlresult.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/" --dsname linear --numinputs 2 --numoutputs 1 --numtasks 4 --numtrain 100 --numval 100 --numtest 200 --numhid 4 --numruns 60 --view "task1,task2,task3,task5" --outfile "bpcsmtlresult.txt" --primtask 1 --BP --impnumtrain 10 -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpcsmtlresult.txt Done
+cccsmtlresult.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/" --dsname linear --numinputs 2 --numoutputs 1 --numtasks 4 --numtrain 100 --numval 100 --numtest 200 --numhid 4 --numruns 60 --view "task1,task2,task3,task5" --outfile "cccsmtlresult.txt" --primtask 1 --CC --impnumtrain 10 -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+cccsmtlresult.txt Done
+bpetamtlurresult.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/" --dsname linear --numinputs 2 --numoutputs 1 --numtasks 4 --numtrain 100 --numval 100 --numtest 200 --numhid 4 --numruns 60 --view "task1,task2,task4,task6" --outfile "bpetamtlurresult.txt" --primtask 1 --BP --impnumtrain 10 -V --ETAMTL --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpetamtlurresult.txt Done
+ccetamtlscoreurresult.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/" --dsname linear --numinputs 2 --numoutputs 1 --numtasks 4 --numtrain 100 --numval 100 --numtest 200 --numhid 4 --numruns 60 --view "task1,task2,task4,task6" --outfile "ccetamtlscoreurresult.txt" --primtask 1 --CCMTL --impnumtrain 10 -V --ETAMTL --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+ccetamtlscoreurresult.txt Done
+ccetamtlslopeurresult.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New BinarTabbed Data/New Binary Tasks/" --dsname band --numinputs 2 --numoutputs 1 --numtasks 4 --numtrain 100 --numval 100 --numtest 200 --numhid 4 --numruns 60 --view "task1,task2,task3,task4" --outfile "bpmtlresults.txt" --primtask 1 --BP --impnumtrain 15 -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpmtlresults.txt Done
+bpstlresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/" --dsname band --numinputs 2 --numoutputs 1 --numtasks 1 --numtrain 15 --numval 100 --numtest 200 --numhid 4 --numruns 60 --view "task1" --outfile "bpstlresults.txt" --primtask 0 --BP -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpstlresults.txt Done
+bpmtlurresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/" --dsname band --numinputs 2 --numoutputs 1 --numtasks 4 --numtrain 100 --numval 100 --numtest 200 --numhid 4 --numruns 60 --view "task1,task2,task5,task6" --outfile "bpmtlurresults.txt" --primtask 1 --BP --impnumtrain 15 -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpmtlurresults.txt Done
+ccmtlresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/" --dsname band --numinputs 2 --numoutputs 1 --numtasks 4 --numtrain 100 --numval 100 --numtest 200 --numhid 4 --numruns 60 --view "task1,task2,task3,task4" --outfile "ccmtlresults.txt" --primtask 1 --CC --impnumtrain 15 -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+ccmtlresults.txt Done
+ccstlresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/" --dsname band --numinputs 2 --numoutputs 1 --numtasks 1 --numtrain 15 --numval 100 --numtest 200 --numhid 4 --numruns 60 --view "task1" --outfile "ccstlresults.txt" --primtask 0 --CC -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+ccstlresults.txt Done
+ccmtlurresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/" --dsname band --numinputs 2 --numoutputs 1 --numtasks 4 --numtrain 100 --numval 100 --numtest 200 --numhid 4 --numruns 60 --view "task1,task2,task5,task6" --outfile "ccmtlurresults.txt" --primtask 1 --CC --impnumtrain 15 -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+ccmtlurresults.txt Done
+bpmtlresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/" --dsname band --numinputs 2 --numoutputs 1 --numtasks 4 --numtrain 100 --numval 100 --numtest 200 --numhid 2 --numruns 60 --view "task1,task2,task3,task4" --outfile "bpmtlresults.txt" --primtask 1 --BP --impnumtrain 15 --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpmtlresults.txt Done
+bpstlresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/" --dsname band --numinputs 2 --numoutputs 1 --numtasks 1 --numtrain 15 --numval 100 --numtest 200 --numhid 2 --numruns 60 --view "task1" --outfile "bpstlresults.txt" --primtask 0 --BP --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpstlresults.txt Done
+bpmtlurresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/" --dsname band --numinputs 2 - "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/" --dsname CirInSq --numinputs 2 --numoutputs 1 --numtasks 4 --numtrain 100 --numval 100 --numtest 200 --numhid 6 --numruns 60 --view "task1,task2,task5,task6" --outfile "bpmtlurresults.txt" --primtask 1 --BP --impnumtrain 15 -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpmtlurresults.txt Done
+ccmtlresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/" --dsname CirInSq --numinputs 2 --numoutputs 1 --numtasks 4 --numtrain 100 --numval 100 --numtest 200 --numhid 6 --numruns 60 --view "task1,task2,task7,task8" --outfile "ccmtlresults.txt" --primtask 1 --CC --impnumtrain 15 -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+ccmtlresults.txt Done
+ccstlresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/" --dsname CirInSq --numinputs 2 --numoutputs 1 --numtasks 1 --numtrain 15 --numval 100 --numtest 200 --numhid 6 --numruns 60 --view "task1" --outfile "ccstlresults.txt" --primtask 0 --CC -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+ccstlresults.txt Done
+ccmtlurresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/" --dsname CirInSq --numinputs 2 --numoutputs 1 --numtasks 4 --numtrain 100 --numval 100 --numtest 200 --numhid 6 --numruns 60 --view "task1,task2,task5,task6" --outfile "ccmtlurresults.txt" --primtask 1 --CC --impnumtrain 15 -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+ccmtlurresults.txt Done
+bpmtlresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/" --dsname CirInSq --numinputs 2 --numoutputs 1 --numtasks 4 --numtrain 100 --numval 100 --numtest 200 --numhid 2 --numruns 60 --view "task1,task2,task7,task8" --outfile "bpmtlresults.txt" --primtask 1 --BP --impnumtrain 15 --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpmtlresults.txt Done
+bpstlresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/" --dsname CirInSq --numinputs 2 --numoutputs 1 --numtasks 1 --numtrain 15 --numval 100 --numtest 200 --numhid 2 --numruns 60 --view "task1" --outfile "bpstlresults.txt" --primtask 0 --BP --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpstlresults.txt Done
+bpmtlurresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/" --dsname CirInSq --numinputs 2 --numoutputs 1 --numtasks 4 --numtrain 100 --numval 100 --numtest 200 --numhid 2 --numruns 60 --view "task1,task2,task5,task6" --outfile "bpmtlurresults.txt" --primtask 1 --BP --impnumtrain 15 --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpmtlurresults.txt Done
+ccmtlresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/" --dsname CirInSq --numinputs 2 --numoutputs 1 --numtasks 4 --numtrain 100 --numval 100 --numtest 200 --numhid 2 --numruns 60 --view "task1,task2,task7,task8" --outfile "ccmtlresults.txt" --primtask 1 --CC --impnumtrain 15 --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+ccmtlresults.txt Done
+ccstlresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:y Tasks/" --dsname linear --numinputs 2 --numoutputs 1 --numtasks 4 --numtrain 100 --numval 100 --numtest 200 --numhid 4 --numruns 60 --view "task1,task2,task4,task6" --outfile "ccetamtlslopeurresult.txt" --primtask 1 --CCMTL --impnumtrain 10 -V --ETAMTL --CandSlope --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+ccetamtlslopeurresult.txt Done
+ccurresult.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname derm --numinputs 33 --numoutputs 1 --numtasks 4 --numtrain 50 --numval 100 --numtest 200 --numhid 3 --numruns 60 --view "task1,task2,task4,task6" --outfile "ccurresult.txt" --primtask 1 --CC --impnumtrain 10 -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+ccurresult.txt Done
+ccmtlurresult.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname derm --numinputs 33 --numoutputs 1 --numtasks 4 --numtrain 50 --numval 100 --numtest 200 --numhid 3 --numruns 60 --view "task1,task2,task4,task6" --outfile "ccmtlurresult.txt" --primtask 1 --CCMTL --impnumtrain 10 -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+ccmtlurresult.txt Done
+bpcsmtlresult.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname derm --numinputs 33 --numoutputs 1 --numtasks 4 --numtrain 50 --numval 100 --numtest 200 --numhid 3 --numruns 60 --view "task1,task2,task3,task5" --outfile "bpcsmtlresult.txt" --primtask 1 --BP --impnumtrain 10 -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpcsmtlresult.txt Done
+cccsmtlresult.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname derm --numinputs 33 --numoutputs 1 --numtasks 4 --numtrain 50 --numval 100 --numtest 200 --numhid 3 --numruns 60 --view "task1,task2,task3,task5" --outfile "cccsmtlresult.txt" --primtask 1 --CC --impnumtrain 10 -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+cccsmtlresult.txt Done
+bpetamtlurresult.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname derm --numinputs 33 --numoutputs 1 --numtasks 4 --numtrain 50 --numval 100 --numtest 200 --numhid 3 --numruns 60 --view "task1,task2,task4,task6" --outfile "bpetamtlurresult.txt" --primtask 1 --BP --impnumtrain 10 -V --ETAMTL --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpetamtlurresult.txt Done
+ccetamtlscoreurresult.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname derm --numinputs 33 --numoutputs 1 --numtasks 4 --numtrain 50 --numval 100 --numtest 200 --numhid 3 --numruns 60 --view "task1,task2,task4,task6" --outfile "ccetamtlscoreurresult.txt" --primtask 1 --CCMTL --impnumtrain 10 -V --ETAMTL --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+ccetamtlscoreurresult.txt Done
+cccsmtlnvresult.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/" --dsname CirInSq --numinputs 2 --numoutputs 1 --numtasks 4 --numtrain 100 --numval 100 --numtest 200 --numhid 12 --numruns 60 --view "task1,task2,task7,task8" --outfile "cccsmtlnvresult.txt" --primtask 1 --CC --impnumtrain 15 --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+cccsmtlnvresult.txt Done
+bpcsmtlssresult.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/ --numinputs 10 --numoutputs 1 --numtasks 4 --numtrain 100 --numval 100 --numtest 200 --numhid 3 --numruns 60 --view "task1,task2,task3,task7" --outfile "bpmtlresults.txt" --primtask 1 --BP --impnumtrain 20 --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpmtlresults.txt Done
+bpstlresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname smallcovtype --numinputs 10 --numoutputs 1 --numtasks 1 --numtrain 20 --numval 100 --numtest 200 --numhid 3 --numruns 60 --view "task1" --outfile "bpstlresults.txt" --primtask 0 --BP --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpstlresults.txt Done
+ccetamtlslopeurresult.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname derm --numinputs 33 --numoutputs 1 --numtasks 4 --numtrain 50 --numval 100 --numtest 200 --numhid 3 --numruns 60 --view "task1,task2,task4,task6" --outfile "ccetamtlslopeurresult.txt" --primtask 1 --CCMTL --impnumtrain 10 -V --ETAMTL --CandSlope --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+ccetamtlslopeurresult.txt Done
+ccurresult.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname heart --numinputs 13 --numoutputs 1 --numtasks 4 --numtrain 80 --numval 100 --numtest 200 --numhid 5 --numruns 60 --view "task1,task2,task4,task5" --outfile "ccurresult.txt" --primtask 1 --CC --impnumtrain 15 -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+ccurresult.txt Done
+ccmtlurresult.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname heart --numinputs 13 --numoutputs 1 --numtasks 4 --numtrain 80 --numval 100 --numtest 200 --numhid 5 --numruns 60 --view "task1,task2,task4,task5" --outfile "ccmtlurresult.txt" --primtask 1 --CCMTL --impnumtrain 15 -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+ccmtlurresult.txt Done
+bpcsmtlresult.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname heart --numinputs 13 --numoutputs 1 --numtasks 4 --numtrain 80 --numval 100 --numtest 200 --numhid 5 --numruns 60 --view "task1,task2,task3,task4" --outfile "bpcsmtlresult.txt" --primtask 1 --BP --impnumtrain 15 -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpcsmtlresult.txt Done
+cccsmtlresult.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname heart --numinputs 13 --numoutputs 1 --numtasks 4 --numtrain 80 --numval 100 --numtest 200 --numhid 5 --numruns 60 --view "task1,task2,task3,task4" --outfile "cccsmtlresult.txt" --primtask 1 --CC --impnumtrain 15 -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+cccsmtlresult.txt Done
+bpetamtlurresult.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname heart --numinputs 13 --numoutputs 1 --numtasks 4 --numtrain 80 --numval 100 --numtest 200 --numhid 5 --numruns 60 --view "task1,task2,task4,task5" --outfile "bpetamtlurresult.txt" --primtask 1 --BP --impnumtrain 15 -V --ETAMTL --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpetamtlurresult.txt Done
+ccetamtlscoreurresult.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/--numtrain 100 --numval 100 --numtest 200 --numhid 6 --numruns 60 --view "task1,task2,task5,task6" --outfile "ccmtlurresults.txt" --primtask 1 --CC --impnumtrain 15 --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+ccmtlurresults.txt Done
+ccurresult.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/" --dsname band --numinputs 2 --numoutputs 1 --numtasks 4 --numtrain 100 --numval 100 --numtest 200 --numhid 4 --numruns 60 --view "task1,task2,task5,task6" --outfile "ccurresult.txt" --primtask 1 --CC --impnumtrain 15 -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+ccurresult.txt Done
+bpcsmtlssresult.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname smallcovtype --numinputs 10 --numoutputs 1 --numtasks 4 --numtrain 100 --numval 100 --numtest 200 --numhid 3 --numruns 60 --view "task1,task2,task3,task7" --outfile "bpcsmtlssresult.txt" --primtask 1 --BP --impnumtrain 20 --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpcsmtlssresult.txt Done
+bpcsmtllsresult.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname heart --numinputs 13 --numoutputs 1 --numtasks 4 --numtrain 80 --numval 100 --numtest 200 --numhid 10 --numruns 60 --view "task1,task2,task3,task4" --outfile "bpcsmtllsresult.txt" --primtask 1 --BP --impnumtrain 15 --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpcsmtllsresult.txt Done
+cccsmtlnvresult.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname heart --numinputs 13 --numoutputs 1 --numtasks 4 --numtrain 80 --numval 100 --numtest 200 --numhid 10 --numruns 60 --view "task1,task2,task3,task4" --outfile "cccsmtlnvresult.txt" --primtask 1 --CC --impnumtrain 15 --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+cccsmtlnvresult.txt Done
+bpcsmtlssresult.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname heart --numinputs 13 --numoutputs 1 --numtasks 4 --numtrain 80 --numval 100 --numtest 200 --numhid 2 --numruns 60 --view "task1,task2,task3,task4" --outfile "bpcsmtlssresult.txt" --primtask 1 --BP --impnumtrain 15 --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpcsmtlssresult.txt Done
+bpcsmtlgurv1result.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/" --dsname band --numinputs 2 --numoutputs 1 --numtasks 6 --numtrain 15 --numval 100 --numtest 200 --numhid 4 --numruns 60 --view "task1,task1,task1,task1,task1,task1" --outfile "bpcsmtlgurv1result.txt" --primtask 1 --BP -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpcsmtlgurv1result.txt Done
+bpcsmtlgurv2result.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/" --dsname band --numinputs 2 --numoutputs 1 --numtasks 6 --numtrain 15 --numval 100 --numtest 200 --numhid 4 --numruns 60 --view "task1,task1,task1,task1,task1,task2" --outfile "bpcsmtlgurv2result.txt" --primtask 1 --BP -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpcsmtlgurv2result.txt Done
+bpcsmtlgurv3result.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/" --dsname CirInSq --numinputs 2 --numoutputs 1 --numtasks 4 --numtrain 100 --numval 100 --numtest 200 --numhid 2 --numruns 60 --view "task1,task2,task7,task8" --outfile "bpcsmtlssresult.txt" --primtask 1 --BP --impnumtrain 15 --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpcsmtlssresult.txt Done
+bpcsmtllsresult.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/" --dsname linear --numinputs 2 --numoutputs 1 --numtasks 4 --numtrain 100 --numval 100 --numtest 200 --numhid 8 --numruns 60 --view "task1,task2,task3,task5" --outfile "bpcsmtllsresult.txt" --primtask 1 --BP --impnumtrain 10 --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpcsmtllsresult.txt Done
+cccsmtlnvresult.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/" --dsname linear --numinputs 2 --numoutputs 1 --numtasks 4 --numtrain 100 --numval 100 --numtest 200 --numhid 8 --numruns 60 --view "task1,task2,task3,task5" --outfile "cccsmtlnvresult.txt" --primtask 1 --CC --impnumtrain 10 --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+cccsmtlnvresult.txt Done
+bpcsmtlssresult.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/" --dsname linear --numinputs 2 --numoutputs 1 --numtasks 4 --numtrain 100 --numval 100 --numtest 200 --numhid 2 --numruns 60 --view "task1,task2,task3,task5" --outfile "bpcsmtlssresult.txt" --primtask 1 --BP --impnumtrain 10 --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpcsmtlssresult.txt Done
+bpcsmtllsresult.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname glass --numinputs 9 --numoutputs 1 --numtasks 4 --numtrain 50 --numval 50 --numtest 100 --numhid 10 --numruns 60 --view "task1,task2,task3,task6" --outfile "bpcsmtllsresult.txt" --primtask 1 --BP --impnumtrain 15 --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpcsmtllsresult.txt Done
+cccsmtlnvresult.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname glass --numinputs 9 --numoutputs 1 --numtasks 4 --numtrain 50 --numval 50 --numtest 100 --numhid 10 --numruns 60 --view "task1,task2,task3,task6" --outfile "cccsmtlnvresult.txt" --primtask 1 --CC --impnumtrain 15 --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+cccsmtlnvresult.txt Done
+bpcsmtlssresult.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname glass --numinputs 9 --numoutputs 1 --numtasks 4 --numtrain 50 --numval 50 --numtest 100 --numhid 2 --numruns 60 --view "task1,task2,task3,task6" --outfile "bpcsmtlssresult.txt" --primtask 1 --BP --impnumtrain 15 --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpcsmtlssresult.txt Done
+bpcsmtllsresult.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname derm --numinputs 33 --numoutputs 1 --numtasks 4 --numtrain 50 --numval 100 --numtest 200 --numhid 10 --numruns 60 --view "task1,task2,task3,task5" --outfile "bpcsmtllsresult.txt" --primtask 1 --BP --impnumtrain 10 --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpcsmtllsresult.txt Done
+cccsm/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/" --dsname CirInSq --numinputs 2 --numoutputs 1 --numtasks 1 --numtrain 15 --numval 100 --numtest 200 --numhid 2 --numruns 60 --view "task1" --outfile "ccstlresults.txt" --primtask 0 --CC --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+ccstlresults.txt Done
+ccmtlurresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/" --dsname CirInSq --numinputs 2 --numoutputs 1 --numtasks 4 --numtrain 100 --numval 100 --numtest 200 --numhid 2 --numruns 60 --view "task1,task2,task5,task6" --outfile "ccmtlurresults.txt" --primtask 1 --CC --impnumtrain 15 --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+ccmtlurresults.txt Done
+bpmtlgurv2result.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/" --dsname band --numinputs 2 --numoutputs 1 --numtasks 6 --numtrain 15 --numval 100 --numtest 200 --numhid 4 --numruns 60 --view "task1,task1,task1,task1,task1,task2" --outfile "bpmtlgurv2result.txt" --primtask 1 --BP -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpmtlgurv2result.txt Done
+bpmtlgurv3result.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/" --dsname band --numinputs 2 --numoutputs 1 --numtasks 6 --numtrain 15 --numval 100 --numtest 200 --numhid 4 --numruns 60 --view "task1,task1,task1,task1,task2,task3" --outfile "bpmtlgurv3result.txt" --primtask 1 --BP -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpmtlgurv3result.txt Done
+bpmtlgurv4result.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/" --dsname band --numinputs 2 --numoutputs 1 --numtasks 6 --numtrain 15 --numval 100 --numtest 200 --numhid 4 --numruns 60 --view "task1,task1,task1,task2,task3,task4" --outfile "bpmtlgurv4result.txt" --primtask 1 --BP -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpmtlgurv4result.txt Done
+ccmtlgurv1result.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/" --dsname band --numinputs 2 --numoutputs 1 --numtasks 6 --numtrain 15 --numval 100 --numtest 200 --numhid 4 --numruns 60 --view "task1,task1,task1,task1,task1,task1" --outfile "ccmtlgurv1result.txt" --primtask 1 --CC -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+ccmtlgurv1result.txt Done
+ccmtlgurv2result.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/" --dsname band --numinputs 2 --numoutputs 1 --numtasks 6 --numtrain 15 --numval 100 --numtest 200 --numhid 4 --numruns 60 --view "task1,task1,task1,task1,task1,task2" --outfile "ccmtlgurv2result.txt" --primtask 1 --CC -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+ccmtlgurv2result.txt Done
+ccmtlgurv3result.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/" --dsname band --numinputs 2 --numoutputs 1 --numtasks 6 --numtrain 15 --numval 100 --numtest 200 --numhid 4 --numruns 60 --view "task1,task1,task1,task1,task2,task3" --outfile "ccmtlgurv3result.txt" --primtask 1 --CC -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+ccmtlgurv3result.txt Done
+ccmtlgurv4result.txt
+C:/Users/John/Documents/Source/JRNN/Builds/ smallcovtype --numinputs 10 --numoutputs 1 --numtasks 4 --numtrain 100 --numval 100 --numtest 200 --numhid 3 --numruns 60 --view "task1,task2,task4,task5" --outfile "ccmtlurresults.txt" --primtask 1 --CC --impnumtrain 20 --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+ccmtlurresults.txt Done
+bpmtlresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname smallcovtype --numinputs 10 --numoutputs 1 --numtasks 4 --numtrain 100 --numval 100 --numtest 200 --numhid 15 --numruns 60 --view "task1,task2,task3,task7" --outfile "bpmtlresults.txt" --primtask 1 --BP --impnumtrain 20 --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpmtlresults.txt Done
+bpstlresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname smallcovtype --numinputs 10 --numoutputs 1 --numtasks 1 --numtrain 20 --numval 100 --numtest 200 --numhid 15 --numruns 60 --view "task1" --outfile "bpstlresults.txt" --primtask 0 --BP --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpstlresults.txt Done
+bpmtlurresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname smallcovtype --numinputs 10 --numoutputs 1 --numtasks 4 --numtrain 100 --numval 100 --numtest 200 --numhid 15 --numruns 60 --view "task1,task2,task4,task5" --outfile "bpmtlurresults.txt" --primtask 1 --BP --impnumtrain 20 --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpmtlurresults.txt Done
+ccmtlresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname smallcovtype --numinputs 10 --numoutputs 1 --numtasks 4 --numtrain 100 --numval 100 --numtest 200 --numhid 15 --numruns 60 --view "task1,task2,task3,task7" --outfile "ccmtlresults.txt" --primtask 1 --CC --impnumtrain 20 --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+ccmtlresults.txt Done
+ccstlresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname smallcovtype --numinputs 10 --numoutputs 1 --numtasks 1 --numtrain 20 --numval 100 --numtest 200 --numhid 15 --numruns 60 --view "task1" --outfile "ccstlresults.txt" --primtask 0 --CC --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+ccstlresults.txt Done
+ccmtlurresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname smallcovtype --numinputs 10 --numoutputs 1 --numtasks 4 --numtrain 100 --numval 100 --numtest 200 --numhid 15 --numruns 60 --view "task1,task2,task4,task5" --outfile "ccmtlurresults.txt" --primtask 1 --CC --impnumtrain 20 --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+ccmtlurresults.txt Done
+bpmtlresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname smallcovtype --numinputs 10 --numoutputs 1 --numtasks 4 --numtrain 100 --numval 100 --numtest 200 --numhid 6 --numruns 60 --view "task1,task2,task3,task7" --outfile "bpmtlresults.txt" --primtask 1 --BP --impnumtrain 20 --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpmtlresults.txt Done
+bpstlresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname smallcovtype --numinputs Binary Tasks/" --dsname band --numinputs 2 --numoutputs 1 --numtasks 6 --numtrain 15 --numval 100 --numtest 200 --numhid 4 --numruns 60 --view "task1,task1,task1,task1,task2,task3" --outfile "bpcsmtlgurv3result.txt" --primtask 1 --BP -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpcsmtlgurv3result.txt Done
+bpcsmtlgurv4result.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/" --dsname band --numinputs 2 --numoutputs 1 --numtasks 6 --numtrain 15 --numval 100 --numtest 200 --numhid 4 --numruns 60 --view "task1,task1,task1,task2,task3,task4" --outfile "bpcsmtlgurv4result.txt" --primtask 1 --BP -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpcsmtlgurv4result.txt Done
+cccsmtlgurv1result.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/" --dsname band --numinputs 2 --numoutputs 1 --numtasks 6 --numtrain 15 --numval 100 --numtest 200 --numhid 4 --numruns 60 --view "task1,task1,task1,task1,task1,task1" --outfile "cccsmtlgurv1result.txt" --primtask 1 --CC -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+cccsmtlgurv1result.txt Done
+cccsmtlgurv2result.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/" --dsname band --numinputs 2 --numoutputs 1 --numtasks 6 --numtrain 15 --numval 100 --numtest 200 --numhid 4 --numruns 60 --view "task1,task1,task1,task1,task1,task2" --outfile "cccsmtlgurv2result.txt" --primtask 1 --CC -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+cccsmtlgurv2result.txt Done
+cccsmtlgurv3result.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/" --dsname band --numinputs 2 --numoutputs 1 --numtasks 6 --numtrain 15 --numval 100 --numtest 200 --numhid 4 --numruns 60 --view "task1,task1,task1,task1,task2,task3" --outfile "cccsmtlgurv3result.txt" --primtask 1 --CC -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+cccsmtlgurv3result.txt Done
+cccsmtlgurv4result.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/" --dsname band --numinputs 2 --numoutputs 1 --numtasks 6 --numtrain 15 --numval 100 --numtest 200 --numhid 4 --numruns 60 --view "task1,task1,task1,task2,task3,task4" --outfile "cccsmtlgurv4result.txt" --primtask 1 --CC -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+cccsmtlgurv4result.txt Done
+bpmtlgurv1result.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/" --dsname band --numinputs 2 --numoutputs 1 --numtasks 6 --numtrain 15 --numval 100 --numtest 200 --numhid 4 --numruns 60 --view "task1,task1,task1,task1,task1,task1" --outfile "bpmtlgurv1result.txt" --primtask 1 --BP -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpmtlgurv1result.txt Done
+cccsmtlgurv3result.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/" --dsname CirInSq --numinputs 2 --numoutputs 1 --numtasks 6 --numtrain 15 --numval 100 --numtest 200 --numhid 6 --numruns 60 --view "task1,task1,task1,task1,task2,task7" --outfile "cccsmtlgurv3result.txt" --primtask 1 --CC -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+cccsmtlgurv3result.txt Done
+cccsmtlgurv4result.txt
+C:/Users/John/Documents/Soume band --numinputs 2 --numoutputs 1 --numtasks 4 --numtrain 100 --numval 100 --numtest 200 --numhid 4 --numruns 60 --view "task1,task2,task5,task6" --outfile "bpetamtlurresult.txt" --primtask 1 --BP --impnumtrain 15 -V --ETAMTL --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpetamtlurresult.txt Done
+ccetamtlscoreurresult.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/" --dsname band --numinputs 2 --numoutputs 1 --numtasks 4 --numtrain 100 --numval 100 --numtest 200 --numhid 4 --numruns 60 --view "task1,task2,task5,task6" --outfile "ccetamtlscoreurresult.txt" --primtask 1 --CCMTL --impnumtrain 15 -V --ETAMTL --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+ccetamtlscoreurresult.txt Done
+ccetamtlslopeurresult.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/" --dsname band --numinputs 2 --numoutputs 1 --numtasks 4 --numtrain 100 --numval 100 --numtest 200 --numhid 4 --numruns 60 --view "task1,task2,task5,task6" --outfile "ccetamtlslopeurresult.txt" --primtask 1 --CCMTL --impnumtrain 15 -V --ETAMTL --CandSlope --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+ccetamtlslopeurresult.txt Done
+ccurresult.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/" --dsname CirInSq --numinputs 2 --numoutputs 1 --numtasks 4 --numtrain 100 --numval 100 --numtest 200 --numhid 6 --numruns 60 --view "task1,task2,task5,task6" --outfile "ccurresult.txt" --primtask 1 --CC --impnumtrain 15 -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+ccurresult.txt Done
+ccmtlurresult.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/" --dsname CirInSq --numinputs 2 --numoutputs 1 --numtasks 4 --numtrain 100 --numval 100 --numtest 200 --numhid 6 --numruns 60 --view "task1,task2,task5,task6" --outfile "ccmtlurresult.txt" --primtask 1 --CCMTL --impnumtrain 15 -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+ccmtlurresult.txt Done
+bpcsmtlresult.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/" --dsname CirInSq --numinputs 2 --numoutputs 1 --numtasks 4 --numtrain 100 --numval 100 --numtest 200 --numhid 6 --numruns 60 --view "task1,task2,task7,task8" --outfile "bpcsmtlresult.txt" --primtask 1 --BP --impnumtrain 15 -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpcsmtlresult.txt Done
+cccsmtlresult.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/" --dsname CirInSq --numinputs 2 --numoutputs 1 --numtasks 4 --numtrain 100 --numval 100 --numtest 200 --numhid 6 --numruns 60 --view "task1,task2,task7,task8" --outfile "cccsmtlresult.txt" --primtask 1 --CC --impnumtrain 15 -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+cccsmtlresult.txt Done
+bpetamtlurresult.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/" --dsname CirInSq --numinputs 2 --numoutputs 1 --numtasks 4 --numtrain 100 --numval 100 --numtest 200 --numhid 6 --numruns 60 --view "task1,task2,task5,task6" --outfile "bpetamtlurresult.txt" --primtask 1 --BP --impnumtrain 15 -V --ETAMTL --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpetamtlurresult.txt Done
+ccetamtlsTabbed Data/UCI Data/" --dsname heart --numinputs 13 --numoutputs 1 --numtasks 4 --numtrain 80 --numval 100 --numtest 200 --numhid 5 --numruns 60 --view "task1,task2,task4,task5" --outfile "ccetamtlscoreurresult.txt" --primtask 1 --CCMTL --impnumtrain 15 -V --ETAMTL --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+ccetamtlscoreurresult.txt Done
+ccetamtlslopeurresult.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname heart --numinputs 13 --numoutputs 1 --numtasks 4 --numtrain 80 --numval 100 --numtest 200 --numhid 5 --numruns 60 --view "task1,task2,task4,task5" --outfile "ccetamtlslopeurresult.txt" --primtask 1 --CCMTL --impnumtrain 15 -V --ETAMTL --CandSlope --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+ccetamtlslopeurresult.txt Done
+ccurresult.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname glass --numinputs 9 --numoutputs 1 --numtasks 4 --numtrain 50 --numval 50 --numtest 100 --numhid 5 --numruns 60 --view "task1,task2,task4,task5" --outfile "ccurresult.txt" --primtask 1 --CC --impnumtrain 15 -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+ccurresult.txt Done
+ccmtlurresult.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname glass --numinputs 9 --numoutputs 1 --numtasks 4 --numtrain 50 --numval 50 --numtest 100 --numhid 5 --numruns 60 --view "task1,task2,task4,task5" --outfile "ccmtlurresult.txt" --primtask 1 --CCMTL --impnumtrain 15 -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+ccmtlurresult.txt Done
+bpcsmtlresult.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname glass --numinputs 9 --numoutputs 1 --numtasks 4 --numtrain 50 --numval 50 --numtest 100 --numhid 5 --numruns 60 --view "task1,task2,task3,task6" --outfile "bpcsmtlresult.txt" --primtask 1 --BP --impnumtrain 15 -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpcsmtlresult.txt Done
+cccsmtlresult.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname glass --numinputs 9 --numoutputs 1 --numtasks 4 --numtrain 50 --numval 50 --numtest 100 --numhid 5 --numruns 60 --view "task1,task2,task3,task6" --outfile "cccsmtlresult.txt" --primtask 1 --CC --impnumtrain 15 -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+cccsmtlresult.txt Done
+bpetamtlurresult.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname glass --numinputs 9 --numoutputs 1 --numtasks 4 --numtrain 50 --numval 50 --numtest 100 --numhid 5 --numruns 60 --view "task1,task2,task4,task5" --outfile "bpetamtlurresult.txt" --primtask 1 --BP --impnumtrain 15 -V --ETAMTL --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpetamtlurresult.txt Done
+bpcsmtlgurv4result.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/" --dsname linear --numinputs 2 --numoutputs 1 --numtasks 6 --numtrain 10 --numval 100 --numtest 200 --numhid 4 --numruns 60 --view "task1,task1,task1,task2,task3,task5" --outfile "bpcsmtlgurv4result.txt" --primtask 1 --BP -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpcsmtlgurv4result.txt Done
+cccsmtlgurv1result.txt
+C:/Users/John/Documents/Source/JRNN-numoutputs 1 --numtasks 4 --numtrain 100 --numval 100 --numtest 200 --numhid 2 --numruns 60 --view "task1,task2,task5,task6" --outfile "bpmtlurresults.txt" --primtask 1 --BP --impnumtrain 15 --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpmtlurresults.txt Done
+ccmtlresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/" --dsname band --numinputs 2 --numoutputs 1 --numtasks 4 --numtrain 100 --numval 100 --numtest 200 --numhid 2 --numruns 60 --view "task1,task2,task3,task4" --outfile "ccmtlresults.txt" --primtask 1 --CC --impnumtrain 15 --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+ccmtlresults.txt Done
+ccetamtlscoreurresult.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname glass --numinputs 9 --numoutputs 1 --numtasks 4 --numtrain 50 --numval 50 --numtest 100 --numhid 5 --numruns 60 --view "task1,task2,task4,task5" --outfile "ccetamtlscoreurresult.txt" --primtask 1 --CCMTL --impnumtrain 15 -V --ETAMTL --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+ccetamtlscoreurresult.txt Done
+ccetamtlslopeurresult.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname glass --numinputs 9 --numoutputs 1 --numtasks 4 --numtrain 50 --numval 50 --numtest 100 --numhid 5 --numruns 60 --view "task1,task2,task4,task5" --outfile "ccetamtlslopeurresult.txt" --primtask 1 --CCMTL --impnumtrain 15 -V --ETAMTL --CandSlope --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+ccetamtlslopeurresult.txt Done
+ccurresult.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname smallcovtype --numinputs 10 --numoutputs 1 --numtasks 4 --numtrain 100 --numval 100 --numtest 200 --numhid 6 --numruns 60 --view "task1,task2,task4,task5" --outfile "ccurresult.txt" --primtask 1 --CC --impnumtrain 20 -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+ccurresult.txt Done
+ccmtlurresult.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname smallcovtype --numinputs 10 --numoutputs 1 --numtasks 4 --numtrain 100 --numval 100 --numtest 200 --numhid 6 --numruns 60 --view "task1,task2,task4,task5" --outfile "ccmtlurresult.txt" --primtask 1 --CCMTL --impnumtrain 20 -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+ccmtlurresult.txt Done
+bpcsmtlresult.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname smallcovtype --numinputs 10 --numoutputs 1 --numtasks 4 --numtrain 100 --numval 100 --numtest 200 --numhid 6 --numruns 60 --view "task1,task2,task3,task7" --outfile "bpcsmtlresult.txt" --primtask 1 --BP --impnumtrain 20 -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpcsmtlresult.txt Done
+cccsmtlresult.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname smallcovtype --numinputs 10 --numoutputs 1 --numtasks 4 --numtrain 100 --numval 100 --numtest 200 --numhid 6 --numruns 60 --view "task1,task2,task3,task7" --outfile "cccsmtlresult.txt" --primtask 1 --CC --impnumtrain 20 -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+cccsmtlresult.txt Done
+bpetamtlurresult.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe -/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/" --dsname linear --numinputs 2 --numoutputs 1 --numtasks 6 --numtrain 10 --numval 100 --numtest 200 --numhid 4 --numruns 60 --view "task1,task1,task1,task1,task1,task1" --outfile "cccsmtlgurv1result.txt" --primtask 1 --CC -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+cccsmtlgurv1result.txt Done
+cccsmtlgurv2result.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/" --dsname linear --numinputs 2 --numoutputs 1 --numtasks 6 --numtrain 10 --numval 100 --numtest 200 --numhid 4 --numruns 60 --view "task1,task1,task1,task1,task1,task2" --outfile "cccsmtlgurv2result.txt" --primtask 1 --CC -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+cccsmtlgurv2result.txt Done
+cccsmtlgurv3result.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/" --dsname linear --numinputs 2 --numoutputs 1 --numtasks 6 --numtrain 10 --numval 100 --numtest 200 --numhid 4 --numruns 60 --view "task1,task1,task1,task1,task2,task3" --outfile "cccsmtlgurv3result.txt" --primtask 1 --CC -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+cccsmtlgurv3result.txt Done
+cccsmtlgurv4result.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/" --dsname linear --numinputs 2 --numoutputs 1 --numtasks 6 --numtrain 10 --numval 100 --numtest 200 --numhid 4 --numruns 60 --view "task1,task1,task1,task2,task3,task5" --outfile "cccsmtlgurv4result.txt" --primtask 1 --CC -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+cccsmtlgurv4result.txt Done
+bpmtlgurv1result.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/" --dsname linear --numinputs 2 --numoutputs 1 --numtasks 6 --numtrain 10 --numval 100 --numtest 200 --numhid 4 --numruns 60 --view "task1,task1,task1,task1,task1,task1" --outfile "bpmtlgurv1result.txt" --primtask 1 --BP -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpmtlgurv1result.txt Done
+bpmtlgurv2result.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/" --dsname linear --numinputs 2 --numoutputs 1 --numtasks 6 --numtrain 10 --numval 100 --numtest 200 --numhid 4 --numruns 60 --view "task1,task1,task1,task1,task1,task2" --outfile "bpmtlgurv2result.txt" --primtask 1 --BP -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpmtlgurv2result.txt Done
+bpmtlgurv3result.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/" --dsname linear --numinputs 2 --numoutputs 1 --numtasks 6 --numtrain 10 --numval 100 --numtest 200 --numhid 4 --numruns 60 --view "task1,task1,task1,task1,task2,task3" --outfile "bpmtlgurv3result.txt" --primtask 1 --BP -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpmtlgurv3result.txt Done
+bpmtlgurv4result.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/" --dsname linear --numinputs 2 --numoutputs 1 --numtasks 6 --numtrain 10 --numval 100 --numtest 200 --numhid 4 --numruns 60 --view "task1,task1,task1,task2,task3,task5" --outfile "bpmtlgurv4result.txt" --primtask 1 --BP -V --params "C:/Users/John/Documents/SouVS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/" --dsname band --numinputs 2 --numoutputs 1 --numtasks 6 --numtrain 15 --numval 100 --numtest 200 --numhid 4 --numruns 60 --view "task1,task1,task1,task2,task3,task4" --outfile "ccmtlgurv4result.txt" --primtask 1 --CC -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+ccmtlgurv4result.txt Done
+bpcsmtlgurv1result.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/" --dsname CirInSq --numinputs 2 --numoutputs 1 --numtasks 6 --numtrain 15 --numval 100 --numtest 200 --numhid 6 --numruns 60 --view "task1,task1,task1,task1,task1,task1" --outfile "bpcsmtlgurv1result.txt" --primtask 1 --BP -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpcsmtlgurv1result.txt Done
+bpcsmtlgurv2result.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/" --dsname CirInSq --numinputs 2 --numoutputs 1 --numtasks 6 --numtrain 15 --numval 100 --numtest 200 --numhid 6 --numruns 60 --view "task1,task1,task1,task1,task1,task2" --outfile "bpcsmtlgurv2result.txt" --primtask 1 --BP -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpcsmtlgurv2result.txt Done
+bpcsmtlgurv3result.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/" --dsname CirInSq --numinputs 2 --numoutputs 1 --numtasks 6 --numtrain 15 --numval 100 --numtest 200 --numhid 6 --numruns 60 --view "task1,task1,task1,task1,task2,task7" --outfile "bpcsmtlgurv3result.txt" --primtask 1 --BP -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpcsmtlgurv3result.txt Done
+bpcsmtlgurv4result.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/" --dsname CirInSq --numinputs 2 --numoutputs 1 --numtasks 6 --numtrain 15 --numval 100 --numtest 200 --numhid 6 --numruns 60 --view "task1,task1,task1,task2,task7,task8" --outfile "bpcsmtlgurv4result.txt" --primtask 1 --BP -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpcsmtlgurv4result.txt Done
+cccsmtlgurv1result.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/" --dsname CirInSq --numinputs 2 --numoutputs 1 --numtasks 6 --numtrain 15 --numval 100 --numtest 200 --numhid 6 --numruns 60 --view "task1,task1,task1,task1,task1,task1" --outfile "cccsmtlgurv1result.txt" --primtask 1 --CC -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+cccsmtlgurv1result.txt Done
+cccsmtlgurv2result.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/" --dsname CirInSq --numinputs 2 --numoutputs 1 --numtasks 6 --numtrain 15 --numval 100 --numtest 200 --numhid 6 --numruns 60 --view "task1,task1,task1,task1,task1,task2" --outfile "cccsmtlgurv2result.txt" --primtask 1 --CC -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+cccsmtlgurv2result.txt Done
+cccsmtlgurv4result.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname smallcovtype --numinputs 10 --numoutputs 1 --numtasks 6 --numtrain 20 --numval 100 --numtest 200 --numhid 6 --numruns 60 --view "task1,task1,task1,task2,task3,task7" --outfile "cccsmtlgurv4result.txt" --primtask 1 --CC -V --params "C:/Users/John/tlnvresult.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname derm --numinputs 33 --numoutputs 1 --numtasks 4 --numtrain 50 --numval 100 --numtest 200 --numhid 10 --numruns 60 --view "task1,task2,task3,task5" --outfile "cccsmtlnvresult.txt" --primtask 1 --CC --impnumtrain 10 --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+cccsmtlnvresult.txt Done
+bpcsmtlssresult.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname derm --numinputs 33 --numoutputs 1 --numtasks 4 --numtrain 50 --numval 100 --numtest 200 --numhid 1 --numruns 60 --view "task1,task2,task3,task5" --outfile "bpcsmtlssresult.txt" --primtask 1 --BP --impnumtrain 10 --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpcsmtlssresult.txt Done
+bpcsmtllsresult.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname smallcovtype --numinputs 10 --numoutputs 1 --numtasks 4 --numtrain 100 --numval 100 --numtest 200 --numhid 15 --numruns 60 --view "task1,task2,task3,task7" --outfile "bpcsmtllsresult.txt" --primtask 1 --BP --impnumtrain 20 --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpcsmtllsresult.txt Done
+cccsmtlnvresult.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname smallcovtype --numinputs 10 --numoutputs 1 --numtasks 4 --numtrain 100 --numval 100 --numtest 200 --numhid 15 --numruns 60 --view "task1,task2,task3,task7" --outfile "cccsmtlnvresult.txt" --primtask 1 --CC --impnumtrain 20 --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+cccsmtlnvresult.txt Done
+bpcsmtlgurv1result.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname glass --numinputs 9 --numoutputs 1 --numtasks 6 --numtrain 15 --numval 50 --numtest 100 --numhid 5 --numruns 60 --view "task1,task1,task1,task1,task1,task1" --outfile "bpcsmtlgurv1result.txt" --primtask 1 --BP -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpcsmtlgurv1result.txt Done
+bpcsmtlgurv2result.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname glass --numinputs 9 --numoutputs 1 --numtasks 6 --numtrain 15 --numval 50 --numtest 100 --numhid 5 --numruns 60 --view "task1,task1,task1,task1,task1,task2" --outfile "bpcsmtlgurv2result.txt" --primtask 1 --BP -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpcsmtlgurv2result.txt Done
+bpcsmtlgurv3result.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname glass --numinputs 9 --numoutputs 1 --numtasks 6 --numtrain 15 --numval 50 --numtest 100 --numhid 5 --numruns 60 --view "task1,task1,task1,task1,task2,task3" --outfile "bpcsmtlgurv3result.txt" --primtask 1 --BP -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpcsmtlgurv3result.txt Done
+bpcsmtlgurv4result.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname glass --numinputs 9 --numoutputs 1 --numtasks 6 --numtrain 15 --numval 50 --numtest 100 --numhid 5 --numruns 60 --view "task1,task1,task1,task2,task3,task6" --outfile "bpcsmtlgurv4result.txt" --primtask 1 --BP -V --params "C:/Users/John/Documents/Source/JRNNrce/JRNN/Experiments/config/Parameters.xml"
+bpmtlgurv4result.txt Done
+ccmtlgurv1result.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/" --dsname linear --numinputs 2 --numoutputs 1 --numtasks 6 --numtrain 10 --numval 100 --numtest 200 --numhid 4 --numruns 60 --view "task1,task1,task1,task1,task1,task1" --outfile "ccmtlgurv1result.txt" --primtask 1 --CC -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+ccmtlgurv1result.txt Done
+ccmtlgurv2result.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/" --dsname linear --numinputs 2 --numoutputs 1 --numtasks 6 --numtrain 10 --numval 100 --numtest 200 --numhid 4 --numruns 60 --view "task1,task1,task1,task1,task1,task2" --outfile "ccmtlgurv2result.txt" --primtask 1 --CC -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+ccmtlgurv2result.txt Done
+ccmtlgurv3result.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/" --dsname linear --numinputs 2 --numoutputs 1 --numtasks 6 --numtrain 10 --numval 100 --numtest 200 --numhid 4 --numruns 60 --view "task1,task1,task1,task1,task2,task3" --outfile "ccmtlgurv3result.txt" --primtask 1 --CC -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+ccmtlgurv3result.txt Done
+ccmtlgurv4result.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/" --dsname linear --numinputs 2 --numoutputs 1 --numtasks 6 --numtrain 10 --numval 100 --numtest 200 --numhid 4 --numruns 60 --view "task1,task1,task1,task2,task3,task5" --outfile "ccmtlgurv4result.txt" --primtask 1 --CC -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+ccmtlgurv4result.txt Done
+cccsmtlgurv1result.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname heart --numinputs 13 --numoutputs 1 --numtasks 6 --numtrain 15 --numval 100 --numtest 200 --numhid 5 --numruns 60 --view "task1,task1,task1,task1,task1,task1" --outfile "cccsmtlgurv1result.txt" --primtask 1 --CC -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+cccsmtlgurv1result.txt Done
+cccsmtlgurv2result.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname heart --numinputs 13 --numoutputs 1 --numtasks 6 --numtrain 15 --numval 100 --numtest 200 --numhid 5 --numruns 60 --view "task1,task1,task1,task1,task1,task2" --outfile "cccsmtlgurv2result.txt" --primtask 1 --CC -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+cccsmtlgurv2result.txt Done
+cccsmtlgurv3result.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname heart --numinputs 13 --numoutputs 1 --numtasks 6 --numtrain 15 --numval 100 --numtest 200 --numhid 5 --numruns 60 --view "task1,task1,task1,task1,task2,task3" --outfile "cccsmtlgurv3result.txt" --primtask 1 --CC -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+cccsmtlgurv3result.txt Done
+cccsmtlgurv4result.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname heart --numinputs 13 --numoutputs 1 --numtasks 6 --numtrain 15 --numval 100 --numtest 200 --numhid 5 --numruns 60 --view "task1,task1,task1,task2,task3,task4"10 --numoutputs 1 --numtasks 1 --numtrain 20 --numval 100 --numtest 200 --numhid 6 --numruns 60 --view "task1" --outfile "bpstlresults.txt" --primtask 0 --BP --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpstlresults.txt Done
+bpmtlurresults.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname smallcovtype --numinputs 10 --numoutputs 1 --numtasks 4 --numtrain 100 --numval 100 --numtest 200 --numhid 6 --numruns 60 --view "task1,task2,task4,task5" --outfile "bpmtlurresults.txt" --primtask 1 --BP --impnumtrain 20 --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpmtlurresults.txt Done
+bpmtlgurv3result.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname derm --numinputs 33 --numoutputs 1 --numtasks 6 --numtrain 10 --numval 100 --numtest 200 --numhid 3 --numruns 60 --view "task1,task1,task1,task1,task2,task3" --outfile "bpmtlgurv3result.txt" --primtask 1 --BP -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpmtlgurv3result.txt Done
+bpmtlgurv4result.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname derm --numinputs 33 --numoutputs 1 --numtasks 6 --numtrain 10 --numval 100 --numtest 200 --numhid 3 --numruns 60 --view "task1,task1,task1,task2,task3,task5" --outfile "bpmtlgurv4result.txt" --primtask 1 --BP -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpmtlgurv4result.txt Done
+ccmtlgurv1result.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname derm --numinputs 33 --numoutputs 1 --numtasks 6 --numtrain 10 --numval 100 --numtest 200 --numhid 3 --numruns 60 --view "task1,task1,task1,task1,task1,task1" --outfile "ccmtlgurv1result.txt" --primtask 1 --CC -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+ccmtlgurv1result.txt Done
+ccmtlgurv2result.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname derm --numinputs 33 --numoutputs 1 --numtasks 6 --numtrain 10 --numval 100 --numtest 200 --numhid 3 --numruns 60 --view "task1,task1,task1,task1,task1,task2" --outfile "ccmtlgurv2result.txt" --primtask 1 --CC -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+ccmtlgurv2result.txt Done
+ccmtlgurv3result.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname derm --numinputs 33 --numoutputs 1 --numtasks 6 --numtrain 10 --numval 100 --numtest 200 --numhid 3 --numruns 60 --view "task1,task1,task1,task1,task2,task3" --outfile "ccmtlgurv3result.txt" --primtask 1 --CC -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+ccmtlgurv3result.txt Done
+ccmtlgurv4result.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname derm --numinputs 33 --numoutputs 1 --numtasks 6 --numtrain 10 --numval 100 --numtest 200 --numhid 3 --numruns 60 --view "task1,task1,task1,task2,task3,task5" --outfile "ccmtlgurv4result.txt" --primtask 1 --CC -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+ccmtlgurv4result.txt Done
+bpcsmtlgurv1result.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname smallcovtype --numicoreurresult.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/" --dsname CirInSq --numinputs 2 --numoutputs 1 --numtasks 4 --numtrain 100 --numval 100 --numtest 200 --numhid 6 --numruns 60 --view "task1,task2,task5,task6" --outfile "ccetamtlscoreurresult.txt" --primtask 1 --CCMTL --impnumtrain 15 -V --ETAMTL --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+ccetamtlscoreurresult.txt Done
+ccetamtlslopeurresult.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/" --dsname CirInSq --numinputs 2 --numoutputs 1 --numtasks 4 --numtrain 100 --numval 100 --numtest 200 --numhid 6 --numruns 60 --view "task1,task2,task5,task6" --outfile "ccetamtlslopeurresult.txt" --primtask 1 --CCMTL --impnumtrain 15 -V --ETAMTL --CandSlope --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+ccetamtlslopeurresult.txt Done
+ccmtlgurv2result.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname glass --numinputs 9 --numoutputs 1 --numtasks 6 --numtrain 15 --numval 50 --numtest 100 --numhid 5 --numruns 60 --view "task1,task1,task1,task1,task1,task2" --outfile "ccmtlgurv2result.txt" --primtask 1 --CC -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+ccmtlgurv2result.txt Done
+ccmtlgurv3result.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname glass --numinputs 9 --numoutputs 1 --numtasks 6 --numtrain 15 --numval 50 --numtest 100 --numhid 5 --numruns 60 --view "task1,task1,task1,task1,task2,task3" --outfile "ccmtlgurv3result.txt" --primtask 1 --CC -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+ccmtlgurv3result.txt Done
+ccmtlgurv4result.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname glass --numinputs 9 --numoutputs 1 --numtasks 6 --numtrain 15 --numval 50 --numtest 100 --numhid 5 --numruns 60 --view "task1,task1,task1,task2,task3,task6" --outfile "ccmtlgurv4result.txt" --primtask 1 --CC -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+ccmtlgurv4result.txt Done
+bpcsmtlgurv1result.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname derm --numinputs 33 --numoutputs 1 --numtasks 6 --numtrain 10 --numval 100 --numtest 200 --numhid 3 --numruns 60 --view "task1,task1,task1,task1,task1,task1" --outfile "bpcsmtlgurv1result.txt" --primtask 1 --BP -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpcsmtlgurv1result.txt Done
+bpcsmtlgurv2result.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname derm --numinputs 33 --numoutputs 1 --numtasks 6 --numtrain 10 --numval 100 --numtest 200 --numhid 3 --numruns 60 --view "task1,task1,task1,task1,task1,task2" --outfile "bpcsmtlgurv2result.txt" --primtask 1 --BP -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpcsmtlgurv2result.txt Done
+bpcsmtlgurv3result.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname derm --numinputs 33 --numoutputs 1 --numtasks 6 --numtrain 10 --numval 100 --numtest 200 --numhid 3 --numruns 60 --view "task1,task1,task1,task1,task2,task3" --outfile "bpcsmtlgurv3resultrce/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/" --dsname CirInSq --numinputs 2 --numoutputs 1 --numtasks 6 --numtrain 15 --numval 100 --numtest 200 --numhid 6 --numruns 60 --view "task1,task1,task1,task2,task7,task8" --outfile "cccsmtlgurv4result.txt" --primtask 1 --CC -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+cccsmtlgurv4result.txt Done
+bpmtlgurv1result.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/" --dsname CirInSq --numinputs 2 --numoutputs 1 --numtasks 6 --numtrain 15 --numval 100 --numtest 200 --numhid 6 --numruns 60 --view "task1,task1,task1,task1,task1,task1" --outfile "bpmtlgurv1result.txt" --primtask 1 --BP -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpmtlgurv1result.txt Done
+bpmtlgurv2result.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/" --dsname CirInSq --numinputs 2 --numoutputs 1 --numtasks 6 --numtrain 15 --numval 100 --numtest 200 --numhid 6 --numruns 60 --view "task1,task1,task1,task1,task1,task2" --outfile "bpmtlgurv2result.txt" --primtask 1 --BP -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpmtlgurv2result.txt Done
+bpmtlgurv3result.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/" --dsname CirInSq --numinputs 2 --numoutputs 1 --numtasks 6 --numtrain 15 --numval 100 --numtest 200 --numhid 6 --numruns 60 --view "task1,task1,task1,task1,task2,task7" --outfile "bpmtlgurv3result.txt" --primtask 1 --BP -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpmtlgurv3result.txt Done
+bpmtlgurv4result.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/" --dsname CirInSq --numinputs 2 --numoutputs 1 --numtasks 6 --numtrain 15 --numval 100 --numtest 200 --numhid 6 --numruns 60 --view "task1,task1,task1,task2,task7,task8" --outfile "bpmtlgurv4result.txt" --primtask 1 --BP -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpmtlgurv4result.txt Done
+ccmtlgurv1result.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/" --dsname CirInSq --numinputs 2 --numoutputs 1 --numtasks 6 --numtrain 15 --numval 100 --numtest 200 --numhid 6 --numruns 60 --view "task1,task1,task1,task1,task1,task1" --outfile "ccmtlgurv1result.txt" --primtask 1 --CC -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+ccmtlgurv1result.txt Done
+ccmtlgurv2result.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/" --dsname CirInSq --numinputs 2 --numoutputs 1 --numtasks 6 --numtrain 15 --numval 100 --numtest 200 --numhid 6 --numruns 60 --view "task1,task1,task1,task1,task1,task2" --outfile "ccmtlgurv2result.txt" --primtask 1 --CC -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+ccmtlgurv2result.txt Done
+ccmtlgurv3result.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/" --dsname CirInSq --numinputs 2 --numoutputs 1 --numtasks 6 --numtrain 15 --numval 100 --numtest 200 --numhid 6 --numruns 60 --view "task1,task1,task1,task1,task2,task7" --outfile "ccmtlgurv3result.txt" --primtask 1 --CC -V --params "C:/Users/John/Documents/Sourc/Experiments/config/Parameters.xml"
+bpcsmtlgurv4result.txt Done
+cccsmtlgurv1result.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname glass --numinputs 9 --numoutputs 1 --numtasks 6 --numtrain 15 --numval 50 --numtest 100 --numhid 5 --numruns 60 --view "task1,task1,task1,task1,task1,task1" --outfile "cccsmtlgurv1result.txt" --primtask 1 --CC -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+cccsmtlgurv1result.txt Done
+cccsmtlgurv2result.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname glass --numinputs 9 --numoutputs 1 --numtasks 6 --numtrain 15 --numval 50 --numtest 100 --numhid 5 --numruns 60 --view "task1,task1,task1,task1,task1,task2" --outfile "cccsmtlgurv2result.txt" --primtask 1 --CC -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+cccsmtlgurv2result.txt Done
+cccsmtlgurv3result.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname glass --numinputs 9 --numoutputs 1 --numtasks 6 --numtrain 15 --numval 50 --numtest 100 --numhid 5 --numruns 60 --view "task1,task1,task1,task1,task2,task3" --outfile "cccsmtlgurv3result.txt" --primtask 1 --CC -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+cccsmtlgurv3result.txt Done
+cccsmtlgurv4result.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname glass --numinputs 9 --numoutputs 1 --numtasks 6 --numtrain 15 --numval 50 --numtest 100 --numhid 5 --numruns 60 --view "task1,task1,task1,task2,task3,task6" --outfile "cccsmtlgurv4result.txt" --primtask 1 --CC -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+cccsmtlgurv4result.txt Done
+bpmtlgurv1result.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname glass --numinputs 9 --numoutputs 1 --numtasks 6 --numtrain 15 --numval 50 --numtest 100 --numhid 5 --numruns 60 --view "task1,task1,task1,task1,task1,task1" --outfile "bpmtlgurv1result.txt" --primtask 1 --BP -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpmtlgurv1result.txt Done
+bpmtlgurv2result.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname glass --numinputs 9 --numoutputs 1 --numtasks 6 --numtrain 15 --numval 50 --numtest 100 --numhid 5 --numruns 60 --view "task1,task1,task1,task1,task1,task2" --outfile "bpmtlgurv2result.txt" --primtask 1 --BP -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpmtlgurv2result.txt Done
+bpmtlgurv3result.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname glass --numinputs 9 --numoutputs 1 --numtasks 6 --numtrain 15 --numval 50 --numtest 100 --numhid 5 --numruns 60 --view "task1,task1,task1,task1,task2,task3" --outfile "bpmtlgurv3result.txt" --primtask 1 --BP -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpmtlgurv3result.txt Done
+bpmtlgurv4result.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname glass --numinputs 9 --numoutputs 1 --numtasks 6 --numtrain 15 --numval 50 --numtest 100 --numhid 5 --numruns 60 --view "task1,task1,task1,task2,task3,task6" --outfile "bpmtlgurv4result.txt" --primtask 1 --B --outfile "cccsmtlgurv4result.txt" --primtask 1 --CC -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+cccsmtlgurv4result.txt Done
+bpmtlgurv1result.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname heart --numinputs 13 --numoutputs 1 --numtasks 6 --numtrain 15 --numval 100 --numtest 200 --numhid 5 --numruns 60 --view "task1,task1,task1,task1,task1,task1" --outfile "bpmtlgurv1result.txt" --primtask 1 --BP -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpmtlgurv1result.txt Done
+bpmtlgurv2result.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname heart --numinputs 13 --numoutputs 1 --numtasks 6 --numtrain 15 --numval 100 --numtest 200 --numhid 5 --numruns 60 --view "task1,task1,task1,task1,task1,task2" --outfile "bpmtlgurv2result.txt" --primtask 1 --BP -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpmtlgurv2result.txt Done
+bpmtlgurv3result.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname heart --numinputs 13 --numoutputs 1 --numtasks 6 --numtrain 15 --numval 100 --numtest 200 --numhid 5 --numruns 60 --view "task1,task1,task1,task1,task2,task3" --outfile "bpmtlgurv3result.txt" --primtask 1 --BP -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpmtlgurv3result.txt Done
+bpmtlgurv4result.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname heart --numinputs 13 --numoutputs 1 --numtasks 6 --numtrain 15 --numval 100 --numtest 200 --numhid 5 --numruns 60 --view "task1,task1,task1,task2,task3,task4" --outfile "bpmtlgurv4result.txt" --primtask 1 --BP -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpmtlgurv4result.txt Done
+ccmtlgurv1result.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname heart --numinputs 13 --numoutputs 1 --numtasks 6 --numtrain 15 --numval 100 --numtest 200 --numhid 5 --numruns 60 --view "task1,task1,task1,task1,task1,task1" --outfile "ccmtlgurv1result.txt" --primtask 1 --CC -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+ccmtlgurv1result.txt Done
+ccmtlgurv2result.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname heart --numinputs 13 --numoutputs 1 --numtasks 6 --numtrain 15 --numval 100 --numtest 200 --numhid 5 --numruns 60 --view "task1,task1,task1,task1,task1,task2" --outfile "ccmtlgurv2result.txt" --primtask 1 --CC -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+ccmtlgurv2result.txt Done
+ccmtlgurv3result.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname heart --numinputs 13 --numoutputs 1 --numtasks 6 --numtrain 15 --numval 100 --numtest 200 --numhid 5 --numruns 60 --view "task1,task1,task1,task1,task2,task3" --outfile "ccmtlgurv3result.txt" --primtask 1 --CC -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+ccmtlgurv3result.txt Done
+ccmtlgurv4result.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname heart --numinputs 13 --numoutputs 1 --numtasks 6 --numtrain 15 --numval 100 --numtest 200 --numhid 5 --numruns 60 Documents/Source/JRNN/Experiments/config/Parameters.xml"
+cccsmtlgurv4result.txt Done
+bpmtlgurv1result.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname smallcovtype --numinputs 10 --numoutputs 1 --numtasks 6 --numtrain 20 --numval 100 --numtest 200 --numhid 6 --numruns 60 --view "task1,task1,task1,task1,task1,task1" --outfile "bpmtlgurv1result.txt" --primtask 1 --BP -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpmtlgurv1result.txt Done
+bpmtlgurv2result.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname smallcovtype --numinputs 10 --numoutputs 1 --numtasks 6 --numtrain 20 --numval 100 --numtest 200 --numhid 6 --numruns 60 --view "task1,task1,task1,task1,task1,task2" --outfile "bpmtlgurv2result.txt" --primtask 1 --BP -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpmtlgurv2result.txt Done
+bpmtlgurv3result.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname smallcovtype --numinputs 10 --numoutputs 1 --numtasks 6 --numtrain 20 --numval 100 --numtest 200 --numhid 6 --numruns 60 --view "task1,task1,task1,task1,task2,task3" --outfile "bpmtlgurv3result.txt" --primtask 1 --BP -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpmtlgurv3result.txt Done
+bpmtlgurv4result.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname smallcovtype --numinputs 10 --numoutputs 1 --numtasks 6 --numtrain 20 --numval 100 --numtest 200 --numhid 6 --numruns 60 --view "task1,task1,task1,task2,task3,task7" --outfile "bpmtlgurv4result.txt" --primtask 1 --BP -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpmtlgurv4result.txt Done
+ccmtlgurv1result.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname smallcovtype --numinputs 10 --numoutputs 1 --numtasks 6 --numtrain 20 --numval 100 --numtest 200 --numhid 6 --numruns 60 --view "task1,task1,task1,task1,task1,task1" --outfile "ccmtlgurv1result.txt" --primtask 1 --CC -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+ccmtlgurv1result.txt Done
+ccmtlgurv2result.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname smallcovtype --numinputs 10 --numoutputs 1 --numtasks 6 --numtrain 20 --numval 100 --numtest 200 --numhid 6 --numruns 60 --view "task1,task1,task1,task1,task1,task2" --outfile "ccmtlgurv2result.txt" --primtask 1 --CC -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+ccmtlgurv2result.txt Done
+ccmtlgurv3result.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname smallcovtype --numinputs 10 --numoutputs 1 --numtasks 6 --numtrain 20 --numval 100 --numtest 200 --numhid 6 --numruns 60 --view "task1,task1,task1,task1,task2,task3" --outfile "ccmtlgurv3result.txt" --primtask 1 --CC -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+ccmtlgurv3result.txt Done
+ccmtlgurv4result.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname smallcovtype --numinputs 10 --numoutputs 1 --numtasks 6 --numtrain 20 --numval 100 --numtest 200 --numhid 6 --numruns 60 --view "task1,task1,task1e/JRNN/Experiments/config/Parameters.xml"
+ccmtlgurv3result.txt Done
+ccmtlgurv4result.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/" --dsname CirInSq --numinputs 2 --numoutputs 1 --numtasks 6 --numtrain 15 --numval 100 --numtest 200 --numhid 6 --numruns 60 --view "task1,task1,task1,task2,task7,task8" --outfile "ccmtlgurv4result.txt" --primtask 1 --CC -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+ccmtlgurv4result.txt Done
+bpcsmtlgurv1result.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/" --dsname linear --numinputs 2 --numoutputs 1 --numtasks 6 --numtrain 10 --numval 100 --numtest 200 --numhid 4 --numruns 60 --view "task1,task1,task1,task1,task1,task1" --outfile "bpcsmtlgurv1result.txt" --primtask 1 --BP -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpcsmtlgurv1result.txt Done
+bpcsmtlgurv2result.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/" --dsname linear --numinputs 2 --numoutputs 1 --numtasks 6 --numtrain 10 --numval 100 --numtest 200 --numhid 4 --numruns 60 --view "task1,task1,task1,task1,task1,task2" --outfile "bpcsmtlgurv2result.txt" --primtask 1 --BP -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpcsmtlgurv2result.txt Done
+bpcsmtlgurv3result.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/" --dsname linear --numinputs 2 --numoutputs 1 --numtasks 6 --numtrain 10 --numval 100 --numtest 200 --numhid 4 --numruns 60 --view "task1,task1,task1,task1,task2,task3" --outfile "bpcsmtlgurv3result.txt" --primtask 1 --BP -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpcsmtlgurv3result.txt Done
+cccsmtlurresult.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/" --dsname band --numinputs 2 --numoutputs 1 --numtasks 4 --numtrain 100 --numval 100 --numtest 200 --numhid 4 --numruns 60 --view "task1,task2,task5,task6" --outfile "cccsmtlurresult.txt" --primtask 1 --CC --impnumtrain 15 -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+cccsmtlurresult.txt Done
+bpcsmtlurresult.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/" --dsname CirInSq --numinputs 2 --numoutputs 1 --numtasks 4 --numtrain 100 --numval 100 --numtest 200 --numhid 6 --numruns 60 --view "task1,task2,task5,task6" --outfile "bpcsmtlurresult.txt" --primtask 1 --BP --impnumtrain 15 -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpcsmtlurresult.txt Done
+cccsmtlurresult.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/" --dsname CirInSq --numinputs 2 --numoutputs 1 --numtasks 4 --numtrain 100 --numval 100 --numtest 200 --numhid 6 --numruns 60 --view "task1,task2,task5,task6" --outfile "cccsmtlurresult.txt" --primtask 1 --CC --impnumtrain 15 -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+cccsmtlurresult.txt Done
+bpcsmtlurresult.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/" --dsname linear --numinputs 2 --numoutputs 1 --numtasks 4 --numtrain 100 --numval 100 --numtest 200 --numhid 4 --numruns 60 --view "task1,task2,task4,task6" --outfile "bpcsmtlurresult.txt" --primtask 1 --BP --impnumtrain 10 -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpcsmtlurresult.txt Done
+cccsmtlurresult.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/" --dsname linear --numinputs 2 --numoutputs 1 --numtasks 4 --numtrain 100 --numval 100 --numtest 200 --numhid 4 --numruns 60 --view "task1,task2,task4,task6" --outfile "cccsmtlurresult.txt" --primtask 1 --CC --impnumtrain 10 -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+cccsmtlurresult.txt Done
+bpcsmtlurresult.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname glass --numinputs 9 --numoutputs 1 --numtasks 4 --numtrain 50 --numval 50 --numtest 100 --numhid 5 --numruns 60 --view "task1,task2,task4,task5" --outfile "bpcsmtlurresult.txt" --primtask 1 --BP --impnumtrain 15 -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpcsmtlurresult.txt Done
+cccsmtlurresult.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname glass --numinputs 9 --numoutputs 1 --numtasks 4 --numtrain 50 --numval 50 --numtest 100 --numhid 5 --numruns 60 --view "task1,task2,task4,task5" --outfile "cccsmtlurresult.txt" --primtask 1 --CC --impnumtrain 15 -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+cccsmtlurresult.txt Done
+bpcsmtlurresult.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname derm --numinputs 33 --numoutputs 1 --numtasks 4 --numtrain 50 --numval 100 --numtest 200 --numhid 3 --numruns 60 --view "task1,task2,task4,task6" --outfile "bpcsmtlurresult.txt" --primtask 1 --BP --impnumtrain 10 -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpcsmtlurresult.txt Done
+cccsmtlurresult.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname derm --numinputs 33 --numoutputs 1 --numtasks 4 --numtrain 50 --numval 100 --numtest 200 --numhid 3 --numruns 60 --view "task1,task2,task4,task6" --outfile "cccsmtlurresult.txt" --primtask 1 --CC --impnumtrain 10 -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+cccsmtlurresult.txt Done
+bpcsmtlurresult.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname smallcovtype --numinputs 10 --numoutputs 1 --numtasks 4 --numtrain 100 --numval 100 --numtest 200 --numhid 6 --numruns 60 --view "task1,task2,task4,task5" --outfile "bpcsmtlurresult.txt" --primtask 1 --BP --impnumtrain 20 -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpcsmtlurresult.txt Done
+cccsmtlurresult.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname smallcovtype --numinputs 10 --numoutputs 1 --numtasks 4 --numtrain 100 --numval 100 --numtest 200 --numhid 6 --numruns 60 --view "task1,task2,task4,task5" --outfile "cccsmtlurresult.txt" --primtask 1 --CC --impnumtrain 20 -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+cccsmtlurresult.txt Done
+bpcsmtlurresult.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname heart --numinputs 13 --numoutputs 1 --numtask-basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname smallcovtype --numinputs 10 --numoutputs 1 --numtasks 4 --numtrain 100 --numval 100 --numtest 200 --numhid 6 --numruns 60 --view "task1,task2,task4,task5" --outfile "bpetamtlurresult.txt" --primtask 1 --BP --impnumtrain 20 -V --ETAMTL --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpetamtlurresult.txt Done
+ccetamtlscoreurresult.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname smallcovtype --numinputs 10 --numoutputs 1 --numtasks 4 --numtrain 100 --numval 100 --numtest 200 --numhid 6 --numruns 60 --view "task1,task2,task4,task5" --outfile "ccetamtlscoreurresult.txt" --primtask 1 --CCMTL --impnumtrain 20 -V --ETAMTL --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+ccetamtlscoreurresult.txt Done
+ccetamtlslopeurresult.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname smallcovtype --numinputs 10 --numoutputs 1 --numtasks 4 --numtrain 100 --numval 100 --numtest 200 --numhid 6 --numruns 60 --view "task1,task2,task4,task5" --outfile "ccetamtlslopeurresult.txt" --primtask 1 --CCMTL --impnumtrain 20 -V --ETAMTL --CandSlope --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+ccetamtlslopeurresult.txt Done
+bpcsmtllsresult.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/" --dsname band --numinputs 2 --numoutputs 1 --numtasks 4 --numtrain 100 --numval 100 --numtest 200 --numhid 10 --numruns 60 --view "task1,task2,task3,task4" --outfile "bpcsmtllsresult.txt" --primtask 1 --BP --impnumtrain 15 --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpcsmtllsresult.txt Done
+cccsmtlnvresult.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/" --dsname band --numinputs 2 --numoutputs 1 --numtasks 4 --numtrain 100 --numval 100 --numtest 200 --numhid 10 --numruns 60 --view "task1,task2,task3,task4" --outfile "cccsmtlnvresult.txt" --primtask 1 --CC --impnumtrain 15 --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+cccsmtlnvresult.txt Done
+bpcsmtlssresult.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/" --dsname band --numinputs 2 --numoutputs 1 --numtasks 4 --numtrain 100 --numval 100 --numtest 200 --numhid 2 --numruns 60 --view "task1,task2,task3,task4" --outfile "bpcsmtlssresult.txt" --primtask 1 --BP --impnumtrain 15 --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpcsmtlssresult.txt Done
+bpcsmtllsresult.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/" --dsname CirInSq --numinputs 2 --numoutputs 1 --numtasks 4 --numtrain 100 --numval 100 --numtest 200 --numhid 12 --numruns 60 --view "task1,task2,task7,task8" --outfile "bpcsmtllsresult.txt" --primtask 1 --BP --impnumtrain 15 --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpcsmtllsresult.txt Done
+.txt" --primtask 1 --BP -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpcsmtlgurv3result.txt Done
+bpcsmtlgurv4result.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname derm --numinputs 33 --numoutputs 1 --numtasks 6 --numtrain 10 --numval 100 --numtest 200 --numhid 3 --numruns 60 --view "task1,task1,task1,task2,task3,task5" --outfile "bpcsmtlgurv4result.txt" --primtask 1 --BP -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpcsmtlgurv4result.txt Done
+cccsmtlgurv1result.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname derm --numinputs 33 --numoutputs 1 --numtasks 6 --numtrain 10 --numval 100 --numtest 200 --numhid 3 --numruns 60 --view "task1,task1,task1,task1,task1,task1" --outfile "cccsmtlgurv1result.txt" --primtask 1 --CC -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+cccsmtlgurv1result.txt Done
+cccsmtlgurv2result.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname derm --numinputs 33 --numoutputs 1 --numtasks 6 --numtrain 10 --numval 100 --numtest 200 --numhid 3 --numruns 60 --view "task1,task1,task1,task1,task1,task2" --outfile "cccsmtlgurv2result.txt" --primtask 1 --CC -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+cccsmtlgurv2result.txt Done
+cccsmtlgurv3result.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname derm --numinputs 33 --numoutputs 1 --numtasks 6 --numtrain 10 --numval 100 --numtest 200 --numhid 3 --numruns 60 --view "task1,task1,task1,task1,task2,task3" --outfile "cccsmtlgurv3result.txt" --primtask 1 --CC -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+cccsmtlgurv3result.txt Done
+cccsmtlgurv4result.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname derm --numinputs 33 --numoutputs 1 --numtasks 6 --numtrain 10 --numval 100 --numtest 200 --numhid 3 --numruns 60 --view "task1,task1,task1,task2,task3,task5" --outfile "cccsmtlgurv4result.txt" --primtask 1 --CC -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+cccsmtlgurv4result.txt Done
+bpmtlgurv1result.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname derm --numinputs 33 --numoutputs 1 --numtasks 6 --numtrain 10 --numval 100 --numtest 200 --numhid 3 --numruns 60 --view "task1,task1,task1,task1,task1,task1" --outfile "bpmtlgurv1result.txt" --primtask 1 --BP -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpmtlgurv1result.txt Done
+bpmtlgurv2result.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname derm --numinputs 33 --numoutputs 1 --numtasks 6 --numtrain 10 --numval 100 --numtest 200 --numhid 3 --numruns 60 --view "task1,task1,task1,task1,task1,task2" --outfile "bpmtlgurv2result.txt" --primtask 1 --BP -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpmtlgurv2result.txt Done
+P -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpmtlgurv4result.txt Done
+ccmtlgurv1result.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname glass --numinputs 9 --numoutputs 1 --numtasks 6 --numtrain 15 --numval 50 --numtest 100 --numhid 5 --numruns 60 --view "task1,task1,task1,task1,task1,task1" --outfile "ccmtlgurv1result.txt" --primtask 1 --CC -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+ccmtlgurv1result.txt Done
+--view "task1,task1,task1,task2,task3,task4" --outfile "ccmtlgurv4result.txt" --primtask 1 --CC -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+ccmtlgurv4result.txt Done
+bpcsmtlurresult.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/" --dsname band --numinputs 2 --numoutputs 1 --numtasks 4 --numtrain 100 --numval 100 --numtest 200 --numhid 4 --numruns 60 --view "task1,task2,task5,task6" --outfile "bpcsmtlurresult.txt" --primtask 1 --BP --impnumtrain 15 -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpcsmtlurresult.txt Done
+nputs 10 --numoutputs 1 --numtasks 6 --numtrain 20 --numval 100 --numtest 200 --numhid 6 --numruns 60 --view "task1,task1,task1,task1,task1,task1" --outfile "bpcsmtlgurv1result.txt" --primtask 1 --BP -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpcsmtlgurv1result.txt Done
+bpcsmtlgurv2result.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname smallcovtype --numinputs 10 --numoutputs 1 --numtasks 6 --numtrain 20 --numval 100 --numtest 200 --numhid 6 --numruns 60 --view "task1,task1,task1,task1,task1,task2" --outfile "bpcsmtlgurv2result.txt" --primtask 1 --BP -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpcsmtlgurv2result.txt Done
+bpcsmtlgurv3result.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname smallcovtype --numinputs 10 --numoutputs 1 --numtasks 6 --numtrain 20 --numval 100 --numtest 200 --numhid 6 --numruns 60 --view "task1,task1,task1,task1,task2,task3" --outfile "bpcsmtlgurv3result.txt" --primtask 1 --BP -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpcsmtlgurv3result.txt Done
+bpcsmtlgurv4result.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname smallcovtype --numinputs 10 --numoutputs 1 --numtasks 6 --numtrain 20 --numval 100 --numtest 200 --numhid 6 --numruns 60 --view "task1,task1,task1,task2,task3,task7" --outfile "bpcsmtlgurv4result.txt" --primtask 1 --BP -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpcsmtlgurv4result.txt Done
+cccsmtlgurv1result.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname smallcovtype --numinputs 10 --numoutputs 1 --numtasks 6 --numtrain 20 --numval 100 --numtest 200 --numhid 6 --numruns 60 --view "task1,task1,task1,task1,task1,task1" --outfile "cccsmtlgurv1result.txt" --primtask 1 --CC -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+cccsmtlgurv1result.txt Done
+cccsmtlgurv2result.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname smallcovtype --numinputs 10 --numoutputs 1 --numtasks 6 --numtrain 20 --numval 100 --numtest 200 --numhid 6 --numruns 60 --view "task1,task1,task1,task1,task1,task2" --outfile "cccsmtlgurv2result.txt" --primtask 1 --CC -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+cccsmtlgurv2result.txt Done
+cccsmtlgurv3result.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname smallcovtype --numinputs 10 --numoutputs 1 --numtasks 6 --numtrain 20 --numval 100 --numtest 200 --numhid 6 --numruns 60 --view "task1,task1,task1,task1,task2,task3" --outfile "cccsmtlgurv3result.txt" --primtask 1 --CC -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+cccsmtlgurv3result.txt Done
+,task2,task3,task7" --outfile "ccmtlgurv4result.txt" --primtask 1 --CC -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+ccmtlgurv4result.txt Done
+bpcsmtlgurv1result.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname heart --numinputs 13 --numoutputs 1 --numtasks 6 --numtrain 15 --numval 100 --numtest 200 --numhid 5 --numruns 60 --view "task1,task1,task1,task1,task1,task1" --outfile "bpcsmtlgurv1result.txt" --primtask 1 --BP -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpcsmtlgurv1result.txt Done
+bpcsmtlgurv2result.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname heart --numinputs 13 --numoutputs 1 --numtasks 6 --numtrain 15 --numval 100 --numtest 200 --numhid 5 --numruns 60 --view "task1,task1,task1,task1,task1,task2" --outfile "bpcsmtlgurv2result.txt" --primtask 1 --BP -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpcsmtlgurv2result.txt Done
+bpcsmtlgurv3result.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname heart --numinputs 13 --numoutputs 1 --numtasks 6 --numtrain 15 --numval 100 --numtest 200 --numhid 5 --numruns 60 --view "task1,task1,task1,task1,task2,task3" --outfile "bpcsmtlgurv3result.txt" --primtask 1 --BP -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpcsmtlgurv3result.txt Done
+bpcsmtlgurv4result.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname heart --numinputs 13 --numoutputs 1 --numtasks 6 --numtrain 15 --numval 100 --numtest 200 --numhid 5 --numruns 60 --view "task1,task1,task1,task2,task3,task4" --outfile "bpcsmtlgurv4result.txt" --primtask 1 --BP -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpcsmtlgurv4result.txt Done
+s 4 --numtrain 80 --numval 100 --numtest 200 --numhid 5 --numruns 60 --view "task1,task2,task4,task5" --outfile "bpcsmtlurresult.txt" --primtask 1 --BP --impnumtrain 15 -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+bpcsmtlurresult.txt Done
+cccsmtlurresult.txt
+C:/Users/John/Documents/Source/JRNN/Builds/VS2010/JRNN/Release/JRNN_exprun.exe --basepath "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/UCI Data/" --dsname heart --numinputs 13 --numoutputs 1 --numtasks 4 --numtrain 80 --numval 100 --numtest 200 --numhid 5 --numruns 60 --view "task1,task2,task4,task5" --outfile "cccsmtlurresult.txt" --primtask 1 --CC --impnumtrain 15 -V --params "C:/Users/John/Documents/Source/JRNN/Experiments/config/Parameters.xml"
+cccsmtlurresult.txt Done
+Finished

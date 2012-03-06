@@ -152,6 +152,9 @@
     <ClInclude Include="..\..\..\..\include\JRNN\trainers\EtaMTLRPropTrainer.h">
       <Filter>Header Files\trainers</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\..\include\JRNN\networks\RevCCNetwork.h">
+      <Filter>Header Files\networks</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt">

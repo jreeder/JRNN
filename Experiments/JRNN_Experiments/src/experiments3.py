@@ -60,7 +60,7 @@ experiments += b.csmtlgur + b.mtlgur \
 
 experiments += b.csmtlur + c.csmtlur + l.csmtlur + g.csmtlur + d.csmtlur + s.csmtlur + h.csmtlur 
 
-experiments = b.stltests + c.stltests + l.stltests + g.stltests + d.stltests + s.stltests + h.stltests
+#experiments += b.stltests + c.stltests + l.stltests + g.stltests + d.stltests + s.stltests + h.stltests
 
 
 
