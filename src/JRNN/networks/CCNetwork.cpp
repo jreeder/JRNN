@@ -63,8 +63,14 @@ namespace JRNN {
 		}*/
 		//NetworkPtr newP(ccnet);
 		//NetworkPtr oldP(net);
+
 		Network::Clone(ccnet, net);
 		ccnet->candLayer = ccnet->layers["cand"];
+		BOOST_FOREACH(LayerPair lp, ccnet->layers){
+			if (lp.second->GetType() == Layer::hidden){
+				ccnet->hiddenLayers.push_back(lp.second);
+			}
+		}
 		ccnet->numUnits = net->numUnits;
 		return ccnet;
 	}
@@ -230,12 +236,15 @@ namespace JRNN {
 		}
 	}
 
+	//TODO This only really works correctly when the layer has one node. 
+	//This is fine right now as there is only one candidate but this could
+	//lead to a loss of generality.
 	void CCNetwork::FullyConnectOut( LayerPtr layer, vecDouble outWeights)
 	{
 		NodeList layerNodes = layer->GetNodes();
 		NodeList outNodes = layers["out"]->GetNodes();
 
-		Connection::SetRandomSeed();
+		//Connection::SetRandomSeed();
 		BOOST_FOREACH(NodePtr n, layerNodes){
 			for (unsigned int i = 0; i < outNodes.size(); i++){
 				AddConnection(Connect(n,outNodes[i], outWeights[i]));

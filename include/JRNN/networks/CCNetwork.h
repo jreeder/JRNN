@@ -34,7 +34,7 @@ namespace JRNN {
 		virtual void InstallCandidate(NodePtr node, vecDouble outWeights = vecDouble(0));
 		virtual void Build(int numIn, int numOut, bool cloneouts = false);
 		virtual void Reset();
-		virtual void SetWeights(hashedDoubleMap weights);
+		void SetWeights(hashedDoubleMap weights);
 		int GetNumUnits();
 
 	protected:
