@@ -31,13 +31,13 @@ namespace JRNN {
 		//void SetNetwork(NetworkPtr net);
 		const LayerPtr GetCandLayer();
 		void CreateCandLayer(int numCand);
-		void InstallCandidate(NodePtr node, vecDouble outWeights = vecDouble(0));
-		void Build(int numIn, int numOut, bool cloneouts = false);
+		virtual void InstallCandidate(NodePtr node, vecDouble outWeights = vecDouble(0));
+		virtual void Build(int numIn, int numOut, bool cloneouts = false);
 		virtual void Reset();
 		virtual void SetWeights(hashedDoubleMap weights);
 		int GetNumUnits();
 
-	private:
+	protected:
 		//int numIn;
 		//int numOut;
 		int numUnits;

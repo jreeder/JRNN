@@ -28,6 +28,7 @@ namespace JRNN {
 	CCNetwork::~CCNetwork()
 	{
 		candConnections.clear();
+		hiddenLayers.clear();
 	}
 
 	CCNetworkPtr CCNetwork::Create()
