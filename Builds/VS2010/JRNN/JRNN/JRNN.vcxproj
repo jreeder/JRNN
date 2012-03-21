@@ -85,6 +85,7 @@
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\JRNN\networks\CCNetwork.cpp" />
     <ClCompile Include="..\..\..\..\src\JRNN\networks\FFMLPNetwork.cpp" />
+    <ClCompile Include="..\..\..\..\src\JRNN\networks\RevCCNetwork.cpp" />
     <ClCompile Include="..\..\..\..\src\JRNN\trainers\BackPropTrainer.cpp" />
     <ClCompile Include="..\..\..\..\src\JRNN\trainers\CCTrainer.cpp" />
     <ClCompile Include="..\..\..\..\src\JRNN\trainers\EtaMTLRPropTrainer.cpp" />

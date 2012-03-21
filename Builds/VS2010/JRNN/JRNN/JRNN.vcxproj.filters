@@ -93,6 +93,9 @@
     <ClCompile Include="..\..\..\..\src\JRNN\trainers\EtaMTLRPropTrainer.cpp">
       <Filter>Source Files\trainers</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\src\JRNN\networks\RevCCNetwork.cpp">
+      <Filter>Source Files\networks</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\include\JRNN\JRNN.h">
