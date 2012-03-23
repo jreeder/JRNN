@@ -13,14 +13,20 @@
 
 namespace JRNN {
 	
-	RevCCNetwork::RevCCNetwork(){}
+	RevCCNetwork::RevCCNetwork(){
+		getTrueOuts = false;
+	}
 
 	RevCCNetwork::RevCCNetwork(int numIn, int numOut){
 		this->numIn = numIn;
 		this->numOut = numOut;
+		getTrueOuts = false;
 	}
 
-	RevCCNetwork::~RevCCNetwork(){}
+	RevCCNetwork::~RevCCNetwork(){
+		autoAssocLayer->Clear(false);
+		normOutLayer->Clear(false);
+	}
 
 	RevCCNetworkPtr RevCCNetwork::Create() {
 		RevCCNetworkPtr np(new RevCCNetwork());
@@ -51,11 +57,26 @@ namespace JRNN {
 		return autoAssocLayer;
 	}
 
+	const LayerPtr RevCCNetwork::GetNormOutLayer(){
+		return normOutLayer;
+	}
+
 	void RevCCNetwork::Build(int numIn, int numOut, bool cloneouts /*= false*/){
 		CCNetwork::Build(numIn, numOut, cloneouts);
-		layers.insert(LayerPair("autoassoc", Layer::CreateLayer(Layer::out, numIn,-1,"autoassoc")));
+		//The way I'm doing things right now will mean that I'll treat them as normal outs
+		//and will have a second special layer pointing to the original outs. 
+		layers.insert(LayerPair("autoassoc", Layer::CreateLayer(Layer::spec, numIn,-1,"autoassoc")));
 		layers["autoassoc"]->BuildLayer<ASigmoid>();
 		autoAssocLayer = layers["autoassoc"];
+		layers.insert(LayerPair("normout", Layer::CreateLayer(Layer::spec, numOut, -1, "normout")));
+		normOutLayer = layers["normout"];
+		LayerPtr tmpOutLayer = layers["out"];
+		normOutLayer->ShallowCopy(tmpOutLayer);
+		BOOST_FOREACH(NodePtr node, autoAssocLayer->GetNodes()){
+			tmpOutLayer->AddNode(node);
+			this->numOut++;
+		}
+		
 	}
 
 	void RevCCNetwork::InstallCandidate(NodePtr node, vecDouble outWeights /* = vecDouble */, vecDouble assocWeights /*=vecDouble*/){
@@ -71,18 +92,21 @@ namespace JRNN {
 		else {
 			FullyConnectOut(lp, outWeights);	
 		}
+		//I don't need this right now since I've added them to the normal output layer. 
+		/*
 		if (assocWeights.size() == 0){
 			FullyConnectAutoAssoc(lp);
 		}
 		else {
 			FullyConnectAutoAssoc(lp, assocWeights);
 		}
+		*/
 		hiddenLayers.push_back(lp);
 		numUnits++;
 	}
 
+	//doesn't do anything right now. 
 	void RevCCNetwork::Reset(){
-		autoAssocLayer.reset();
 		CCNetwork::Reset();
 	}
 
@@ -116,4 +140,15 @@ namespace JRNN {
 			}
 		}
 	}
+
+	vecDouble RevCCNetwork::GetOutputs()
+	{
+		if (getTrueOuts){
+			return normOutLayer->GetOutput();
+		}
+		else {
+			return Network::GetOutputs();
+		}
+	}
+
 }

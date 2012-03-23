@@ -20,7 +20,8 @@ namespace JRNN {
             input,
             hidden,
             out,
-            bias
+            bias,
+			spec
         };
 
         Layer();
@@ -32,6 +33,7 @@ namespace JRNN {
         //void BuildLayer(Node::nodeType nType);
 		static LayerPtr CreateLayer(layerType type, int inLayerSize, int height, string name);
 		static LayerPtr Clone( LayerPtr layer );
+		void ShallowCopy (LayerPtr layer);
 		template<class T>
 		void BuildLayer();
 
@@ -61,7 +63,7 @@ namespace JRNN {
 		void RemoveNode(NodePtr node);
 		int RemoveUnconnectedNodes();
 
-		void Clear();
+		void Clear(bool disconnect = true);
 
         int GetSize();
 		int GetHeight();

@@ -215,12 +215,7 @@ namespace JRNN {
 		this->numTest = numTest;
 		this->primaryTask = primaryTask;
 		this->impoverish = impoverish;
-		trainIns.clear();
-		trainOuts.clear();
-		valIns.clear();
-		valOuts.clear();
-		testIns.clear();
-		testOuts.clear();
+		ClearSubsets();
 		if (!dsAnalyzed){
 			AnalyzeDS();
 		}

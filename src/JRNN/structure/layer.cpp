@@ -90,6 +90,14 @@ void Layer::Activate(){
     }
 }
 
+void Layer::Activate(vecDouble inputs){
+	assert(inputs.size() == layerSize);
+	for(unsigned int i = 0; i < inputs.size(); i++){
+		nodes[i]->Activate(inputs[i]);
+		string tmp = nodes[i]->GetName();
+	}
+}
+
 vecDouble Layer::GetOutput(){
     vecDouble tmpVec;
     tmpVec.resize(nodes.size());
@@ -111,14 +119,6 @@ vecDouble Layer::GetPrimes()
 		i++;
 	}
 	return tmpVec;
-}
-
-void Layer::Activate(vecDouble inputs){
-	assert(inputs.size() == layerSize);
-    for(unsigned int i = 0; i < inputs.size(); i++){
-        nodes[i]->Activate(inputs[i]);
-        string tmp = nodes[i]->GetName();
-    }
 }
 
 const string& Layer::GetName(){
@@ -165,10 +165,12 @@ void Layer::RemoveNode(NodePtr node){
 	}
 }
 
-void Layer::Clear()
+void Layer::Clear(bool disconnect /*= true*/)
 {
-	BOOST_FOREACH(NodePtr node, nodes){
-		node->Disconnect();
+	if (disconnect){
+		BOOST_FOREACH(NodePtr node, nodes){
+			node->Disconnect();
+		}
 	}
 	nodes.clear();
 	layerSize = 0;
@@ -207,6 +209,16 @@ LayerPtr Layer::Clone( LayerPtr layer )
 {
 	LayerPtr lp(new Layer((*layer)));
 	return lp;
+}
+
+void Layer::ShallowCopy(LayerPtr layer){
+	//This function is meant to be called on an empty layer in order to make a 
+	//reference copy. I'm using this to point to a subset of another layer. 
+	nodes.clear();
+	NodeList origNodes = layer->GetNodes();
+	BOOST_FOREACH(NodePtr node, origNodes){
+		nodes.push_back(node);
+	}
 }
 
 NodePtr Layer::GetNodeByName( string name )

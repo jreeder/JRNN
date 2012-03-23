@@ -75,6 +75,7 @@ namespace JRNN {
 		double CalcStdDev(datatype type);
 		void Shuffle(ints &indexes);
 		void ShuffleSubsets();
+		void ClearSubsets();
 		virtual void Reshuffle();
 		virtual void AnalyzeDS();
 		ints ARange(int start, int end);

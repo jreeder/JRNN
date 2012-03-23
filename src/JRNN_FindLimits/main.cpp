@@ -15,10 +15,19 @@
 //#include "networks/FFMLPNetwork.h"
 #include <ctime>
 
-//using namespace JRNN;
+#include "trainers/RevCCTrainer.h"
+
+using namespace JRNN;
 using namespace std;
 
 int main(int argc, char** argv) {
+	
+	do 
+	{
+		RevCCTrainer test(4,2,8);
+	} while (0);
+	
+	
 	//string filename,outfile;
 	//int numIn,numOut;
 

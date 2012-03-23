@@ -90,6 +90,7 @@
     <ClCompile Include="..\..\..\..\src\JRNN\trainers\CCTrainer.cpp" />
     <ClCompile Include="..\..\..\..\src\JRNN\trainers\EtaMTLRPropTrainer.cpp" />
     <ClCompile Include="..\..\..\..\src\JRNN\trainers\MTLCCTrainer.cpp" />
+    <ClCompile Include="..\..\..\..\src\JRNN\trainers\RevCCTrainer.cpp" />
     <ClCompile Include="..\..\..\..\src\JRNN\trainers\RPropTrainer.cpp" />
     <ClCompile Include="..\..\..\..\src\JRNN\utility\activationfunctions.cpp" />
     <ClCompile Include="..\..\..\..\src\JRNN\utility\csmtldataset.cpp" />
@@ -113,6 +114,7 @@
     <ClInclude Include="..\..\..\..\include\JRNN\structure\node.h" />
     <ClInclude Include="..\..\..\..\include\JRNN\trainers\EtaMTLRPropTrainer.h" />
     <ClInclude Include="..\..\..\..\include\JRNN\trainers\MTLCCTrainer.h" />
+    <ClInclude Include="..\..\..\..\include\JRNN\trainers\RevCCTrainer.h" />
     <ClInclude Include="..\..\..\..\include\JRNN\utility\activationfunctions.h" />
     <ClInclude Include="..\..\..\..\include\JRNN\utility\csmtldataset.h" />
     <ClInclude Include="..\..\..\..\include\JRNN\utility\dataset.h" />

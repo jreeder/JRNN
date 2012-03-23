@@ -183,12 +183,7 @@ namespace JRNN {
 		this->numTest = numTest;
 		this->primaryTask = primaryTask;
 		this->impoverish = impoverish;
-		trainIns.clear();
-		trainOuts.clear();
-		valIns.clear();
-		valOuts.clear();
-		testIns.clear();
-		testOuts.clear();
+		ClearSubsets();
 		if (!dsAnalyzed){
 			AnalyzeDS();
 		}
@@ -288,6 +283,33 @@ namespace JRNN {
 		CalcStdDevs();
 	}
 
+	//Only really useful to the revcc that I'm writing right now. Might not make it into final.
+	void CSMTLDataset::DistSubview( strings newView )
+	{
+		ClearSubsets();
+		int viewSize = newView.size();
+		int numToDist = viewSize*numTrain + viewSize * numVal + viewSize * numTest;
+		assert(size > numToDist && numImpTrain < numTrain && viewSize > 0 && primaryTask <viewSize);
+		for(int i = 0; i < viewSize; i++){
+			hashedIntsMap indexQueues = taskList[newView[i]]->outClassIndexes;
+			TaskPtr task = taskList[newView[i]];
+			if (impoverish && primaryTask == i){
+				int numRepeats = numTrain / numImpTrain;
+				FillSubset(trainIns, trainOuts, numImpTrain, indexQueues, task, numRepeats);
+			}
+			else{
+				FillSubset(trainIns, trainOuts, numTrain, indexQueues, task);
+			}
+			if (primaryTask == -1 || primaryTask == i){
+				FillSubset(valIns, valOuts, numVal, indexQueues, task);
+				FillSubset(testIns, testOuts, numTest, indexQueues, task);
+			}
+		}
+		ShuffleSubsets();
+		CalcStdDevs();
+	}
+
+
 	void CSMTLDataset::Reshuffle()
 	{
 		BOOST_FOREACH(string className, outClassNames){
@@ -298,7 +320,6 @@ namespace JRNN {
 			}
 		}
 	}
-
 
 	vecDouble CSMTLDataset::Task::getNetOuts( vecDouble inputs )
 	{

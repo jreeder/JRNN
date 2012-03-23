@@ -177,12 +177,7 @@ void Dataset::DistData(int numTrain, int numVal, int numTest){
     this->numTrain = numTrain;
     this->numVal = numVal;
     this->numTest = numTest;
-	trainIns.clear();
-	trainOuts.clear();
-	valIns.clear();
-	valOuts.clear();
-	testIns.clear();
-	testOuts.clear();
+	ClearSubsets();
     randSeed = 314159;
     //genRandRange();
 	if (!dsAnalyzed){
@@ -195,12 +190,7 @@ void Dataset::RedistData(){
     randSeed++;
     //GenRandRange();
 	Reshuffle();
-	trainIns.clear();
-	trainOuts.clear();
-	valIns.clear();
-	valOuts.clear();
-	testIns.clear();
-	testOuts.clear();
+	ClearSubsets();
     Distribute();
 }
 
@@ -474,6 +464,16 @@ void Dataset::ShuffleSubsets(){
 		testOuts[i] = testOuts[j];
 		testOuts[j] = tmpOutVec;
 	}
+}
+
+void Dataset::ClearSubsets()
+{
+	trainIns.clear();
+	trainOuts.clear();
+	valIns.clear();
+	valOuts.clear();
+	testIns.clear();
+	testOuts.clear();
 }
 
 double Dataset::GetStdDev( datatype type )

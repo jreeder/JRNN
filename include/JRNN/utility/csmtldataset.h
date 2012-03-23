@@ -29,7 +29,7 @@ namespace JRNN {
 		void AddTaskFromNet(NetworkPtr net, string taskName);
 		DatasetPtr SpawnDS();
 		virtual void DistData(int numTrain, int numVal, int numTest, bool impoverish = false, int primaryTask = -1, int numImpTrain = 0);
-		
+		void DistSubview(strings view);
 
 		class Task {
 		public:

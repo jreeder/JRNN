@@ -9,6 +9,9 @@
 				of the life long learning system. 
 *********************************************************************/
 
+#ifndef _REVCCNETWORK_H
+#define _REVCCNETWORK_H
+
 #include "JRNN.h"
 #include "networks/CCNetwork.h"
 
@@ -26,14 +29,20 @@ namespace JRNN {
 		static RevCCNetworkPtr Clone(RevCCNetworkPtr net);
 		virtual NetworkPtr	Clone();
 		const LayerPtr GetAutoAssocLayer();
+		const LayerPtr GetNormOutLayer();
+		virtual vecDouble GetOutputs();
 		virtual void InstallCandidate(NodePtr node, vecDouble outWeights = vecDouble(0), vecDouble assocWeights = vecDouble(0));
 		virtual void Build(int numIn, int numOut, bool cloneouts = false);
 		virtual void Reset();
+		bool getTrueOuts;
 
-	protected:
+	protected:		
 		LayerPtr autoAssocLayer;
+		LayerPtr normOutLayer;
 		void FullyConnectAutoAssoc(LayerPtr layer);
 		void FullyConnectAutoAssoc(LayerPtr layer, vecDouble outWeights);
 	};
 
 }
+
+#endif

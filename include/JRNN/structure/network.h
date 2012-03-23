@@ -50,7 +50,7 @@ namespace JRNN{
 		int GetNumHidLayers();
 		void SetScaleAndOffset(double scale, double offset);
 
-        vecDouble GetOutputs();
+        virtual vecDouble GetOutputs();
 		vecDouble GetPrimes(string layerName);
         void SetDesiredOut(vecDouble desiredOut);
         LayerPtr GetLayer(string layerName);

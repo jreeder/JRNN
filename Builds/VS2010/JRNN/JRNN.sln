@@ -22,10 +22,15 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "JRNN_FindLimits", "JRNN_Fin
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "xmlconfig", "xmlconfig\xmlconfig.vcxproj", "{5AACAD82-A9CC-4B0B-9C7D-749EEB893BED}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "JRNN_mtl", "JRNN_mtl\JRNN_mtl.vcxproj", "{121FA3D3-186E-45BA-81FB-56CEBE707710}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "JRNN_exprun", "JRNN_mtl\JRNN_mtl.vcxproj", "{121FA3D3-186E-45BA-81FB-56CEBE707710}"
 	ProjectSection(ProjectDependencies) = postProject
 		{E4965A51-3BB5-470F-83AE-C73B5E419A74} = {E4965A51-3BB5-470F-83AE-C73B5E419A74}
 		{5AACAD82-A9CC-4B0B-9C7D-749EEB893BED} = {5AACAD82-A9CC-4B0B-9C7D-749EEB893BED}
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{1ACE2938-CBBC-4C43-B68F-824FD031411C}"
+	ProjectSection(SolutionItems) = preProject
+		Performance1.psess = Performance1.psess
 	EndProjectSection
 EndProject
 Global

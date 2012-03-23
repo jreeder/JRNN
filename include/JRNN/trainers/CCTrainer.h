@@ -82,6 +82,8 @@ namespace JRNN {
 		} parms;
 		
 	protected:
+		//Special constructor of my subclass. This is hacky at the moment. 
+		CCTrainer();
 		//Members
 		CCNetworkPtr network;
 		DatasetPtr data;
@@ -176,7 +178,9 @@ namespace JRNN {
 		status ValidationEpoch();
 		status TestImprovement();
 		
+		//Utility Methods - Make it easier for my subclass. This is hacky should probably change. 
 
+		vecDouble ActivateNet(vecDouble inPoint, vecDouble outPoint);
 
 	};
 }

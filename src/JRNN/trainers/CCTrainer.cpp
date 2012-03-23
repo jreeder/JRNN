@@ -69,6 +69,68 @@ namespace JRNN {
 		ResetVars();
 	}
 
+	//Only meant to be used by subclasses. 
+	CCTrainer::CCTrainer(){
+		this->primaryIndexes = ints(0);
+		resetFlag = false;
+		numResets = 0;
+		//Need to set this value in the subclass also. 
+		//if(primaryIndexes.size() > 0){
+		//	nTrainOutVals = data->GetSize(Dataset::TRAIN) * primaryIndexes.size();
+		//}
+		//else {
+		//	nTrainOutVals = data->GetSize(Dataset::TRAIN) * network->GetNumOut();
+		//}
+
+		parms.nTrials = 1;//Not used
+		parms.maxNewUnits = 25;//Not used
+		parms.valPatience = 2;
+		parms.impPatience = 2;
+		parms.weightMult = 1.0;
+		parms.maxWeight = 10000;
+		parms.useMaxWeight = true;
+		parms.maxResets = 10; //Not used right now
+		parms.primeOffset = 0.1;
+
+		parms.out.epochs = 300; //200
+		parms.out.patience = 12;//12
+		parms.out.epsilon = 10.0;//1.0
+		parms.out.decay = 0.0;//0.001
+		parms.out.mu = 2.0;
+		parms.out.changeThreshold = 0.02; //0.01
+
+		parms.cand.epochs = 200; //200
+		parms.cand.patience = 12; //12
+		parms.cand.epsilon = 100;
+		parms.cand.decay = 0.0;//0.001
+		parms.cand.mu = 2.0;
+		parms.cand.changeThreshold = 0.03;
+
+		parms.nCand = 8; //This is normally set by the constructor. Need to change this if I subclass.
+		parms.indexThreshold = 0.05; //0.1 Index is the Sqrt of MSE so Mean Err
+		parms.scoreThreshold = 0.4;
+		parms.errorMeasure = INDEX;
+		out.conDeltas.clear();
+		out.conPSlopes.clear();
+		out.conSlopes.clear();
+		cand.conDeltas.clear();
+		cand.conPSlopes.clear();
+		cand.conSlopes.clear();
+
+		//Need to do this in the subclass when I know how many outs there will be. 
+		//and what the data will be. 
+		/*int numOut = network->GetNumOut();
+		err.errors = vecDouble(numOut);
+		err.sumErrs = vecDouble(numOut);
+		err.measure = (ErrorType) parms.errorMeasure;
+		valErr.errors = vecDouble(numOut);
+		valErr.sumErrs = vecDouble(numOut);
+		valErr.measure = (ErrorType) parms.errorMeasure;
+		candCorr = hashedVecDoubleMap(numOut);
+		candPCorr = hashedVecDoubleMap(numOut);
+		ResetVars();*/
+	}
+
 	CCTrainer::~CCTrainer(){}
 
 	void CCTrainer::QuickProp( ConPtr con, conVars& vars, double epsilon, double decay, 
@@ -249,9 +311,11 @@ namespace JRNN {
 		NodeList outNodes = network->GetLayer("out")->GetNodes();
 		
 		while(itIns != ins.end()){
-			vecDouble input = (*itIns);
+			/*vecDouble input = (*itIns);
 			vecDouble desiredOut = (*itOuts);
-			network->Activate(input);
+			network->Activate(input);*/
+			//This looks backwards but the true network output is pulled in the compute error function
+			vecDouble desiredOut = ActivateNet((*itIns), (*itOuts));
 			ComputeError(desiredOut, err, outNodes, true, true);
 
 
@@ -260,6 +324,15 @@ namespace JRNN {
 		}
 		double MSE = err.trueErr / (double)nTrainOutVals;
 		MSE_Rec.push_back(MSE);
+	}
+
+	vecDouble CCTrainer::ActivateNet( vecDouble inPoint, vecDouble outPoint )
+	{
+		//this basically doesn't do anything but it allows me to subclass alot less
+		//for the rev cc algorithm. 
+		vecDouble retVal;
+		network->Activate(inPoint);
+		return outPoint;
 	}
 
 	void CCTrainer::UpdateOutWeights()
@@ -353,9 +426,11 @@ namespace JRNN {
 		NodeList outNodes = network->GetLayer("out")->GetNodes();
 		//double SSE = 0;
 		while(itIns != ins.end()){
-			vecDouble input = (*itIns);
+			/*vecDouble input = (*itIns);
 			vecDouble desiredOut = (*itOuts);
-			network->Activate(input);
+			network->Activate(input);*/
+			//This looks backwards but the true network output is pulled in the compute error function
+			vecDouble desiredOut = ActivateNet((*itIns), (*itOuts));
 			ComputeError(desiredOut, err, outNodes, false, false);
 
 			ComputeCorrelations();
@@ -475,9 +550,11 @@ namespace JRNN {
 		NodeList outNodes = network->GetLayer("out")->GetNodes();
 		//double SSE = 0;
 		while(itIns != ins.end()){
-			vecDouble input = (*itIns);
+			/*vecDouble input = (*itIns);
 			vecDouble desiredOut = (*itOuts);
-			network->Activate(input);
+			network->Activate(input);*/
+			//This looks backwards but the true network output is pulled in the compute error function
+			vecDouble desiredOut = ActivateNet((*itIns), (*itOuts));
 			ComputeError(desiredOut, err, outNodes, false, false);
 
 			ComputeCandSlopes();
@@ -637,9 +714,11 @@ namespace JRNN {
 		//double SSE = 0;
 		resetError(valErr);
 		while(itIns != ins.end()){
-			vecDouble input = (*itIns);
+			/*vecDouble input = (*itIns);
 			vecDouble desiredOut = (*itOuts);
-			network->Activate(input);
+			network->Activate(input);*/
+			//This looks backwards but the true network output is pulled in the compute error function
+			vecDouble desiredOut = ActivateNet((*itIns), (*itOuts));
 			ComputeError(desiredOut, valErr, outNodes, true, false);
 
 
