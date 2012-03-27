@@ -28,10 +28,15 @@ namespace JRNN {
 		void ResetVars();
 		void Reset();
 		void RedistData();
+		//Training Methods
 		void TrainToValConv(int maxEpochs);
 		void TrainToConvergence(int maxEpochs, bool validate = false);
-		double TestOnData(Dataset::datatype type);
-		hashedDoubleMap TestWiClass(Dataset::datatype type);
+
+		//Testing Methods
+		virtual double TestOnData(Dataset::datatype type);
+		virtual hashedDoubleMap TestWiClass(Dataset::datatype type);
+
+		//Network information methods. 
 		int GetEpochs();
 		int GetNumResets();
 		int GetNumHidLayers();
@@ -180,7 +185,7 @@ namespace JRNN {
 		
 		//Utility Methods - Make it easier for my subclass. This is hacky should probably change. 
 
-		vecDouble ActivateNet(vecDouble inPoint, vecDouble outPoint);
+		virtual vecDouble ActivateNet(vecDouble inPoint, vecDouble outPoint);
 
 	};
 }

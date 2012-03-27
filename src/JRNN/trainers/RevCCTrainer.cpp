@@ -44,4 +44,44 @@ namespace JRNN {
 		return retVal;
 	}
 
+	vecDouble RevCCTrainer::ActivateNet( vecDouble inPoint, vecDouble outPoint )
+	{
+		vecDouble retVal;
+		retVal = ConcatVec(outPoint, inPoint);
+		network->Activate(inPoint);
+		return retVal;
+	}
+
+	vecDouble RevCCTrainer::ConcatVec( vecDouble first, vecDouble second )
+	{
+		vecDouble retVec(first.size() + second.size());
+		int newSize = first.size() + second.size();
+		int i = 0;
+		BOOST_FOREACH(double val, first){
+			retVec[i] = val;
+			i++;
+		}
+		BOOST_FOREACH(double val, second){
+			retVec[i] = val;
+			i++;
+		}
+		return retVec;
+	}
+
+	double RevCCTrainer::TestOnData( Dataset::datatype type )
+	{
+		net1->getTrueOuts = true;
+		network = net1;
+		return CCTrainer::TestOnData(type);
+		net1->getTrueOuts = true;
+	}
+
+	JRNN::hashedDoubleMap RevCCTrainer::TestWiClass( Dataset::datatype type )
+	{
+		net1->getTrueOuts = true;
+		network = net1;
+		return CCTrainer::TestWiClass(type);
+		net1->getTrueOuts = false;
+	}
+
 }

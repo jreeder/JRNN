@@ -33,14 +33,31 @@ namespace JRNN {
 			vecDouble outPoint;
 		};
 
+		virtual double TestOnData(Dataset::datatype type);
+		virtual hashedDoubleMap TestWiClass(Dataset::datatype type);
+
 	protected:
 		
 		RevCCNetworkPtr net1;
 		RevCCNetworkPtr net2;
 		RevCCNetworkPtr revNet;
 
+		enum Stage {
+			INIT,
+			STAGEI,
+			STAGEII
+		} trainStage;
+
+		enum Phase {
+			TRAIN,
+			TEST
+		} algPhase;
+
 		reverbdpoint ReverberateNetwork();
 
+		virtual vecDouble ActivateNet(vecDouble inPoint, vecDouble outPoint);
+		
+		vecDouble ConcatVec( vecDouble first, vecDouble second );
 		static RandomGenerator01 revRand;
 		//conVars assoc;
 
