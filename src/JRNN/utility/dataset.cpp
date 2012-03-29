@@ -13,8 +13,10 @@ using namespace std;
 RandomGeneratorInt Dataset::dRand = RandomGeneratorInt(1,RAND_MAX);
 
 Dataset::Dataset() {
+	//Not Used right now
 	outputPerCategory = false;
 	normalizeReals = false;
+
 	dsAnalyzed = false;
 	outClassIndexes.clear();
 	outClassPercentage.clear();
@@ -51,6 +53,16 @@ Dataset::Dataset(const Dataset& orig) {
 }
 
 Dataset::~Dataset() {
+}
+
+void Dataset::Clear(){
+	dsAnalyzed = false;
+	outClassIndexes.clear();
+	outClassPercentage.clear();
+	outClassNames.clear();
+	inputs.clear();
+	outputs.clear();
+	ClearSubsets();
 }
 
 const matDouble& Dataset::GetInputs(datatype type){
@@ -171,6 +183,33 @@ void Dataset::LoadFromFile(string filepath, int numInputs, int numOutputs){
 		randomRange.push_back(i);
 	}
 
+}
+
+void Dataset::LoadFromMatDoubles( matDouble& newInputs, matDouble& newOutputs )
+{
+	this->numInputs = newInputs[0].size();
+	this->numOutputs = newOutputs[0].size();
+	size = newInputs.size();
+	matDouble::iterator itIns = newInputs.begin();
+	matDouble::iterator itOuts = newOutputs.begin();
+	int count = 0;
+	while(itIns != newInputs.end()){
+		inputs.push_back((*itIns));
+		outputs.push_back((*itOuts));
+		string outname = StringFromVector((*itOuts));
+		outClassIndexes[outname].push_back(count);
+		count++;
+	}
+	hashedIntsMap::iterator it = outClassIndexes.begin();
+	//calculate the percentage of each outclass to the whole.
+	while(it != outClassIndexes.end()){
+		double tmpPerc = it->second.size() / (double)size;
+		outClassPercentage[it->first] = tmpPerc;
+		outClassNames.push_back(it->first);
+		//Shuffle(it->second);Removed so that the datasets are always the same for the first load
+		it++;
+	}
+	dsAnalyzed = true;
 }
 
 void Dataset::DistData(int numTrain, int numVal, int numTest){
@@ -534,4 +573,15 @@ double Dataset::CalcStdDev( datatype type )
 	else {
 		return 0;
 	}
+}
+
+void Dataset::MergeSubsets( DatasetPtr dsPtr )
+{
+	trainIns.insert(trainIns.end(),dsPtr->trainIns.begin(), dsPtr->trainIns.end());
+	trainOuts.insert(trainOuts.end(), dsPtr->trainOuts.begin(), dsPtr->trainOuts.end());
+	valIns.insert(valIns.end(), dsPtr->valIns.begin(), dsPtr->valIns.end());
+	valOuts.insert(valOuts.end(), dsPtr->valOuts.begin(), dsPtr->valOuts.end());
+	testIns.insert(testIns.end(), dsPtr->testIns.begin(), dsPtr->testIns.end());
+	testOuts.insert(testOuts.end(), dsPtr->testOuts.begin(), dsPtr->testOuts.end());
+	ShuffleSubsets();
 }

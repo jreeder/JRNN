@@ -28,6 +28,9 @@ namespace JRNN {
 		void ResetVars();
 		void Reset();
 		void RedistData();
+
+		void SetDataSet(DatasetPtr dataset);
+
 		//Training Methods
 		void TrainToValConv(int maxEpochs);
 		void TrainToConvergence(int maxEpochs, bool validate = false);

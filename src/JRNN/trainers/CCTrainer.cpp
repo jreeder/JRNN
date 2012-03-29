@@ -891,4 +891,15 @@ namespace JRNN {
 		return numResets;
 	}
 
+	void CCTrainer::SetDataSet( DatasetPtr dataset )
+	{
+		this->data = dataset;
+		if(primaryIndexes.size() > 0){
+			nTrainOutVals = data->GetSize(Dataset::TRAIN) * primaryIndexes.size();
+		}
+		else {
+			nTrainOutVals = data->GetSize(Dataset::TRAIN) * network->GetNumOut();
+		}
+	}
+
 }

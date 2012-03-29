@@ -33,14 +33,20 @@ namespace JRNN {
 			vecDouble outPoint;
 		};
 
-		virtual double TestOnData(Dataset::datatype type);
-		virtual hashedDoubleMap TestWiClass(Dataset::datatype type);
+		void TrainTask(DatasetPtr data, bool validate);
+
+		double TestOnData(DatasetPtr data);
+		hashedDoubleMap TestWiClass(DatasetPtr data);
 
 	protected:
 		
+		bool firstTrained;
+
 		RevCCNetworkPtr net1;
 		RevCCNetworkPtr net2;
 		RevCCNetworkPtr revNet;
+
+		DatasetPtr bufferDS;
 
 		enum Stage {
 			INIT,
@@ -58,6 +64,8 @@ namespace JRNN {
 		virtual vecDouble ActivateNet(vecDouble inPoint, vecDouble outPoint);
 		
 		vecDouble ConcatVec( vecDouble first, vecDouble second );
+		void FinishSetup();
+		void FillBufferDS( int numPoints );
 		static RandomGenerator01 revRand;
 		//conVars assoc;
 

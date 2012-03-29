@@ -31,14 +31,17 @@ namespace JRNN {
         const matDouble& GetInputs(datatype type);
         const matDouble& GetOutputs(datatype type);
         void LoadFromFile(string filepath, int numInputs, int numOutputs);
+		void LoadFromMatDoubles(matDouble& newInputs, matDouble& newOutputs);
 		const int GetSize(datatype type);
 		double GetStdDev(datatype type);
         void SetNumInputs(int numInputs);
         void SetNumOutputs(int numOutputs);
 		void SetOutputPerCategory(bool outPerClass);
 		void SetNormalizeReals(bool normReals);
+		void MergeSubsets(DatasetPtr dsPtr);
         virtual void DistData(int numTrain, int numVal, int numTest);
         virtual void RedistData();
+		void Clear();
 
     protected:
         int size;
