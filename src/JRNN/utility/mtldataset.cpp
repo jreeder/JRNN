@@ -225,6 +225,7 @@ namespace JRNN {
 	void MTLDataset::Distribute()
 	{
 		int viewSize = view.size();
+		//this assert doesn't take into account if the data needs to come from networks. Need to do som proper error checking
 		assert(size > (numTrain + numVal + numTest) && numImpTrain < numTrain && viewSize > 0 && primaryTask < viewSize);
 		//int totalTr = 0, totalVal = 0, totalTest = 0;
 		int numClasses = outClassNames.size();

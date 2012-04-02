@@ -22,10 +22,18 @@ namespace JRNN {
 	public:
 		RevCCTrainer(int numIn, int numOut, int numCandidates);
 		~RevCCTrainer();
+		
+		struct TestResult {
+			int epoch;
+			hashedDoubleMap result;
+		};
+		
+		typedef std::vector<TestResult> TestResults;
 
 		struct revparameters {
 			uint numRev;
-			uint numRevTrainPts;
+			uint numRevTrainRatio; //multiplier for the number of rev training points to inject into net1
+			int bufferSize;
 		} revparams;
 
 		struct reverbdpoint {
@@ -33,21 +41,30 @@ namespace JRNN {
 			vecDouble outPoint;
 		};
 
-		void TrainTask(DatasetPtr data, bool validate);
+		void TrainTask(DatasetPtr taskData,int maxEpochs, bool validate, bool testWhileTrain = false, DatasetPtr testData = DatasetPtr(), Dataset::datatype testDataType = Dataset::TRAIN);
+		
+		double TestOnData(DatasetPtr testData, Dataset::datatype type);
+		hashedDoubleMap TestWiClass(DatasetPtr testData, Dataset::datatype type);
 
-		double TestOnData(DatasetPtr data);
-		hashedDoubleMap TestWiClass(DatasetPtr data);
+		const TestResults& getTestWhileTrainResults();
+
+		void Reset();
 
 	protected:
 		
 		bool firstTrained;
+		bool ScopedOut; //Do I want to monitor the performance of a previous dataset during training
 
 		RevCCNetworkPtr net1;
 		RevCCNetworkPtr net2;
 		RevCCNetworkPtr revNet;
 
 		DatasetPtr bufferDS;
+		DatasetPtr outTestDS; //The dataset that will be monitored during training. 
+		Dataset::datatype outTestDStype;
 
+		TestResults TestWhileTrainResults;
+		
 		enum Stage {
 			INIT,
 			STAGEI,
@@ -66,6 +83,10 @@ namespace JRNN {
 		vecDouble ConcatVec( vecDouble first, vecDouble second );
 		void FinishSetup();
 		void FillBufferDS( int numPoints );
+		
+		//Overloaded so that I can insert tests after each epoch. 
+		CCTrainer::status TrainOuts();
+		
 		static RandomGenerator01 revRand;
 		//conVars assoc;
 

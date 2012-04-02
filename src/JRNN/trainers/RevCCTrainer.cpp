@@ -22,11 +22,16 @@ namespace JRNN {
 		net2->Build(numIn, numOut);
 		network = net1;
 		firstTrained = false;
+		ScopedOut = false;
+		outTestDStype = Dataset::TEST;
 		bufferDS.reset(new Dataset());
 		bufferDS->SetNumInputs(numIn);
 		bufferDS->SetNumOutputs(numOut);
 		revRand.gen.seed(static_cast<unsigned int>(time(NULL)));
 		parms.nCand = numCandidates;
+		revparams.bufferSize = 200;
+		revparams.numRev = 5;
+		revparams.numRevTrainRatio = 1;
 		FinishSetup();
 	}
 
@@ -93,62 +98,72 @@ namespace JRNN {
 		return retVec;
 	}
 
-	double RevCCTrainer::TestOnData(DatasetPtr data)
+	double RevCCTrainer::TestOnData(DatasetPtr testData, Dataset::datatype type)
 	{
 		double retVal;
 		net1->getTrueOuts = true;
 		network = net1;
-		SetDataSet(data);
-		retVal = CCTrainer::TestOnData(Dataset::TEST);
+		DatasetPtr oldData = this->data;
+		SetDataSet(testData);
+		retVal = CCTrainer::TestOnData(type);
+		SetDataSet(oldData);
 		net1->getTrueOuts = false;
 		return retVal;
 	}
 
-	JRNN::hashedDoubleMap RevCCTrainer::TestWiClass(DatasetPtr data)
+	JRNN::hashedDoubleMap RevCCTrainer::TestWiClass(DatasetPtr testData, Dataset::datatype type)
 	{
 		hashedDoubleMap retVal;
 		net1->getTrueOuts = true;
 		network = net1;
-		SetDataSet(data);
-		retVal = CCTrainer::TestWiClass(Dataset::TEST);
+		DatasetPtr oldData = this->data;
+		SetDataSet(testData);
+		retVal = CCTrainer::TestWiClass(type);
+		SetDataSet(oldData);
 		net1->getTrueOuts = false;
 		return retVal;
 	}
 
-	void RevCCTrainer::TrainTask( DatasetPtr taskData, bool validate )
+	void RevCCTrainer::TrainTask( DatasetPtr taskData,int maxEpochs, bool validate, bool testWhileTrain /*= false*/, DatasetPtr testData /*= DatasetPtr()*/, Dataset::datatype testDataType /*= Dataset::TRAIN*/ )
 	{
 		if (!firstTrained)
 		{
 			//Initial Training
 			SetDataSet(taskData);
 			network = net1;
-			TrainToConvergence(3000, validate);;//TODO: Need to parameterize some of these values. 
+			TrainToConvergence(maxEpochs, validate);;//TODO: Need to parameterize some of these values. 
 			
 			//First Stage I
 			revNet = net1;
-			FillBufferDS(300);
-			network = net2;
+			FillBufferDS(revparams.bufferSize);
+			network = net2; //This has to happen before SetDataset
 			SetDataSet(bufferDS);
-			TrainToConvergence(3000);
+			TrainToConvergence(maxEpochs);
 			bufferDS->Clear();
 			firstTrained = true;
 		}
 		else {
+			//These only make since after the first round of training.
+			this->ScopedOut = testWhileTrain;
+			this->outTestDS = testData;
+			this->outTestDStype = testDataType;
 			//Stage II
 			revNet = net2;
-			FillBufferDS(taskData->GetSize(Dataset::TRAIN));
+			FillBufferDS(taskData->GetSize(Dataset::TRAIN) * revparams.numRevTrainRatio);
 			taskData->MergeSubsets(bufferDS);
 			bufferDS->Clear();
 			SetDataSet(taskData);
 			network = net1;
-			TrainToConvergence(3000, validate);
+			TrainToConvergence(maxEpochs, validate);
 
+			//Turn this off for Stage I
+			this->ScopedOut = false;
 			//Stage I
 			revNet = net1;
-			FillBufferDS(300);
+			FillBufferDS(revparams.bufferSize);
 			network = net2;
 			SetDataSet(bufferDS);
-			TrainToConvergence(3000);
+			TrainToConvergence(maxEpochs);
 			bufferDS->Clear();
 		}
 	}
@@ -167,4 +182,77 @@ namespace JRNN {
 		bufferDS->DistData(numPoints,0,0); //TOOD: need to change these to parameters.
 	}
 
+
+	CCTrainer::status RevCCTrainer::TrainOuts()
+	{
+		int quitEpoch = 0;
+		double lastError = 0.0;
+		int startEpoch = epoch;
+		//resetOutValues();
+		for (int i = 0; i < parms.out.epochs; i++){
+			resetError(err);
+
+			OutputEpoch();
+
+			if ((err.measure == BITS) && (err.bits == 0)) {
+				return CCTrainer::WIN;
+			}
+			else if (err.measure == INDEX) {
+				double index = ErrorIndex(err.trueErr,1,nTrainOutVals);
+				if (index < parms.indexThreshold){
+					return CCTrainer::WIN;
+				}
+			}
+
+			UpdateOutWeights();
+			epoch++;
+
+			if (ScopedOut){
+				TestResult tmpResult;
+				tmpResult.epoch = epoch;
+				tmpResult.result = TestWiClass(outTestDS, outTestDStype);
+				TestWhileTrainResults.push_back(tmpResult);
+			}
+
+			if (resetFlag == true){ //this is not used currently. 
+				epoch = startEpoch;
+				i = 0;
+				quitEpoch = 0;
+				lastError = 0.0;
+				resetTrainOuts();
+				resetFlag = false;
+#ifdef _DEBUG
+				cout << "Reset Train Outs" << endl;
+#endif // _DEBUG
+				continue;
+			}
+
+			if (i == 0){
+				lastError = err.trueErr;
+				quitEpoch = epoch + parms.out.patience;
+			}
+			else if (fabs(err.trueErr - lastError) > lastError * parms.out.changeThreshold){
+				lastError = err.trueErr;
+				quitEpoch = epoch + parms.out.patience;
+			}
+			else if (epoch == quitEpoch){
+				return CCTrainer::STAGNANT;
+			}
+		}
+		return CCTrainer::TIMEOUT;
+	}
+
+	const RevCCTrainer::TestResults& RevCCTrainer::getTestWhileTrainResults()
+	{
+		return TestWhileTrainResults;
+	}
+
+	void RevCCTrainer::Reset(){
+		ResetVars();
+		net1->Reset();
+		net2->Reset();
+		TestWhileTrainResults.clear();
+		outTestDS.reset();
+		bufferDS->Clear();
+	}
 }

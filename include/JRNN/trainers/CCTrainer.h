@@ -159,7 +159,7 @@ namespace JRNN {
 		//Output training methods
 		void resetError(errVars& errorVars);
 		void resetOutValues();
-		status TrainOuts();
+		virtual status TrainOuts();
 		void resetTrainOuts();
 		void OutputEpoch(); 
 

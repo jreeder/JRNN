@@ -16,18 +16,61 @@
 #include <ctime>
 
 #include "trainers/RevCCTrainer.h"
+#include "utility/csmtldataset.h"
+#include "utility/mtldataset.h"
+#include <boost/pointer_cast.hpp>
 
 using namespace JRNN;
 using namespace std;
 
+string basepath = "D:/Users/John Reeder/Code/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/";
+string dsname = "band";
+int numInputs = 2;
+int numOutputs = 1;
+int numTasks = 4;
+string outFileName = "outfile.txt";
+int numTrain = 100;
+int numVal = 100;
+int numTest = 200;
+int numCandidates = 8;
+int numRuns = 3;
+
+DatasetPtr LoadData( string viewString, string basepath, string dsname, int numInputs, int numOutputs, int primarytask, int impNumTrain, int numTrain, int numVal, int numTest, ints& primaryIndexes, bool useCSMTLDS );
+
 int main(int argc, char** argv) {
 	
-	do 
-	{
-		RevCCTrainer test(4,2,8);
-	} while (0);
+
+	DatasetPtr ds = LoadData("task1,task2,task3,task4", basepath, dsname, numInputs, numOutputs, 0, 0, numTrain, numVal, numTrain, ints(0), true);
+	CSMTLDatasetPtr cds = boost::dynamic_pointer_cast<CSMTLDataset>(ds); 
+
+	if (cds.get() == NULL){
+		return EXIT_FAILURE;
+	}
 	
+	int numNetInputs, numNetOutputs;
+
+	numNetOutputs = numOutputs;
+	numNetInputs = numInputs + numTasks;
+
+	strings outputstring;
+
+	RevCCTrainer* trainer = new RevCCTrainer(numNetInputs, numNetOutputs, numCandidates);
+
+	strings subview;
+	subview.push_back("task1");
+	cds->DistSubview(subview);
+	DatasetPtr firstDS = cds->SpawnDS();
+	subview.clear();
+	subview.push_back("task2");
+	cds->DistSubview(subview);
+	DatasetPtr secondDS = cds->SpawnDS();
+
+	trainer->TrainTask(firstDS,3000,true);
+	trainer->TrainTask(secondDS,3000,true,true,firstDS,Dataset::TEST);
+
+	RevCCTrainer::TestResults results = trainer->getTestWhileTrainResults();
 	
+	return EXIT_SUCCESS;
 	//string filename,outfile;
 	//int numIn,numOut;
 
@@ -77,5 +120,70 @@ int main(int argc, char** argv) {
 	//cout << test1["hello"] << " " << test2["hello"] << endl;
 
 	//return 0;
-	return EXIT_SUCCESS;
+	
+}
+
+JRNN::DatasetPtr LoadData( string viewString, string basepath, string dsname, int numInputs, int numOutputs, int primarytask, int impNumTrain, int numTrain, int numVal, int numTest, ints& primaryIndexes, bool useCSMTLDS)
+{
+	DatasetPtr retDS;
+
+	if (!useCSMTLDS) {
+		MTLDatasetPtr mds(new MTLDataset());
+		/*for (int i = 0; i < numTasks; i++)
+		{
+		string tasknum = lexical_cast<string>(i+1);
+		string filename = basepath + dsname + "-task" + tasknum + ".txt";
+		string taskname = "task-" + tasknum;
+		mds->AddTaskFromFile(filename,taskname,numInputs,numOutputs);
+		}*/
+	
+		strings view = splitString(viewString, ",");
+	
+		BOOST_FOREACH(string taskname, view){
+			string filename = basepath + dsname + "-" + taskname + ".txt";
+			mds->AddTaskFromFile(filename, taskname, numInputs, numOutputs);
+		}
+	
+	
+		mds->SetView(view);
+		//mds->DistData(numTrain,numVal,numTest);
+	
+		primaryIndexes = ints(0);
+		if (primarytask > 0){
+			string taskname = view[primarytask-1];
+			primaryIndexes = mds->GetIndexes(taskname);
+		}
+		if (impNumTrain > 0 && primarytask > 0) {
+			/*int numImpoverished = numTrain - impNumTrain;
+			mds->ImpoverishPrimaryTaskTraining(numImpoverished,(primarytask - 1));*/
+			mds->DistData(numTrain,numVal,numTest, true, impNumTrain, (primarytask - 1));
+		}
+		else {
+			mds->DistData(numTrain, numVal, numTest);
+		}
+	
+		retDS = mds->SpawnDS();	
+	}
+	else {
+		CSMTLDatasetPtr cds(new CSMTLDataset());
+		strings view = splitString(viewString, ",");
+
+		BOOST_FOREACH(string taskname, view){
+			string filename = basepath + dsname + "-" + taskname + ".txt";
+			cds->AddTaskFromFile(filename, taskname, numInputs, numOutputs);
+		}
+
+		cds->SetView(view);
+
+		if (impNumTrain > 0 && primarytask > 0){
+			cds->DistData(numTrain, numVal, numTest, true, impNumTrain, (primarytask - 1));
+		}
+		else {
+			cds->DistData(numTrain, numVal, numTest, false, 0, (primarytask - 1));
+		}
+
+		retDS = cds->SpawnDS();
+	}
+	
+	return retDS;
 }
