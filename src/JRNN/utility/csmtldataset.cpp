@@ -164,6 +164,7 @@ namespace JRNN {
 				viewCount++;
 			}
 		}
+		size = inputs.size();
 	}
 
 	vecDouble CSMTLDataset::VecDoubleFromDoubles( const doubles& inDoubles )
@@ -175,7 +176,7 @@ namespace JRNN {
 		return retVec;
 	}
 
-	void CSMTLDataset::DistData( int numTrain, int numVal, int numTest, bool impoverish /*= false*/, int primaryTask /*= 0*/, int numImpTrain /*= 0*/ )
+	void CSMTLDataset::DistData( int numTrain, int numVal, int numTest, bool impoverish /*= false*/, int numImpTrain /*= 0*/, int primaryTask /*= -1*/)
 	{
 		this->numImpTrain = numImpTrain;
 		this->numTrain = numTrain;
@@ -262,7 +263,7 @@ namespace JRNN {
 	void CSMTLDataset::Distribute()
 	{
 		int viewSize = view.size();
-		int numToDist = viewSize*numTrain + viewSize * numVal + viewSize * numTest;
+		int numToDist = viewSize * numTrain + viewSize * numVal +  viewSize * numTest;
 		assert(size > numToDist && numImpTrain < numTrain && viewSize > 0 && primaryTask <viewSize);
 		for(int i = 0; i < viewSize; i++){
 			hashedIntsMap indexQueues = taskList[view[i]]->outClassIndexes;

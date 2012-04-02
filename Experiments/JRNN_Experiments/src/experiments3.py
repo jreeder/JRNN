@@ -20,32 +20,37 @@ testdicts = [{'dsname':'band','numRuns':60, 'numInputs':2,'numOutputs':1,\
         ]
 experiments = []
 
+#experiments += [b.csmtl[1]]
+#
 #experiments += testdicts
 
-#old experiments no longer used 
-# b.bandnorm + b.bandnormnv + b.bandlargenv + b.bandsmallnv 
-#experiments = c.cirinsqnorm + c.cirinsqnormnv + c.cirinsqlargenv + c.cirinsqsmallnv \
-            #+ l.linearnorm + l.linearnormnv + l.linearlargenv + l.linearsmallnv
-#experiments = b.ccmtl + b.csmtl + l.ccmtl + c.ccmtl
-#experiments = d.largeimpnv + d.normimpnv
-
-experiments += g.normimp + g.smallimpnv + g.largeimpnv + g.normimpnv \
-            + d.normimp + d.smallimpnv + d.largeimpnv + d.normimpnv \
-            + l.normimp + l.smallimpnv + l.largeimpnv + l.normimpnv \
-            + h.normimp + h.smallimpnv + h.largeimpnv + h.normimpnv \
-            + s.normimp + s.smallimpnv + s.largeimpnv + s.normimpnv \
-            + b.normimp + b.smallimpnv + b.largeimpnv + b.normimpnv \
-            + c.normimp + c.smallimpnv + c.largeimpnv + c.normimpnv \
+#New Experiments
+#experiments += g.normimp + g.smallimpnv + g.largeimpnv + g.normimpnv \
+            #+ d.normimp + d.smallimpnv + d.largeimpnv + d.normimpnv \
+            #+ l.normimp + l.smallimpnv + l.largeimpnv + l.normimpnv \
+            #+ h.normimp + h.smallimpnv + h.largeimpnv + h.normimpnv \
+            #+ s.normimp + s.smallimpnv + s.largeimpnv + s.normimpnv \
+            #+ b.normimp + b.smallimpnv + b.largeimpnv + b.normimpnv \
+            #+ c.normimp + c.smallimpnv + c.largeimpnv + c.normimpnv \
 
 
 
-experiments += b.ccmtl + b.csmtl + b.etamtl \
-    + c.ccmtl + c.csmtl + c.etamtl \
-    + l.ccmtl + l.csmtl + l.etamtl \
-    + d.ccmtl + d.csmtl + d.etamtl \
-    + h.ccmtl + h.csmtl + h.etamtl \
-    + g.ccmtl + g.csmtl + g.etamtl \
-    + s.ccmtl + s.csmtl + s.etamtl \
+#experiments += b.ccmtl + b.etamtl \
+    #+ c.ccmtl + c.etamtl \
+    #+ l.ccmtl + l.etamtl \
+    #+ d.ccmtl + d.etamtl \
+    #+ h.ccmtl + h.etamtl \
+    #+ g.ccmtl + g.etamtl \
+    #+ s.ccmtl + s.etamtl \
+
+experiments += b.csmtl \
+    + c.csmtl 
+    + l.csmtl 
+    + d.csmtl 
+    + h.csmtl 
+    + g.csmtl 
+    + s.csmtl 
+    
 
 experiments += b.csmtlos + c.csmtlos + l.csmtlos + g.csmtlos \
     + d.csmtlos + s.csmtlos + h.csmtlos
@@ -64,3 +69,11 @@ experiments += b.csmtlur + c.csmtlur + l.csmtlur + g.csmtlur + d.csmtlur + s.csm
 
 
 
+
+
+#old experiments no longer used 
+# b.bandnorm + b.bandnormnv + b.bandlargenv + b.bandsmallnv 
+#experiments = c.cirinsqnorm + c.cirinsqnormnv + c.cirinsqlargenv + c.cirinsqsmallnv \
+            #+ l.linearnorm + l.linearnormnv + l.linearlargenv + l.linearsmallnv
+#experiments = b.ccmtl + b.csmtl + l.ccmtl + c.ccmtl
+#experiments = d.largeimpnv + d.normimpnv

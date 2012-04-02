@@ -28,7 +28,7 @@ namespace JRNN {
 		void AddTaskFromFile(string fileName, string taskName, int numIn, int numOut);
 		void AddTaskFromNet(NetworkPtr net, string taskName);
 		DatasetPtr SpawnDS();
-		virtual void DistData(int numTrain, int numVal, int numTest, bool impoverish = false, int primaryTask = -1, int numImpTrain = 0);
+		virtual void DistData(int numTrain, int numVal, int numTest, bool impoverish = false, int numImpTrain = 0, int primaryTask = -1);
 		void DistSubview(strings view);
 
 		class Task {

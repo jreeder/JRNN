@@ -9,7 +9,7 @@ from subprocess import *
 from multiprocessing import *
 from config import *
 
-verbose = Truetest = False
+verbose = Falsetest = False
 real = True
 dsinpath1 = ['linear', 'CirInSq', 'band']
 dsinpath2 = ['smallcovtype', 'glass', 'derm', 'heart']
@@ -34,7 +34,7 @@ def ProcessExp(expparams):
     primTask = expparams['primTask']
     netType = expparams['netType']
     expFold = expparams['expFold']
-    useCSMTL = expparams.get('useCSMTL', False)
+    useCSMTL = expparams.get('useCSMTLDS', False)
     useEtaMTL = expparams.get('useEtaMTL', False)
     useCandSlope = expparams.get('useCandSlope', False)
     useRelmin = expparams.get('RELMIN', False)
