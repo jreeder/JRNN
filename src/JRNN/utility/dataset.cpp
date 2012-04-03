@@ -199,6 +199,8 @@ void Dataset::LoadFromMatDoubles( matDouble& newInputs, matDouble& newOutputs )
 		string outname = StringFromVector((*itOuts));
 		outClassIndexes[outname].push_back(count);
 		count++;
+		itIns++;
+		itOuts++;
 	}
 	hashedIntsMap::iterator it = outClassIndexes.begin();
 	//calculate the percentage of each outclass to the whole.
@@ -255,7 +257,7 @@ void Dataset::AnalyzeDS(){
 
 void Dataset::Distribute(){
     //TODO: need to place some error checks here ... this is very unsafe.
-    assert(size > (numTrain + numVal + numTest));
+    assert(size >= (numTrain + numVal + numTest));
 	
 	//Find the number of points from each class that goes into the subsets
 	//ints trainClsCounts, valClsCounts, testClsCounts, clsPositions;

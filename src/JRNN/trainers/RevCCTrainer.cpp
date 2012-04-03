@@ -45,7 +45,7 @@ namespace JRNN {
 		valErr.measure = (ErrorType) parms.errorMeasure;
 		candCorr = hashedVecDoubleMap(numOut);
 		candPCorr = hashedVecDoubleMap(numOut);
-		ResetVars();
+		//ResetVars(); Not needed This is the first thing that traintoconvergence does.
 	}
 
 	RevCCTrainer::~RevCCTrainer(){}

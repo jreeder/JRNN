@@ -25,10 +25,12 @@ using namespace std;
 
 string basepath = "D:/Users/John Reeder/Code/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/";
 string dsname = "band";
+string view = "task1,task2,task3,task4";
 int numInputs = 2;
 int numOutputs = 1;
 int numTasks = 4;
-string outFileName = "outfile.txt";
+string outFileName = "outfilereverb.txt";
+string outFileName2 = "outfilenoreverb.txt";
 int numTrain = 100;
 int numVal = 100;
 int numTest = 200;
@@ -40,7 +42,7 @@ DatasetPtr LoadData( string viewString, string basepath, string dsname, int numI
 int main(int argc, char** argv) {
 	
 
-	DatasetPtr ds = LoadData("task1,task2,task3,task4", basepath, dsname, numInputs, numOutputs, 0, 0, numTrain, numVal, numTrain, ints(0), true);
+	DatasetPtr ds = LoadData(view, basepath, dsname, numInputs, numOutputs, 0, 0, numTrain, numVal, numTrain, ints(0), true);
 	CSMTLDatasetPtr cds = boost::dynamic_pointer_cast<CSMTLDataset>(ds); 
 
 	if (cds.get() == NULL){
@@ -64,12 +66,56 @@ int main(int argc, char** argv) {
 	subview.push_back("task2");
 	cds->DistSubview(subview);
 	DatasetPtr secondDS = cds->SpawnDS();
-
-	trainer->TrainTask(firstDS,3000,true);
-	trainer->TrainTask(secondDS,3000,true,true,firstDS,Dataset::TEST);
-
-	RevCCTrainer::TestResults results = trainer->getTestWhileTrainResults();
+	ofstream ofile;
 	
+	ofile.open(outFileName);
+	for (int i = 0; i < numRuns; i++)
+	{
+		trainer->TrainTask(firstDS,3000,true);
+		trainer->TrainTask(secondDS,3000,true,true,firstDS,Dataset::TEST);
+	
+		RevCCTrainer::TestResults results = trainer->getTestWhileTrainResults();
+		
+		BOOST_FOREACH(RevCCTrainer::TestResult result, results){
+			ofile << result.epoch << "-";
+			std::pair<string, double> p;
+			BOOST_FOREACH(p, result.result){
+				ofile << p.first << ":" << p.second << "\t";
+			}
+			ofile << "|";
+		}
+		ofile << endl;
+
+		trainer->Reset();
+		firstDS->RedistData();
+		secondDS->RedistData();
+	}
+	ofile.close();
+
+	ofile.open(outFileName2);
+	for (int i = 0; i < numRuns; i++){
+		trainer->revparams.numRev = 1;
+		trainer->TrainTask(firstDS, 3000, true);
+		trainer->TrainTask(secondDS, 3000, true, true, firstDS, Dataset::TEST);
+
+		RevCCTrainer::TestResults results = trainer->getTestWhileTrainResults();
+
+		BOOST_FOREACH(RevCCTrainer::TestResult result, results){
+			ofile << result.epoch << "-";
+			std::pair<string, double> p;
+			BOOST_FOREACH(p, result.result){
+				ofile << p.first << ":" << p.second << "\t";
+			}
+			ofile << "|";
+		}
+		ofile << endl;
+
+		trainer->Reset();
+		firstDS->RedistData();
+		secondDS->RedistData();
+	}
+	ofile.close();
+
 	return EXIT_SUCCESS;
 	//string filename,outfile;
 	//int numIn,numOut;
