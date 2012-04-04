@@ -41,6 +41,15 @@ namespace JRNN {
 			vecDouble outPoint;
 		};
 
+		//Values that are changed after each training. Keep them here so they can be recalled if need be.
+		struct netparameters {
+			int epochs;
+			int numResets;
+			int numHidLayers;
+			doubles MSERec;
+			doubles VMSERec;
+		} net1vals, net2vals;
+
 		void TrainTask(DatasetPtr taskData,int maxEpochs, bool validate, bool testWhileTrain = false, DatasetPtr testData = DatasetPtr(), Dataset::datatype testDataType = Dataset::TRAIN);
 		
 		double TestOnData(DatasetPtr testData, Dataset::datatype type);
@@ -83,6 +92,8 @@ namespace JRNN {
 		vecDouble ConcatVec( vecDouble first, vecDouble second );
 		void FinishSetup();
 		void FillBufferDS( int numPoints );
+
+		void SaveNetParameters(netparameters& netparms);
 		
 		//Overloaded so that I can insert tests after each epoch. 
 		CCTrainer::status TrainOuts();

@@ -233,6 +233,13 @@ namespace JRNN {
 		}
 	}
 
+	inline void printHashedDoubleMap(hashedDoubleMap& toPrint, std::iostream& stream){
+		std::pair<string, double> p;
+		BOOST_FOREACH(p, toPrint){
+			stream << p.first << ":" << p.second << "\t";
+		}
+	}
+
 	inline strings splitString(string inString, string charSep){
 		typedef boost::tokenizer<boost::char_separator<char> > tokenizer;
 		boost::char_separator<char> sep(charSep.c_str());

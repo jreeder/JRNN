@@ -35,6 +35,18 @@ namespace JRNN {
 		FinishSetup();
 	}
 
+	void RevCCTrainer::Reset(){
+		ResetVars();
+		net1->Reset();
+		net2->Reset();
+		network = net1;
+		firstTrained = false;
+		ScopedOut = false;
+		TestWhileTrainResults.clear();
+		outTestDS.reset();
+		bufferDS->Clear();
+	}
+
 	void RevCCTrainer::FinishSetup(){
 		int numOut = network->GetNumOut();
 		err.errors = vecDouble(numOut);
@@ -132,13 +144,14 @@ namespace JRNN {
 			SetDataSet(taskData);
 			network = net1;
 			TrainToConvergence(maxEpochs, validate);;//TODO: Need to parameterize some of these values. 
-			
+			SaveNetParameters(net1vals);
 			//First Stage I
 			revNet = net1;
 			FillBufferDS(revparams.bufferSize);
 			network = net2; //This has to happen before SetDataset
 			SetDataSet(bufferDS);
 			TrainToConvergence(maxEpochs);
+			SaveNetParameters(net2vals);
 			bufferDS->Clear();
 			firstTrained = true;
 		}
@@ -155,6 +168,7 @@ namespace JRNN {
 			SetDataSet(taskData);
 			network = net1;
 			TrainToConvergence(maxEpochs, validate);
+			SaveNetParameters(net1vals);
 
 			//Turn this off for Stage I
 			this->ScopedOut = false;
@@ -163,9 +177,13 @@ namespace JRNN {
 			FillBufferDS(revparams.bufferSize);
 			network = net2;
 			SetDataSet(bufferDS);
-			TrainToConvergence(maxEpochs);
+			TrainToConvergence(maxEpochs); //Not validating right now might need to come back and do that later. would require buffer dataset to have a validation set. 
+			SaveNetParameters(net2vals);
 			bufferDS->Clear();
 		}
+		//clean up by putting net1 back as the main network
+		network = net1;
+		SetDataSet(taskData);
 	}
 
 	void RevCCTrainer::FillBufferDS( int numPoints )
@@ -212,6 +230,14 @@ namespace JRNN {
 				tmpResult.epoch = epoch;
 				tmpResult.result = TestWiClass(outTestDS, outTestDStype);
 				TestWhileTrainResults.push_back(tmpResult);
+#ifdef _DEBUG
+				cout << epoch << ":";
+				std::pair<string, double> p;
+				BOOST_FOREACH(p, tmpResult.result){
+					cout << p.first << "-" << p.second;
+				}
+				cout << endl;
+#endif
 			}
 
 			if (resetFlag == true){ //this is not used currently. 
@@ -247,12 +273,13 @@ namespace JRNN {
 		return TestWhileTrainResults;
 	}
 
-	void RevCCTrainer::Reset(){
-		ResetVars();
-		net1->Reset();
-		net2->Reset();
-		TestWhileTrainResults.clear();
-		outTestDS.reset();
-		bufferDS->Clear();
+	void RevCCTrainer::SaveNetParameters( netparameters& netparms )
+	{
+		netparms.epochs = this->GetEpochs();
+		netparms.numHidLayers = this->GetNumHidLayers();
+		netparms.numResets = this->GetNumResets();
+		netparms.MSERec = this->GetMSERec();
+		netparms.VMSERec = this->GetVMSERec();
 	}
+
 }

@@ -25,7 +25,7 @@ using namespace std;
 
 string basepath = "D:/Users/John Reeder/Code/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/";
 string dsname = "band";
-string view = "task1,task2,task3,task4";
+string view = "task1,task2,task3,task5";
 int numInputs = 2;
 int numOutputs = 1;
 int numTasks = 4;
@@ -36,12 +36,14 @@ int numVal = 100;
 int numTest = 200;
 int numCandidates = 8;
 int numRuns = 3;
+bool verbose = true;
 
 DatasetPtr LoadData( string viewString, string basepath, string dsname, int numInputs, int numOutputs, int primarytask, int impNumTrain, int numTrain, int numVal, int numTest, ints& primaryIndexes, bool useCSMTLDS );
 
 int main(int argc, char** argv) {
+	if (verbose)
+		cout << "Starting ..." << endl;
 	
-
 	DatasetPtr ds = LoadData(view, basepath, dsname, numInputs, numOutputs, 0, 0, numTrain, numVal, numTrain, ints(0), true);
 	CSMTLDatasetPtr cds = boost::dynamic_pointer_cast<CSMTLDataset>(ds); 
 
@@ -63,28 +65,53 @@ int main(int argc, char** argv) {
 	cds->DistSubview(subview);
 	DatasetPtr firstDS = cds->SpawnDS();
 	subview.clear();
-	subview.push_back("task2");
+	subview.push_back("task5");
 	cds->DistSubview(subview);
 	DatasetPtr secondDS = cds->SpawnDS();
 	ofstream ofile;
 	
 	ofile.open(outFileName);
-	for (int i = 0; i < numRuns; i++)
+	stringstream output(stringstream::out);
+	for (int i = 0; i < 0; i++)
 	{
+		if (verbose)
+			cout << "Re-verb Run " << i+1 << endl;
+		//Train First Task
 		trainer->TrainTask(firstDS,3000,true);
+		//Train Second Task
 		trainer->TrainTask(secondDS,3000,true,true,firstDS,Dataset::TEST);
-	
-		RevCCTrainer::TestResults results = trainer->getTestWhileTrainResults();
 		
+		//Second Task test results
+		hashedDoubleMap secondResults = trainer->TestWiClass(secondDS, Dataset::TEST);
+		int hiddenLayers = trainer->net1vals.numHidLayers;
+		int epochs = trainer->net1vals.epochs;
+		int numResets = trainer->net1vals.numResets;
+		int time = 0;
+		
+		
+		output << epochs << "\t";
+		output << time << "\t";
+		output << hiddenLayers << "\t";
+		output << numResets << "\t";
+		
+		printHashedDoubleMap(secondResults,output);
+		output << "|\t";
+		printDoubles(trainer->net1vals.MSERec,output);
+		output << "|\t";
+
+		//Previous Task test results. 
+		hashedDoubleMap firstTaskResults = trainer->TestWiClass(firstDS, Dataset::TEST);
+		printHashedDoubleMap(firstTaskResults, output);
+		output << "|\t";
+		RevCCTrainer::TestResults results = trainer->getTestWhileTrainResults();
 		BOOST_FOREACH(RevCCTrainer::TestResult result, results){
-			ofile << result.epoch << "-";
-			std::pair<string, double> p;
-			BOOST_FOREACH(p, result.result){
-				ofile << p.first << ":" << p.second << "\t";
-			}
-			ofile << "|";
+			output << "*" << result.epoch << "!";
+			printHashedDoubleMap(result.result,output);
 		}
-		ofile << endl;
+		output << endl;
+		ofile << output.str();
+		output.str("");
+		output.clear();
 
 		trainer->Reset();
 		firstDS->RedistData();
@@ -94,21 +121,49 @@ int main(int argc, char** argv) {
 
 	ofile.open(outFileName2);
 	for (int i = 0; i < numRuns; i++){
+		
+		if (verbose)
+			cout << "No Re-verb Run " << i+1 << endl;
+
+		//Set the reverb down to 1 ... this is straight pseudo rehearsal
 		trainer->revparams.numRev = 1;
-		trainer->TrainTask(firstDS, 3000, true);
-		trainer->TrainTask(secondDS, 3000, true, true, firstDS, Dataset::TEST);
+		//Train First Task
+		trainer->TrainTask(firstDS,3000,true);
+		//Train Second Task
+		trainer->TrainTask(secondDS,3000,true,true,firstDS,Dataset::TEST);
 
+		//Second Task test results
+		hashedDoubleMap secondResults = trainer->TestWiClass(secondDS, Dataset::TEST);
+		int hiddenLayers = trainer->net1vals.numHidLayers;
+		int epochs = trainer->net1vals.epochs;
+		int numResets = trainer->net1vals.numResets;
+		int time = 0;
+
+
+		output << epochs << "\t";
+		output << time << "\t";
+		output << hiddenLayers << "\t";
+		output << numResets << "\t";
+
+		printHashedDoubleMap(secondResults,output);
+		output << "|\t";
+		printDoubles(trainer->net1vals.MSERec,output);
+		output << "|\t";
+
+		//Previous Task test results. 
+		hashedDoubleMap firstTaskResults = trainer->TestWiClass(firstDS, Dataset::TEST);
+		printHashedDoubleMap(firstTaskResults, output);
+		output << "|\t";
 		RevCCTrainer::TestResults results = trainer->getTestWhileTrainResults();
-
 		BOOST_FOREACH(RevCCTrainer::TestResult result, results){
-			ofile << result.epoch << "-";
-			std::pair<string, double> p;
-			BOOST_FOREACH(p, result.result){
-				ofile << p.first << ":" << p.second << "\t";
-			}
-			ofile << "|";
+			output << "*" << result.epoch << "!";
+			printHashedDoubleMap(result.result,output);
 		}
-		ofile << endl;
+
+		output << endl;
+		ofile << output.str();
+		output.str(""); //needed to set the internal string back to empty
+		output.clear(); //Clears any error flags if any ...probably doesn't do anything for me
 
 		trainer->Reset();
 		firstDS->RedistData();
@@ -116,6 +171,8 @@ int main(int argc, char** argv) {
 	}
 	ofile.close();
 
+	if(verbose)
+		cout << "The End" << endl;
 	return EXIT_SUCCESS;
 	//string filename,outfile;
 	//int numIn,numOut;

@@ -635,6 +635,7 @@ namespace JRNN {
 		matDouble outs = data->GetOutputs(type);
 		matDouble::iterator itIns = ins.begin();
 		matDouble::iterator itOuts = outs.begin();
+		taskErrors.clear();
 
 		int numInCorrect = 0;
 		int totalItems = ins.size();
@@ -651,7 +652,9 @@ namespace JRNN {
 				string name = "task-";
 				name += lexical_cast<string>(i);
 				int tmp = (int)errors[i];
-				//cout << tmp << " " << output << " " << desiredOut << endl;
+#ifdef _DEBUG
+				cout << tmp << " " << output << " " << desiredOut << endl;
+#endif
 				if (errors[i] != 0){
 					taskErrors[name]++;
 				}
