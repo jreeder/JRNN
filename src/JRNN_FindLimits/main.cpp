@@ -23,7 +23,7 @@
 using namespace JRNN;
 using namespace std;
 
-string basepath = "D:/Users/John Reeder/Code/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/";
+string basepath = "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/";
 string dsname = "band";
 string view = "task1,task2,task3,task5";
 int numInputs = 2;
@@ -72,7 +72,7 @@ int main(int argc, char** argv) {
 	
 	ofile.open(outFileName);
 	stringstream output(stringstream::out);
-	for (int i = 0; i < 0; i++)
+	for (int i = 0; i < numRuns; i++)
 	{
 		if (verbose)
 			cout << "Re-verb Run " << i+1 << endl;

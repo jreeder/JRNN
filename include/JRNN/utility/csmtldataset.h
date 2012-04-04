@@ -30,6 +30,7 @@ namespace JRNN {
 		DatasetPtr SpawnDS();
 		virtual void DistData(int numTrain, int numVal, int numTest, bool impoverish = false, int numImpTrain = 0, int primaryTask = -1);
 		void DistSubview(strings view);
+		void ResetView();
 
 		class Task {
 		public:
@@ -64,6 +65,7 @@ namespace JRNN {
 		CSMTLDataStore dataStore;
 		Tasks taskList;
 		strings view;
+		strings subView;
 		StringSet inputStrings;
 		matDouble realInputs;
 		int numRealInputs;
@@ -75,6 +77,7 @@ namespace JRNN {
 		vecDouble CreateContextIn(int taskNum);
 		vecDouble ConcatVec(vecDouble first, vecDouble second);
 		vecDouble VecDoubleFromDoubles( const doubles& inDoubles );
+		
 	};
 }
 

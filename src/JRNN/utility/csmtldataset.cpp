@@ -36,6 +36,7 @@ namespace JRNN {
 	void CSMTLDataset::SetView(strings view)
 	{
 		this->view = view;
+		this->subView = view;
 		this->dsAnalyzed = false;
 		GenerateDS();
 		//This probably will change
@@ -178,6 +179,7 @@ namespace JRNN {
 
 	void CSMTLDataset::DistData( int numTrain, int numVal, int numTest, bool impoverish /*= false*/, int numImpTrain /*= 0*/, int primaryTask /*= -1*/)
 	{
+		//TODO:need to add some code here to make sure that the dataset has been generated before this happens
 		this->numImpTrain = numImpTrain;
 		this->numTrain = numTrain;
 		this->numVal = numVal;
@@ -262,12 +264,12 @@ namespace JRNN {
 
 	void CSMTLDataset::Distribute()
 	{
-		int viewSize = view.size();
+		int viewSize = subView.size();
 		int numToDist = viewSize * numTrain + viewSize * numVal +  viewSize * numTest;
 		assert(size > numToDist && numImpTrain < numTrain && viewSize > 0 && primaryTask <viewSize);
 		for(int i = 0; i < viewSize; i++){
-			hashedIntsMap indexQueues = taskList[view[i]]->outClassIndexes;
-			TaskPtr task = taskList[view[i]];
+			hashedIntsMap indexQueues = taskList[subView[i]]->outClassIndexes;
+			TaskPtr task = taskList[subView[i]];
 			if (impoverish && primaryTask == i){
 				int numRepeats = numTrain / numImpTrain;
 				FillSubset(trainIns, trainOuts, numImpTrain, indexQueues, task, numRepeats);
@@ -288,28 +290,33 @@ namespace JRNN {
 	void CSMTLDataset::DistSubview( strings newView )
 	{
 		ClearSubsets();
-		int viewSize = newView.size();
-		int numToDist = viewSize*numTrain + viewSize * numVal + viewSize * numTest;
-		assert(size > numToDist && numImpTrain < numTrain && viewSize > 0 && primaryTask <viewSize);
-		for(int i = 0; i < viewSize; i++){
-			hashedIntsMap indexQueues = taskList[newView[i]]->outClassIndexes;
-			TaskPtr task = taskList[newView[i]];
-			if (impoverish && primaryTask == i){
-				int numRepeats = numTrain / numImpTrain;
-				FillSubset(trainIns, trainOuts, numImpTrain, indexQueues, task, numRepeats);
-			}
-			else{
-				FillSubset(trainIns, trainOuts, numTrain, indexQueues, task);
-			}
-			if (primaryTask == -1 || primaryTask == i){
-				FillSubset(valIns, valOuts, numVal, indexQueues, task);
-				FillSubset(testIns, testOuts, numTest, indexQueues, task);
-			}
-		}
-		ShuffleSubsets();
-		CalcStdDevs();
+		this->subView = newView;
+		Distribute();
+		//int viewSize = newView.size();
+		//int numToDist = viewSize*numTrain + viewSize * numVal + viewSize * numTest;
+		//assert(size > numToDist && numImpTrain < numTrain && viewSize > 0 && primaryTask <viewSize);
+		//for(int i = 0; i < viewSize; i++){
+		//	hashedIntsMap indexQueues = taskList[newView[i]]->outClassIndexes;
+		//	TaskPtr task = taskList[newView[i]];
+		//	if (impoverish && primaryTask == i){
+		//		int numRepeats = numTrain / numImpTrain;
+		//		FillSubset(trainIns, trainOuts, numImpTrain, indexQueues, task, numRepeats);
+		//	}
+		//	else{
+		//		FillSubset(trainIns, trainOuts, numTrain, indexQueues, task);
+		//	}
+		//	if (primaryTask == -1 || primaryTask == i){
+		//		FillSubset(valIns, valOuts, numVal, indexQueues, task);
+		//		FillSubset(testIns, testOuts, numTest, indexQueues, task);
+		//	}
+		//}
+		//ShuffleSubsets();
+		//CalcStdDevs();
 	}
 
+	void CSMTLDataset::ResetView(){
+		this->subView = this->view;
+	}
 
 	void CSMTLDataset::Reshuffle()
 	{
