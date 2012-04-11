@@ -10,6 +10,7 @@
 #include "JRNN.h"
 #include "trainers/RevCCTrainer.h"
 #include "utility/dataset.h"
+#include "utility/csmtldataset.h"
 
 namespace JRNN {
 
@@ -32,6 +33,8 @@ namespace JRNN {
 		revparams.bufferSize = 200;
 		revparams.numRev = 5;
 		revparams.numRevTrainRatio = 1;
+		revparams.cleanReverb = false;
+		revparams.numContexts = 0;
 		FinishSetup();
 	}
 
@@ -68,10 +71,20 @@ namespace JRNN {
 		//set this up to randomly choose a context. This might be something I could test. 
 		//to see if this makes a difference. 
 
-		vecDouble tmpIn(revNet->GetNumIn());
+		int inSize = revNet->GetNumIn();
+		if (revparams.cleanReverb){
+			assert(revparams.numContexts > 0);
+			inSize -= revparams.numContexts;
+		}
+
+		vecDouble tmpIn(inSize);
 		for (uint i = 0; i < tmpIn.size(); i++)
 		{
 			tmpIn[i] = revRand();
+		}
+		if (revparams.cleanReverb){
+			vecDouble randContext = dynamic_pointer_cast<CSMTLDataset>(data)->GetRandContext();
+			tmpIn = ConcatVec(tmpIn,randContext);
 		}
 		revNet->Activate(tmpIn);
 		for (uint i = 1; i < revparams.numRev; i++)
@@ -82,6 +95,10 @@ namespace JRNN {
 		reverbdpoint retVal;
 		retVal.inPoint = tmpIn;
 		retVal.outPoint = revNet->GetNormOutLayer()->GetOutput();
+
+		if(revparams.cleanReverb){
+			retVal.outPoint = ApplyThreshold(retVal.outPoint);
+		}
 
 		return retVal;
 	}

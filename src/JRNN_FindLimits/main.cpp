@@ -23,7 +23,8 @@
 using namespace JRNN;
 using namespace std;
 
-string basepath = "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/";
+//string basepath = "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/";
+string basepath = "D:/Users/John Reeder/Code/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/";
 string dsname = "band";
 string view = "task1,task2,task3,task5";
 int numInputs = 2;
@@ -35,10 +36,12 @@ int numTrain = 100;
 int numVal = 100;
 int numTest = 200;
 int numCandidates = 8;
-int numRuns = 3;
+int numRuns = 20;
 bool verbose = true;
+bool gCleanReverb = true;
 
 DatasetPtr LoadData( string viewString, string basepath, string dsname, int numInputs, int numOutputs, int primarytask, int impNumTrain, int numTrain, int numVal, int numTest, ints& primaryIndexes, bool useCSMTLDS );
+
 
 int main(int argc, char** argv) {
 	if (verbose)
@@ -60,14 +63,17 @@ int main(int argc, char** argv) {
 
 	RevCCTrainer* trainer = new RevCCTrainer(numNetInputs, numNetOutputs, numCandidates);
 
+	trainer->revparams.numContexts = cds->GetViewSize();
+	trainer->revparams.cleanReverb = gCleanReverb;
+
 	strings subview;
 	subview.push_back("task1");
 	cds->DistSubview(subview);
-	DatasetPtr firstDS = cds->SpawnDS();
+	CSMTLDatasetPtr firstDS = cds->SpawnDS();
 	subview.clear();
 	subview.push_back("task5");
 	cds->DistSubview(subview);
-	DatasetPtr secondDS = cds->SpawnDS();
+	CSMTLDatasetPtr secondDS = cds->SpawnDS();
 	ofstream ofile;
 	
 	ofile.open(outFileName);

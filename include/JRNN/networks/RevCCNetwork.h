@@ -39,6 +39,7 @@ namespace JRNN {
 	protected:		
 		LayerPtr autoAssocLayer;
 		LayerPtr normOutLayer;
+		//TODO:might make this network context are soon. 
 		void FullyConnectAutoAssoc(LayerPtr layer);
 		void FullyConnectAutoAssoc(LayerPtr layer, vecDouble outWeights);
 	};

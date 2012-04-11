@@ -27,10 +27,12 @@ namespace JRNN {
 		void SetView(strings view);
 		void AddTaskFromFile(string fileName, string taskName, int numIn, int numOut);
 		void AddTaskFromNet(NetworkPtr net, string taskName);
-		DatasetPtr SpawnDS();
+		CSMTLDatasetPtr SpawnDS();
 		virtual void DistData(int numTrain, int numVal, int numTest, bool impoverish = false, int numImpTrain = 0, int primaryTask = -1);
 		void DistSubview(strings view);
 		void ResetView();
+		vecDouble GetRandContext();
+		int GetViewSize();
 
 		class Task {
 		public:
@@ -75,7 +77,7 @@ namespace JRNN {
 		virtual void FillSubset( matDouble& ins, matDouble& outs, int numExamples, hashedIntsMap& indexQueues, TaskPtr inTask, int numRepeats = 0);
 		virtual void Reshuffle();
 		vecDouble CreateContextIn(int taskNum);
-		vecDouble ConcatVec(vecDouble first, vecDouble second);
+		//vecDouble ConcatVec(vecDouble first, vecDouble second);
 		vecDouble VecDoubleFromDoubles( const doubles& inDoubles );
 		
 	};

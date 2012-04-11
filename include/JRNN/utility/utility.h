@@ -83,6 +83,22 @@ namespace JRNN {
 		return retVal;
 	}
 
+	inline vecDouble ConcatVec( vecDouble first, vecDouble second )
+	{
+		vecDouble retVec(first.size() + second.size());
+		int newSize = first.size() + second.size();
+		int i = 0;
+		BOOST_FOREACH(double val, first){
+			retVec[i] = val;
+			i++;
+		}
+		BOOST_FOREACH(double val, second){
+			retVec[i] = val;
+			i++;
+		}
+		return retVec;
+	}
+
 	inline void FillVec(vecDouble& vector, double value){
 		vecDouble::iterator it = vector.begin();
 		for (; it != vector.end(); it++){

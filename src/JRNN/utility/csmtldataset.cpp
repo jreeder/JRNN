@@ -30,6 +30,7 @@ namespace JRNN {
 		this->realInputs = orig.realInputs;
 		this->taskList = orig.taskList;
 		this->view = orig.view;
+		this->subView = orig.subView;
 		this->numRealInputs = orig.numRealInputs;
 	}
 
@@ -102,9 +103,11 @@ namespace JRNN {
 	}
 
 
-	JRNN::DatasetPtr CSMTLDataset::SpawnDS()
+	JRNN::CSMTLDatasetPtr CSMTLDataset::SpawnDS()
 	{
-		DatasetPtr ds(new CSMTLDataset(*this));
+		//This need not be a plain dataset ptr. I can cast it that way when I call this if I want it. 
+		//This way I have fewer issues getting confused with the polymorphism. 
+		CSMTLDatasetPtr ds(new CSMTLDataset(*this));
 		return ds;
 	}
 
@@ -116,21 +119,21 @@ namespace JRNN {
 		return retVec;
 	}
 
-	vecDouble CSMTLDataset::ConcatVec( vecDouble first, vecDouble second )
-	{
-		vecDouble retVec(first.size() + second.size());
-		int newSize = first.size() + second.size();
-		int i = 0;
-		BOOST_FOREACH(double val, first){
-			retVec[i] = val;
-			i++;
-		}
-		BOOST_FOREACH(double val, second){
-			retVec[i] = val;
-			i++;
-		}
-		return retVec;
-	}
+	//vecDouble CSMTLDataset::ConcatVec( vecDouble first, vecDouble second )
+	//{
+	//	vecDouble retVec(first.size() + second.size());
+	//	int newSize = first.size() + second.size();
+	//	int i = 0;
+	//	BOOST_FOREACH(double val, first){
+	//		retVec[i] = val;
+	//		i++;
+	//	}
+	//	BOOST_FOREACH(double val, second){
+	//		retVec[i] = val;
+	//		i++;
+	//	}
+	//	return retVec;
+	//}
 
 	void CSMTLDataset::GenerateDS()
 	{
@@ -265,8 +268,8 @@ namespace JRNN {
 	void CSMTLDataset::Distribute()
 	{
 		int viewSize = subView.size();
-		int numToDist = viewSize * numTrain + viewSize * numVal +  viewSize * numTest;
-		assert(size > numToDist && numImpTrain < numTrain && viewSize > 0 && primaryTask <viewSize);
+		int numToDist = viewSize * numTrain + viewSize * numVal + viewSize * numTest;
+		assert(size > numToDist && numImpTrain < numTrain && viewSize > 0 && primaryTask < viewSize);
 		for(int i = 0; i < viewSize; i++){
 			hashedIntsMap indexQueues = taskList[subView[i]]->outClassIndexes;
 			TaskPtr task = taskList[subView[i]];
@@ -327,6 +330,18 @@ namespace JRNN {
 				Shuffle(task->outClassIndexes[className]);
 			}
 		}
+	}
+
+	vecDouble CSMTLDataset::GetRandContext()
+	{
+		int viewSize = view.size();
+		int randTaskNum = dRand() % viewSize;
+		return CreateContextIn(randTaskNum);
+	}
+
+	int CSMTLDataset::GetViewSize()
+	{
+		return view.size();
 	}
 
 	vecDouble CSMTLDataset::Task::getNetOuts( vecDouble inputs )

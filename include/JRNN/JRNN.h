@@ -23,6 +23,7 @@
 #include <boost/enable_shared_from_this.hpp>
 #include <boost/random.hpp>
 #include <boost/generator_iterator.hpp>
+#include <boost/pointer_cast.hpp>
 #include <iostream>
 #include <limits>
 #include <cmath>
@@ -84,6 +85,7 @@ namespace JRNN {
 }
 
 using boost::lexical_cast;
+using boost::dynamic_pointer_cast;
 using std::string;
 
 #include "utility/utility.h"
