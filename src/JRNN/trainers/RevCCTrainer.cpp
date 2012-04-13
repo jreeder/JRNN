@@ -100,6 +100,9 @@ namespace JRNN {
 			retVal.outPoint = ApplyThreshold(retVal.outPoint);
 		}
 
+#ifdef _DEBUG
+		cout << "in: " << retVal.inPoint << "out" << retVal.outPoint << endl;
+#endif
 		return retVal;
 	}
 
@@ -209,7 +212,7 @@ namespace JRNN {
 		matDouble newOutputs;
 		for (int i = 0; i < numPoints; i++)
 		{
-			reverbdpoint dpoint = ReverberateNetwork();
+           	reverbdpoint dpoint = ReverberateNetwork();
 			newInputs.push_back(dpoint.inPoint);
 			newOutputs.push_back(dpoint.outPoint);
 		}
@@ -297,6 +300,12 @@ namespace JRNN {
 		netparms.numResets = this->GetNumResets();
 		netparms.MSERec = this->GetMSERec();
 		netparms.VMSERec = this->GetVMSERec();
+	}
+
+	void RevCCTrainer::SetScaleAndOffset( double scale, double offset )
+	{
+		net1->SetScaleAndOffset(scale, offset);
+		net2->SetScaleAndOffset(scale, offset);
 	}
 
 }

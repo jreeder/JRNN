@@ -38,4 +38,5 @@ def MakeGraph(title, filepath):
     tmpArr2 = [float(sum(x))/len(x) for x in tmpArr]
     
     pArray = np.array(tmpArr2)
-    plot(pArray)
+    #plot(pArray)
+    return pArray

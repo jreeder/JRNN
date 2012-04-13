@@ -63,6 +63,9 @@ void Dataset::Clear(){
 	inputs.clear();
 	outputs.clear();
 	ClearSubsets();
+	numTest = 0;
+	numTrain = 0;
+	numVal = 0;
 }
 
 const matDouble& Dataset::GetInputs(datatype type){
@@ -577,7 +580,7 @@ double Dataset::CalcStdDev( datatype type )
 	}
 }
 
-void Dataset::MergeSubsets( DatasetPtr dsPtr )
+void Dataset::MergeSubsets( DatasetPtr dsPtr, bool resetSubsetSize /*= false*/ )
 {
 	trainIns.insert(trainIns.end(),dsPtr->trainIns.begin(), dsPtr->trainIns.end());
 	trainOuts.insert(trainOuts.end(), dsPtr->trainOuts.begin(), dsPtr->trainOuts.end());
@@ -585,5 +588,11 @@ void Dataset::MergeSubsets( DatasetPtr dsPtr )
 	valOuts.insert(valOuts.end(), dsPtr->valOuts.begin(), dsPtr->valOuts.end());
 	testIns.insert(testIns.end(), dsPtr->testIns.begin(), dsPtr->testIns.end());
 	testOuts.insert(testOuts.end(), dsPtr->testOuts.begin(), dsPtr->testOuts.end());
+	if (resetSubsetSize)
+	{
+		numTrain = trainIns.size();
+		numVal = valIns.size();
+		numTest = valIns.size();
+	}
 	ShuffleSubsets();
 }

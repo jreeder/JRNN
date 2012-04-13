@@ -16,6 +16,7 @@
 #include "trainers/CCTrainer.h"
 #include "trainers/MTLCCTrainer.h"
 #include "trainers/EtaMTLRPropTrainer.h"
+#include "trainers/RevCCTrainer.h"
 #include <iostream>
 #include <sstream>
 #include <fstream>
@@ -32,8 +33,10 @@ using namespace xmlconfig;
 
 void CCWorker(CCTrainer& trainer, strings* results, int numRuns, bool useValidation = true, int maxEpochs = 3000);
 void BPWorker(RPropTrainer& trainer, int numHid, strings* results, int numRuns, bool useValidation = true, int maxEpochs = 3000, double minError = 0.04);
+void RevCCWorker(RevCCTrainer& trainer, strings* results, int numRuns, string subView1, string subView2, CSMTLDatasetPtr cds, bool useValidation = true, int maxEpochs = 3000);
 
 DatasetPtr LoadData( string viewString, string basepath, string dsname, int numInputs, int numOutputs, int primarytask, int impNumTrain, int numTrain, int numVal, int numTest, ints& primaryIndexes, bool useCSMTLDS );
+
 
 int main(int argc, char* argv[]){
 	
@@ -52,6 +55,14 @@ int main(int argc, char* argv[]){
 	int numNetOutputs = 1;
 	int numNetInputs = 2;
 	ints primaryIndexes = ints(0);
+
+	//Reverb Parameters
+	int numReverbs = 5;
+	int revRatio = 1;
+	int bufferSize = 200;
+	string subView1 = "";
+	string subView2 = "";
+
 	bool useValidation = true;
 	string viewString = "";
 	string outfile;
@@ -61,9 +72,12 @@ int main(int argc, char* argv[]){
 	bool useBP = false;
 	bool useCCMTL = false;
 	bool useCSMTLDS = false;
+	bool useREVERB = false;
 	bool useEtaMTL = false;
 	bool useCandSlope = false;
 	bool useCandScore = false;
+	bool useCleanReverb = false;
+
 	DatasetPtr ds;
 
 	//RProp parameters
@@ -102,18 +116,28 @@ int main(int argc, char* argv[]){
 		ValueArg<string> inParamsPath("", "params", "The path to the parameters xml file", false, "", "string", cmd);
 		ValueArg<int> inPrimaryTask("", "primtask", "The primary task, ex: 1", false, 0, "int", cmd);
 		ValueArg<double> inEtaRelmin("", "relmin", "The RELMIN parameter", false, 0.05, "double", cmd);
+		
+		ValueArg<int> inNumReverbs("", "numReverbs", "The number of reverberations", false, 5, "int", cmd);
+		ValueArg<int> inRevRatio("", "revRation", "The ratio of reverbated points to normal points", false, 1, "int", cmd);
+		ValueArg<int> inBufferSize("", "bufferSize", "The size of the reberberated buffer", false, 200, "int", cmd);
+		ValueArg<string> inSubView1("", "subView1", "The first task to learn with reverberation", false, "", "string", cmd);
+		ValueArg<string> inSubView2("", "subView2", "The second task to learn with reverberation", false, "", "string", cmd);
+
 		SwitchArg inCC("","CC", "Use Cascade Correlation", false);
 		SwitchArg inBP("","BP", "Use Back Propagation", false);
 		SwitchArg inCCMTL("", "CCMTL", "Use MTL Cascade Correlation", false);
 		SwitchArg inCSMTLDS("", "CSMTLDS", "Use the CSMTL Dataset instead of MTL", cmd, false);
+		SwitchArg inREVERB("", "REVERB", "Use Reverberation CCCSMTL", false);
 		SwitchArg inEtaMTL("", "ETAMTL", "Use Eta MTL this will require CCMTL instead of CC", cmd, false);
 		SwitchArg inUseCandScore("", "CandScore", "Use the Candidate score adjustment in CCMTL", cmd, false);
 		SwitchArg inUseCandSlope("", "CandSlope", "Use the Candidate slope adjustment in CCMTL", cmd, false);
+		SwitchArg inUseCleanReverb("", "CleanReverb", "Clean the inputs and outputs of the reverberation process", cmd, false);
 
 		vector<Arg*> xorlist;
 		xorlist.push_back(&inCCMTL);
 		xorlist.push_back(&inCC);
 		xorlist.push_back(&inBP);
+		xorlist.push_back(&inREVERB);
 		cmd.xorAdd(xorlist);
 
 		cmd.parse(argc,argv);
@@ -135,13 +159,22 @@ int main(int argc, char* argv[]){
 		paramspath = inParamsPath.getValue();
 		primarytask = inPrimaryTask.getValue();
 		RELMIN = inEtaRelmin.getValue();
+		
+		numReverbs = inNumReverbs.getValue();
+		revRatio = inRevRatio.getValue();
+		bufferSize = inBufferSize.getValue();
+		subView1 = inSubView1.getValue();
+		subView2 = inSubView2.getValue();
+
 		useCC = inCC.getValue();
 		useBP = inBP.getValue();
 		useCCMTL = inCCMTL.getValue();
 		useCSMTLDS = inCSMTLDS.getValue();
+		useREVERB = inREVERB.getValue();
 		useEtaMTL = inEtaMTL.getValue();
 		useCandScore = inUseCandScore.getValue();
 		useCandSlope = inUseCandSlope.getValue();
+		useCleanReverb = inUseCleanReverb.getValue();
 	}
 	catch (TCLAP::ArgException &e) {
 		cout << "error: " << e.error() << " for arg " << e.argId() << endl;
@@ -163,7 +196,7 @@ int main(int argc, char* argv[]){
 
 	ds = LoadData(viewString, basepath, dsname, numInputs, numOutputs, primarytask, impNumTrain, numTrain, numVal, numTest, primaryIndexes, useCSMTLDS);
 
-	if(!useCSMTLDS){
+	if(!useCSMTLDS && !useREVERB){
 		numNetOutputs = numTasks * numOutputs;
 		numNetInputs = numInputs;
 	}
@@ -205,7 +238,7 @@ int main(int argc, char* argv[]){
 		}
 		BPWorker((*bp), numHid, &results, numRuns, useValidation,rPropMaxEpochs,rPropMinError);
 	}
-	else {
+	else if (useCC || useCCMTL ) {
 		CCNetworkPtr ccnet = CCNetwork::Create();
 		double scale,offset;
 		if (xmlLoaded){
@@ -257,6 +290,45 @@ int main(int argc, char* argv[]){
 			params.GetVar("CC.params.cand@changeThreshold", cc->parms.cand.changeThreshold, parmsOptional);
 		}
 		CCWorker((*cc), &results, numRuns, useValidation, ccMaxEpochs);
+	} else if (useREVERB) {
+		RevCCTrainer* rcc = new RevCCTrainer(numNetInputs,numNetOutputs,ccNumCands);
+		double scale,offset;
+		if (xmlLoaded){
+			bool success = true;
+			success &= params.GetVar("CC.params@conScale", scale, parmsOptional);
+			success &= params.GetVar("CC.params@conOffset", offset, parmsOptional);
+			if (success){
+				rcc->SetScaleAndOffset(scale, offset);
+			}
+			params.GetVar("CC.params@valPatience", rcc->parms.valPatience, parmsOptional);
+			params.GetVar("CC.params@impPatience", rcc->parms.impPatience, parmsOptional);
+			params.GetVar("CC.params@weightMult", rcc->parms.weightMult, parmsOptional);
+			params.GetVar("CC.params@maxWeight", rcc->parms.maxWeight, parmsOptional);
+			params.GetVar("CC.params@useMaxWeight", rcc->parms.useMaxWeight, parmsOptional);
+			params.GetVar("CC.params@primeOffset", rcc->parms.primeOffset, parmsOptional);
+			params.GetVar("CC.params@indexThreshold", rcc->parms.indexThreshold, parmsOptional);
+			params.GetVar("CC.params@scoreThreshold", rcc->parms.scoreThreshold, parmsOptional);
+			params.GetVar("CC.params@errorMeasure", rcc->parms.errorMeasure, parmsOptional);
+			params.GetVar("CC.params.out@epochs", rcc->parms.out.epochs, parmsOptional);
+			params.GetVar("CC.params.out@patience", rcc->parms.out.patience, parmsOptional);
+			params.GetVar("CC.params.out@epsilon", rcc->parms.out.epsilon, parmsOptional);
+			params.GetVar("CC.params.out@decay", rcc->parms.out.decay, parmsOptional);
+			params.GetVar("CC.params.out@mu", rcc->parms.out.mu, parmsOptional);
+			params.GetVar("CC.params.out@changeThreshold", rcc->parms.out.changeThreshold , parmsOptional);
+			params.GetVar("CC.params.cand@epochs", rcc->parms.cand.epochs , parmsOptional);
+			params.GetVar("CC.params.cand@patience", rcc->parms.cand.patience, parmsOptional);
+			params.GetVar("CC.params.cand@epsilon", rcc->parms.cand.epsilon , parmsOptional);
+			params.GetVar("CC.params.cand@decay", rcc->parms.cand.decay, parmsOptional);
+			params.GetVar("CC.params.cand@mu", rcc->parms.cand.mu, parmsOptional);
+			params.GetVar("CC.params.cand@changeThreshold", rcc->parms.cand.changeThreshold, parmsOptional);
+		}
+		CSMTLDatasetPtr cds = dynamic_pointer_cast<CSMTLDataset>(ds);
+		rcc->revparams.cleanReverb = useREVERB;
+		rcc->revparams.bufferSize = bufferSize;
+		rcc->revparams.numRev = numReverbs;
+		rcc->revparams.numRevTrainRatio = revRatio;
+		rcc->revparams.numContexts = cds->GetViewSize();
+		RevCCWorker((*rcc), &results, numRuns, subView1, subView2, cds, useValidation, ccMaxEpochs);
 	}
 
 	ofstream ofile;
@@ -355,6 +427,64 @@ void CCWorker(CCTrainer& trainer, strings* results, int numRuns, bool useValidat
 		trainer.RedistData();
 	}
 }
+
+void RevCCWorker( RevCCTrainer& trainer, strings* results, int numRuns, string subView1, string subView2, CSMTLDatasetPtr cds, bool useValidation /*= true*/, int maxEpochs /*= 3000*/ )
+{
+	stringstream output(stringstream::out);
+	strings subview;
+	subview.push_back(subView1);
+	cds->DistSubview(subview);
+	CSMTLDatasetPtr firstDS = cds->SpawnDS();
+	subview.clear();
+	subview.push_back(subView2);
+	cds->DistSubview(subview);
+	CSMTLDatasetPtr secondDS = cds->SpawnDS();
+
+	for (int i = 0; i < numRuns; i++)
+	{
+		//Train First Task
+		trainer.TrainTask(firstDS,3000,true);
+		//Train Second Task
+		trainer.TrainTask(secondDS,3000,true,true,firstDS,Dataset::TEST);
+
+		//Second Task test results
+		hashedDoubleMap secondResults = trainer.TestWiClass(secondDS, Dataset::TEST);
+		int hiddenLayers = trainer.net1vals.numHidLayers;
+		int epochs = trainer.net1vals.epochs;
+		int numResets = trainer.net1vals.numResets;
+		int time = 0;
+
+
+		output << epochs << "\t";
+		output << time << "\t";
+		output << hiddenLayers << "\t";
+		output << numResets << "\t";
+
+		printHashedDoubleMap(secondResults,output);
+		output << "|\t";
+		printDoubles(trainer.net1vals.MSERec,output);
+		output << "|\t";
+
+		//Previous Task test results. 
+		hashedDoubleMap firstTaskResults = trainer.TestWiClass(firstDS, Dataset::TEST);
+		printHashedDoubleMap(firstTaskResults, output);
+		output << "|\t";
+		RevCCTrainer::TestResults ftresults = trainer.getTestWhileTrainResults();
+		BOOST_FOREACH(RevCCTrainer::TestResult result, ftresults){
+			output << "*" << result.epoch << "!";
+			printHashedDoubleMap(result.result,output);
+		}
+		output << endl;
+		results->push_back(output.str());
+		output.str("");
+		output.clear();
+
+		trainer.Reset();
+		firstDS->RedistData();
+		secondDS->RedistData();
+	}
+}
+
 
 JRNN::DatasetPtr LoadData( string viewString, string basepath, string dsname, int numInputs, int numOutputs, int primarytask, int impNumTrain, int numTrain, int numVal, int numTest, ints& primaryIndexes, bool useCSMTLDS)
 {

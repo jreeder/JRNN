@@ -59,6 +59,8 @@ namespace JRNN {
 
 		const TestResults& getTestWhileTrainResults();
 
+		void SetScaleAndOffset(double scale, double offset);
+
 		void Reset();
 
 	protected:
