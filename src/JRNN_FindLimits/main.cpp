@@ -23,8 +23,8 @@
 using namespace JRNN;
 using namespace std;
 
-//string basepath = "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/";
-string basepath = "D:/Users/John Reeder/Code/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/";
+string basepath = "C:/Users/John/Documents/Source/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/";
+//string basepath = "D:/Users/John Reeder/Code/JRNN/Experiments/Data/Tabbed Data/New Binary Tasks/";
 string dsname = "band";
 string view = "task1,task2,task3,task5";
 int numInputs = 2;
