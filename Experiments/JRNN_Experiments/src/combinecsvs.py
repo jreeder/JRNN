@@ -8,7 +8,7 @@ import sys
 import os
 from config import *
 
-folder = basepath + r"\Experiments\Results\csvresults\EXP 2-1 Round 13"
+folder = basepath + r"\Experiments\Results\csvresults\EXP 2-1 Round 14"
 filter1 = "NormSize"
 filter2 = "Error"
 test = False

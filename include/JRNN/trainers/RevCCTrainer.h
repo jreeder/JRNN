@@ -95,7 +95,7 @@ namespace JRNN {
 		
 		vecDouble ConcatVec( vecDouble first, vecDouble second );
 		void FinishSetup();
-		void FillBufferDS( int numPoints );
+		void FillBufferDS( int numPoints, bool validate = false );
 
 		void SaveNetParameters(netparameters& netparms);
 		

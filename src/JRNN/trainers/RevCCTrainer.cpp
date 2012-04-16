@@ -158,58 +158,76 @@ namespace JRNN {
 
 	void RevCCTrainer::TrainTask( DatasetPtr taskData,int maxEpochs, bool validate, bool testWhileTrain /*= false*/, DatasetPtr testData /*= DatasetPtr()*/, Dataset::datatype testDataType /*= Dataset::TRAIN*/ )
 	{
-		if (!firstTrained)
+		if (revparams.bufferSize > 0) //only do dual network if there is a buffer size, simple way to turn on and off dual network.
 		{
-			//Initial Training
-			SetDataSet(taskData);
+			if (!firstTrained)
+			{
+				//Initial Training
+				SetDataSet(taskData);
+				network = net1;
+				TrainToConvergence(maxEpochs, validate);
+				SaveNetParameters(net1vals);
+				//First Stage I
+				revNet = net1;
+				FillBufferDS(revparams.bufferSize);
+				network = net2; //This has to happen before SetDataset
+				SetDataSet(bufferDS);
+				TrainToConvergence(maxEpochs);
+				SaveNetParameters(net2vals);
+				bufferDS->Clear();
+				firstTrained = true;
+			}
+			else {
+				//These only make since after the first round of training.
+				this->ScopedOut = testWhileTrain;
+				this->outTestDS = testData;
+				this->outTestDStype = testDataType;
+				//Stage II
+				revNet = net2;
+				//right here we add validation items to the buffer ds so if we validate the new task we also validate the buffer
+				FillBufferDS(taskData->GetSize(Dataset::TRAIN) * revparams.numRevTrainRatio, validate);
+				taskData->MergeSubsets(bufferDS);
+				bufferDS->Clear();
+				SetDataSet(taskData);
+				network = net1;
+				TrainToConvergence(maxEpochs, validate);
+				SaveNetParameters(net1vals);
+	
+				//Turn this off for Stage I
+				this->ScopedOut = false;
+				//Stage I
+				revNet = net1;
+				FillBufferDS(revparams.bufferSize);
+				network = net2;
+				SetDataSet(bufferDS);
+				TrainToConvergence(maxEpochs); //Not validating right now might need to come back and do that later. would require buffer dataset to have a validation set. 
+				SaveNetParameters(net2vals);
+				bufferDS->Clear();
+			}
+			
+			//clean up by putting net1 back as the main network
 			network = net1;
-			TrainToConvergence(maxEpochs, validate);;//TODO: Need to parameterize some of these values. 
-			SaveNetParameters(net1vals);
-			//First Stage I
-			revNet = net1;
-			FillBufferDS(revparams.bufferSize);
-			network = net2; //This has to happen before SetDataset
-			SetDataSet(bufferDS);
-			TrainToConvergence(maxEpochs);
-			SaveNetParameters(net2vals);
-			bufferDS->Clear();
-			firstTrained = true;
-		}
-		else {
-			//These only make since after the first round of training.
-			this->ScopedOut = testWhileTrain;
-			this->outTestDS = testData;
-			this->outTestDStype = testDataType;
-			//Stage II
-			revNet = net2;
-			FillBufferDS(taskData->GetSize(Dataset::TRAIN) * revparams.numRevTrainRatio);
-			taskData->MergeSubsets(bufferDS);
-			bufferDS->Clear();
+			SetDataSet(taskData);
+		} 
+		else
+		{
 			SetDataSet(taskData);
 			network = net1;
 			TrainToConvergence(maxEpochs, validate);
 			SaveNetParameters(net1vals);
-
-			//Turn this off for Stage I
-			this->ScopedOut = false;
-			//Stage I
-			revNet = net1;
-			FillBufferDS(revparams.bufferSize);
-			network = net2;
-			SetDataSet(bufferDS);
-			TrainToConvergence(maxEpochs); //Not validating right now might need to come back and do that later. would require buffer dataset to have a validation set. 
-			SaveNetParameters(net2vals);
-			bufferDS->Clear();
 		}
-		//clean up by putting net1 back as the main network
-		network = net1;
-		SetDataSet(taskData);
+		
 	}
 
-	void RevCCTrainer::FillBufferDS( int numPoints )
+	void RevCCTrainer::FillBufferDS( int numPoints, bool validate /*= false */ )
 	{
 		matDouble newInputs;
 		matDouble newOutputs;
+		//changed this to add validation data to buffer if requested. 
+		if (validate) {
+			numPoints *= 2;
+		}
+
 		for (int i = 0; i < numPoints; i++)
 		{
            	reverbdpoint dpoint = ReverberateNetwork();
@@ -217,7 +235,13 @@ namespace JRNN {
 			newOutputs.push_back(dpoint.outPoint);
 		}
 		bufferDS->LoadFromMatDoubles(newInputs, newOutputs);
-		bufferDS->DistData(numPoints,0,0); //TOOD: need to change these to parameters.
+		if (validate){
+			bufferDS->DistData(numPoints/2, numPoints/2, 0);
+		}
+		else {
+			bufferDS->DistData(numPoints,0,0); 
+		}
+		
 	}
 
 

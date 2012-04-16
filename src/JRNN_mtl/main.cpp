@@ -33,7 +33,7 @@ using namespace xmlconfig;
 
 void CCWorker(CCTrainer& trainer, strings* results, int numRuns, bool useValidation = true, int maxEpochs = 3000);
 void BPWorker(RPropTrainer& trainer, int numHid, strings* results, int numRuns, bool useValidation = true, int maxEpochs = 3000, double minError = 0.04);
-void RevCCWorker(RevCCTrainer& trainer, strings* results, int numRuns, string subView1, string subView2, CSMTLDatasetPtr cds, bool useValidation = true, int maxEpochs = 3000);
+void RevCCWorker(RevCCTrainer& trainer, strings* results, int numRuns, string subView1, string subView2, CSMTLDatasetPtr cds, bool testRecall, bool useValidation = true, int maxEpochs = 3000);
 
 DatasetPtr LoadData( string viewString, string basepath, string dsname, int numInputs, int numOutputs, int primarytask, int impNumTrain, int numTrain, int numVal, int numTest, ints& primaryIndexes, bool useCSMTLDS );
 
@@ -62,6 +62,7 @@ int main(int argc, char* argv[]){
 	int bufferSize = 200;
 	string subView1 = "";
 	string subView2 = "";
+	bool testRecall = false; // if this is false then test generalization
 
 	bool useValidation = true;
 	string viewString = "";
@@ -117,17 +118,20 @@ int main(int argc, char* argv[]){
 		ValueArg<int> inPrimaryTask("", "primtask", "The primary task, ex: 1", false, 0, "int", cmd);
 		ValueArg<double> inEtaRelmin("", "relmin", "The RELMIN parameter", false, 0.05, "double", cmd);
 		
+		//Reverb Parameters
+		SwitchArg inREVERB("", "REVERB", "Use Reverberation CCCSMTL", false);
 		ValueArg<int> inNumReverbs("", "numReverbs", "The number of reverberations", false, 5, "int", cmd);
-		ValueArg<int> inRevRatio("", "revRation", "The ratio of reverbated points to normal points", false, 1, "int", cmd);
-		ValueArg<int> inBufferSize("", "bufferSize", "The size of the reberberated buffer", false, 200, "int", cmd);
+		ValueArg<int> inRevRatio("", "revRatio", "The ratio of reverberated points to normal points", false, 1, "int", cmd);
+		ValueArg<int> inBufferSize("", "bufferSize", "The size of the reverberated buffer", false, 200, "int", cmd);
 		ValueArg<string> inSubView1("", "subView1", "The first task to learn with reverberation", false, "", "string", cmd);
 		ValueArg<string> inSubView2("", "subView2", "The second task to learn with reverberation", false, "", "string", cmd);
+		SwitchArg inTestRecall("", "testRecall", "Test the first tasks recall instead of generalization", cmd, false);
 
 		SwitchArg inCC("","CC", "Use Cascade Correlation", false);
 		SwitchArg inBP("","BP", "Use Back Propagation", false);
 		SwitchArg inCCMTL("", "CCMTL", "Use MTL Cascade Correlation", false);
 		SwitchArg inCSMTLDS("", "CSMTLDS", "Use the CSMTL Dataset instead of MTL", cmd, false);
-		SwitchArg inREVERB("", "REVERB", "Use Reverberation CCCSMTL", false);
+		
 		SwitchArg inEtaMTL("", "ETAMTL", "Use Eta MTL this will require CCMTL instead of CC", cmd, false);
 		SwitchArg inUseCandScore("", "CandScore", "Use the Candidate score adjustment in CCMTL", cmd, false);
 		SwitchArg inUseCandSlope("", "CandSlope", "Use the Candidate slope adjustment in CCMTL", cmd, false);
@@ -160,11 +164,13 @@ int main(int argc, char* argv[]){
 		primarytask = inPrimaryTask.getValue();
 		RELMIN = inEtaRelmin.getValue();
 		
+		//reverb parameters. 
 		numReverbs = inNumReverbs.getValue();
 		revRatio = inRevRatio.getValue();
 		bufferSize = inBufferSize.getValue();
 		subView1 = inSubView1.getValue();
 		subView2 = inSubView2.getValue();
+		testRecall = inTestRecall.getValue();
 
 		useCC = inCC.getValue();
 		useBP = inBP.getValue();
@@ -194,9 +200,14 @@ int main(int argc, char* argv[]){
 		xmlLoaded = true;
 	}
 
+	if (useREVERB)
+	{
+		useCSMTLDS = true;
+	}
+
 	ds = LoadData(viewString, basepath, dsname, numInputs, numOutputs, primarytask, impNumTrain, numTrain, numVal, numTest, primaryIndexes, useCSMTLDS);
 
-	if(!useCSMTLDS && !useREVERB){
+	if(!useCSMTLDS){
 		numNetOutputs = numTasks * numOutputs;
 		numNetInputs = numInputs;
 	}
@@ -328,7 +339,7 @@ int main(int argc, char* argv[]){
 		rcc->revparams.numRev = numReverbs;
 		rcc->revparams.numRevTrainRatio = revRatio;
 		rcc->revparams.numContexts = cds->GetViewSize();
-		RevCCWorker((*rcc), &results, numRuns, subView1, subView2, cds, useValidation, ccMaxEpochs);
+		RevCCWorker((*rcc), &results, numRuns, subView1, subView2, cds, testRecall, useValidation, ccMaxEpochs);
 	}
 
 	ofstream ofile;
@@ -428,60 +439,112 @@ void CCWorker(CCTrainer& trainer, strings* results, int numRuns, bool useValidat
 	}
 }
 
-void RevCCWorker( RevCCTrainer& trainer, strings* results, int numRuns, string subView1, string subView2, CSMTLDatasetPtr cds, bool useValidation /*= true*/, int maxEpochs /*= 3000*/ )
+void RevCCWorker( RevCCTrainer& trainer, strings* results, int numRuns, string subView1, string subView2, CSMTLDatasetPtr cds, bool testRecall, bool useValidation /*= true*/, int maxEpochs /*= 3000*/ )
 {
 	stringstream output(stringstream::out);
-	strings subview;
-	subview.push_back(subView1);
-	cds->DistSubview(subview);
-	CSMTLDatasetPtr firstDS = cds->SpawnDS();
-	subview.clear();
-	subview.push_back(subView2);
-	cds->DistSubview(subview);
-	CSMTLDatasetPtr secondDS = cds->SpawnDS();
+	Dataset::datatype dt = Dataset::TEST;
+	if (testRecall){
+		dt = Dataset::TRAIN;
+	}
+	
 
-	for (int i = 0; i < numRuns; i++)
+	if (subView1 != "" && subView2 != "")
 	{
-		//Train First Task
-		trainer.TrainTask(firstDS,3000,true);
-		//Train Second Task
-		trainer.TrainTask(secondDS,3000,true,true,firstDS,Dataset::TEST);
-
-		//Second Task test results
-		hashedDoubleMap secondResults = trainer.TestWiClass(secondDS, Dataset::TEST);
-		int hiddenLayers = trainer.net1vals.numHidLayers;
-		int epochs = trainer.net1vals.epochs;
-		int numResets = trainer.net1vals.numResets;
-		int time = 0;
-
-
-		output << epochs << "\t";
-		output << time << "\t";
-		output << hiddenLayers << "\t";
-		output << numResets << "\t";
-
-		printHashedDoubleMap(secondResults,output);
-		output << "|\t";
-		printDoubles(trainer.net1vals.MSERec,output);
-		output << "|\t";
-
-		//Previous Task test results. 
-		hashedDoubleMap firstTaskResults = trainer.TestWiClass(firstDS, Dataset::TEST);
-		printHashedDoubleMap(firstTaskResults, output);
-		output << "|\t";
-		RevCCTrainer::TestResults ftresults = trainer.getTestWhileTrainResults();
-		BOOST_FOREACH(RevCCTrainer::TestResult result, ftresults){
-			output << "*" << result.epoch << "!";
-			printHashedDoubleMap(result.result,output);
+		strings subview;
+		subview.push_back(subView1);
+		cds->DistSubview(subview);
+		CSMTLDatasetPtr firstDS = cds->SpawnDS();
+		subview.clear();
+		subview.push_back(subView2);
+		cds->DistSubview(subview);
+		CSMTLDatasetPtr secondDS = cds->SpawnDS();
+	
+		for (int i = 0; i < numRuns; i++)
+		{
+			//Train First Task
+			trainer.TrainTask(firstDS,maxEpochs,useValidation);
+			//Train Second Task
+			trainer.TrainTask(secondDS,maxEpochs,useValidation,true,firstDS,dt);
+	
+			//Second Task test results
+			hashedDoubleMap secondResults = trainer.TestWiClass(secondDS, Dataset::TEST);
+			int hiddenLayers = trainer.net1vals.numHidLayers;
+			int epochs = trainer.net1vals.epochs;
+			int numResets = trainer.net1vals.numResets;
+			int time = 0;
+	
+	
+			output << epochs << "\t";
+			output << time << "\t";
+			output << hiddenLayers << "\t";
+			output << numResets << "\t";
+	
+			printHashedDoubleMap(secondResults,output);
+			output << "|\t";
+			printDoubles(trainer.net1vals.MSERec,output);
+			output << "|\t";
+	
+			//Previous Task test results. 
+			hashedDoubleMap firstTaskResults = trainer.TestWiClass(firstDS, dt);
+			printHashedDoubleMap(firstTaskResults, output);
+			output << "|\t";
+			RevCCTrainer::TestResults ftresults = trainer.getTestWhileTrainResults();
+			BOOST_FOREACH(RevCCTrainer::TestResult result, ftresults){
+				output << "*" << result.epoch << "!";
+				printHashedDoubleMap(result.result,output);
+			}
+			output << "$" << endl;
+			results->push_back(output.str());
+			output.str("");
+			output.clear();
+	
+			trainer.Reset();
+			firstDS->RedistData();
+			secondDS->RedistData();
 		}
-		output << endl;
-		results->push_back(output.str());
-		output.str("");
-		output.clear();
+	} 
+	else
+	{
+		CSMTLDatasetPtr tmpDS;
+		strings tmpView = cds->GetView();
 
-		trainer.Reset();
-		firstDS->RedistData();
-		secondDS->RedistData();
+		for (int i = 0; i < numRuns; i++)
+		{
+			//for each individual task in the view. In the order they were provided
+			BOOST_FOREACH(string task, tmpView){
+				strings inView;
+				inView.push_back(task);
+				cds->DistSubview(inView);
+				tmpDS = cds->SpawnDS();
+				//Train the task. 
+				trainer.TrainTask(tmpDS,maxEpochs,useValidation);
+
+				//Grab the results
+				hashedDoubleMap results = trainer.TestWiClass(tmpDS, Dataset::TEST);
+				int hiddenLayers = trainer.net1vals.numHidLayers;
+				int epochs = trainer.net1vals.epochs;
+				int numResets = trainer.net1vals.numResets;
+				int time = 0;
+
+
+				output << epochs << "\t";
+				output << time << "\t";
+				output << hiddenLayers << "\t";
+				output << numResets << "\t";
+
+				printHashedDoubleMap(results,output);
+				output << "|\t";
+				printDoubles(trainer.net1vals.MSERec,output);
+				output << "$\t";
+				tmpDS.reset();
+			}
+			results->push_back(output.str());
+			output.str("");
+			output.clear();
+			trainer.Reset();
+			cds->RedistData();
+		}
+
 	}
 }
 
