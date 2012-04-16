@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# Author:  jreeder --<>
+# Author:  jreeder --<jreeder@gmail.com>
 # Purpose: used to run general experiments with the JRNN nueral network library.
 # Created: 5/27/2011
 
@@ -9,8 +9,8 @@ from subprocess import *
 from multiprocessing import *
 from config import *
 
-verbose = Falsetest = False
-real = True
+verbose = Truetest = True
+real = False
 dsinpath1 = ['linear', 'CirInSq', 'band']
 dsinpath2 = ['smallcovtype', 'glass', 'derm', 'heart']
 
@@ -38,6 +38,15 @@ def ProcessExp(expparams):
     useEtaMTL = expparams.get('useEtaMTL', False)
     useCandSlope = expparams.get('useCandSlope', False)
     useRelmin = expparams.get('RELMIN', False)
+    #reverb parameters
+    #useReverb = expparams.get('REVERB', False)
+    numReverbs = expparams.get('numReverbs', 5)
+    revRatio = expparams.get('revRatio', 1)
+    bufferSize = expparams.get('bufferSize', 200)
+    subView1 = expparams.get('subView1', '')
+    subView2 = expparams.get('subView2', '')
+    testRecall = expparams.get('testRecall', True)
+    
     path = datapath if dsname in dsinpath1 else datapath2
     outfilepath = os.path.join(outpath3, expFold)
     useValStr = "T" if useValidation else "F"
@@ -76,10 +85,19 @@ def ProcessExp(expparams):
         cmd += " --ETAMTL"
         
     if useRelmin:
-        cmd += " --relmin %(useRelmin)d" % useRelmin
+        cmd += " --relmin %d" % useRelmin
     
     if useCandSlope:
         cmd += " --CandSlope" #only used if CCMTL is the nettype. 
+        
+    if netType == 'REVERB':
+        cmd += " --numReverbs %d" % numReverbs
+        cmd += " --revRatio %d" % revRatio
+        cmd += " --bufferSize %d" % bufferSize
+        cmd += " --subView1 %s" % subView1
+        cmd += " --subView2 %s" % subView2
+        if testRecall:
+            cmd += " --testRecall"
     
     cmd += " --params \"%s\"" % paramspath
     

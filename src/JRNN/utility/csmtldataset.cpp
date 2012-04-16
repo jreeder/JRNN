@@ -15,6 +15,7 @@ namespace JRNN {
 	{
 		newData = true;
 		impoverish = false;
+		conceptData = true;
 		primaryTask = -1;
 		numImpTrain = 0;
 	}
@@ -26,6 +27,7 @@ namespace JRNN {
 		this->inputStrings = orig.inputStrings;
 		this->newData = orig.newData;
 		this->numImpTrain = orig.numImpTrain;
+		this->conceptData = orig.conceptData;
 		this->primaryTask = orig.primaryTask;
 		this->realInputs = orig.realInputs;
 		this->taskList = orig.taskList;
@@ -230,6 +232,29 @@ namespace JRNN {
 			//Shuffle(it->second); Removed so that the datasets are always the same for the first load
 			it++;
 		}
+		if (conceptData && outClassNames.size() == 2)
+		{
+			BOOST_FOREACH(string taskName , view){
+				TaskPtr task = taskList[taskName];
+				string class1 = task->outClassNames[0];
+				string class2 = task->outClassNames[1];
+				int class1size = task->outClassIndexes[class1].size();
+				int class2size = task->outClassIndexes[class2].size();
+				int minSize = class1size > class2size ? class2size : class1size;
+			
+				if (!(class1size == class2size)){
+					if (class1size > minSize){
+						task->outClassIndexes[class1].resize(minSize);
+					}
+					else {
+						task->outClassIndexes[class2].resize(minSize);
+					}
+				}
+				int tmp1 = task->outClassIndexes[class1].size();
+				int tmp2 = task->outClassIndexes[class2].size();
+			}
+			
+		}
 	}
 
 	void CSMTLDataset::FillSubset( matDouble& ins, matDouble& outs, int numExamples, hashedIntsMap& indexQueues, TaskPtr inTask, int numRepeats /*= 0*/ )
@@ -237,16 +262,34 @@ namespace JRNN {
 		int i = 0, total = 0;
 		int numClasses = inTask->outClassNames.size();
 		ints usedIndexes;
+		//TODO need to fix what happens if there is not enough data to fill a set.
+ 		
+		if (conceptData)
+ 		{
+			int numAvailable = 0;
+			numAvailable = indexQueues["0"].size() + indexQueues["1"].size();
+			if (numAvailable < numExamples) {
+				numExamples = numAvailable;
+			}
+ 		}
 		while (total < numExamples){
 			int classIndex = i++ %numClasses;
 			string className = inTask->outClassNames[classIndex];
 			double tmpPerc = inTask->outClassPercentages[className];
 			int tmpCount = 0;
-			tmpCount = (int)floor((numExamples * tmpPerc) + 0.5);
+			if (conceptData)
+			{
+				tmpCount = (int)floor((numExamples/numClasses) + 0.5);
+			}
+			else {
+				tmpCount = (int)floor((numExamples * tmpPerc) + 0.5);
+			}
+			
 			if (tmpCount > (numExamples - total)){
 				tmpCount = numExamples - total;
 			}
 			while (!indexQueues[className].empty() && tmpCount-- > 0){
+				int tmp = indexQueues[className].size();
 				int index = indexQueues[className].back();
 				ins.push_back(inputs[index]);
 				outs.push_back(outputs[index]);
@@ -281,6 +324,7 @@ namespace JRNN {
 				FillSubset(trainIns, trainOuts, numTrain, indexQueues, task);
 			}
 			if (primaryTask == -1 || primaryTask == i){
+				//TODO Might need to move validation fill outside so all tasks get validated
 				FillSubset(valIns, valOuts, numVal, indexQueues, task);
 				FillSubset(testIns, testOuts, numTest, indexQueues, task);
 			}
@@ -342,6 +386,16 @@ namespace JRNN {
 	int CSMTLDataset::GetViewSize()
 	{
 		return view.size();
+	}
+
+	JRNN::strings CSMTLDataset::GetView()
+	{
+		return view;
+	}
+
+	void CSMTLDataset::SetConceptData( bool isConceptData )
+	{
+		this->conceptData = isConceptData;
 	}
 
 	vecDouble CSMTLDataset::Task::getNetOuts( vecDouble inputs )

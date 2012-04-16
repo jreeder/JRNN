@@ -36,7 +36,7 @@ int numTrain = 100;
 int numVal = 100;
 int numTest = 200;
 int numCandidates = 8;
-int numRuns = 20;
+int numRuns = 2;
 bool verbose = true;
 bool gCleanReverb = true;
 

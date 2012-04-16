@@ -23,7 +23,7 @@ def ParseFile(filename):
     resetsArr = []
     firstDSErrArr = []
     firstDSErrsWhileTrain = []
-    
+    #TODO Change this later to handle the $ token. 
     for line in infile:
         firstsplit = line.split("|")
         if len(firstsplit) < 4: continue

@@ -38,7 +38,7 @@ namespace JRNN {
         void SetNumOutputs(int numOutputs);
 		void SetOutputPerCategory(bool outPerClass);
 		void SetNormalizeReals(bool normReals);
-		void MergeSubsets(DatasetPtr dsPtr);
+		void MergeSubsets(DatasetPtr dsPtr, bool resetSubsetSize = false);
         virtual void DistData(int numTrain, int numVal, int numTest);
         virtual void RedistData();
 		void Clear();
