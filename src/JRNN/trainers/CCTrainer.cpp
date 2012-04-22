@@ -91,6 +91,8 @@ namespace JRNN {
 		parms.useMaxWeight = true;
 		parms.maxResets = 10; //Not used right now
 		parms.primeOffset = 0.1;
+		parms.useSDCC = false;
+		parms.SDCCRatio = 0.8;
 
 		parms.out.epochs = 300; //200
 		parms.out.patience = 12;//12
@@ -521,11 +523,19 @@ namespace JRNN {
 				cor = ((*curCorr)[j] - avgValue * err.sumErrs[j]) / err.sumSqErr;
 				(*prevCorr)[j] = cor;
 				(*curCorr)[j] = 0.0;
-				score += fabs (cor);
+				score += fabs (cor); //need to add the modifier for sib/dec training.
 			}
 
 			//TODO Need to add code here to weight the scores.
 			//Positively for primary task and tending to zero for unrelated tasks.
+
+			if (parms.useSDCC)
+			{
+				int tmpHeight = network->GetCandLayer()->GetHeight();
+				if (node->GetHeight() == tmpHeight){
+					score *= parms.SDCCRatio;
+				}
+			}
 
 			candSumVals[name] = 0.0;
 

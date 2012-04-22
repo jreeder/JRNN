@@ -32,7 +32,7 @@ namespace JRNN {
 		const LayerPtr GetNormOutLayer();
 		virtual vecDouble GetOutputs();
 		virtual void InstallCandidate(NodePtr node, vecDouble outWeights = vecDouble(0), vecDouble assocWeights = vecDouble(0));
-		virtual void Build(int numIn, int numOut, bool cloneouts = false);
+		virtual void Build(int numIn, int numOut, bool cloneouts = false, bool useSDCC = false, bool varyActFunc = false);
 		virtual void Reset();
 		bool getTrueOuts;
 

@@ -57,6 +57,8 @@ namespace JRNN {
 			bool useMaxWeight;
 			int maxResets;
 			double primeOffset;
+			bool useSDCC;
+			double SDCCRatio;
 
 			struct  
 			{

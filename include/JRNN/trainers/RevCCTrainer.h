@@ -61,6 +61,8 @@ namespace JRNN {
 
 		void SetScaleAndOffset(double scale, double offset);
 
+		void SetSDCCandVaryActFunc( bool useSDCC, bool varyActFunc );
+
 		void Reset();
 
 	protected:

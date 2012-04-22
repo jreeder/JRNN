@@ -35,6 +35,7 @@ namespace JRNN {
 		void Activate();
 		void Activate(double input);
 		void SetHeight(int newHeight);
+		int GetHeight();
 		double GetOut();
 		double GetPrime();
 		int GetNumConnections();

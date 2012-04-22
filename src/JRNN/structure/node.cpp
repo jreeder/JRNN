@@ -263,3 +263,8 @@ int Node::GetNumConnections()
 {
 	return numConnections;
 }
+
+int Node::GetHeight()
+{
+	return height;
+}

@@ -78,6 +78,10 @@ int main(int argc, char* argv[]){
 	bool useCandSlope = false;
 	bool useCandScore = false;
 	bool useCleanReverb = false;
+	
+	bool useSDCC = false;
+	bool varyActFunc = false;
+	double SDRatio = 0.8;
 
 	DatasetPtr ds;
 
@@ -127,6 +131,10 @@ int main(int argc, char* argv[]){
 		ValueArg<string> inSubView2("", "subView2", "The second task to learn with reverberation", false, "", "string", cmd);
 		SwitchArg inTestRecall("", "testRecall", "Test the first tasks recall instead of generalization", cmd, false);
 
+		SwitchArg inUseSDCC("", "useSDCC", "Use Sibling Descendant CC", cmd, false);
+		SwitchArg inVaryActFunc("", "varyActFunc", "Vary the activation functions", cmd, false);
+		ValueArg<double> inSDRatio("", "SDRatio", "The ratio by which to reduce new layer CC scores", false, 1.0, "double", cmd);
+
 		SwitchArg inCC("","CC", "Use Cascade Correlation", false);
 		SwitchArg inBP("","BP", "Use Back Propagation", false);
 		SwitchArg inCCMTL("", "CCMTL", "Use MTL Cascade Correlation", false);
@@ -171,6 +179,10 @@ int main(int argc, char* argv[]){
 		subView1 = inSubView1.getValue();
 		subView2 = inSubView2.getValue();
 		testRecall = inTestRecall.getValue();
+
+		useSDCC = inUseSDCC.getValue();
+		varyActFunc = inVaryActFunc.getValue();
+		SDRatio = inSDRatio.getValue();
 
 		useCC = inCC.getValue();
 		useBP = inBP.getValue();
@@ -260,7 +272,7 @@ int main(int argc, char* argv[]){
 				ccnet->SetScaleAndOffset(scale, offset);
 			}
 		}
-		ccnet->Build(numNetInputs, numNetOutputs, useEtaMTL); //when etamtl is true we want to use cloneouts 
+		ccnet->Build(numNetInputs, numNetOutputs, useEtaMTL, useSDCC, varyActFunc); //when etamtl is true we want to use cloneouts 
 		CCTrainer* cc;
 		if (useCC){
 			cc = new CCTrainer(ccnet,ds,ccNumCands,primaryIndexes);
@@ -300,6 +312,8 @@ int main(int argc, char* argv[]){
 			params.GetVar("CC.params.cand@mu", cc->parms.cand.mu, parmsOptional);
 			params.GetVar("CC.params.cand@changeThreshold", cc->parms.cand.changeThreshold, parmsOptional);
 		}
+		cc->parms.useSDCC = useSDCC;
+		cc->parms.SDCCRatio = SDRatio;
 		CCWorker((*cc), &results, numRuns, useValidation, ccMaxEpochs);
 	} else if (useREVERB) {
 		RevCCTrainer* rcc = new RevCCTrainer(numNetInputs,numNetOutputs,ccNumCands);
@@ -311,6 +325,7 @@ int main(int argc, char* argv[]){
 			if (success){
 				rcc->SetScaleAndOffset(scale, offset);
 			}
+			rcc->SetSDCCandVaryActFunc(useSDCC, varyActFunc);
 			params.GetVar("CC.params@valPatience", rcc->parms.valPatience, parmsOptional);
 			params.GetVar("CC.params@impPatience", rcc->parms.impPatience, parmsOptional);
 			params.GetVar("CC.params@weightMult", rcc->parms.weightMult, parmsOptional);
@@ -333,6 +348,9 @@ int main(int argc, char* argv[]){
 			params.GetVar("CC.params.cand@mu", rcc->parms.cand.mu, parmsOptional);
 			params.GetVar("CC.params.cand@changeThreshold", rcc->parms.cand.changeThreshold, parmsOptional);
 		}
+		rcc->parms.SDCCRatio = SDRatio;
+		rcc->parms.useSDCC = useSDCC;
+
 		CSMTLDatasetPtr cds = dynamic_pointer_cast<CSMTLDataset>(ds);
 		rcc->revparams.cleanReverb = useREVERB;
 		rcc->revparams.bufferSize = bufferSize;
@@ -538,6 +556,7 @@ void RevCCWorker( RevCCTrainer& trainer, strings* results, int numRuns, string s
 				output << "$\t";
 				tmpDS.reset();
 			}
+			output << endl;
 			results->push_back(output.str());
 			output.str("");
 			output.clear();

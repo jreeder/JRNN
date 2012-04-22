@@ -81,12 +81,15 @@ namespace JRNN {
 		return CCNetwork::Clone(oldP);
 	}
 
-	void CCNetwork::Build(int numIn, int numOut, bool cloneouts /*= false*/){
+	void CCNetwork::Build( int numIn, int numOut, bool cloneouts /*= false*/, bool useSDCC /*= false*/, bool varyActFunc /*= false*/ )
+	{
 		this->numIn	= numIn;
 		this->numOut = numOut;
 		this->numHidLayers = 0;
 		this->numUnits = numIn;
 		this->cloneOuts = cloneouts;
+		this->useSDCC = useSDCC;
+		this->varyActFunc = varyActFunc;
 		//TODO Added some static strings for input output and bias layers so I don't have
 		//to worry about mistyping errors. 
 		layers.insert(LayerPair("input", Layer::CreateLayer(Layer::input, numIn,0,"input")));
@@ -151,14 +154,30 @@ namespace JRNN {
 		candConnections.clear();
 		candLayer->SetLayerSize(numCand);
 		candLayer->SetHeight(tmpHeight);
-		candLayer->BuildLayer<ASigmoid>();
+		if(!varyActFunc){
+			candLayer->BuildLayer<ASigmoid>();
+		} 
+		else {
+			BuildVariedLayer(candLayer);
+		}
+		
 		candLayer->SetPrevLayer(out->GetPrevLayer());
 		CandFullyConnectBack(candLayer);
 	}
 
 	void CCNetwork::InstallCandidate(NodePtr node, vecDouble outWeights)
 	{
-		LayerPtr lp = AddHiddenLayer();
+		bool newLayer = node->GetHeight() == currentLayer->GetHeight() ? false : true;
+		
+		LayerPtr lp;
+
+		if (newLayer){
+			lp  = AddHiddenLayer();
+		}
+		else {
+			lp = currentLayer;
+		}
+
 		lp->AddNode(node);
 		candLayer->RemoveNode(node);
 		BOOST_FOREACH(ConPtr con, node->GetConnections(IN)){
@@ -170,7 +189,12 @@ namespace JRNN {
 		else {
 			FullyConnectOut(lp, outWeights);
 		}
-		hiddenLayers.push_back(lp);
+
+		if (newLayer)
+		{
+			this->currentLayer = lp;
+			hiddenLayers.push_back(lp);
+		}
 		numUnits++;
 	}
 
@@ -180,6 +204,26 @@ namespace JRNN {
 		LayerPtr prevLayer = layer->GetPrevLayer();
 		
 		Connection::SetRandomSeed();
+
+		if (useSDCC){ //Use the sibling/descendant mechanism to reduce network depth
+			NodeList prevNodes = prevLayer->GetNodes();
+			int count = 0;
+			int tmpHeight = layer->GetHeight();
+			BOOST_FOREACH(NodePtr n, prevNodes){
+				BOOST_FOREACH(NodePtr n2, layerNodes){
+					if (count++ % 2 == 0)
+					{
+						//Only connect half of the candidates to the last layer as descendants.
+						candConnections.push_back(Connect(n,n2));
+					}
+					else {
+						n2->SetHeight(tmpHeight - 1); //Don't connect and reduce the height This will be a sibling node;
+					}
+				}
+			}
+			prevLayer = prevLayer->GetPrevLayer();
+		}
+
 		while(prevLayer){
 			NodeList prevNodes = prevLayer->GetNodes();
 			BOOST_FOREACH(NodePtr n, prevNodes){
@@ -331,6 +375,47 @@ namespace JRNN {
 			}
 		}
 		Network::RemoveHiddenLayer(layer);
+	}
+
+	void CCNetwork::SetUseSDCC( bool inUseSDCC )
+	{
+		this->useSDCC = inUseSDCC;
+	}
+
+	void CCNetwork::SetVaryActFunc( bool inVaryActFunc )
+	{
+		this->varyActFunc = inVaryActFunc;
+	}
+
+	void CCNetwork::BuildVariedLayer( LayerPtr candLayer )
+	{
+		int layerSize = candLayer->GetSize();
+		int layerHeight = candLayer->GetHeight();
+		string baseName = candLayer->GetName() + "_";
+		NodeList layerNodes = candLayer->GetNodes();
+		for (int i = 0; i < layerSize; i++)
+		{
+			string num = lexical_cast<string>(i);
+			string name = baseName + num;
+			NodePtr np;
+			switch (i % 4)
+			{
+			case 0:
+				np = Node::CreateNode<ASigmoid>(layerHeight, name);
+				break;
+			case 1:
+				np = Node::CreateNode<Sigmoid>(layerHeight, name);
+				break;
+			case 2:
+				np = Node::CreateNode<Gaussian>(layerHeight, name);
+				break;
+			case 3:
+				np = Node::CreateNode<Linear>(layerHeight, name);
+			default:
+				np = Node::CreateNode<ASigmoid>(layerHeight, name);
+			}
+			layerNodes.push_back(np);
+		}
 	}
 
 }

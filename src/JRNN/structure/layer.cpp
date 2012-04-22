@@ -143,12 +143,16 @@ int Layer::GetHeight(){
 
 void Layer::SetHeight( int newHeight ){
 	height = newHeight;
+	BOOST_FOREACH(NodePtr n, nodes){
+		n->SetHeight(newHeight);
+	}
 }
 
 void Layer::AddNode( NodePtr node ){
 	string tmpName = name + "_";
 	tmpName += lexical_cast<string>(layerSize + 1);
 	node->SetName(tmpName);
+	node->SetHeight(height);
 	nodes.push_back(node);
 	layerSize++;
 }

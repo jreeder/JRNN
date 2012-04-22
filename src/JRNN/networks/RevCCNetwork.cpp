@@ -45,6 +45,7 @@ namespace JRNN {
 		}
 		revccnet->numUnits = net->numUnits;
 		revccnet->autoAssocLayer = revccnet->layers["autoassoc"];
+		revccnet->normOutLayer = revccnet->layers["normout"]; 
 		return revccnet;
 	}
 
@@ -61,8 +62,9 @@ namespace JRNN {
 		return normOutLayer;
 	}
 
-	void RevCCNetwork::Build(int numIn, int numOut, bool cloneouts /*= false*/){
-		CCNetwork::Build(numIn, numOut, cloneouts);
+	void RevCCNetwork::Build( int numIn, int numOut, bool cloneouts /*= false*/, bool useSDCC /*= false*/, bool varyActFunc /*= false*/ )
+	{
+		CCNetwork::Build(numIn, numOut, cloneouts, useSDCC, varyActFunc);
 		//The way I'm doing things right now will mean that I'll treat them as normal outs
 		//and will have a second special layer pointing to the original outs. 
 		layers.insert(LayerPair("autoassoc", Layer::CreateLayer(Layer::spec, numIn,-1,"autoassoc")));

@@ -62,6 +62,7 @@ namespace JRNN{
         hashedDoubleMap GetWeights();
         virtual void SetWeights(hashedDoubleMap weights);
         virtual void Reset();
+		void ResetHeights();
         void PrintConnections();
 		//bool AddHiddenLayer(LayerPtr newLayer);
 		//bool AddCascadedLayer(LayerPtr newLayer);

@@ -332,4 +332,12 @@ namespace JRNN {
 		net2->SetScaleAndOffset(scale, offset);
 	}
 
+	void RevCCTrainer::SetSDCCandVaryActFunc( bool useSDCC, bool varyActFunc )
+	{
+		this->net1->SetUseSDCC(useSDCC);
+		this->net2->SetUseSDCC(useSDCC);
+		this->net1->SetVaryActFunc(varyActFunc);
+		this->net2->SetVaryActFunc(varyActFunc);
+	}
+
 }

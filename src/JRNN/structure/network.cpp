@@ -154,7 +154,7 @@ namespace JRNN{
 
 	Network::Network(const Network& orig) {
 		locked = orig.locked;
-		numHidLayers = orig.locked;
+		numHidLayers = orig.numHidLayers;
 		numIn = orig.numIn;
 		numOut = orig.numOut;
 		conScale = orig.conScale;
@@ -337,6 +337,7 @@ namespace JRNN{
 			 numHidLayers--;
 			 layer->Clear();
 			 layers.erase(layer->GetName());
+			 ResetHeights();
 		 }
 	 }
 
@@ -403,6 +404,18 @@ namespace JRNN{
 		ConPtr cp = Connection::Connect(n1,n2,conweight);
 		cp->SetScaleAndOffset(conScale, conOffset);
 		return cp;
+	}
+
+	void Network::ResetHeights()
+	{
+		LayerPtr current = layers["input"];
+		LayerPtr next = current->GetNextLayer();
+		while(next){
+			int tmpHeight = current->GetHeight();
+			next->SetHeight(tmpHeight + 1);
+			current = next;
+			next = next->GetNextLayer();
+		}
 	}
 
 }
