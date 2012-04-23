@@ -20,11 +20,16 @@ testdicts = [{'dsname':'band','numRuns':60, 'numInputs':2,'numOutputs':1,\
         ]
 experiments = []
 
+#experiments += d.csmtl    Just a testing line
+
 #experiments += [b.csmtl[1]]
 #
 #experiments += testdicts
 
 #New Experiments
+
+#experiments += b.stltests + c.stltests + l.stltests + g.stltests + d.stltests + s.stltests + h.stltests
+
 experiments += g.normimp + g.smallimpnv + g.largeimpnv + g.normimpnv \
             + d.normimp + d.smallimpnv + d.largeimpnv + d.normimpnv \
             + l.normimp + l.smallimpnv + l.largeimpnv + l.normimpnv \
@@ -51,7 +56,7 @@ experiments += b.csmtl \
     + g.csmtl \
     + s.csmtl 
 
-#experiments += d.csmtl    Just a testing line
+
 
 experiments += b.csmtlos + c.csmtlos + l.csmtlos + g.csmtlos \
     + d.csmtlos + s.csmtlos + h.csmtlos
@@ -66,7 +71,7 @@ experiments += b.csmtlgur + b.mtlgur \
 
 experiments += b.csmtlur + c.csmtlur + l.csmtlur + g.csmtlur + d.csmtlur + s.csmtlur + h.csmtlur 
 
-#experiments += b.stltests + c.stltests + l.stltests + g.stltests + d.stltests + s.stltests + h.stltests
+
 
 experiments += b.reverbNoValNumReverbsRecall + b.reverbValNumReverbsRecall
 
