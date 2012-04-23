@@ -25,23 +25,23 @@ experiments = []
 #experiments += testdicts
 
 #New Experiments
-#experiments += g.normimp + g.smallimpnv + g.largeimpnv + g.normimpnv \
-            #+ d.normimp + d.smallimpnv + d.largeimpnv + d.normimpnv \
-            #+ l.normimp + l.smallimpnv + l.largeimpnv + l.normimpnv \
-            #+ h.normimp + h.smallimpnv + h.largeimpnv + h.normimpnv \
-            #+ s.normimp + s.smallimpnv + s.largeimpnv + s.normimpnv \
-            #+ b.normimp + b.smallimpnv + b.largeimpnv + b.normimpnv \
-            #+ c.normimp + c.smallimpnv + c.largeimpnv + c.normimpnv \
+experiments += g.normimp + g.smallimpnv + g.largeimpnv + g.normimpnv \
+            + d.normimp + d.smallimpnv + d.largeimpnv + d.normimpnv \
+            + l.normimp + l.smallimpnv + l.largeimpnv + l.normimpnv \
+            + h.normimp + h.smallimpnv + h.largeimpnv + h.normimpnv \
+            + s.normimp + s.smallimpnv + s.largeimpnv + s.normimpnv \
+            + b.normimp + b.smallimpnv + b.largeimpnv + b.normimpnv \
+            + c.normimp + c.smallimpnv + c.largeimpnv + c.normimpnv \
 
 
 
-#experiments += b.ccmtl + b.etamtl \
-    #+ c.ccmtl + c.etamtl \
-    #+ l.ccmtl + l.etamtl \
-    #+ d.ccmtl + d.etamtl \
-    #+ h.ccmtl + h.etamtl \
-    #+ g.ccmtl + g.etamtl \
-    #+ s.ccmtl + s.etamtl \
+experiments += b.ccmtl + b.etamtl \
+    + c.ccmtl + c.etamtl \
+    + l.ccmtl + l.etamtl \
+    + d.ccmtl + d.etamtl \
+    + h.ccmtl + h.etamtl \
+    + g.ccmtl + g.etamtl \
+    + s.ccmtl + s.etamtl \
 
 experiments += b.csmtl \
     + c.csmtl \
@@ -53,8 +53,8 @@ experiments += b.csmtl \
 
 #experiments += d.csmtl    Just a testing line
 
-#experiments += b.csmtlos + c.csmtlos + l.csmtlos + g.csmtlos \
-    #+ d.csmtlos + s.csmtlos + h.csmtlos
+experiments += b.csmtlos + c.csmtlos + l.csmtlos + g.csmtlos \
+    + d.csmtlos + s.csmtlos + h.csmtlos
 
 experiments += b.csmtlgur + b.mtlgur \
     + c.csmtlgur + c.mtlgur \
@@ -68,7 +68,7 @@ experiments += b.csmtlur + c.csmtlur + l.csmtlur + g.csmtlur + d.csmtlur + s.csm
 
 #experiments += b.stltests + c.stltests + l.stltests + g.stltests + d.stltests + s.stltests + h.stltests
 
-#experiments += b.reverbNoValNumReverbsRecall + b.reverbValNumReverbsRecall
+experiments += b.reverbNoValNumReverbsRecall + b.reverbValNumReverbsRecall
 
 
 

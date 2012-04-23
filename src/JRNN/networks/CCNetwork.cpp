@@ -103,6 +103,7 @@ namespace JRNN {
 		layers["out"]->BuildLayer<ASigmoid>();
 		layers["bias"]->BuildLayer<Bias>();
 		candLayer = layers["cand"];
+		currentLayer = layers["input"];
 		FullyConnect();
 	}
 
@@ -205,7 +206,7 @@ namespace JRNN {
 		
 		Connection::SetRandomSeed();
 
-		if (useSDCC){ //Use the sibling/descendant mechanism to reduce network depth
+		if (useSDCC && prevLayer->GetType() != Layer::input){ //Use the sibling/descendant mechanism to reduce network depth
 			NodeList prevNodes = prevLayer->GetNodes();
 			int count = 0;
 			int tmpHeight = layer->GetHeight();
@@ -392,7 +393,7 @@ namespace JRNN {
 		int layerSize = candLayer->GetSize();
 		int layerHeight = candLayer->GetHeight();
 		string baseName = candLayer->GetName() + "_";
-		NodeList layerNodes = candLayer->GetNodes();
+		NodeList& layerNodes = candLayer->GetNodes();
 		for (int i = 0; i < layerSize; i++)
 		{
 			string num = lexical_cast<string>(i);
@@ -411,6 +412,7 @@ namespace JRNN {
 				break;
 			case 3:
 				np = Node::CreateNode<Linear>(layerHeight, name);
+				break;
 			default:
 				np = Node::CreateNode<ASigmoid>(layerHeight, name);
 			}

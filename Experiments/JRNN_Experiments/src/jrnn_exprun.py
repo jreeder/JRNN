@@ -9,8 +9,8 @@ from subprocess import *
 from multiprocessing import *
 from config import *
 
-verbose = Falsetest = False
-real = True
+verbose = Truetest = True
+real = False
 dsinpath1 = ['linear', 'CirInSq', 'band']
 dsinpath2 = ['smallcovtype', 'glass', 'derm', 'heart']
 
@@ -46,6 +46,12 @@ def ProcessExp(expparams):
     subView1 = expparams.get('subView1', '')
     subView2 = expparams.get('subView2', '')
     testRecall = expparams.get('testRecall', True)
+    
+    #SDCC and VaryActFunc Parameters change the defaults here. 
+    useSDCC = expparams.get('useSDCC', True)
+    SDRatio = expparams.get('SDRatio', 0.9)
+    varyActFunc = expparams.get('varyActFunc', False)
+    
     
     path = datapath if dsname in dsinpath1 else datapath2
     outfilepath = os.path.join(outpath3, expFold)
@@ -98,6 +104,13 @@ def ProcessExp(expparams):
         cmd += " --subView2 %s" % subView2
         if testRecall:
             cmd += " --testRecall"
+
+    if varyActFunc:
+        cmd += " --varyActFunc"
+    
+    if useSDCC:
+        cmd += " --useSDCC"
+        cmd += " --SDRatio %f" % SDRatio
     
     cmd += " --params \"%s\"" % paramspath
     
