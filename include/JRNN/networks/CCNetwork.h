@@ -58,7 +58,7 @@ namespace JRNN {
 		void RemoveUnConnectedNodes();
 		virtual void RemoveHiddenLayer(LayerPtr layer);
 		void BuildVariedLayer( LayerPtr candLayer );
-
+		void CandConnectOut( NodePtr node, vecDouble outWeights = vecDouble(0));
 
 	};
 }

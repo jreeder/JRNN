@@ -185,10 +185,14 @@ namespace JRNN {
 			AddConnection(con);
 		}
 		if (outWeights.size() == 0){
-			FullyConnectOut(lp);
+			
+			CandConnectOut(node);
+			//FullyConnectOut(lp);
 		}
 		else {
-			FullyConnectOut(lp, outWeights);
+			
+			CandConnectOut(node, outWeights);
+			//FullyConnectOut(lp, outWeights);
 		}
 
 		if (newLayer)
@@ -260,6 +264,7 @@ namespace JRNN {
 	//	return lp;
 	//}
 
+	//NOT used anymore but left here if I need it. 
 	void CCNetwork::FullyConnectOut( LayerPtr layer )
 	{
 		NodeList layerNodes = layer->GetNodes();
@@ -281,9 +286,7 @@ namespace JRNN {
 		}
 	}
 
-	//TODO This only really works correctly when the layer has one node. 
-	//This is fine right now as there is only one candidate but this could
-	//lead to a loss of generality.
+	//NOT used anymore but left here if I need it. 
 	void CCNetwork::FullyConnectOut( LayerPtr layer, vecDouble outWeights)
 	{
 		NodeList layerNodes = layer->GetNodes();
@@ -293,6 +296,32 @@ namespace JRNN {
 		BOOST_FOREACH(NodePtr n, layerNodes){
 			for (unsigned int i = 0; i < outNodes.size(); i++){
 				AddConnection(Connect(n,outNodes[i], outWeights[i]));
+			}
+		}
+	}
+
+	void CCNetwork::CandConnectOut( NodePtr node, vecDouble outWeights )
+	{
+		NodeList outNodes = layers["out"]->GetNodes();
+		if (outWeights.size() > 0){
+			assert(outNodes.size() == outWeights.size());
+			for (uint i = 0; i < outNodes.size(); i++)
+			{
+				AddConnection(Connect(node,outNodes[i], outWeights[i]));
+			}
+		}
+		else {
+			Connection::SetRandomSeed();
+			if (cloneOuts){
+				double conWeight = Connection::GetRandWeight(this->conScale, this->conOffset);
+				BOOST_FOREACH(NodePtr n, outNodes){
+					AddConnection(Connect(node, n, conWeight));
+				}
+			}
+			else {
+				BOOST_FOREACH(NodePtr n, outNodes){
+					AddConnection(Connect(node, n));
+				}
 			}
 		}
 	}
