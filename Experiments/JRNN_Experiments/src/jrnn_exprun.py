@@ -9,8 +9,8 @@ from subprocess import *
 from multiprocessing import *
 from config import *
 
-verbose = Truetest = True
-real = False
+verbose = Falsetest = False 
+real = True
 dsinpath1 = ['linear', 'CirInSq', 'band']
 dsinpath2 = ['smallcovtype', 'glass', 'derm', 'heart']
 

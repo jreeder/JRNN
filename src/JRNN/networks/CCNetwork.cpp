@@ -311,6 +311,7 @@ namespace JRNN {
 		candLayer->Clear();
 		hiddenLayers.clear();
 		numUnits = numIn;
+		currentLayer = layers["input"];
 		Network::Reset();
 	}
 
