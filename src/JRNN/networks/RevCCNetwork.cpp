@@ -82,29 +82,30 @@ namespace JRNN {
 	}
 
 	void RevCCNetwork::InstallCandidate(NodePtr node, vecDouble outWeights /* = vecDouble */, vecDouble assocWeights /*=vecDouble*/){
-		LayerPtr lp = AddHiddenLayer();
-		lp->AddNode(node);
-		candLayer->RemoveNode(node);
-		BOOST_FOREACH(ConPtr con, node->GetConnections(IN)){
-			AddConnection(con);
-		}
-		if (outWeights.size() == 0){
-			FullyConnectOut(lp);
-		}
-		else {
-			FullyConnectOut(lp, outWeights);	
-		}
-		//I don't need this right now since I've added them to the normal output layer. 
-		/*
-		if (assocWeights.size() == 0){
-			FullyConnectAutoAssoc(lp);
-		}
-		else {
-			FullyConnectAutoAssoc(lp, assocWeights);
-		}
-		*/
-		hiddenLayers.push_back(lp);
-		numUnits++;
+		CCNetwork::InstallCandidate(node, outWeights);
+		//LayerPtr lp = AddHiddenLayer();
+		//lp->AddNode(node);
+		//candLayer->RemoveNode(node);
+		//BOOST_FOREACH(ConPtr con, node->GetConnections(IN)){
+		//	AddConnection(con);
+		//}
+		//if (outWeights.size() == 0){
+		//	FullyConnectOut(lp);
+		//}
+		//else {
+		//	FullyConnectOut(lp, outWeights);	
+		//}
+		////I don't need this right now since I've added them to the normal output layer. 
+		///*
+		//if (assocWeights.size() == 0){
+		//	FullyConnectAutoAssoc(lp);
+		//}
+		//else {
+		//	FullyConnectAutoAssoc(lp, assocWeights);
+		//}
+		//*/
+		//hiddenLayers.push_back(lp);
+		//numUnits++;
 	}
 
 	//doesn't do anything right now. 
