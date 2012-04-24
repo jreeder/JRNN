@@ -19,7 +19,7 @@ datapath2 = basepath + r"/Experiments/Data/Tabbed Data/UCI Data/"
 outpath = basepath + r"/Experiments/Results/Exp 1-1/Round-4/"
 outpath2 = basepath + r"/Experiments/Results/Exp 2-1/Round 5/"
 #main outpath used now with general experimental script
-outpath3 = basepath + r"/Experiments/Results/Exp 2-1/Round 17/" 
+outpath3 = basepath + r"/Experiments/Results/Exp 2-1/Round 18/" 
 #8 is best run 9 is new csmtl stuff 10 is all ds with csmtl ccmtl and etamtl and stltests
 #Round 11 has the new experiments with more impoverished sets 12 has some reruns the gradur fix and the csmtlur exp. 
 #Round 13 is a rerun using a new experimental executable that has some fixes. EtaMTL now works and overall networks might 
@@ -28,6 +28,7 @@ outpath3 = basepath + r"/Experiments/Results/Exp 2-1/Round 17/"
 #Round 15 is some of the reverb stuff. 
 #Round 16 has the csmtl stuff again withte fix to the data distribtion. hosed by mistake in running use 17
 #Round 17 rerun everything with sdcc for cc side of things.
+#Round 18 reverb stuff with reverb outs connected to bias. 
 genericout = basepath + r"/Experiments/Results/"
 jrnn_exe2 = basepath + r"/Builds/VS2010/JRNN/Release/JRNN_test2.exe"
 jrnn_exprun = basepath + r"/Builds/VS2010/JRNN/Release/JRNN_exprun.exe"
