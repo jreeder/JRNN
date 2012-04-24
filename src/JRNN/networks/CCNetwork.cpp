@@ -440,9 +440,9 @@ namespace JRNN {
 			case 2:
 				np = Node::CreateNode<Gaussian>(layerHeight, name);
 				break;
-			case 3:
+			/*case 3:
 				np = Node::CreateNode<Linear>(layerHeight, name);
-				break;
+				break;*/
 			default:
 				np = Node::CreateNode<ASigmoid>(layerHeight, name);
 			}
