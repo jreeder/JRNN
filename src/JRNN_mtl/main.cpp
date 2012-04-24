@@ -352,7 +352,7 @@ int main(int argc, char* argv[]){
 		rcc->parms.useSDCC = useSDCC;
 
 		CSMTLDatasetPtr cds = dynamic_pointer_cast<CSMTLDataset>(ds);
-		rcc->revparams.cleanReverb = useREVERB;
+		rcc->revparams.cleanReverb = true;
 		rcc->revparams.bufferSize = bufferSize;
 		rcc->revparams.numRev = numReverbs;
 		rcc->revparams.numRevTrainRatio = revRatio;
