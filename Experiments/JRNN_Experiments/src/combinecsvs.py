@@ -8,7 +8,7 @@ import sys
 import os
 from config import *
 
-folder = basepath + r"\Experiments\Results\csvresults\EXP 2-1 Round 14"
+folder = basepath + r"\Experiments\Results\csvresults\EXP 2-1 Round 17"
 filter1 = "NormSize"
 filter2 = "Error"
 test = False
@@ -16,15 +16,10 @@ test = False
 table = {}
 dsnames = []
 
-
-if __name__=='__main__':
-    if not test:
-        filter1 = sys.argv[1]
-        filter2 = sys.argv[2]
-    
-    outfilename = "combined/" + filter1 + " - " + filter2 + ".csv"
-    os.chdir(folder)
-    filelist = os.listdir(os.curdir)
+def combine(filter1, filter2):
+    global folder
+    outfilename = folder + "/combined/" + filter1 + " - " + filter2 + ".csv"
+    filelist = os.listdir(folder)
     filterlist = [path for path in filelist if (filter1 in path) and (filter2 in path)]
     
     headerwritten = False
@@ -32,7 +27,8 @@ if __name__=='__main__':
         for filename in filterlist:
             dsname = filename.split(" ")[0]
             dsnames.append(dsname)
-            with open(filename, 'r') as infile:
+            filenamepath = os.path.join(folder, filename)
+            with open(filenamepath, 'r') as infile:
                 lines = infile.readlines()
                 headings = lines[0][:-1].split(',')
                 values = lines[1][:-1].split(',')
@@ -53,6 +49,13 @@ if __name__=='__main__':
                 values.append(table[header].get(dsname, ' '))
             line += ','.join(values)
             print >>outfile, line
+
+if __name__=='__main__':
+    if not test:
+        filter1 = sys.argv[1]
+        filter2 = sys.argv[2]
+    
+    combine(filter1, filter2)
                 
                 
                 
