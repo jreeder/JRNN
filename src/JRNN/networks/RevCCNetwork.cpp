@@ -70,6 +70,7 @@ namespace JRNN {
 		layers.insert(LayerPair("autoassoc", Layer::CreateLayer(Layer::spec, numIn,-1,"autoassoc")));
 		layers["autoassoc"]->BuildLayer<ASigmoid>();
 		autoAssocLayer = layers["autoassoc"];
+		FullyConnectAutoAssoc(layers["bias"]);
 		layers.insert(LayerPair("normout", Layer::CreateLayer(Layer::spec, numOut, -1, "normout")));
 		normOutLayer = layers["normout"];
 		LayerPtr tmpOutLayer = layers["out"];

@@ -67,9 +67,6 @@ namespace JRNN {
 
 	RevCCTrainer::reverbdpoint RevCCTrainer::ReverberateNetwork()
 	{
-		//Right now I'm letting this randomly generate all of these. I need to at some point
-		//set this up to randomly choose a context. This might be something I could test. 
-		//to see if this makes a difference. 
 
 		int inSize = revNet->GetNumIn();
 		if (revparams.cleanReverb){
@@ -211,10 +208,14 @@ namespace JRNN {
 		} 
 		else
 		{
+			this->ScopedOut = testWhileTrain;
+			this->outTestDS = testData;
+			this->outTestDStype = testDataType;
 			SetDataSet(taskData);
 			network = net1;
 			TrainToConvergence(maxEpochs, validate);
 			SaveNetParameters(net1vals);
+			this->ScopedOut = false;
 		}
 		
 	}
