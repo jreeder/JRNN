@@ -4,18 +4,19 @@
 # Created: 5/27/2011
 
 import os
+import sys
 
 from subprocess import *
 from multiprocessing import *
 from config import *
 
-verbose = Falsetest = False 
-real = True
+verbose = Truetest = False 
+real = False
 dsinpath1 = ['linear', 'CirInSq', 'band']
 dsinpath2 = ['smallcovtype', 'glass', 'derm', 'heart']
 
 
-def ProcessExp(expparams):
+def ProcessExp(expparams, roundFold):
     global verbose
     global real
     dsname = expparams['dsname']
@@ -54,7 +55,7 @@ def ProcessExp(expparams):
     
     
     path = datapath if dsname in dsinpath1 else datapath2
-    outfilepath = os.path.join(outpath3, expFold)
+    outfilepath = os.path.join(roundFold, expFold)
     useValStr = "T" if useValidation else "F"
     exe = jrnn_exprun
     #Need to create outfile name here based on parameters. 
@@ -68,14 +69,14 @@ def ProcessExp(expparams):
     if not os.path.exists(outfilepath):
         os.makedirs(outfilepath)
         
-    os.chdir(outfilepath)
+    outfilename = os.path.normpath(os.path.join(outfilepath, outfile))
     
     #outfilepath = os.path.join(outfilepath, outfile)
     
     cmd = "%(exe)s --basepath \"%(path)s\" --dsname %(dsname)s --numinputs %(numInputs)d " % locals()\
         + "--numoutputs %(numOutputs)d --numtasks %(numTasks)d --numtrain %(numTrain)d " % locals()\
         + "--numval %(numVal)d --numtest %(numTest)d --numhid %(numHidPerTask)d " % locals()\
-        + "--numruns %(numRuns)d --view \"%(viewString)s\" --outfile \"%(outfile)s\" " % locals()\
+        + "--numruns %(numRuns)d --view \"%(viewString)s\" --outfile \"%(outfilename)s\" " % locals()\
         + "--primtask %(primTask)d --%(netType)s" % locals()
 
     if impNumTrain > 0:
@@ -123,18 +124,32 @@ def ProcessExp(expparams):
     print outfile + " Done"
  
 if __name__=='__main__':
-    from experiments3 import *
     
-    if not os.path.exists(outpath3):
-        os.makedirs(outpath3)
+    if len(sys.argv) != 2:
+        sys.exit("Wrong number of arguments!")
         
-    os.chdir(outpath3)
+    
+    roundFold = sys.argv[1]
+    
+    from experiments3 import * 
+
+    jrnn_outpath = os.path.join(outpath3, roundFold)
+    
+    if not os.path.exists(jrnn_outpath):
+        os.makedirs(jrnn_outpath)
+        
+    #os.chdir(outpath3)
     if test:
-        ProcessExp(experiments[0])
+        ProcessExp(experiments[0], jrnn_outpath)
     else:
         pool = Pool(numProcesses)
-        pool.map(ProcessExp, experiments)
+        #pool.map(ProcessExp, experiments, 1)
+        for exp in experiments:
+            pool.apply_async(ProcessExp, (exp,jrnn_outpath))
         
+        pool.close()
+        pool.join()
+    
     print "Finished"
     
     

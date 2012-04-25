@@ -75,6 +75,8 @@ experiments = []
 
 experiments += b.reverbNoValNumReverbsRecall + b.reverbValNumReverbsRecall
 
+experiments += b.reverbValNumReverbsRecall
+
 #experiments = [b.reverbValNumReverbsRecall[0], b.reverbNoValNumReverbsRecall[0]]
 
 #old experiments no longer used 
