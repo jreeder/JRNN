@@ -250,7 +250,7 @@ namespace JRNN{
 	 hashedDoubleMap Network::GetWeights(){
 		 hashedDoubleMap weights;
 		 BOOST_FOREACH(ConPair con, connections){
-			 weights[con.second->GetName()] = con.second->GetWeight();
+			 weights[con.first] = con.second->GetWeight();
 		 }
 		 return weights;
 	 }
