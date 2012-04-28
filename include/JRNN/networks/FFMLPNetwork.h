@@ -26,7 +26,7 @@ namespace JRNN {
 		static FFMLPNetPtr Clone( FFMLPNetPtr net);
 		virtual NetworkPtr Clone();
 
-	private:
+	protected:
 		int numHid;
 
 		void FullyConnect(bool cloneouts);
