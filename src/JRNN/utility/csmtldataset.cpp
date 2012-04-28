@@ -325,9 +325,10 @@ namespace JRNN {
 			}
 			if (primaryTask == -1 || primaryTask == i){
 				//TODO Might need to move validation fill outside so all tasks get validated
-				FillSubset(valIns, valOuts, numVal, indexQueues, task);
+				//FillSubset(valIns, valOuts, numVal, indexQueues, task);
 				FillSubset(testIns, testOuts, numTest, indexQueues, task);
 			}
+			FillSubset(valIns, valOuts, numVal, indexQueues, task);
 		}
 		ShuffleSubsets();
 		CalcStdDevs();
@@ -359,6 +360,13 @@ namespace JRNN {
 		//}
 		//ShuffleSubsets();
 		//CalcStdDevs();
+	}
+
+	void CSMTLDataset::DistSubview( strings newView, int numTrain, int numVal, int numTest){
+		this->numTrain = numTrain;
+		this->numVal = numVal;
+		this->numTest = numTest;
+		DistSubview(newView);
 	}
 
 	void CSMTLDataset::ResetView(){
