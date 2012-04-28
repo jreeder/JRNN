@@ -99,6 +99,9 @@
     <ClCompile Include="..\..\..\..\src\JRNN\trainers\RevCCTrainer.cpp">
       <Filter>Source Files\trainers</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\src\JRNN\networks\CSLLLFFMLPNetwork.cpp">
+      <Filter>Source Files\networks</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\include\JRNN\JRNN.h">
@@ -163,6 +166,9 @@
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\JRNN\trainers\RevCCTrainer.h">
       <Filter>Header Files\trainers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\JRNN\networks\CSLLLFFMLPNetwork.h">
+      <Filter>Header Files\networks</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

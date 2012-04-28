@@ -30,6 +30,7 @@ namespace JRNN {
 		CSMTLDatasetPtr SpawnDS();
 		virtual void DistData(int numTrain, int numVal, int numTest, bool impoverish = false, int numImpTrain = 0, int primaryTask = -1);
 		void DistSubview(strings view);
+		void DistSubview(strings newView, int numTrain, int numVal, int numTest);
 		void ResetView();
 		void SetConceptData(bool isConceptData);
 		vecDouble GetRandContext();

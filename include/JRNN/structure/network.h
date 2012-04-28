@@ -36,8 +36,8 @@ namespace JRNN{
 		
 		static void Clone(NetworkPtr newP, NetworkPtr oldP);
 		virtual NetworkPtr Clone();
-        void Activate(vecDouble inputs);
-		void Activate(LayerPtr layer);
+        virtual void Activate(vecDouble inputs);
+		virtual void Activate(LayerPtr layer);
 		void SetInputs(vecDouble inputs);
 		void SetLocked(bool lock);
 		bool GetLocked();

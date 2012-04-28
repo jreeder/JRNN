@@ -84,6 +84,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\JRNN\networks\CCNetwork.cpp" />
+    <ClCompile Include="..\..\..\..\src\JRNN\networks\CSLLLFFMLPNetwork.cpp" />
     <ClCompile Include="..\..\..\..\src\JRNN\networks\FFMLPNetwork.cpp" />
     <ClCompile Include="..\..\..\..\src\JRNN\networks\RevCCNetwork.cpp" />
     <ClCompile Include="..\..\..\..\src\JRNN\trainers\BackPropTrainer.cpp" />
@@ -106,6 +107,7 @@
   <ItemGroup>
     <ClInclude Include="..\..\..\..\include\JRNN\JRNN.h" />
     <ClInclude Include="..\..\..\..\include\JRNN\networks\CCNetwork.h" />
+    <ClInclude Include="..\..\..\..\include\JRNN\networks\CSLLLFFMLPNetwork.h" />
     <ClInclude Include="..\..\..\..\include\JRNN\networks\FFMLPNetwork.h" />
     <ClInclude Include="..\..\..\..\include\JRNN\networks\RevCCNetwork.h" />
     <ClInclude Include="..\..\..\..\include\JRNN\structure\connection.h" />
