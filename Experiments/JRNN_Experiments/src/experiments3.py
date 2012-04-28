@@ -48,34 +48,36 @@ experiments = []
     #+ g.ccmtl + g.etamtl \
     #+ s.ccmtl + s.etamtl \
 
-#experiments += b.csmtl \
-    #+ c.csmtl \
-    #+ l.csmtl \
-    #+ d.csmtl \
-    #+ h.csmtl \
-    #+ g.csmtl \
-    #+ s.csmtl 
+experiments += b.csmtl \
+    + c.csmtl \
+    + l.csmtl \
+    + d.csmtl \
+    + h.csmtl \
+    + g.csmtl \
+    + s.csmtl 
 
 
 
-#experiments += b.csmtlos + c.csmtlos + l.csmtlos + g.csmtlos \
-    #+ d.csmtlos + s.csmtlos + h.csmtlos
+experiments += b.csmtlos + c.csmtlos + l.csmtlos + g.csmtlos \
+    + d.csmtlos + s.csmtlos + h.csmtlos
 
-#experiments += b.csmtlgur + b.mtlgur \
-    #+ c.csmtlgur + c.mtlgur \
-    #+ l.csmtlgur + l.mtlgur \
-    #+ g.csmtlgur + g.mtlgur \
-    #+ d.csmtlgur + d.mtlgur \
-    #+ s.csmtlgur + s.mtlgur \
-    #+ h.csmtlgur + h.mtlgur 
+experiments += b.csmtlgur + b.mtlgur \
+    + c.csmtlgur + c.mtlgur \
+    + l.csmtlgur + l.mtlgur \
+    + g.csmtlgur + g.mtlgur \
+    + d.csmtlgur + d.mtlgur \
+    + s.csmtlgur + s.mtlgur \
+    + h.csmtlgur + h.mtlgur 
 
-#experiments += b.csmtlur + c.csmtlur + l.csmtlur + g.csmtlur + d.csmtlur + s.csmtlur + h.csmtlur 
+experiments += b.csmtlur + c.csmtlur + l.csmtlur + g.csmtlur + d.csmtlur + s.csmtlur + h.csmtlur 
 
 
 
-experiments += b.reverbNoValNumReverbsRecall + b.reverbValNumReverbsRecall
+#experiments += b.reverbNoValNumReverbsRecall + b.reverbValNumReverbsRecall
 
-experiments += b.reverbValNumReverbsRecall
+#experiments += [b.reverbNoValNumReverbsRecall[1]]
+
+#experiments += b.reverbValNumReverbsRecall
 
 #experiments = [b.reverbValNumReverbsRecall[0], b.reverbNoValNumReverbsRecall[0]]
 

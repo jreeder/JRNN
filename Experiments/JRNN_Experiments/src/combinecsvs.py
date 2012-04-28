@@ -13,11 +13,12 @@ filter1 = "NormSize"
 filter2 = "Error"
 test = False
 
-table = {}
-dsnames = []
+
 
 def combine(filter1, filter2):
     global folder
+    table = {}
+    dsnames = []
     outfilename = folder + "/combined/" + filter1 + " - " + filter2 + ".csv"
     filelist = os.listdir(folder)
     filterlist = [path for path in filelist if (filter1 in path) and (filter2 in path)]

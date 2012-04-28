@@ -10,8 +10,8 @@ from subprocess import *
 from multiprocessing import *
 from config import *
 
-verbose = Truetest = False 
-real = False
+verbose = Falsetest = False 
+real = True
 dsinpath1 = ['linear', 'CirInSq', 'band']
 dsinpath2 = ['smallcovtype', 'glass', 'derm', 'heart']
 
@@ -50,7 +50,7 @@ def ProcessExp(expparams, roundFold):
     
     #SDCC and VaryActFunc Parameters change the defaults here. 
     useSDCC = expparams.get('useSDCC', True)
-    SDRatio = expparams.get('SDRatio', 0.9)
+    SDRatio = expparams.get('SDRatio', 1.0)
     varyActFunc = expparams.get('varyActFunc', False)
     
     
@@ -140,7 +140,7 @@ if __name__=='__main__':
         
     #os.chdir(outpath3)
     if test:
-        ProcessExp(experiments[0], jrnn_outpath)
+        ProcessExp(experiments[1], jrnn_outpath)
     else:
         pool = Pool(numProcesses)
         #pool.map(ProcessExp, experiments, 1)
