@@ -617,7 +617,7 @@ JRNN::DatasetPtr LoadData( string viewString, string basepath, string dsname, in
 			string filename = basepath + dsname + "-" + taskname + ".txt";
 			cds->AddTaskFromFile(filename, taskname, numInputs, numOutputs);
 		}
-
+		//TODO Debug the gradur case as I don't think it's loading correctly. 
 		cds->SetView(view);
 
 		if (impNumTrain > 0 && primarytask > 0){

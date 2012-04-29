@@ -99,6 +99,12 @@ def extractdata(title, folder):
 
 
 if __name__=='__main__':
+
+    if len(sys.argv) != 2:
+        print "Wring number of arguments"
+        
+    edpath = os.path.join(outpath3, sys.argv[1])
+    
     if not os.path.exists(csvpath):
         os.makedirs(csvpath)
         
@@ -110,13 +116,13 @@ if __name__=='__main__':
     #extractdata("CoverType CCMTL", "smallcovtype/CCMTLTest")
     #extractdata("Heart CCMTL", "heart/CCMTLTest")
 
-    #extractdata("Linear GRADUR", "linear/GRADURTest")
-    #extractdata("Band GRADUR", "band/GRADURTest")
-    #extractdata("CirInSq GRADUR", "CirInSq/GRADURTest")
-    #extractdata("Derm GRADUR", "derm/GRADURTest")
-    #extractdata("Glass GRADUR", "glass/GRADURTest")
-    #extractdata("CoverType GRADUR", "smallcovtype/GRADURTest")
-    #extractdata("Heart GRADUR", "heart/GRADURTest")
+    extractdata("Linear GRADUR", "linear/GRADURTest")
+    extractdata("Band GRADUR", "band/GRADURTest")
+    extractdata("CirInSq GRADUR", "CirInSq/GRADURTest")
+    extractdata("Derm GRADUR", "derm/GRADURTest")
+    extractdata("Glass GRADUR", "glass/GRADURTest")
+    extractdata("CoverType GRADUR", "smallcovtype/GRADURTest")
+    extractdata("Heart GRADUR", "heart/GRADURTest")
 
     #extractdata("Linear LargeSizeNV", "linear/LargeSizeNV")
     #extractdata("Band LargeSizeNV", "band/LargeSizeNV")
@@ -150,13 +156,13 @@ if __name__=='__main__':
     #extractdata("CoverType NormSize", "smallcovtype/NormSize")
     #extractdata("Heart NormSize", "heart/NormSize")
     
-    #extractdata("Linear CSMTL", "linear/CSMTLTest")
-    #extractdata("Band CSMTL", "band/CSMTLTest")
-    #extractdata("CirInSq CSMTL", "CirInSq/CSMTLTest")
-    #extractdata("Derm CSMTL", "derm/CSMTLTest")
-    #extractdata("Glass CSMTL", "glass/CSMTLTest")
-    #extractdata("CoverType CSMTL", "smallcovtype/CSMTLTest")
-    #extractdata("Heart CSMTL", "heart/CSMTLTest")
+    extractdata("Linear CSMTL", "linear/CSMTLTest")
+    extractdata("Band CSMTL", "band/CSMTLTest")
+    extractdata("CirInSq CSMTL", "CirInSq/CSMTLTest")
+    extractdata("Derm CSMTL", "derm/CSMTLTest")
+    extractdata("Glass CSMTL", "glass/CSMTLTest")
+    extractdata("CoverType CSMTL", "smallcovtype/CSMTLTest")
+    extractdata("Heart CSMTL", "heart/CSMTLTest")
 
     #extractdata("Linear STL", "linear/stltests")
     #extractdata("Band STL", "band/stltests")
@@ -166,12 +172,12 @@ if __name__=='__main__':
     #extractdata("CoverType STL", "smallcovtype/stltests") 
     #extractdata("Heart STL", "heart/stltests")
     
-    extractdata("Linear ETAMTL", "linear/ETAMTLTest")
-    extractdata("Band ETAMTL", "band/ETAMTLTest")
-    extractdata("CirInSq ETAMTL", "CirInSq/ETAMTLTest")
-    extractdata("Derm ETAMTL", "derm/ETAMTLTest")
-    extractdata("Glass ETAMTL", "glass/ETAMTLTest")
-    extractdata("CoverType ETAMTL", "smallcovtype/ETAMTLTest")
-    extractdata("Heart ETAMTL", "heart/ETAMTLTest")
+    #extractdata("Linear ETAMTL", "linear/ETAMTLTest")
+    #extractdata("Band ETAMTL", "band/ETAMTLTest")
+    #extractdata("CirInSq ETAMTL", "CirInSq/ETAMTLTest")
+    #extractdata("Derm ETAMTL", "derm/ETAMTLTest")
+    #extractdata("Glass ETAMTL", "glass/ETAMTLTest")
+    #extractdata("CoverType ETAMTL", "smallcovtype/ETAMTLTest")
+    #extractdata("Heart ETAMTL", "heart/ETAMTLTest")
     
     print "Finished" 
