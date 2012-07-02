@@ -157,6 +157,15 @@ void Layer::AddNode( NodePtr node ){
 	layerSize++;
 }
 
+void Layer::AddNode( NodePtr node, bool createName){
+	if (createName){
+		AddNode(node);
+	}
+	else {
+		nodes.push_back(node);
+	}
+}
+
 void Layer::RemoveNode(NodePtr node){
 	NodeList::iterator it = nodes.begin();
 	while (it != nodes.end()){
@@ -238,4 +247,40 @@ NodePtr Layer::GetNodeByName( string name )
 		retNode = nodes[index];
 	}
 	return retNode;
+}
+
+void Layer::SetTypeByName( string type )
+{
+	if (type == "bias"){
+		type = Layer::bias;
+	} 
+	else if (type == "hidden"){
+		type = Layer::hidden;
+	} 
+	else if (type == "input"){
+		type = Layer::input;
+	} 
+	else if (type == "out"){
+		type = Layer::out;
+	}
+	else {
+		type = Layer::hidden;
+	}
+}
+
+string Layer::GetTypeName()
+{
+	switch (type)
+	{
+	case Layer::bias:
+		return "bias";
+	case Layer::hidden:
+		return "hidden";
+	case Layer::input:
+		return "input";
+	case Layer::out:
+		return "out";
+	default:
+		return "";
+	}
 }

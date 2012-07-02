@@ -90,6 +90,9 @@
     <ClCompile Include="..\..\..\..\src\JRNN\utility\etamtlhelper.cpp">
       <Filter>Source Files\utility</Filter>
     </ClCompile>
+	<ClCompile Include="..\..\..\..\src\JRNN\utility\serialization.cpp">
+      <Filter>Source Files\utility</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\..\..\src\JRNN\trainers\EtaMTLRPropTrainer.cpp">
       <Filter>Source Files\trainers</Filter>
     </ClCompile>
@@ -156,6 +159,9 @@
       <Filter>Header Files\trainers</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\JRNN\utility\etamtlhelper.h">
+      <Filter>Header Files\utility</Filter>
+    </ClInclude>
+	<ClInclude Include="..\..\..\..\include\JRNN\utility\serialization.h">
       <Filter>Header Files\utility</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\JRNN\trainers\EtaMTLRPropTrainer.h">

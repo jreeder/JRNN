@@ -241,11 +241,16 @@ namespace JRNN{
 		return connections;
 	}
 
-	 void Network::Reset(){
-		 BOOST_FOREACH(ConPair con, connections){
-			 con.second->Reset();
-		 }
-	 }
+	LayerMap& Network::GetLayers()
+	{
+		return layers;
+	}
+
+	void Network::Reset(){
+    	BOOST_FOREACH(ConPair con, connections){
+         	con.second->Reset();
+     	}
+ 	}
 
 	 hashedDoubleMap Network::GetWeights(){
 		 hashedDoubleMap weights;

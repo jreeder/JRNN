@@ -264,6 +264,11 @@ int Node::GetNumConnections()
 	return numConnections;
 }
 
+string Node::GetActFuncType()
+{
+	return actFunction->getType();
+}
+
 int Node::GetHeight()
 {
 	return height;

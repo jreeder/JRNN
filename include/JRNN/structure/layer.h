@@ -54,12 +54,15 @@ namespace JRNN {
         int GetLayerSize() const;
 
         void SetType(layerType type);
+		void SetTypeByName(string type);
         layerType GetType() const;
+		string GetTypeName();
 
         void SetName(string newName);
         const string& GetName();
 
 		void AddNode(NodePtr node);
+		void AddNode( NodePtr node, bool createName);
 		void RemoveNode(NodePtr node);
 		int RemoveUnconnectedNodes();
 
