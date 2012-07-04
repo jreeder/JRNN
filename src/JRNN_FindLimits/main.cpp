@@ -16,6 +16,8 @@
 #include <ctime>
 
 #include "trainers/RPropTrainer.h"
+#include "trainers/RevCCTrainer.h"
+#include "networks/RevCCNetwork.h"
 #include "networks/CSLLLFFMLPNetwork.h"
 #include "networks/FFMLPNetwork.h"
 #include "utility/csmtldataset.h"
@@ -49,227 +51,21 @@ bool gCleanReverb = true;
 
 DatasetPtr LoadData( string viewString, string basepath, string dsname, int numInputs, int numOutputs, int primarytask, int impNumTrain, int numTrain, int numVal, int numTest, ints& primaryIndexes, bool useCSMTLDS );
 
+int FFCSLLLExperiment();
+
+int RevCCExperiment();
+
 
 
 int main(int argc, char** argv) {
-	if (verbose)
-		cout << "Starting ..." << endl;
 	
-	DatasetPtr ds = LoadData(view, basepath, dsname, numInputs, numOutputs, 0, 0, numTrain, numVal, numTrain, primaryIndexes, true);
-	CSMTLDatasetPtr cds = boost::dynamic_pointer_cast<CSMTLDataset>(ds); 
-
-	if (cds.get() == NULL){
-		return EXIT_FAILURE;
-	}
+	int retValue = EXIT_FAILURE;
 	
-	int numNetInputs, numNetOutputs;
+	//retValue = FFCSLLLExperiment();
+	//retValue = RevCCExperiment();
 
-	numNetOutputs = numOutputs;
-	numNetInputs = numInputs + numTasks;
-
-	double rPropEtaPlus = 1.2;
-	double rPropEtaMinus = 0.5;
-	int rPropMaxEpochs = 3000;
-	double rPropMinError = 0.04;
-
-	strings outputstring;
-
-	FFMLPNetPtr ffnet = FFMLPNetwork::Create();
-	int numHid = numHidPerTask * numTasks;
-	ffnet->SetScaleAndOffset(scale, offset);
-	ffnet->Build(numNetInputs, numHid, numNetOutputs);
 	
-
-	//RevCCTrainer* trainer = new RevCCTrainer(numNetInputs, numNetOutputs, numCandidates);
-
-	//trainer->revparams.numContexts = cds->GetViewSize();
-	//trainer->revparams.cleanReverb = gCleanReverb;
-
-	strings subview;
-	subview.push_back("task2");
-	subview.push_back("task3");
-	subview.push_back("task4");
-	cds->DistSubview(subview);
-	CSMTLDatasetPtr firstDS = cds->SpawnDS();
-	subview.clear();
-	subview.push_back("task1");
-	cds->DistSubview(subview, numImpTrain, numVal, numTest);
-	CSMTLDatasetPtr secondDS = cds->SpawnDS();
-	ofstream ofile;
-
-	RPropTrainer ffbp = RPropTrainer(ffnet, firstDS, rPropEtaPlus, rPropEtaMinus, primaryIndexes);
-
-	ffbp.maxWeight = 1000;
-	ffbp.useMaxWeight = true;
-
-	ffbp.TrainToValConv(rPropMaxEpochs);
-
-	CSLLFFMLPNetPtr csnet = CSLLFFMLPNetwork::Create();
-	csnet->SetScaleAndOffset(scale, offset);
-	csnet->Build(numNetInputs, numHidPerTask, numNetOutputs, ffnet);
-
-	RPropTrainer csbp = RPropTrainer(csnet, secondDS, rPropEtaPlus, rPropEtaMinus, primaryIndexes);
-	
-	csbp.maxWeight = 1000;
-	csbp.useMaxWeight = true;
-
-
-	csbp.TrainToValConv(rPropMaxEpochs);
-	
-	ofile.open(outFileName);
-	stringstream output(stringstream::out);
-	//for (int i = 0; i < numRuns; i++)
-	//{
-	//	if (verbose)
-	//		cout << "Re-verb Run " << i+1 << endl;
-	//	//Train First Task
-	//	trainer->TrainTask(firstDS,3000,true);
-	//	//Train Second Task
-	//	trainer->TrainTask(secondDS,3000,true,true,firstDS,Dataset::TEST);
-	//	
-	//	//Second Task test results
-	//	hashedDoubleMap secondResults = trainer->TestWiClass(secondDS, Dataset::TEST);
-	//	int hiddenLayers = trainer->net1vals.numHidLayers;
-	//	int epochs = trainer->net1vals.epochs;
-	//	int numResets = trainer->net1vals.numResets;
-	//	int time = 0;
-	//	
-	//	
-	//	output << epochs << "\t";
-	//	output << time << "\t";
-	//	output << hiddenLayers << "\t";
-	//	output << numResets << "\t";
-	//	
-	//	printHashedDoubleMap(secondResults,output);
-	//	output << "|\t";
-	//	printDoubles(trainer->net1vals.MSERec,output);
-	//	output << "|\t";
-
-	//	//Previous Task test results. 
-	//	hashedDoubleMap firstTaskResults = trainer->TestWiClass(firstDS, Dataset::TEST);
-	//	printHashedDoubleMap(firstTaskResults, output);
-	//	output << "|\t";
-	//	RevCCTrainer::TestResults results = trainer->getTestWhileTrainResults();
-	//	BOOST_FOREACH(RevCCTrainer::TestResult result, results){
-	//		output << "*" << result.epoch << "!";
-	//		printHashedDoubleMap(result.result,output);
-	//	}
-	//	output << endl;
-	//	ofile << output.str();
-	//	output.str("");
-	//	output.clear();
-
-	//	trainer->Reset();
-	//	firstDS->RedistData();
-	//	secondDS->RedistData();
-	//}
-	//ofile.close();
-
-	//ofile.open(outFileName2);
-	//for (int i = 0; i < numRuns; i++){
-	//	
-	//	if (verbose)
-	//		cout << "No Re-verb Run " << i+1 << endl;
-
-	//	//Set the reverb down to 1 ... this is straight pseudo rehearsal
-	//	trainer->revparams.numRev = 1;
-	//	//Train First Task
-	//	trainer->TrainTask(firstDS,3000,true);
-	//	//Train Second Task
-	//	trainer->TrainTask(secondDS,3000,true,true,firstDS,Dataset::TEST);
-
-	//	//Second Task test results
-	//	hashedDoubleMap secondResults = trainer->TestWiClass(secondDS, Dataset::TEST);
-	//	int hiddenLayers = trainer->net1vals.numHidLayers;
-	//	int epochs = trainer->net1vals.epochs;
-	//	int numResets = trainer->net1vals.numResets;
-	//	int time = 0;
-
-
-	//	output << epochs << "\t";
-	//	output << time << "\t";
-	//	output << hiddenLayers << "\t";
-	//	output << numResets << "\t";
-
-	//	printHashedDoubleMap(secondResults,output);
-	//	output << "|\t";
-	//	printDoubles(trainer->net1vals.MSERec,output);
-	//	output << "|\t";
-
-	//	//Previous Task test results. 
-	//	hashedDoubleMap firstTaskResults = trainer->TestWiClass(firstDS, Dataset::TEST);
-	//	printHashedDoubleMap(firstTaskResults, output);
-	//	output << "|\t";
-	//	RevCCTrainer::TestResults results = trainer->getTestWhileTrainResults();
-	//	BOOST_FOREACH(RevCCTrainer::TestResult result, results){
-	//		output << "*" << result.epoch << "!";
-	//		printHashedDoubleMap(result.result,output);
-	//	}
-
-	//	output << endl;
-	//	ofile << output.str();
-	//	output.str(""); //needed to set the internal string back to empty
-	//	output.clear(); //Clears any error flags if any ...probably doesn't do anything for me
-
-	//	trainer->Reset();
-	//	firstDS->RedistData();
-	//	secondDS->RedistData();
-	//}
-
-	ofile.close();
-
-	if(verbose)
-		cout << "The End" << endl;
-	return EXIT_SUCCESS;
-	//string filename,outfile;
-	//int numIn,numOut;
-
-	//if (argc != 5)
-	//{	
-	//	cout << "Incorrect Arguments" << endl;
-	//	cout << "Proper Syntax: JRNN_FindLimits <filename> <outfile> <numIn> <numOut>" << endl;
-	//	return -1;
-	//} 
-	//else
-	//{
-	//	filename = argv[1];
-	//	outfile = argv[2];
-	//	numIn = lexical_cast<int>(argv[3]);
-	//	numOut = lexical_cast<int>(argv[4]);
-	//}
-	////TODO: need to finish this experiment. All it needs to do is read in a data file and run multiple
-	////sets of experiments with differing numbers of training points and differing number of hidden layers.
-
-	//fstream myfile;
-	//myfile.open(outfile.c_str());
-	//if (myfile.is_open() == false){
-	//	cout << "Output file not open: " << outfile.c_str() << endl;
-	//	return -1;
-	//}
-
-	//DatasetPtr ds(new Dataset());
-
-	//ds->LoadFromFile(filename,numIn,numOut);
-	//int numTest = 200;
-	//int numVal = 200;
-	//int numRuns = 60;
-	//ints numTrains;
-	//int temparray[] = {200, 100, 50, 40, 30, 20, 10, 5};
-	//BOOST_FOREACH(int x , temparray){
-	//	numTrains.push_back(x);
-	//}
-	//ints numHids;
-	//int temparray2[] = {1,2,4,8,16,32};
-	//BOOST_FOREACH(int x, temparray2){
-	//	numHids.push_back(x);
-	//}
-
-	//hashedDoubleMap test1;
-	//hashedIntMap test2;
-
-	//cout << test1["hello"] << " " << test2["hello"] << endl;
-
-	//return 0;
+	return retValue;
 	
 }
 
@@ -336,4 +132,215 @@ JRNN::DatasetPtr LoadData( string viewString, string basepath, string dsname, in
 	}
 	
 	return retDS;
+}
+
+int FFCSLLLExperiment()
+{
+	if (verbose)
+		cout << "Starting ..." << endl;
+
+	DatasetPtr ds = LoadData(view, basepath, dsname, numInputs, numOutputs, 0, 0, numTrain, numVal, numTrain, primaryIndexes, true);
+	CSMTLDatasetPtr cds = boost::dynamic_pointer_cast<CSMTLDataset>(ds); 
+
+	if (cds.get() == NULL){
+		return EXIT_FAILURE;
+	}
+
+	int numNetInputs, numNetOutputs;
+
+	numNetOutputs = numOutputs;
+	numNetInputs = numInputs + numTasks;
+
+	double rPropEtaPlus = 1.2;
+	double rPropEtaMinus = 0.5;
+	int rPropMaxEpochs = 3000;
+	double rPropMinError = 0.04;
+
+	strings outputstring;
+
+	FFMLPNetPtr ffnet = FFMLPNetwork::Create();
+	int numHid = numHidPerTask * numTasks;
+	ffnet->SetScaleAndOffset(scale, offset);
+	ffnet->Build(numNetInputs, numHid, numNetOutputs);
+
+	strings subview;
+	subview.push_back("task2");
+	subview.push_back("task3");
+	subview.push_back("task4");
+	cds->DistSubview(subview);
+	CSMTLDatasetPtr firstDS = cds->SpawnDS();
+	subview.clear();
+	subview.push_back("task1");
+	cds->DistSubview(subview, numImpTrain, numVal, numTest);
+	CSMTLDatasetPtr secondDS = cds->SpawnDS();
+	ofstream ofile;
+
+	RPropTrainer ffbp = RPropTrainer(ffnet, firstDS, rPropEtaPlus, rPropEtaMinus, primaryIndexes);
+
+	ffbp.maxWeight = 1000;
+	ffbp.useMaxWeight = true;
+
+	ffbp.TrainToValConv(rPropMaxEpochs);
+
+	CSLLFFMLPNetPtr csnet = CSLLFFMLPNetwork::Create();
+	csnet->SetScaleAndOffset(scale, offset);
+	csnet->Build(numNetInputs, numHidPerTask, numNetOutputs, ffnet);
+
+	RPropTrainer csbp = RPropTrainer(csnet, secondDS, rPropEtaPlus, rPropEtaMinus, primaryIndexes);
+
+	csbp.maxWeight = 1000;
+	csbp.useMaxWeight = true;
+
+
+	csbp.TrainToValConv(rPropMaxEpochs);
+
+	ofile.open(outFileName);
+	stringstream output(stringstream::out);
+
+	ofile.close();
+
+	if(verbose)
+		cout << "The End" << endl;
+
+	return EXIT_SUCCESS;
+}
+
+int RevCCExperiment()
+{
+	if (verbose)
+		cout << "Starting ..." << endl;
+
+	DatasetPtr ds = LoadData(view, basepath, dsname, numInputs, numOutputs, 0, 0, numTrain, numVal, numTrain, primaryIndexes, true);
+	CSMTLDatasetPtr cds = boost::dynamic_pointer_cast<CSMTLDataset>(ds); 
+
+	if (cds.get() == NULL){
+		return EXIT_FAILURE;
+	}
+
+	int numNetInputs, numNetOutputs;
+
+	numNetOutputs = numOutputs;
+	numNetInputs = numInputs + numTasks;
+
+	strings subview;
+	subview.push_back("task2");
+	subview.push_back("task3");
+	subview.push_back("task4");
+	cds->DistSubview(subview);
+	CSMTLDatasetPtr firstDS = cds->SpawnDS();
+	subview.clear();
+	subview.push_back("task1");
+	cds->DistSubview(subview, numImpTrain, numVal, numTest);
+	CSMTLDatasetPtr secondDS = cds->SpawnDS();
+	ofstream ofile;
+
+	RevCCTrainer* trainer = new RevCCTrainer(numNetInputs, numNetOutputs, numCandidates);
+
+	trainer->revparams.numContexts = cds->GetViewSize();
+	trainer->revparams.cleanReverb = gCleanReverb;
+
+	for (int i = 0; i < numRuns; i++)
+	{
+		if (verbose)
+			cout << "Re-verb Run " << i+1 << endl;
+		//Train First Task
+		trainer->TrainTask(firstDS,3000,true);
+		//Train Second Task
+		trainer->TrainTask(secondDS,3000,true,true,firstDS,Dataset::TEST);
+
+		//Second Task test results
+		hashedDoubleMap secondResults = trainer->TestWiClass(secondDS, Dataset::TEST);
+		int hiddenLayers = trainer->net1vals.numHidLayers;
+		int epochs = trainer->net1vals.epochs;
+		int numResets = trainer->net1vals.numResets;
+		int time = 0;
+
+
+		output << epochs << "\t";
+		output << time << "\t";
+		output << hiddenLayers << "\t";
+		output << numResets << "\t";
+
+		printHashedDoubleMap(secondResults,output);
+		output << "|\t";
+		printDoubles(trainer->net1vals.MSERec,output);
+		output << "|\t";
+
+		//Previous Task test results. 
+		hashedDoubleMap firstTaskResults = trainer->TestWiClass(firstDS, Dataset::TEST);
+		printHashedDoubleMap(firstTaskResults, output);
+		output << "|\t";
+		RevCCTrainer::TestResults results = trainer->getTestWhileTrainResults();
+		BOOST_FOREACH(RevCCTrainer::TestResult result, results){
+			output << "*" << result.epoch << "!";
+			printHashedDoubleMap(result.result,output);
+		}
+		output << endl;
+		ofile << output.str();
+		output.str("");
+		output.clear();
+
+		trainer->Reset();
+		firstDS->RedistData();
+		secondDS->RedistData();
+	}
+	ofile.close();
+
+	ofile.open(outFileName2);
+	for (int i = 0; i < numRuns; i++){
+
+		if (verbose)
+			cout << "No Re-verb Run " << i+1 << endl;
+
+		//Set the reverb down to 1 ... this is straight pseudo rehearsal
+		trainer->revparams.numRev = 1;
+		//Train First Task
+		trainer->TrainTask(firstDS,3000,true);
+		//Train Second Task
+		trainer->TrainTask(secondDS,3000,true,true,firstDS,Dataset::TEST);
+
+		//Second Task test results
+		hashedDoubleMap secondResults = trainer->TestWiClass(secondDS, Dataset::TEST);
+		int hiddenLayers = trainer->net1vals.numHidLayers;
+		int epochs = trainer->net1vals.epochs;
+		int numResets = trainer->net1vals.numResets;
+		int time = 0;
+
+
+		output << epochs << "\t";
+		output << time << "\t";
+		output << hiddenLayers << "\t";
+		output << numResets << "\t";
+
+		printHashedDoubleMap(secondResults,output);
+		output << "|\t";
+		printDoubles(trainer->net1vals.MSERec,output);
+		output << "|\t";
+
+		//Previous Task test results. 
+		hashedDoubleMap firstTaskResults = trainer->TestWiClass(firstDS, Dataset::TEST);
+		printHashedDoubleMap(firstTaskResults, output);
+		output << "|\t";
+		RevCCTrainer::TestResults results = trainer->getTestWhileTrainResults();
+		BOOST_FOREACH(RevCCTrainer::TestResult result, results){
+			output << "*" << result.epoch << "!";
+			printHashedDoubleMap(result.result,output);
+		}
+
+		output << endl;
+		ofile << output.str();
+		output.str(""); //needed to set the internal string back to empty
+		output.clear(); //Clears any error flags if any ...probably doesn't do anything for me
+
+		trainer->Reset();
+		firstDS->RedistData();
+		secondDS->RedistData();
+	}
+
+	ofile.close();
+
+	if(verbose)
+		cout << "The End" << endl;
+
+	return EXIT_SUCCESS;
 }
