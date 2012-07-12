@@ -18,7 +18,7 @@ namespace JRNN {
 		virtual double prime(double value, double sum) = 0;
 		
 		string getType() {
-			return _type;
+			return _type; //Need to figure out how to make this work for all of my classes. 
 		}
 	private:
 		static const string _type;

@@ -14,6 +14,7 @@
 //#include "trainers/RPropTrainer.h"
 //#include "networks/FFMLPNetwork.h"
 #include <ctime>
+#include <iostream>
 
 #include "trainers/RPropTrainer.h"
 #include "trainers/RevCCTrainer.h"
@@ -22,6 +23,7 @@
 #include "networks/FFMLPNetwork.h"
 #include "utility/csmtldataset.h"
 #include "utility/mtldataset.h"
+#include "utility/serialization.h"
 #include <boost/pointer_cast.hpp>
 
 using namespace JRNN;
@@ -55,7 +57,7 @@ int FFCSLLLExperiment();
 
 int RevCCExperiment();
 
-
+int SerializationTest();
 
 int main(int argc, char** argv) {
 	
@@ -63,6 +65,7 @@ int main(int argc, char** argv) {
 	
 	//retValue = FFCSLLLExperiment();
 	//retValue = RevCCExperiment();
+	retValue = SerializationTest();
 
 	
 	return retValue;
@@ -196,7 +199,7 @@ int FFCSLLLExperiment()
 
 	ofile.open(outFileName);
 	stringstream output(stringstream::out);
-
+	//Stuff goes here that is missing. 
 	ofile.close();
 
 	if(verbose)
@@ -233,6 +236,8 @@ int RevCCExperiment()
 	cds->DistSubview(subview, numImpTrain, numVal, numTest);
 	CSMTLDatasetPtr secondDS = cds->SpawnDS();
 	ofstream ofile;
+	ofile.open(outFileName);
+	stringstream output(stringstream::out);
 
 	RevCCTrainer* trainer = new RevCCTrainer(numNetInputs, numNetOutputs, numCandidates);
 
@@ -341,6 +346,19 @@ int RevCCExperiment()
 
 	if(verbose)
 		cout << "The End" << endl;
+
+	return EXIT_SUCCESS;
+}
+
+int SerializationTest(){
+	FFMLPNetPtr net = FFMLPNetwork::Create();
+	net->Build(2,8,2);
+
+	JSONArchiver archiver;
+	ofstream ofile;
+	ofile.open("testfile.txt", ios_base::out);
+	archiver.Save(net,ofile);
+	ofile.close();
 
 	return EXIT_SUCCESS;
 }

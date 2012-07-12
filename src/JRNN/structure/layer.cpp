@@ -47,12 +47,22 @@ void Layer::SetNextLayer(LayerPtr nextLayer) {
 LayerPtr Layer::GetNextLayer() const {
     return nextLayer;
 }
+
+bool Layer::HasNextL(){
+	return nextLayer.get() == 0 ? false : true;
+}
+
 void Layer::SetPrevLayer(LayerPtr prevLayer) {
     this->prevLayer = prevLayer;
 }
 LayerPtr Layer::GetPrevLayer() const {
     return prevLayer;
 }
+
+bool Layer::HasPrevL(){
+	return prevLayer.get() == 0 ? false : true;
+}
+
 void Layer::SetLayerSize(int layerSize) {
     this->layerSize = layerSize;
 }

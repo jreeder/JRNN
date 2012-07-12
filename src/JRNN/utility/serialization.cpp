@@ -60,7 +60,7 @@ namespace JRNN {
 	serialize::Node Serializer::ConvNode(NodePtr node){
 		serialize::Node sNode;
 		sNode.activationFunc = node->GetActFuncType();
-		sNode.height = node->getHeight();
+		sNode.height = node->GetHeight();
 		sNode.name = node->GetName();
 		return sNode;
 	}
@@ -97,8 +97,8 @@ namespace JRNN {
 		serialize::Layer sLayer;
 		sLayer.height = layer->GetHeight();
 		sLayer.name = layer->GetName();
-		sLayer.nextLayerName = layer->GetNextLayer()->GetName();
-		sLayer.prevLayerName = layer->GetPrevLayer()->GetName();
+		sLayer.nextLayerName = layer->HasNextL() ? layer->GetNextLayer()->GetName() : "";
+		sLayer.prevLayerName = layer->HasPrevL() ? layer->GetPrevLayer()->GetName() : "";
 		sLayer.size	= layer->GetSize();
 		sLayer.type	= layer->GetTypeName();
 		BOOST_FOREACH(NodePtr node, layer->GetNodes()){

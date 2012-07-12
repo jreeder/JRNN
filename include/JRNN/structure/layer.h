@@ -46,9 +46,11 @@ namespace JRNN {
         //getters/setters
         void SetNextLayer(LayerPtr nextLayer);
         LayerPtr GetNextLayer() const;
+		bool HasNextL();
 
         void SetPrevLayer(LayerPtr prevLayer);
         LayerPtr GetPrevLayer() const;
+		bool HasPrevL();
 
         void SetLayerSize(int layerSize);
         int GetLayerSize() const;

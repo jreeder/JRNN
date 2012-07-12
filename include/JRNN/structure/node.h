@@ -43,7 +43,6 @@ namespace JRNN {
 		//double GetSigSteepness();
 		ConList& GetConnections(conType type);
 		string GetActFuncType();
-		int getHeight();
         
 		void SetName(string newName);
 //        void setNumIn(int newNumIn);
