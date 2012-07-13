@@ -262,19 +262,19 @@ NodePtr Layer::GetNodeByName( string name )
 void Layer::SetTypeByName( string type )
 {
 	if (type == "bias"){
-		type = Layer::bias;
+		this->type = Layer::bias;
 	} 
 	else if (type == "hidden"){
-		type = Layer::hidden;
+		this->type = Layer::hidden;
 	} 
 	else if (type == "input"){
-		type = Layer::input;
+		this->type = Layer::input;
 	} 
 	else if (type == "out"){
-		type = Layer::out;
+		this->type = Layer::out;
 	}
 	else {
-		type = Layer::hidden;
+		this->type = Layer::hidden;
 	}
 }
 

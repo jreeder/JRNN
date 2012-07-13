@@ -17,8 +17,8 @@ namespace JRNN {
 
 		virtual double prime(double value, double sum) = 0;
 		
-		string getType() {
-			return _type; //Need to figure out how to make this work for all of my classes. 
+		virtual string getType() {
+			return _type; 
 		}
 	private:
 		static const string _type;
@@ -55,6 +55,9 @@ namespace JRNN {
 			return _prime(value, sum);
 		}
 		
+		virtual string getType() {
+			return _type; 
+		}
 	private:
 		  static const string _type;
 
@@ -81,6 +84,9 @@ namespace JRNN {
 
 		double prime(double value, double sum){
 			return _prime(value, sum);
+		}
+		virtual string getType() {
+			return _type; 
 		}
 	private:
 		static const string _type;
@@ -114,6 +120,9 @@ namespace JRNN {
 		double prime(double value, double sum){
 			return _prime(value, sum);
 		}
+		virtual string getType() {
+			return _type; 
+		}
 	private:
 		static const string _type;
 		static double _activate(double sum){
@@ -138,6 +147,9 @@ namespace JRNN {
 		double prime(double value, double sum){
 			return _prime(value, sum);
 		}
+		virtual string getType() {
+			return _type; 
+		}
 	private:
 		static const string _type;
 		static double _activate(double sum){
@@ -157,6 +169,9 @@ namespace JRNN {
 
 		double prime(double value, double sum){
 			return _prime(value, sum);
+		}
+		virtual string getType() {
+			return _type; 
 		}
 	private:
 		static const string _type;

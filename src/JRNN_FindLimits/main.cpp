@@ -360,5 +360,12 @@ int SerializationTest(){
 	archiver.Save(net,ofile);
 	ofile.close();
 
+	ifstream ifile;
+	ifile.open("testfile.txt", ios_base::in);
+	NetworkPtr tmpNet = archiver.Load(ifile);
+	//TODO: Need to write the functions to convert the specialized network types. 
+
+	ifile.close();
+
 	return EXIT_SUCCESS;
 }

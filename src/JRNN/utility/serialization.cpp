@@ -43,7 +43,7 @@ namespace JRNN {
 			sNet->GetLayers().insert(LayerPair(layer.name,ConvLayer(layer)));
 		}
 		BOOST_FOREACH(serialize::Layer layer, net.layers){
-			LayerPtr sLayer = sNet->GetLayers()[layer.name];
+			LayerPtr sLayer = sNet->GetLayer(layer.name);//change that to the get layer function.
 			if (layer.prevLayerName != ""){
 				sLayer->SetPrevLayer(sNet->GetLayer(layer.prevLayerName));
 			}
@@ -193,8 +193,8 @@ namespace JRNN {
 		newLayer.size = findValue(layer, "size").get_int();
 		newLayer.height = findValue(layer, "height").get_int();
 		newLayer.name = findValue(layer, "name").get_str();
-		newLayer.prevLayerName = findValue(layer, "prevValueName").get_str();
-		newLayer.nextLayerName = findValue(layer, "nextValueName").get_str();
+		newLayer.prevLayerName = findValue(layer, "prevLayerName").get_str();
+		newLayer.nextLayerName = findValue(layer, "nextLayerName").get_str();
 		mArray nodes = findValue(layer, "nodes").get_array();
 		newLayer.nodes = readNodes(nodes);
 		return newLayer;
@@ -277,7 +277,7 @@ namespace JRNN {
 		return newNodes;
 	}
 
-	NetworkPtr JSONArchiver::Load( istream inStream )
+	NetworkPtr JSONArchiver::Load( istream& inStream )
 	{
 		mValue value;
 		read_stream(inStream, value);

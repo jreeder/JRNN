@@ -58,7 +58,7 @@ namespace JRNN {
 	public:
 		Serializer(){}
 		~Serializer(){}
-		virtual NetworkPtr Load(istream inStream) = 0;
+		virtual NetworkPtr Load(istream& inStream) = 0;
 		virtual void Save(NetworkPtr net, ostream& stream) = 0;
 
 	protected:
@@ -73,7 +73,7 @@ namespace JRNN {
 
 	class JSONArchiver : Serializer {
 	public:
-		virtual NetworkPtr Load(istream inStream);
+		virtual NetworkPtr Load(istream& inStream);
 		virtual void Save(NetworkPtr net, ostream& stream);
 
 	private:
