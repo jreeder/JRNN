@@ -11,6 +11,8 @@
 
 #include "JRNN.h"
 #include "structure/network.h"
+#include "networks/CCNetwork.h"
+#include "networks/FFMLPNetwork.h"
 #include <iostream>
 #include <fstream>
 #include <json_spirit_reader_template.h>
@@ -51,6 +53,20 @@ namespace JRNN {
 			std::vector<Layer> layers;
 			std::vector<Connection> connections;
 		};
+
+		struct FFMLPNetwork : Network {
+			int numHid;
+		};
+
+		struct CCNetwork : Network {
+			int numUnits;
+			string candLayerName;
+			string currentLayerName;
+			vector<string> hiddenLayerNames;
+			bool cloneOuts;
+			bool useSDCC;
+			bool varyActFunc;
+		};
 	}
 
 	class Serializer {
@@ -62,6 +78,10 @@ namespace JRNN {
 		virtual void Save(NetworkPtr net, ostream& stream) = 0;
 
 	protected:
+		static serialize::FFMLPNetwork ConvFFMLPNetwork(FFMLPNetPtr net);
+		static FFMLPNetPtr ConvFFMLPNetwork(serialize::FFMLPNetwork& net);
+		static serialize::CCNetwork ConvCCNetwork(CCNetworkPtr net);
+		static CCNetworkPtr ConvCCNetwork(serialize::CCNetwork& net);
 		static serialize::Network ConvNetwork(NetworkPtr net);
 		static NetworkPtr ConvNetwork(serialize::Network& net);
 		static serialize::Node ConvNode(NodePtr node);
