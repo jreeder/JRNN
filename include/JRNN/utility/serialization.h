@@ -28,16 +28,12 @@ namespace JRNN {
 			string name;
 			int height;
 			string activationFunc;
-			void ReadIn(NodePtr node);
-			void WriteOut(NodePtr node);
 		};
 
 		struct Connection {
 			string inNodeName;
 			string outNodeName;
 			double weight;
-			void ReadIn(ConPtr con);
-			//void WriteOut(ConPtr con); Not needed. 
 		};
 
 		struct Layer {
@@ -48,8 +44,6 @@ namespace JRNN {
 			string prevLayerName;
 			string nextLayerName;
 			std::vector<Node> nodes;
-			void ReadIn(LayerPtr layer);
-			void WriteOut(LayerPtr layer);
 		};
 
 		struct Network {
@@ -87,6 +81,7 @@ namespace JRNN {
 		~Serializer(){}
 		virtual NetworkPtr Load(istream& inStream) = 0;
 		virtual void Save(NetworkPtr net, ostream& stream) = 0;
+		friend struct serialize::Network;
 
 	protected:
 		/*static serialize::FFMLPNetwork ConvFFMLPNetwork(FFMLPNetPtr net);
@@ -108,6 +103,7 @@ namespace JRNN {
 		virtual void Save(NetworkPtr net, ostream& stream);
 
 	private:
+		//TODO Need to finish the serialization for the CCNetwork and FFMLPNetwork
 		const mValue& findValue( const mObject& obj, const string& name  );
 		mObject writeNetwork(serialize::Network& net);
 		serialize::Network readNetwork(mObject& obj);

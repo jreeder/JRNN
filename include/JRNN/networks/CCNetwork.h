@@ -30,14 +30,23 @@ namespace JRNN {
 		//NetworkPtr GetNetwork();
 		//void SetNetwork(NetworkPtr net);
 		const LayerPtr GetCandLayer();
+		void SetCandLayerByName(string name);
 		void CreateCandLayer(int numCand);
 		virtual void InstallCandidate(NodePtr node, vecDouble outWeights = vecDouble(0));
 		virtual void Build(int numIn, int numOut, bool cloneouts = false, bool useSDCC = false, bool varyActFunc = false);
 		virtual void Reset();
 		void SetWeights(hashedDoubleMap weights);
 		int GetNumUnits();
+		void SetNumUnits(int newNumUnits);
 		void SetUseSDCC(bool inUseSDCC);
 		void SetVaryActFunc(bool inVaryActFunc);
+		void SetCurrentLayerByName( string currentLayerName );
+		void SetCloneOuts( bool cloneOuts );
+		LayerList& GetHiddenLayers();
+		LayerPtr GetCurrentLayer();
+		bool GetCloneOuts();
+		bool GetSDCC();
+		bool GetVaryActFunc();
 
 	protected:
 		//int numIn;
@@ -58,8 +67,7 @@ namespace JRNN {
 		void RemoveUnConnectedNodes();
 		virtual void RemoveHiddenLayer(LayerPtr layer);
 		void BuildVariedLayer( LayerPtr candLayer );
-		void CandConnectOut( NodePtr node, vecDouble outWeights = vecDouble(0));
-
+		void CandConnectOut( NodePtr node, vecDouble outWeights = vecDouble(0));	
 	};
 }
 

@@ -450,4 +450,48 @@ namespace JRNN {
 		}
 	}
 
+	void CCNetwork::SetNumUnits( int newNumUnits )
+	{
+		this->numUnits = newNumUnits;
+	}
+
+	void CCNetwork::SetCandLayerByName(string name){
+		this->candLayer = GetLayer(name);
+	}
+
+	void CCNetwork::SetCurrentLayerByName( string currentLayerName )
+	{
+		this->currentLayer = GetLayer(currentLayerName);
+	}
+
+	void CCNetwork::SetCloneOuts( bool cloneOuts )
+	{
+		this->cloneOuts = cloneOuts;
+	}
+
+	LayerList& CCNetwork::GetHiddenLayers()
+	{
+		return hiddenLayers;
+	}
+
+	LayerPtr CCNetwork::GetCurrentLayer()
+	{
+		return currentLayer;
+	}
+
+	bool CCNetwork::GetCloneOuts()
+	{
+		return cloneOuts;
+	}
+
+	bool CCNetwork::GetSDCC()
+	{
+		return useSDCC;
+	}
+
+	bool CCNetwork::GetVaryActFunc()
+	{
+		return varyActFunc;
+	}
+
 }

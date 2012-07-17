@@ -23,36 +23,14 @@ namespace JRNN {
 		ConMap::iterator conIT = net->GetConnections().begin();
 		ConMap::iterator conITend = net->GetConnections().end();
 		for(;conIT != conITend; conIT++){
-			ConPair con = (*conIT);
-			sNet.connections.push_back(ConvConnection(con.second));
+			sNet.connections.push_back(ConvConnection(conIT->second));
 		}
 		LayerMap::iterator layerIT = net->GetLayers().begin();
 		LayerMap::iterator layerITend = net->GetLayers().end();
 		for(;layerIT != layerITend; layerIT++){
-			sNet.layers.push_back(ConvLayer((*layerIT).second));
+			sNet.layers.push_back(ConvLayer(layerIT->second));
 		}
 		return sNet;
-	}
-
-	void serialize::Network::ReadIn(NetworkPtr net){
-		numHidLayers = net->GetNumHidLayers();
-		numIn = net->GetNumIn();
-		numOut = net->GetNumOut();
-		ConMap::iterator conIT = net->GetConnections().begin();
-		ConMap::iterator conITend = net->GetConnections().end();
-		for(;conIT != conITend; conIT++){
-			ConPair con = (*conIT);
-			Connection sCon;
-			sCon.ReadIn(con.second);
-			connections.push_back(sCon);
-		}
-		LayerMap::iterator layerIT = net->GetLayers().begin();
-		LayerMap::iterator layerITend = net->GetLayers().end();
-		for(;layerIT != layerITend; layerIT++){
-			Layer sLayer;
-			sLayer.ReadIn((*layerIT).second);
-			layers.push_back(sLayer);
-		}
 	}
 
 	NetworkPtr Serializer::ConvNetwork(serialize::Network& net){
@@ -64,7 +42,7 @@ namespace JRNN {
 			sNet->GetLayers().insert(LayerPair(layer.name,ConvLayer(layer)));
 		}
 		BOOST_FOREACH(serialize::Layer layer, net.layers){
-			LayerPtr sLayer = sNet->GetLayer(layer.name);//change that to the get layer function.
+			LayerPtr sLayer = sNet->GetLayer(layer.name);
 			if (layer.prevLayerName != ""){
 				sLayer->SetPrevLayer(sNet->GetLayer(layer.prevLayerName));
 			}
@@ -78,6 +56,22 @@ namespace JRNN {
 		return sNet;
 	}
 
+	void serialize::Network::ReadIn(NetworkPtr net){
+		numHidLayers = net->GetNumHidLayers();
+		numIn = net->GetNumIn();
+		numOut = net->GetNumOut();
+		ConMap::iterator conIT = net->GetConnections().begin();
+		ConMap::iterator conITend = net->GetConnections().end();
+		for(;conIT != conITend; conIT++){
+			connections.push_back(Serializer::ConvConnection(conIT->second));
+		}
+		LayerMap::iterator layerIT = net->GetLayers().begin();
+		LayerMap::iterator layerITend = net->GetLayers().end();
+		for(;layerIT != layerITend; layerIT++){
+			layers.push_back(Serializer::ConvLayer(layerIT->second));
+		}
+	}
+
 	void serialize::Network::WriteOut(NetworkPtr net){
 		if (!net){
 			net = JRNN::Network::Create();
@@ -86,9 +80,7 @@ namespace JRNN {
 		net->SetNumOut(numOut);
 		net->SetNumHidLayers(numHidLayers);
 		BOOST_FOREACH(serialize::Layer layer, layers){
-			LayerPtr nLayer;
-			layer.WriteOut(nLayer);
-			net->GetLayers().insert(LayerPair(layer.name,nLayer));
+			net->GetLayers().insert(LayerPair(layer.name,Serializer::ConvLayer(layer)));
 		}
 		BOOST_FOREACH(serialize::Layer layer, layers){
 			LayerPtr sLayer = net->GetLayer(layer.name);
@@ -104,6 +96,46 @@ namespace JRNN {
 		}
 	}
 
+	void serialize::CCNetwork::ReadIn(CCNetworkPtr net){
+		Network::ReadIn(net);
+		numUnits = net->GetNumUnits();
+		candLayerName = net->GetCandLayer()->GetName();
+		currentLayerName = net->GetCurrentLayer()->GetName();
+		cloneOuts = net->GetCloneOuts();
+		useSDCC = net->GetSDCC();
+		varyActFunc = net->GetVaryActFunc();
+		LayerList tmpHidLayers = net->GetHiddenLayers();
+		LayerList::iterator it = tmpHidLayers.begin();
+		for (; it != tmpHidLayers.end(); it++){
+			hiddenLayerNames.push_back((*it)->GetName());
+		}
+	}
+
+	void serialize::CCNetwork::WriteOut(CCNetworkPtr net){
+		if (!net){
+			net = JRNN::CCNetwork::Create();
+		}
+		Network::WriteOut(net);
+		net->SetNumUnits(numUnits);
+		net->SetCandLayerByName(candLayerName);
+		net->SetCurrentLayerByName(currentLayerName);
+		net->SetCloneOuts(cloneOuts);
+		net->SetUseSDCC(useSDCC);
+		net->SetVaryActFunc(varyActFunc);
+		vector<string>::iterator it = hiddenLayerNames.begin();
+		LayerList layerl = net->GetHiddenLayers();
+		for (;it != hiddenLayerNames.end(); it++){
+			layerl.push_back(net->GetLayer((*it)));
+		}
+	}
+
+	void serialize::FFMLPNetwork::ReadIn(FFMLPNetPtr net){
+		Network::ReadIn(net);
+	}
+
+	void serialize::FFMLPNetwork::WriteOut(FFMLPNetPtr net){
+		Network::WriteOut(net);
+	}
 	serialize::Node Serializer::ConvNode(NodePtr node){
 		serialize::Node sNode;
 		sNode.activationFunc = node->GetActFuncType();
