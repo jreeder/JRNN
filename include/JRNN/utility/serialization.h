@@ -28,12 +28,16 @@ namespace JRNN {
 			string name;
 			int height;
 			string activationFunc;
+			void ReadIn(NodePtr node);
+			void WriteOut(NodePtr node);
 		};
 
 		struct Connection {
 			string inNodeName;
 			string outNodeName;
 			double weight;
+			void ReadIn(ConPtr con);
+			//void WriteOut(ConPtr con); Not needed. 
 		};
 
 		struct Layer {
@@ -44,6 +48,8 @@ namespace JRNN {
 			string prevLayerName;
 			string nextLayerName;
 			std::vector<Node> nodes;
+			void ReadIn(LayerPtr layer);
+			void WriteOut(LayerPtr layer);
 		};
 
 		struct Network {
@@ -52,10 +58,13 @@ namespace JRNN {
 			int numHidLayers;
 			std::vector<Layer> layers;
 			std::vector<Connection> connections;
+			virtual void ReadIn(NetworkPtr net);
+			virtual void WriteOut(NetworkPtr net);
 		};
 
 		struct FFMLPNetwork : Network {
-			int numHid;
+			virtual void ReadIn(FFMLPNetPtr net);
+			virtual void WriteOut(FFMLPNetPtr net);
 		};
 
 		struct CCNetwork : Network {
@@ -66,6 +75,8 @@ namespace JRNN {
 			bool cloneOuts;
 			bool useSDCC;
 			bool varyActFunc;
+			virtual void ReadIn(CCNetworkPtr net);
+			virtual void WriteOut(CCNetworkPtr net);
 		};
 	}
 
@@ -78,10 +89,10 @@ namespace JRNN {
 		virtual void Save(NetworkPtr net, ostream& stream) = 0;
 
 	protected:
-		static serialize::FFMLPNetwork ConvFFMLPNetwork(FFMLPNetPtr net);
+		/*static serialize::FFMLPNetwork ConvFFMLPNetwork(FFMLPNetPtr net);
 		static FFMLPNetPtr ConvFFMLPNetwork(serialize::FFMLPNetwork& net);
 		static serialize::CCNetwork ConvCCNetwork(CCNetworkPtr net);
-		static CCNetworkPtr ConvCCNetwork(serialize::CCNetwork& net);
+		static CCNetworkPtr ConvCCNetwork(serialize::CCNetwork& net);*/
 		static serialize::Network ConvNetwork(NetworkPtr net);
 		static NetworkPtr ConvNetwork(serialize::Network& net);
 		static serialize::Node ConvNode(NodePtr node);
@@ -91,7 +102,7 @@ namespace JRNN {
 		static LayerPtr ConvLayer (serialize::Layer& layer);
 	};
 
-	class JSONArchiver : Serializer {
+	class JSONArchiver : public Serializer {
 	public:
 		virtual NetworkPtr Load(istream& inStream);
 		virtual void Save(NetworkPtr net, ostream& stream);

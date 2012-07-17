@@ -34,6 +34,27 @@ namespace JRNN {
 		return sNet;
 	}
 
+	void serialize::Network::ReadIn(NetworkPtr net){
+		numHidLayers = net->GetNumHidLayers();
+		numIn = net->GetNumIn();
+		numOut = net->GetNumOut();
+		ConMap::iterator conIT = net->GetConnections().begin();
+		ConMap::iterator conITend = net->GetConnections().end();
+		for(;conIT != conITend; conIT++){
+			ConPair con = (*conIT);
+			Connection sCon;
+			sCon.ReadIn(con.second);
+			connections.push_back(sCon);
+		}
+		LayerMap::iterator layerIT = net->GetLayers().begin();
+		LayerMap::iterator layerITend = net->GetLayers().end();
+		for(;layerIT != layerITend; layerIT++){
+			Layer sLayer;
+			sLayer.ReadIn((*layerIT).second);
+			layers.push_back(sLayer);
+		}
+	}
+
 	NetworkPtr Serializer::ConvNetwork(serialize::Network& net){
 		NetworkPtr sNet = Network::Create();
 		sNet->SetNumIn(net.numIn);
@@ -55,6 +76,32 @@ namespace JRNN {
 			sNet->AddConnection(Connection::Connect(sNet->GetNode(con.inNodeName), sNet->GetNode(con.outNodeName),con.weight));
 		}
 		return sNet;
+	}
+
+	void serialize::Network::WriteOut(NetworkPtr net){
+		if (!net){
+			net = JRNN::Network::Create();
+		}
+		net->SetNumIn(numIn);
+		net->SetNumOut(numOut);
+		net->SetNumHidLayers(numHidLayers);
+		BOOST_FOREACH(serialize::Layer layer, layers){
+			LayerPtr nLayer;
+			layer.WriteOut(nLayer);
+			net->GetLayers().insert(LayerPair(layer.name,nLayer));
+		}
+		BOOST_FOREACH(serialize::Layer layer, layers){
+			LayerPtr sLayer = net->GetLayer(layer.name);
+			if (layer.prevLayerName != ""){
+				sLayer->SetPrevLayer(net->GetLayer(layer.prevLayerName));
+			}
+			if (layer.nextLayerName != ""){
+				sLayer->SetNextLayer(net->GetLayer(layer.nextLayerName));
+			}
+		}
+		BOOST_FOREACH(serialize::Connection con, connections){
+			net->AddConnection(JRNN::Connection::Connect(net->GetNode(con.inNodeName), net->GetNode(con.outNodeName),con.weight));
+		}
 	}
 
 	serialize::Node Serializer::ConvNode(NodePtr node){
