@@ -39,7 +39,6 @@ namespace JRNN {
 	{
 		CSLLFFMLPNetPtr np(new CSLLFFMLPNetwork());
 		Network::Clone(np, net);
-		np->numHid = net->numHid;
 		np->cdkNetwork = net->cdkNetwork;
 		return np;
 	}

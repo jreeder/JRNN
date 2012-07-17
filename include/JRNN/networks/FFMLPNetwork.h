@@ -27,7 +27,6 @@ namespace JRNN {
 		virtual NetworkPtr Clone();
 
 	protected:
-		int numHid;
 
 		void FullyConnect(bool cloneouts);
 		

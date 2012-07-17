@@ -27,8 +27,7 @@ namespace JRNN {
 	{
 		this->numIn = numIn;
 		this->numOut = numOut;
-		this->numHid = numHid;
-		this->numHidLayers = 1;
+		this->numHidLayers = numHid;
 		layers.insert(LayerPair("input", Layer::CreateLayer(Layer::input,numIn,0,"input")));
 		layers.insert(LayerPair("hidden", Layer::CreateLayer(Layer::hidden, numHid, 1,"hidden")));
 		layers.insert(LayerPair("out", Layer::CreateLayer(Layer::out,numOut, 2,"out")));
@@ -70,7 +69,6 @@ namespace JRNN {
 		//	ConPtr con = conP.second;
 		//	np->AddConnection(Connection::Clone(con, np->GetNode(con->GetInNodeName()), np->GetNode(con->GetOutNodeName())));
 		//}
-		np->numHid = net->numHid;
 		return np;
 	}
 
