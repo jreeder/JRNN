@@ -15,6 +15,7 @@
 //#include "networks/FFMLPNetwork.h"
 #include <ctime>
 #include <iostream>
+#include <typeinfo>
 
 #include "trainers/RPropTrainer.h"
 #include "trainers/RevCCTrainer.h"
@@ -362,8 +363,8 @@ int SerializationTest(){
 
 	ifstream ifile;
 	ifile.open("testfile.txt", ios_base::in);
-	NetworkPtr tmpNet = archiver.Load(ifile);
-	//TODO: Need to write the functions to convert the specialized network types. 
+	FFMLPNetPtr tmpNet;
+	archiver.Load(tmpNet,ifile);
 
 	ifile.close();
 

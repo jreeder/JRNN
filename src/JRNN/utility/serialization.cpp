@@ -57,6 +57,7 @@ namespace JRNN {
 	}
 
 	void serialize::Network::ReadIn(NetworkPtr net){
+		netType = Normal;
 		numHidLayers = net->GetNumHidLayers();
 		numIn = net->GetNumIn();
 		numOut = net->GetNumOut();
@@ -98,6 +99,7 @@ namespace JRNN {
 
 	void serialize::CCNetwork::ReadIn(CCNetworkPtr net){
 		Network::ReadIn(net);
+		netType = CC;
 		numUnits = net->GetNumUnits();
 		candLayerName = net->GetCandLayer()->GetName();
 		currentLayerName = net->GetCurrentLayer()->GetName();
@@ -131,6 +133,7 @@ namespace JRNN {
 
 	void serialize::FFMLPNetwork::ReadIn(FFMLPNetPtr net){
 		Network::ReadIn(net);
+		netType = FFMLP;
 	}
 
 	void serialize::FFMLPNetwork::WriteOut(FFMLPNetPtr net){
@@ -208,28 +211,67 @@ namespace JRNN {
 	}
 
 
-	mObject JSONArchiver::writeNetwork( serialize::Network& net )
+	void JSONArchiver::writeNetwork( mObject& outNet, serialize::Network& net )
 	{
-		mObject newNet;
-		newNet["numIn"] = net.numIn;
-		newNet["numOut"] = net.numOut;
-		newNet["numHidLayers"] = net.numHidLayers;
-		newNet["layers"] = writeLayers(net.layers);
-		newNet["connections"] = writeCons(net.connections);
-		return newNet;
+		outNet["netType"] = net.netType;
+		outNet["numIn"] = net.numIn;
+		outNet["numOut"] = net.numOut;
+		outNet["numHidLayers"] = net.numHidLayers;
+		outNet["layers"] = writeLayers(net.layers);
+		outNet["connections"] = writeCons(net.connections);
 	}
 
-	serialize::Network JSONArchiver::readNetwork( mObject& net )
+	void JSONArchiver::readNetwork( serialize::Network& sNet, mObject& net )
 	{
-		serialize::Network newNet;
-		newNet.numIn = findValue(net, "numIn").get_int();
-		newNet.numOut = findValue(net, "numOut").get_int();
-		newNet.numHidLayers = findValue(net, "numHidLayers").get_int();
+		sNet.netType = static_cast<serialize::NetType>(findValue(net, "netType").get_int());
+		sNet.numIn = findValue(net, "numIn").get_int();
+		sNet.numOut = findValue(net, "numOut").get_int();
+		sNet.numHidLayers = findValue(net, "numHidLayers").get_int();
 		mArray cons = findValue(net, "connections").get_array();
 		mArray layers = findValue(net, "layers").get_array();
-		newNet.layers = readLayers(layers);
-		newNet.connections = readCons(cons);
-		return newNet;
+		sNet.layers = readLayers(layers);
+		sNet.connections = readCons(cons);
+	}
+
+	void JSONArchiver::writeFFNetwork( mObject& outNet, serialize::FFMLPNetwork& net )
+	{
+		writeNetwork(outNet,net);
+	}
+
+	void JSONArchiver::readFFNetwork( serialize::FFMLPNetwork& sNet, mObject& net )
+	{
+		readNetwork(sNet,net);
+	}
+
+	void JSONArchiver::writeCCNetwork( mObject& outNet, serialize::CCNetwork& net )
+	{
+		//Basic things
+		writeNetwork(outNet,net);
+
+		//CC specific things. 
+		outNet["numUnits"] = net.numUnits;
+		outNet["candLayerName"] = net.candLayerName;
+		outNet["currentLayerName"] = net.currentLayerName;
+		outNet["hiddenLayerNames"] = writeStrings(net.hiddenLayerNames);
+		outNet["cloneOuts"] = net.cloneOuts;
+		outNet["useSDCC"] = net.useSDCC;
+		outNet["varyActFunc"] = net.varyActFunc;
+	}
+
+	void JSONArchiver::readCCNetwork( serialize::CCNetwork& sNet, mObject& net )
+	{
+		//use network function for basic stuff
+		readNetwork(sNet,net);
+
+		//read in all the CC specific things. 
+		sNet.numUnits = findValue(net, "numUnits").get_int();
+		sNet.candLayerName = findValue(net, "candLayerName").get_str();
+		sNet.currentLayerName = findValue(net, "currentLayerName").get_str();
+		mArray hidLayerNames = findValue(net, "hiddenLayerNames").get_array();
+		sNet.hiddenLayerNames = readStrings(hidLayerNames);
+		sNet.cloneOuts = findValue(net, "cloneOuts").get_bool();
+		sNet.useSDCC = findValue(net, "useSDCC").get_bool();
+		sNet.varyActFunc = findValue(net, "varyActFunc").get_bool();
 	}
 
 	mArray JSONArchiver::writeLayers( std::vector<serialize::Layer>& layers )
@@ -299,6 +341,26 @@ namespace JRNN {
 		return newCons;
 	}
 
+	json_spirit::mArray JSONArchiver::writeStrings( vector<string> hiddenLayerNames )
+	{
+		mArray newStrings;
+		std::vector<string>::iterator it = hiddenLayerNames.begin();
+		for (; it != hiddenLayerNames.end(); it++){
+			newStrings.push_back((*it));
+		}
+		return newStrings;
+	}
+
+	vector<string> JSONArchiver::readStrings( mArray hidLayerNames )
+	{
+		std::vector<string> newStrings;
+		mArray::iterator it = hidLayerNames.begin();
+		for (; it != hidLayerNames.end(); it++){
+			newStrings.push_back((*it).get_str());
+		}
+		return newStrings;
+	}
+
 	mObject JSONArchiver::writeCon( serialize::Connection& con )
 	{
 		mObject newCon;
@@ -356,21 +418,63 @@ namespace JRNN {
 		return newNodes;
 	}
 
-	NetworkPtr JSONArchiver::Load( istream& inStream )
+	void JSONArchiver::Load( NetworkPtr outNet, istream& inStream )
 	{
 		mValue value;
 		read_stream(inStream, value);
 		mObject inNet = value.get_obj();
-		serialize::Network sNet = readNetwork(inNet);
-		NetworkPtr newNet = ConvNetwork(sNet);
-		return newNet;
+		serialize::NetType netType = static_cast<serialize::NetType>(findValue(inNet, "netType").get_int());
+		if (netType == serialize::Normal){
+			serialize::Network sNet;
+			readNetwork(sNet,inNet);
+			sNet.WriteOut(outNet);
+		}
+		else if (netType == serialize::FFMLP){
+			serialize::FFMLPNetwork sNetFF;
+			readFFNetwork(sNetFF,inNet);
+			FFMLPNetPtr tmpNet = dynamic_pointer_cast<FFMLPNetwork>(outNet);
+			assert(tmpNet);
+			sNetFF.WriteOut(tmpNet);
+		}
+		else if (netType == serialize::CC){
+			serialize::CCNetwork sNetCC;
+			readCCNetwork(sNetCC,inNet);
+			CCNetworkPtr tmpNetCC = dynamic_pointer_cast<CCNetwork>(outNet);
+			assert(tmpNetCC);
+			sNetCC.WriteOut(tmpNetCC);
+		}
+		else {
+			assert(0);
+		}
 	}
 
-	void JSONArchiver::Save( NetworkPtr net, ostream& stream)
+	void JSONArchiver::Save( NetworkPtr inNet, ostream& outStream)
 	{
-		serialize::Network sNet = ConvNetwork(net);
-		mObject outNet = writeNetwork(sNet);
-		write_stream(mValue(outNet),stream);
+
+		mObject outNet;
+
+		if (typeid(CCNetworkPtr) == typeid(inNet) ){
+			serialize::CCNetwork sNet;
+			sNet.ReadIn(dynamic_pointer_cast<CCNetwork>(inNet));
+			writeCCNetwork(outNet,sNet);
+		} 
+		else if (typeid(FFMLPNetPtr) == typeid(inNet)){
+			serialize::FFMLPNetwork sNet;
+			sNet.ReadIn(dynamic_pointer_cast<FFMLPNetwork>(inNet));
+			writeFFNetwork(outNet,sNet);
+		}
+		else {
+			serialize::Network sNet;
+			sNet.ReadIn(inNet);
+			writeNetwork(outNet,sNet);	
+		}
+
+		write_stream(mValue(outNet),outStream);
+
+		/*serialize::Network sNet = ConvNetwork(inNet);
+		mObject outNet;
+		writeNetwork(outNet, sNet);
+		write_stream(mValue(outNet),outStream);*/
 	}
 
 }

@@ -17,6 +17,7 @@
 #include <fstream>
 #include <json_spirit_reader_template.h>
 #include <json_spirit_writer_template.h>
+#include <typeinfo>
 
 using namespace std;
 using namespace json_spirit;
@@ -24,6 +25,13 @@ using namespace json_spirit;
 namespace JRNN {
 
 	namespace serialize {
+
+		enum NetType {
+			Normal,
+			FFMLP,
+			CC
+		};
+
 		struct Node {
 			string name;
 			int height;
@@ -47,6 +55,7 @@ namespace JRNN {
 		};
 
 		struct Network {
+			NetType netType;
 			int numIn;
 			int numOut;
 			int numHidLayers;
@@ -79,8 +88,8 @@ namespace JRNN {
 	public:
 		Serializer(){}
 		~Serializer(){}
-		virtual NetworkPtr Load(istream& inStream) = 0;
-		virtual void Save(NetworkPtr net, ostream& stream) = 0;
+		virtual void Load(NetworkPtr outNet, istream& inStream) = 0;
+		virtual void Save(NetworkPtr inNet, ostream& outStream) = 0;
 		friend struct serialize::Network;
 
 	protected:
@@ -88,8 +97,8 @@ namespace JRNN {
 		static FFMLPNetPtr ConvFFMLPNetwork(serialize::FFMLPNetwork& net);
 		static serialize::CCNetwork ConvCCNetwork(CCNetworkPtr net);
 		static CCNetworkPtr ConvCCNetwork(serialize::CCNetwork& net);*/
-		static serialize::Network ConvNetwork(NetworkPtr net);
-		static NetworkPtr ConvNetwork(serialize::Network& net);
+		static serialize::Network ConvNetwork(NetworkPtr net); //Not used anymore
+		static NetworkPtr ConvNetwork(serialize::Network& net); //Not used anymore
 		static serialize::Node ConvNode(NodePtr node);
 		static NodePtr ConvNode(serialize::Node& node);
 		static serialize::Connection ConvConnection (ConPtr con);
@@ -99,14 +108,19 @@ namespace JRNN {
 
 	class JSONArchiver : public Serializer {
 	public:
-		virtual NetworkPtr Load(istream& inStream);
-		virtual void Save(NetworkPtr net, ostream& stream);
+		virtual void Load(NetworkPtr outNet, istream& inStream);
+		virtual void Save(NetworkPtr inNet, ostream& outStream);
 
 	private:
-		//TODO Need to finish the serialization for the CCNetwork and FFMLPNetwork
 		const mValue& findValue( const mObject& obj, const string& name  );
-		mObject writeNetwork(serialize::Network& net);
-		serialize::Network readNetwork(mObject& obj);
+		//Overloaded functions for the different types of networks
+		void writeNetwork(mObject& outNet, serialize::Network& net);
+		void readNetwork(serialize::Network& sNet, mObject& net);
+		void writeFFNetwork(mObject& outNet, serialize::FFMLPNetwork& net);
+		void readFFNetwork(serialize::FFMLPNetwork& sNet, mObject& net);
+		void writeCCNetwork(mObject& outNet, serialize::CCNetwork& net);
+		void readCCNetwork(serialize::CCNetwork& sNet, mObject& net);
+
 		mArray writeLayers(std::vector<serialize::Layer>& layers);
 		std::vector<serialize::Layer> readLayers(mArray& layers);
 		mObject writeLayer(serialize::Layer layer);
@@ -115,6 +129,8 @@ namespace JRNN {
 		std::vector<serialize::Connection> readCons(mArray& cons);
 		mObject writeCon(serialize::Connection& con);
 		serialize::Connection readCon(mObject& con);
+		mArray writeStrings( vector<string> hiddenLayerNames );
+		std::vector<string> readStrings( mArray hidLayerNames );
 		mObject writeNode(serialize::Node& node);
 		serialize::Node readNode(mObject& node);
 		std::vector<serialize::Node> readNodes(mArray& nodes);
