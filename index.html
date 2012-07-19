@@ -1,0 +1,63 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>JRNN by jreeder</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>JRNN</h1>
+        <p>&quot;John Reeder's Neural Network Library&quot;</p>
+
+        <p class="view"><a href="https://github.com/jreeder/JRNN">View the Project on GitHub <small>jreeder/JRNN</small></a></p>
+
+
+        <ul>
+          <li><a href="https://github.com/jreeder/JRNN/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/jreeder/JRNN/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/jreeder/JRNN">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <p>This is a Neural Networks library in C++. </p>
+
+<p>It makes extensive use of boost shared pointers and some containers, so <a href="http://www.boost.org">Boost</a> version 1.43 or greater is needed to compile against. </p>
+
+<p>The experimental programs make use of <a href="tclap.sourceforge.net">TCLAP</a> for command line parsing, and xmlconfig/tinyxml for parameter file reading. </p>
+
+<p>xmlconfig is an extension of <a href="http://www.grinninglizard.com/tinyxml/">tinyxml</a> that provides a very limited XPath like interface into xml files. It has built in value cacheing, and maintains awareness of the xml file state, so look ups are quick and values are up to date with the original xml file. </p>
+
+<p>Network serialization is implemented in a way that allows for several different output formats. Currently the only output format is JSON which is implemented using the <a href="http://www.codeproject.com/Articles/20027/JSON-Spirit-A-C-JSON-Parser-Generator-Implemented">JSON-Spirit</a> Library. </p>
+
+<p>Currently there are trainers for Standard Backprop, RProp, and Cascade Correlation. </p>
+
+<p>This software is of primary use to my disseratation research. So things are pretty specific to my needs. Once I've finished with my dissertation I'll clean this up and make it more presentable. </p>
+
+<h2>Dependencies &amp; Use</h2>
+
+<ul>
+<li>  <a href="http://www.boost.org">Boost</a> Version &gt;= 1.43</li>
+<li>  <a href="tclap.sourceforge.net">TCLAP</a> Version &gt;= 1.2.1</li>
+<li>  <a href="http://www.codeproject.com/Articles/20027/JSON-Spirit-A-C-JSON-Parser-Generator-Implemented">JSON-Spirit</a> Version &gt;= 4.05</li>
+</ul><p>Currently only the VS2010 build environment is kept up to date. At some point I will be adding cmake support. </p>
+
+<hr><p>Copyright © 2012 John Reeder</p>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/jreeder">jreeder</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+    
+  </body>
+</html>
