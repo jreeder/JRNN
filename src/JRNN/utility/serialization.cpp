@@ -75,7 +75,7 @@ namespace JRNN {
 
 	void serialize::Network::WriteOut(NetworkPtr net){
 		if (!net){
-			net = JRNN::Network::Create();
+			assert(0);
 		}
 		net->SetNumIn(numIn);
 		net->SetNumOut(numOut);
@@ -115,7 +115,7 @@ namespace JRNN {
 
 	void serialize::CCNetwork::WriteOut(CCNetworkPtr net){
 		if (!net){
-			net = JRNN::CCNetwork::Create();
+			assert(0);
 		}
 		Network::WriteOut(net);
 		net->SetNumUnits(numUnits);
@@ -137,6 +137,9 @@ namespace JRNN {
 	}
 
 	void serialize::FFMLPNetwork::WriteOut(FFMLPNetPtr net){
+		if (!net){
+			assert(0);
+		}
 		Network::WriteOut(net);
 	}
 	serialize::Node Serializer::ConvNode(NodePtr node){
@@ -418,34 +421,38 @@ namespace JRNN {
 		return newNodes;
 	}
 
-	void JSONArchiver::Load( NetworkPtr outNet, istream& inStream )
+	NetworkPtr JSONArchiver::Load(istream& inStream )
 	{
 		mValue value;
 		read_stream(inStream, value);
 		mObject inNet = value.get_obj();
+		NetworkPtr retNet;
 		serialize::NetType netType = static_cast<serialize::NetType>(findValue(inNet, "netType").get_int());
 		if (netType == serialize::Normal){
 			serialize::Network sNet;
 			readNetwork(sNet,inNet);
-			sNet.WriteOut(outNet);
+			retNet = Network::Create();
+			sNet.WriteOut(retNet);
 		}
 		else if (netType == serialize::FFMLP){
 			serialize::FFMLPNetwork sNetFF;
 			readFFNetwork(sNetFF,inNet);
-			FFMLPNetPtr tmpNet = dynamic_pointer_cast<FFMLPNetwork>(outNet);
-			assert(tmpNet);
+			FFMLPNetPtr tmpNet = FFMLPNetwork::Create();
 			sNetFF.WriteOut(tmpNet);
+			retNet = tmpNet;
 		}
 		else if (netType == serialize::CC){
 			serialize::CCNetwork sNetCC;
 			readCCNetwork(sNetCC,inNet);
-			CCNetworkPtr tmpNetCC = dynamic_pointer_cast<CCNetwork>(outNet);
-			assert(tmpNetCC);
+			CCNetworkPtr tmpNetCC = CCNetwork::Create();
 			sNetCC.WriteOut(tmpNetCC);
+			retNet = tmpNetCC;
 		}
 		else {
 			assert(0);
 		}
+
+		return retNet;
 	}
 
 	void JSONArchiver::Save( NetworkPtr inNet, ostream& outStream)
@@ -453,12 +460,12 @@ namespace JRNN {
 
 		mObject outNet;
 
-		if (typeid(CCNetworkPtr) == typeid(inNet) ){
+		if (typeid(CCNetwork) == typeid((*inNet))){
 			serialize::CCNetwork sNet;
 			sNet.ReadIn(dynamic_pointer_cast<CCNetwork>(inNet));
 			writeCCNetwork(outNet,sNet);
 		} 
-		else if (typeid(FFMLPNetPtr) == typeid(inNet)){
+		else if (typeid(FFMLPNetwork) == typeid((*inNet))){
 			serialize::FFMLPNetwork sNet;
 			sNet.ReadIn(dynamic_pointer_cast<FFMLPNetwork>(inNet));
 			writeFFNetwork(outNet,sNet);

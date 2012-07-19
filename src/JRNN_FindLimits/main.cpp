@@ -352,8 +352,8 @@ int RevCCExperiment()
 }
 
 int SerializationTest(){
-	FFMLPNetPtr net = FFMLPNetwork::Create();
-	net->Build(2,8,2);
+	CCNetworkPtr net = CCNetwork::Create();
+	net->Build(2,2);
 
 	JSONArchiver archiver;
 	ofstream ofile;
@@ -363,8 +363,8 @@ int SerializationTest(){
 
 	ifstream ifile;
 	ifile.open("testfile.txt", ios_base::in);
-	FFMLPNetPtr tmpNet;
-	archiver.Load(tmpNet,ifile);
+	CCNetworkPtr tmpNet;
+	tmpNet = dynamic_pointer_cast<CCNetwork>(archiver.Load(ifile));
 
 	ifile.close();
 
