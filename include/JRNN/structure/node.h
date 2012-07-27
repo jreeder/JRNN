@@ -16,8 +16,10 @@
 //using namespace boost::numeric::ublas;
 
 namespace JRNN {
+
 	class Node {
 	public:
+		
 
 		/*enum nodeType {
 			sigmoid,

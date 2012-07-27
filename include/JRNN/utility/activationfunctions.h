@@ -11,6 +11,7 @@
 #include "JRNN.h"
 
 namespace JRNN {
+
 	class ActivationFunction {
 	public:
 		virtual double activate(double sum) = 0;
@@ -183,7 +184,7 @@ namespace JRNN {
 		}
 	};
 	
-
+	typedef boost::scoped_ptr<ActivationFunction> ActFuncPtr;
 }
 
 #endif

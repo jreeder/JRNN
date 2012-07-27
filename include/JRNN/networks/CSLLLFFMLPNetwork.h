@@ -19,7 +19,7 @@
 
 namespace JRNN {
 	class CSLLFFMLPNetwork;
-	typedef NetworkPtrHelper<CSLLFFMLPNetwork>::Ptr CSLLFFMLPNetPtr;
+	typedef boost::shared_ptr<CSLLFFMLPNetwork> CSLLFFMLPNetPtr;
 	typedef boost::enable_shared_from_this<CSLLFFMLPNetwork> CSLLFFMLPSharedFromThis;
 
 	class CSLLFFMLPNetwork : public FFMLPNetwork, public CSLLFFMLPSharedFromThis {

@@ -38,34 +38,23 @@ namespace ublas = boost::numeric::ublas;
 
 
 namespace JRNN {
+    
+	//These two forward declarations have to be here because they have a circular dependency
 	class Node;
-    class Network;
-    class Connection;
-    class Layer;
-    class Dataset;
-	class ActivationFunction;
-    typedef boost::unordered_map<std::string, double> hashedDoubleMap;
-    typedef boost::unordered_map<std::string, int> hashedIntMap;
-    typedef boost::shared_ptr<Node> NodePtr;
-	typedef boost::scoped_ptr<ActivationFunction> ActFuncPtr;
-    typedef std::vector<NodePtr> NodeList;
-    typedef ublas::vector<double> vecDouble;
-	template<typename T = Network>
-	struct NetworkPtrHelper {
-		    typedef boost::shared_ptr<T> Ptr;
-	};
-    typedef boost::shared_ptr<Connection> ConPtr;
-    typedef boost::shared_ptr<Layer> LayerPtr;
-    typedef std::vector<ConPtr> ConList;
+	typedef boost::shared_ptr<Node> NodePtr;
+	typedef std::vector<NodePtr> NodeList;
+
+	class Connection;
+	typedef boost::shared_ptr<Connection> ConPtr;
+	typedef std::vector<ConPtr> ConList;
 	typedef std::map<std::string, ConPtr> ConMap;
 	typedef std::pair<std::string, ConPtr> ConPair;
-    typedef boost::shared_ptr<Layer> LayerPtr;
-    typedef std::map<std::string,LayerPtr> LayerMap;
-	typedef std::pair<std::string, LayerPtr> LayerPair;
-	typedef std::vector<LayerPtr> LayerList;
+
+	typedef boost::unordered_map<std::string, double> hashedDoubleMap;
+    typedef boost::unordered_map<std::string, int> hashedIntMap;
+	typedef ublas::vector<double> vecDouble;
     typedef std::vector<ublas::vector<double> > matDouble;
     typedef std::vector<double> doubles;
-    typedef boost::shared_ptr<Dataset> DatasetPtr;
 	typedef std::vector<std::string> strings;
 	typedef std::set<std::string> StringSet;
 	typedef std::pair<StringSet::iterator, bool> StringSetRet;

@@ -13,6 +13,13 @@
 
 namespace JRNN {
     
+	class Layer;
+	typedef boost::shared_ptr<Layer> LayerPtr;
+	typedef std::map<std::string,LayerPtr> LayerMap;
+	typedef std::pair<std::string, LayerPtr> LayerPair;
+	typedef std::vector<LayerPtr> LayerList;
+
+
     class Layer {
     public:
         

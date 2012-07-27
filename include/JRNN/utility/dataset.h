@@ -13,6 +13,9 @@
 
 namespace JRNN {
 
+	class Dataset;
+	typedef boost::shared_ptr<Dataset> DatasetPtr;
+
     class Dataset {
 
     public:

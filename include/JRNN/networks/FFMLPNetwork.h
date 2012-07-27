@@ -13,7 +13,7 @@
 
 namespace JRNN {
 	class FFMLPNetwork;
-	typedef NetworkPtrHelper<FFMLPNetwork>::Ptr FFMLPNetPtr;
+	typedef boost::shared_ptr<FFMLPNetwork> FFMLPNetPtr;
 	typedef boost::enable_shared_from_this<FFMLPNetwork> FFMLPSharedFromThis;
 
 	class FFMLPNetwork : public Network, public FFMLPSharedFromThis {

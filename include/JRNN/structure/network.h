@@ -17,7 +17,9 @@ using namespace std;
 
 namespace JRNN{
 
-	typedef NetworkPtrHelper<>::Ptr NetworkPtr;
+	class Network;
+
+	typedef boost::shared_ptr<Network> NetworkPtr;
 	typedef boost::enable_shared_from_this<Network> NetworkSharedFromThis;
 
     class Network: public NetworkSharedFromThis{
