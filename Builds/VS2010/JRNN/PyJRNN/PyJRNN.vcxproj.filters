@@ -21,10 +21,10 @@
     <ClCompile Include="..\..\..\..\src\PyJRNN\PyJRNN.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\PyJRNN\networks\ccnetwork.cpp">
+    <ClCompile Include="..\..\..\..\src\PyJRNN\networks\pynetwork.cpp">
       <Filter>Source Files\networks</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\PyJRNN\networks\network.cpp">
+    <ClCompile Include="..\..\..\..\src\PyJRNN\networks\pyccnetwork.cpp">
       <Filter>Source Files\networks</Filter>
     </ClCompile>
   </ItemGroup>

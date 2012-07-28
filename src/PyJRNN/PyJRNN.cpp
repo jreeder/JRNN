@@ -29,9 +29,11 @@ void exportTemp(){
 	def("greet", greet, "return one of 3 parts of a greeting");
 }
 
+void exportNetworks();
+
 BOOST_PYTHON_MODULE(PyJRNN)
 {
 	object package = scope();
 	package.attr("__path__") = "PyJRNN";
-	exportTemp();
+	exportNetworks();
 }

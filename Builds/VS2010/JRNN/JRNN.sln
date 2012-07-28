@@ -34,6 +34,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PyJRNN", "PyJRNN\PyJRNN.vcxproj", "{83208084-67D1-4BFF-944D-2D50BD39B44F}"
+	ProjectSection(ProjectDependencies) = postProject
+		{E4965A51-3BB5-470F-83AE-C73B5E419A74} = {E4965A51-3BB5-470F-83AE-C73B5E419A74}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

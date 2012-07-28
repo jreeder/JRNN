@@ -70,6 +70,7 @@ namespace JRNN{
 		//static NetworkPtr CreateMinFFNetwork(int numIn, int numOut);
         
     protected:
+		
 		Network();
 		Network(const Network& orig);
 
