@@ -16,6 +16,9 @@
     <Filter Include="Source Files\networks">
       <UniqueIdentifier>{d9672aa5-f911-4b10-98f8-21645545ae97}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\networks">
+      <UniqueIdentifier>{34e905a0-b791-4261-bb53-bd76a779ae7e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\..\src\PyJRNN\PyJRNN.cpp">
@@ -24,8 +27,16 @@
     <ClCompile Include="..\..\..\..\src\PyJRNN\networks\pynetwork.cpp">
       <Filter>Source Files\networks</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\PyJRNN\networks\pyccnetwork.cpp">
-      <Filter>Source Files\networks</Filter>
-    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\..\include\PyJRNN\networks\pynetworkshelper.h">
+      <Filter>Header Files\networks</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\PyJRNN\networks\pyccnetwork.h">
+      <Filter>Header Files\networks</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\PyJRNN\JRNNTypeDefs.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

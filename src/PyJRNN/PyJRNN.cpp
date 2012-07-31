@@ -8,6 +8,7 @@
 *********************************************************************/
 
 #include <boost/python.hpp>
+#include "JRNNTypeDefs.h"
 
 using namespace boost::python;
 
@@ -35,5 +36,11 @@ BOOST_PYTHON_MODULE(PyJRNN)
 {
 	object package = scope();
 	package.attr("__path__") = "PyJRNN";
+	
+	exportTypeDefs();
+
+	object module(handle<>(borrowed(PyImport_AddModule("PyJRNN.networks"))));
+	scope().attr("networks") = module;
+	scope module_scope = module;
 	exportNetworks();
 }

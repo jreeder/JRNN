@@ -44,7 +44,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
-      <AdditionalIncludeDirectories>$(ProjectDir)\..\..\..\..\include\JRNN;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)\..\..\..\..\include\PyJRNN;$(ProjectDir)\..\..\..\..\include\JRNN;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
     </ClCompile>
     <Link>
@@ -71,9 +71,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\..\src\PyJRNN\networks\pyccnetwork.cpp" />
     <ClCompile Include="..\..\..\..\src\PyJRNN\networks\pynetwork.cpp" />
     <ClCompile Include="..\..\..\..\src\PyJRNN\PyJRNN.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\..\include\PyJRNN\JRNNTypeDefs.h" />
+    <ClInclude Include="..\..\..\..\include\PyJRNN\networks\pyccnetwork.h" />
+    <ClInclude Include="..\..\..\..\include\PyJRNN\networks\pynetworkshelper.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
