@@ -79,6 +79,9 @@
     <ClInclude Include="..\..\..\..\include\PyJRNN\networks\pyccnetwork.h" />
     <ClInclude Include="..\..\..\..\include\PyJRNN\networks\pynetworkshelper.h" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\..\..\src\PyJRNN\PyJRNN_test.py" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
