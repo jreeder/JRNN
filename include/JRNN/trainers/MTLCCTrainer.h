@@ -8,6 +8,9 @@
 				to the CCTrainer. 
 *********************************************************************/
 
+#ifndef _MTLCCTRAINER_H
+#define _MTLCCTRAINER_H
+
 #include "JRNN.h"
 #include "trainers/CCTrainer.h"
 #include "utility/etamtlhelper.h"
@@ -36,3 +39,4 @@ namespace JRNN {
 		double CalcWeight(bool primary, int index);
 	};
 }
+#endif

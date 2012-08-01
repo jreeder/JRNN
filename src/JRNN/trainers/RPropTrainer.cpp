@@ -4,6 +4,7 @@
  * 
  * Created on June 7, 2010, 11:10 PM
  */
+
 #include "JRNN.h"
 #include "trainers/RPropTrainer.h"
 

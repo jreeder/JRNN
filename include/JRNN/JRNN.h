@@ -9,8 +9,6 @@
 #ifndef _JRNN_H
 #define	_JRNN_H
 
-#define JRNN_USE_NUMPY_FOR_PYTHON_BINDING
-
 #include <vector>
 #include <map>
 #include <set>
@@ -34,7 +32,13 @@
 #include <time.h>
 #include <algorithm>
 #include <assert.h>
-#include <pyublas/numpy.hpp>
+#ifdef JRNN_USE_NUMPY_FOR_PYTHON_BINDING
+	#define PY_ARRAY_UNIQUE_SYMBOL JRNN_PyUnique
+		#ifndef JRNN_DO_IMPORT 
+			#define NO_IMPORT_ARRAY
+		#endif
+	#include <pyublas/numpy.hpp>
+#endif // JRNN_USE_NUMPY_FOR_PYTHON_BINDING
 
 
 namespace ublas = boost::numeric::ublas;
@@ -55,7 +59,7 @@ namespace JRNN {
 
 	typedef boost::unordered_map<std::string, double> hashedDoubleMap;
     typedef boost::unordered_map<std::string, int> hashedIntMap;
-	
+
 #ifdef JRNN_USE_NUMPY_FOR_PYTHON_BINDING
 	typedef pyublas::numpy_vector<double> vecDouble;
 #else

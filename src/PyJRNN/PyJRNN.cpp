@@ -8,6 +8,7 @@
 *********************************************************************/
 
 #include <boost/python.hpp>
+//#define PY_ARRAY_UNIQUE_SYMBOL PyJRNN_unique
 #include "JRNNTypeDefs.h"
 
 using namespace boost::python;
@@ -43,4 +44,5 @@ BOOST_PYTHON_MODULE(PyJRNN)
 	scope().attr("networks") = module;
 	scope module_scope = module;
 	exportNetworks();
+
 }

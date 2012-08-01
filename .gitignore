@@ -5,8 +5,8 @@ dist/
 private/
 Results/
 *.swp
-Debug/
-Release/
+Debug*/
+Release*/
 ipch/
 *.suo
 *.user

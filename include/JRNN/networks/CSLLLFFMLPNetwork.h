@@ -13,7 +13,6 @@
 #ifndef _CSLLFFMLPNETWORK_H
 #define _CSLLFFMLPNETWORK_H
 
-
 #include "JRNN.h"
 #include "networks/FFMLPNetwork.h"
 
