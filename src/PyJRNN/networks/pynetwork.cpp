@@ -9,6 +9,7 @@
 #include <boost/python.hpp>
 #include "networks/pynetworkshelper.h"
 #include "networks/pyccnetwork.h"
+#include "networks/pyffmlpnetwork.h"
 
 
 using namespace boost::python;
@@ -33,4 +34,6 @@ void exportNetworks(){
 		;
 
 	exportCCNetwork();
+
+	exportFFMLPNetwork();
 }

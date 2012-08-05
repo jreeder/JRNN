@@ -6,6 +6,9 @@
 	purpose:	This will wrap the CCNetwork class for python
 *********************************************************************/
 
+#ifndef _PYCCNETWORK_H
+#define _PYCCNETWORK_H
+
 #include "networks/pynetworkshelper.h"
 #include <boost/python.hpp>
 
@@ -13,8 +16,6 @@ using namespace JRNN;
 using namespace boost::python;
 
 NetworkPtr (CCNetwork::*CCClonePtr)() = &CCNetwork::Clone;
-
-struct NetWrap;
 
 BOOST_PYTHON_MEMBER_FUNCTION_OVERLOADS(CCNetwork_buildoverloads,Build,2,5);
 
@@ -30,3 +31,5 @@ void exportCCNetwork(){
 		;
 
 }
+
+#endif

@@ -32,6 +32,7 @@ void exportTemp(){
 }
 
 void exportNetworks();
+void exportDatasets();
 
 BOOST_PYTHON_MODULE(PyJRNN)
 {
@@ -45,4 +46,8 @@ BOOST_PYTHON_MODULE(PyJRNN)
 	scope module_scope = module;
 	exportNetworks();
 
+	object module2(handle<>(borrowed(PyImport_AddModule("PyJRNN.utility"))));
+	package.attr("utility") = module2;
+	scope module2_scope = module2;
+	exportDatasets();
 }

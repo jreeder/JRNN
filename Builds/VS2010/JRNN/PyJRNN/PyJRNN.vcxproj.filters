@@ -19,6 +19,12 @@
     <Filter Include="Header Files\networks">
       <UniqueIdentifier>{34e905a0-b791-4261-bb53-bd76a779ae7e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\utility">
+      <UniqueIdentifier>{0dab07e8-d950-414c-a6bc-951cca1027f4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\utility">
+      <UniqueIdentifier>{1fddb7c2-931f-4b3a-b95b-383895851090}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\..\src\PyJRNN\PyJRNN.cpp">
@@ -26,6 +32,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\PyJRNN\networks\pynetwork.cpp">
       <Filter>Source Files\networks</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\PyJRNN\utility\pydataset.cpp">
+      <Filter>Source Files\utility</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -37,6 +46,15 @@
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\PyJRNN\JRNNTypeDefs.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\PyJRNN\networks\pyffmlpnetwork.h">
+      <Filter>Header Files\networks</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\PyJRNN\utility\pydatasethelper.h">
+      <Filter>Header Files\utility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\PyJRNN\utility\pymtldataset.h">
+      <Filter>Header Files\utility</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

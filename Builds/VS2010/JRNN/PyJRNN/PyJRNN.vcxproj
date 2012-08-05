@@ -75,11 +75,15 @@
   <ItemGroup>
     <ClCompile Include="..\..\..\..\src\PyJRNN\networks\pynetwork.cpp" />
     <ClCompile Include="..\..\..\..\src\PyJRNN\PyJRNN.cpp" />
+    <ClCompile Include="..\..\..\..\src\PyJRNN\utility\pydataset.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\include\PyJRNN\JRNNTypeDefs.h" />
     <ClInclude Include="..\..\..\..\include\PyJRNN\networks\pyccnetwork.h" />
+    <ClInclude Include="..\..\..\..\include\PyJRNN\networks\pyffmlpnetwork.h" />
     <ClInclude Include="..\..\..\..\include\PyJRNN\networks\pynetworkshelper.h" />
+    <ClInclude Include="..\..\..\..\include\PyJRNN\utility\pymtldataset.h" />
+    <ClInclude Include="..\..\..\..\include\PyJRNN\utility\pydatasethelper.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\..\..\src\PyJRNN\PyJRNN_test.py" />
