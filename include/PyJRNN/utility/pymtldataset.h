@@ -18,9 +18,13 @@ using namespace boost::python;
 
 //Need to fix these to have default arguments
 void (MTLDataset::*ImpPrim1)(double, unsigned int) = &MTLDataset::ImpoverishPrimaryTaskTraining;
-void (MTLDataset::*ImpPrim11)(double) = &MTLDataset::ImpoverishPrimaryTaskTraining;
+//void (MTLDataset::*ImpPrim11)(double) = &MTLDataset::ImpoverishPrimaryTaskTraining;
+//void ImpPrim11(double x){ MTLDataset md; (md.* ImpPrim1)(x,0); }
 void (MTLDataset::*ImpPrim2)(int, unsigned int) = &MTLDataset::ImpoverishPrimaryTaskTraining;
-void (MTLDataset::*ImpPrim21)(int) = &MTLDataset::ImpoverishPrimaryTaskTraining;
+//void (MTLDataset::*ImpPrim21)(int) = &MTLDataset::ImpoverishPrimaryTaskTraining;
+//void ImpPrim21(int x) { MTLDataset md; (md.* ImpPrim2)(x, 0); }
+
+BOOST_PYTHON_MEMBER_FUNCTION_OVERLOADS(MTLDataset_ImpPrimOverlaods, ImpoverishPrimaryTaskTraining, 1,2);
 
 BOOST_PYTHON_MEMBER_FUNCTION_OVERLOADS(MTLDataset_DistDataOverloads, DistData, 3, 6);
 
@@ -31,10 +35,8 @@ void exportMTLDataset(){
 		def("GetIndexes", &MTLDataset::GetIndexes).
 		def("AddTaskFromFile", &MTLDataset::AddTaskFromFile).
 		def("AddTaskFromNet", &MTLDataset::AddTaskFromNet).
-		def("ImpoverishPrimaryTaskTraining", ImpPrim1).
-		def("ImpoverishPrimaryTaskTraining", ImpPrim11).
-		def("ImpoverishPrimaryTaskTraining", ImpPrim2).
-		def("ImpoverishPrimaryTaskTraining", ImpPrim21).
+		def("ImpoverishPrimaryTaskTraining", ImpPrim1, MTLDataset_ImpPrimOverlaods()).
+		def("ImpoverishPrimaryTaskTraining", ImpPrim2, MTLDataset_ImpPrimOverlaods()).
 		def("SpawnDS", &MTLDataset::SpawnDS).
 		def("DistData", &MTLDataset::DistData, MTLDataset_DistDataOverloads())
 		;

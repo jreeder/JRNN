@@ -24,6 +24,17 @@ void exportTypeDefs(){
 
 	class_<doubles>("doubles").
 		def(vector_indexing_suite<doubles>());
+
+	class_<strings>("strings").
+		def(vector_indexing_suite<strings>());
+
+	class_<ints>("ints").
+		def(vector_indexing_suite<ints>());
+
+	//Need to figure out how to convert matDoubles from lists of numpy arrays this doesn't 
+	//work
+	//class_<matDouble>("matDouble").
+	//	def(vector_indexing_suite<matDouble>());
 }
 
 #endif
