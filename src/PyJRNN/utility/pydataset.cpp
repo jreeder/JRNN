@@ -27,5 +27,13 @@ void exportDatasets(){
 		def("Clear", &Dataset::Clear)
 		;
 
+	enum_<Dataset::datatype>("DSDatatype").
+		value("TRAIN", Dataset::TRAIN).
+		value("TEST", Dataset::TEST).
+		value("VAL", Dataset::VAL).
+		value("ALL", Dataset::ALL).
+		export_values()
+		;
+
 	exportMTLDataset();
 }
