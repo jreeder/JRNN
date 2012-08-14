@@ -1,6 +1,6 @@
 /********************************************************************
 	created:	2012/08/05
-	filename: 	mtldataset.h
+	filename: 	pymtldataset.cpp
 	author:		jreeder
 	
 	purpose:	wrapper for the mtldataset class. 

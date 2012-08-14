@@ -25,6 +25,9 @@
     <Filter Include="Header Files\utility">
       <UniqueIdentifier>{1fddb7c2-931f-4b3a-b95b-383895851090}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\trainers">
+      <UniqueIdentifier>{d45f5204-1552-4b62-a2ae-023071791aa5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\..\src\PyJRNN\PyJRNN.cpp">
@@ -35,6 +38,18 @@
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\PyJRNN\utility\pydataset.cpp">
       <Filter>Source Files\utility</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\PyJRNN\utility\pymtldataset.cpp">
+      <Filter>Source Files\utility</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\PyJRNN\utility\pycsmtldataset.cpp">
+      <Filter>Source Files\utility</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\PyJRNN\utility\pyserialization.cpp">
+      <Filter>Source Files\utility</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\PyJRNN\trainers\pycctrainer.cpp">
+      <Filter>Source Files\trainers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -51,9 +66,6 @@
       <Filter>Header Files\networks</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\PyJRNN\utility\pydatasethelper.h">
-      <Filter>Header Files\utility</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\include\PyJRNN\utility\pymtldataset.h">
       <Filter>Header Files\utility</Filter>
     </ClInclude>
   </ItemGroup>

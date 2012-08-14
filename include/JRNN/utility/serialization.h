@@ -110,6 +110,8 @@ namespace JRNN {
 	public:
 		virtual NetworkPtr Load(istream& inStream);
 		virtual void Save(NetworkPtr inNet, ostream& outStream);
+		NetworkPtr LoadFromFile(string fileName);
+		void SaveToFile(NetworkPtr inNet, string fileName);
 
 	private:
 		const mValue& findValue( const mObject& obj, const string& name  );

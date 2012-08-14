@@ -60,7 +60,7 @@ namespace JRNN {
 			bool useSDCC;
 			double SDCCRatio;
 
-			struct  
+			struct outParms 
 			{
 				int epochs;
 				int patience;
@@ -72,7 +72,7 @@ namespace JRNN {
 				double changeThreshold;
 			} out;
 
-			struct  
+			struct candParms
 			{
 				int epochs;
 				int patience;

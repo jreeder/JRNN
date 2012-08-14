@@ -484,4 +484,21 @@ namespace JRNN {
 		write_stream(mValue(outNet),outStream);*/
 	}
 
+	NetworkPtr JSONArchiver::LoadFromFile( string fileName )
+	{
+		ifstream ifile;
+		ifile.open(fileName, ios_base::in);
+		NetworkPtr net = this->Load(ifile);
+		ifile.close();
+		return net;
+	}
+
+	void JSONArchiver::SaveToFile( NetworkPtr inNet, string fileName )
+	{
+		ofstream ofile;
+		ofile.open(fileName, ios_base::out);
+		this->Save(inNet, ofile);
+		ofile.close();
+	}
+
 }

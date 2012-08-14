@@ -10,10 +10,12 @@
 #include <boost/python.hpp>
 #include <utility/dataset.h>
 #include "utility/pydatasethelper.h"
-#include "utility/pymtldataset.h"
 
 using namespace boost::python;
 using namespace JRNN;
+
+void exportMTLDataset();
+void exportCSMTLDataset();
 
 void exportDatasets(){
 
@@ -36,4 +38,5 @@ void exportDatasets(){
 		;
 
 	exportMTLDataset();
+	exportCSMTLDataset();
 }
