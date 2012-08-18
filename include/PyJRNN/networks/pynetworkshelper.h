@@ -48,6 +48,28 @@ struct NetWrap : Network, wrapper<Network>
 	}
 
 	vecDouble default_GetOutputs() {return this->Network::GetOutputs();}
+
+	void Reset() {
+		if (override Reset = this->get_override("Reset")){
+			Reset();
+		}
+		else {
+			Network::Reset();
+		}
+	}
+
+	void default_Reset() {return this->Network::Reset();}
+};
+
+struct CCNetWrap : CCNetwork, wrapper<CCNetwork>
+{
+	NetworkPtr Clone(){
+		if(override Clone = this->get_override("Clone"))
+			return Clone();
+		return CCNetwork::Clone();
+	}
+
+	NetworkPtr default_Clone() {return this->CCNetwork::Clone();}
 };
 
 #endif

@@ -8,13 +8,14 @@
 
 #include <boost/python.hpp>
 #include "networks/pynetworkshelper.h"
-#include "networks/pyccnetwork.h"
-#include "networks/pyffmlpnetwork.h"
 
 
 using namespace boost::python;
 using namespace JRNN;
 
+void exportCCNetwork();
+void exportFFMLPNetwork();
+void exportRevCCNetwork();
 void exportNetworks(){
 	
 
@@ -30,10 +31,13 @@ void exportNetworks(){
 		def("Clone", ClonePtr, &NetWrap::default_Clone).
 		def("Activate", ActivatePtr, &NetWrap::default_Activate).
 		def("GetOutputs", &Network::GetOutputs, &NetWrap::default_GetOutputs).
-		def("PrintConnectsion", &Network::PrintConnections)
+		def("PrintConnectsion", &Network::PrintConnections).
+		def("Reset", &Network::Reset, &NetWrap::default_Reset)
 		;
 
 	exportCCNetwork();
 
 	exportFFMLPNetwork();
+
+	exportRevCCNetwork();
 }

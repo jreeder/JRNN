@@ -6,9 +6,6 @@
 	purpose:	Mapping the ffmlpnetwork class. 
 *********************************************************************/
 
-#ifndef _PYFFMLPNETWORK_H
-#define _PYFFMLPNETWORK_H
-
 #include <boost/python.hpp>
 #include <networks/FFMLPNetwork.h>
 
@@ -28,4 +25,3 @@ void exportFFMLPNetwork(){
 		;
 
 }
-#endif

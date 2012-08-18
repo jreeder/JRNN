@@ -27,10 +27,12 @@ template<class T>
 struct std_item {
 	typedef typename T::value_type V;
 
+
 	static V& get(T& x, unsigned int i){
 		if (i < 0) i += x.size();
 		if (i >= 0 && i < x.size()) return x[i];
 		IndexError();
+		return x[0]; //Should never get here, just to get rid of warning
 	}
 
 	static void set(T& x, unsigned int i, V const& v){

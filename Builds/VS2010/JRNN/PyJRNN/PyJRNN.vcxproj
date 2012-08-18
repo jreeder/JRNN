@@ -73,7 +73,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\..\src\PyJRNN\networks\pyccnetwork.cpp" />
+    <ClCompile Include="..\..\..\..\src\PyJRNN\networks\pyffmlpnetwork.cpp" />
     <ClCompile Include="..\..\..\..\src\PyJRNN\networks\pynetwork.cpp" />
+    <ClCompile Include="..\..\..\..\src\PyJRNN\networks\pyrevccnetwork.cpp" />
     <ClCompile Include="..\..\..\..\src\PyJRNN\PyJRNN.cpp" />
     <ClCompile Include="..\..\..\..\src\PyJRNN\trainers\pycctrainer.cpp" />
     <ClCompile Include="..\..\..\..\src\PyJRNN\utility\pycsmtldataset.cpp" />
@@ -83,8 +86,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\include\PyJRNN\JRNNTypeDefs.h" />
-    <ClInclude Include="..\..\..\..\include\PyJRNN\networks\pyccnetwork.h" />
-    <ClInclude Include="..\..\..\..\include\PyJRNN\networks\pyffmlpnetwork.h" />
     <ClInclude Include="..\..\..\..\include\PyJRNN\networks\pynetworkshelper.h" />
     <ClInclude Include="..\..\..\..\include\PyJRNN\utility\pydatasethelper.h" />
   </ItemGroup>

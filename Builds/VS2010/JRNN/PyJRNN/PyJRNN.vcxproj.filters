@@ -51,19 +51,22 @@
     <ClCompile Include="..\..\..\..\src\PyJRNN\trainers\pycctrainer.cpp">
       <Filter>Source Files\trainers</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\src\PyJRNN\networks\pyccnetwork.cpp">
+      <Filter>Source Files\networks</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\PyJRNN\networks\pyffmlpnetwork.cpp">
+      <Filter>Source Files\networks</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\PyJRNN\networks\pyrevccnetwork.cpp">
+      <Filter>Source Files\networks</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\include\PyJRNN\networks\pynetworkshelper.h">
       <Filter>Header Files\networks</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\include\PyJRNN\networks\pyccnetwork.h">
-      <Filter>Header Files\networks</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\..\include\PyJRNN\JRNNTypeDefs.h">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\include\PyJRNN\networks\pyffmlpnetwork.h">
-      <Filter>Header Files\networks</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\PyJRNN\utility\pydatasethelper.h">
       <Filter>Header Files\utility</Filter>
