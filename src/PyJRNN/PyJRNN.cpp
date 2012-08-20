@@ -35,6 +35,7 @@ void exportNetworks();
 void exportDatasets();
 void exportSerialization();
 void exportCCTrainer();
+void exportRevCCTrainer();
 
 BOOST_PYTHON_MODULE(PyJRNN)
 {
@@ -61,4 +62,5 @@ BOOST_PYTHON_MODULE(PyJRNN)
 	package.attr("trainers") = module3;
 	scope module3_scope = module3;
 	exportCCTrainer();
+	exportRevCCTrainer();
 }

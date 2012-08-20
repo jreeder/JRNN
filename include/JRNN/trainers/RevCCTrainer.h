@@ -26,6 +26,14 @@ namespace JRNN {
 		struct TestResult {
 			int epoch;
 			hashedDoubleMap result;
+			bool operator==(TestResult const& rhs){
+				if(this->epoch == rhs.epoch && this->result == rhs.result){
+					return true;
+				}
+				else {
+					return false;
+				}
+			}
 		};
 		
 		typedef std::vector<TestResult> TestResults;

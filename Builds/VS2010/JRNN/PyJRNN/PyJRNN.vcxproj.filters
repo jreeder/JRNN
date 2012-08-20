@@ -60,6 +60,9 @@
     <ClCompile Include="..\..\..\..\src\PyJRNN\networks\pyrevccnetwork.cpp">
       <Filter>Source Files\networks</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\src\PyJRNN\trainers\pyrevcctrainer.cpp">
+      <Filter>Source Files\trainers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\include\PyJRNN\networks\pynetworkshelper.h">
