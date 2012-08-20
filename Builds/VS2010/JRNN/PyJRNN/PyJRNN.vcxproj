@@ -78,8 +78,10 @@
     <ClCompile Include="..\..\..\..\src\PyJRNN\networks\pynetwork.cpp" />
     <ClCompile Include="..\..\..\..\src\PyJRNN\networks\pyrevccnetwork.cpp" />
     <ClCompile Include="..\..\..\..\src\PyJRNN\PyJRNN.cpp" />
+    <ClCompile Include="..\..\..\..\src\PyJRNN\trainers\pybackproptrainer.cpp" />
     <ClCompile Include="..\..\..\..\src\PyJRNN\trainers\pycctrainer.cpp" />
     <ClCompile Include="..\..\..\..\src\PyJRNN\trainers\pyrevcctrainer.cpp" />
+    <ClCompile Include="..\..\..\..\src\PyJRNN\trainers\pyrproptrainer.cpp" />
     <ClCompile Include="..\..\..\..\src\PyJRNN\utility\pycsmtldataset.cpp" />
     <ClCompile Include="..\..\..\..\src\PyJRNN\utility\pydataset.cpp" />
     <ClCompile Include="..\..\..\..\src\PyJRNN\utility\pymtldataset.cpp" />
