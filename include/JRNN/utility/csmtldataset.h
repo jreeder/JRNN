@@ -27,6 +27,7 @@ namespace JRNN {
 		void SetView(strings view);
 		void AddTaskFromFile(string fileName, string taskName, int numIn, int numOut);
 		void AddTaskFromNet(NetworkPtr net, string taskName);
+		void AddMatDoublesToTask(matDouble& inMat, matDouble& outMat, string taskName);
 		CSMTLDatasetPtr SpawnDS();
 		virtual void DistData(int numTrain, int numVal, int numTest, bool impoverish = false, int numImpTrain = 0, int primaryTask = -1);
 		void DistSubview(strings view);
