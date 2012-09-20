@@ -23,6 +23,8 @@ void exportCSMTLDataset(){
 		add_property("View", &CSMTLDataset::GetView, &CSMTLDataset::SetView).
 		def("AddTaskFromFile", &CSMTLDataset::AddTaskFromFile).
 		def("AddTaskFromNet", &CSMTLDataset::AddTaskFromNet).
+		def("AddMatDoublesToTask", &CSMTLDataset::AddMatDoublesToTask).
+		def("AddVecDoublesToTask", &CSMTLDataset::AddVecDoublesToTask).
 		def("SpawnDS", &CSMTLDataset::SpawnDS).
 		def("DistSubview", dist1).
 		def("DistSubview", dist2).

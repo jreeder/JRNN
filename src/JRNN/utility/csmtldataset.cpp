@@ -94,6 +94,56 @@ namespace JRNN {
 		}
 	}
 
+	void CSMTLDataset::AddMatDoublesToTask( matDouble& inMat, matDouble& outMat, string taskName )
+	{
+		Tasks::iterator task = taskList.find(taskName);
+		if (task == taskList.end()){
+			TaskPtr tp(new Task());
+			tp->name = taskName;
+			tp->hasNet = false;
+			tp->numOuts = outMat.size();
+			taskList[taskName] = tp;
+			numOutputs = outMat[0].size();
+			numRealInputs = inMat[0].size();
+		}
+		assert(inMat.size() == outMat.size());
+		matDouble::iterator inItt = inMat.begin();
+		matDouble::iterator outItt = outMat.begin();
+		for (;inItt != inMat.end(); inItt++, outItt++){
+			vecDouble in = (*inItt);
+			vecDouble out = (*outItt);
+			string instring = StringFromVector(in);
+			StringSetRet ret = inputStrings.insert(instring);
+			dataStore[instring][taskName] = ConvertVector<doubles>(out);
+
+			if (ret.second){
+				realInputs.push_back(in);
+			}
+		}
+	}
+
+	void CSMTLDataset::AddVecDoublesToTask( vecDouble& inVec, vecDouble& outVec, string taskName )
+	{
+		Tasks::iterator task = taskList.find(taskName);
+		if (task == taskList.end()){
+			TaskPtr tp(new Task());
+			tp->name = taskName;
+			tp->hasNet = false;
+			tp->numOuts = outVec.size();
+			taskList[taskName] = tp;
+			numOutputs = outVec.size();
+			numRealInputs = inVec.size();
+		}
+
+		string instring = StringFromVector(inVec);
+		StringSetRet ret = inputStrings.insert(instring);
+		dataStore[instring][taskName] = ConvertVector<doubles>(outVec);
+
+		if (ret.second){
+			realInputs.push_back(inVec);
+		}
+	}
+
 	void CSMTLDataset::AddTaskFromNet( NetworkPtr net, string taskName )
 	{
 		TaskPtr tp(new Task());
@@ -178,6 +228,16 @@ namespace JRNN {
 		vecDouble retVec(inDoubles.size());
 		for (unsigned int i = 0; i < inDoubles.size(); i++){
 			retVec[i] = inDoubles[i];
+		}
+		return retVec;
+	}
+
+	template<class outType, class inType>
+	outType CSMTLDataset::ConvertVector(const inType& inVector)
+	{
+		outType retVec(inVector.size());
+		for (unsigned int i = 0; i < inVector.size(); i++){
+			retVec[i] = inVector[i];
 		}
 		return retVec;
 	}

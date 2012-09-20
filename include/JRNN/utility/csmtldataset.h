@@ -28,6 +28,7 @@ namespace JRNN {
 		void AddTaskFromFile(string fileName, string taskName, int numIn, int numOut);
 		void AddTaskFromNet(NetworkPtr net, string taskName);
 		void AddMatDoublesToTask(matDouble& inMat, matDouble& outMat, string taskName);
+		void AddVecDoublesToTask(vecDouble& inVec, vecDouble& outVec, string taskName);
 		CSMTLDatasetPtr SpawnDS();
 		virtual void DistData(int numTrain, int numVal, int numTest, bool impoverish = false, int numImpTrain = 0, int primaryTask = -1);
 		void DistSubview(strings view);
@@ -84,7 +85,9 @@ namespace JRNN {
 		vecDouble CreateContextIn(int taskNum);
 		//vecDouble ConcatVec(vecDouble first, vecDouble second);
 		vecDouble VecDoubleFromDoubles( const doubles& inDoubles );
-		
+		template<class outType, class inType> 
+		outType ConvertVector(const inType& inVector);
+
 	};
 }
 
