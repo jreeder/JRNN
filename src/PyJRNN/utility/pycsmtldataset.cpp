@@ -29,6 +29,7 @@ void exportCSMTLDataset(){
 		def("DistSubview", dist1).
 		def("DistSubview", dist2).
 		add_property("ViewSize", &CSMTLDataset::GetViewSize).
+		add_property("isConceptData", &CSMTLDataset::GetConceptData, &CSMTLDataset::SetConceptData).
 		def("DistData", &CSMTLDataset::DistData, CSMTLDataset_DDOverloads()).
 		def("ResetView", &CSMTLDataset::ResetView).
 		def("GetRandContext", &CSMTLDataset::GetRandContext)

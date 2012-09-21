@@ -26,7 +26,9 @@ void exportDatasets(){
 		def("RedistData", &Dataset::RedistData, &DSWrap::default_RedistData).
 		def("GetSize", &Dataset::GetSize).
 		def("GetStdDev", &Dataset::GetStdDev).
-		def("Clear", &Dataset::Clear)
+		def("Clear", &Dataset::Clear).
+		def("GetInputs", &Dataset::GetInputs, return_value_policy<copy_const_reference>()).
+		def("GetOutputs", &Dataset::GetOutputs, return_value_policy<copy_const_reference>())
 		;
 
 	enum_<Dataset::datatype>("DSDatatype").

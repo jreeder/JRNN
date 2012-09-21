@@ -93,7 +93,11 @@
     <ClInclude Include="..\..\..\..\include\PyJRNN\utility\pydatasethelper.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\..\..\src\PyJRNN\PyJRNN_test.py" />
+    <CustomBuild Include="..\..\..\..\src\PyJRNN\PyJRNN_test.py">
+      <FileType>Document</FileType>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">xcopy /y "%(FullPath)" "$(OutputPath)"</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">PyJRNN_test.py</Outputs>
+    </CustomBuild>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

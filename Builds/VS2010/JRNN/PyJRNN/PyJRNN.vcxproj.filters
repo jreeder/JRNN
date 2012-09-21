@@ -82,8 +82,8 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\..\..\src\PyJRNN\PyJRNN_test.py">
+    <CustomBuild Include="..\..\..\..\src\PyJRNN\PyJRNN_test.py">
       <Filter>Source Files</Filter>
-    </None>
+    </CustomBuild>
   </ItemGroup>
 </Project>

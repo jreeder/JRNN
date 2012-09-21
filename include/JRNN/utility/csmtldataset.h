@@ -28,13 +28,14 @@ namespace JRNN {
 		void AddTaskFromFile(string fileName, string taskName, int numIn, int numOut);
 		void AddTaskFromNet(NetworkPtr net, string taskName);
 		void AddMatDoublesToTask(matDouble& inMat, matDouble& outMat, string taskName);
-		void AddVecDoublesToTask(vecDouble& inVec, vecDouble& outVec, string taskName);
+		void AddVecDoublesToTask(vecDouble inVec, vecDouble outVec, string taskName);
 		CSMTLDatasetPtr SpawnDS();
 		virtual void DistData(int numTrain, int numVal, int numTest, bool impoverish = false, int numImpTrain = 0, int primaryTask = -1);
 		void DistSubview(strings view);
 		void DistSubview(strings newView, int numTrain, int numVal, int numTest);
 		void ResetView();
 		void SetConceptData(bool isConceptData);
+		bool GetConceptData();
 		vecDouble GetRandContext();
 		int GetViewSize();
 		strings GetView();

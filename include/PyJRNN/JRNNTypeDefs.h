@@ -47,7 +47,7 @@ struct std_item {
 		else IndexError();
 	}
 
-	static void add(T& x, V& v){
+	static void add(T& x, V const& v){
 		x.push_back(v);
 	}
 };

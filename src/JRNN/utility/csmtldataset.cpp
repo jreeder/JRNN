@@ -18,6 +18,7 @@ namespace JRNN {
 		conceptData = true;
 		primaryTask = -1;
 		numImpTrain = 0;
+		size = 0;
 	}
 
 	CSMTLDataset::CSMTLDataset(const CSMTLDataset& orig ) : Dataset(orig)
@@ -82,6 +83,7 @@ namespace JRNN {
 
 				if (ret.second){
 					realInputs.push_back(in);
+					size++;
 				}
 			}
 			dataFile.close();
@@ -118,11 +120,12 @@ namespace JRNN {
 
 			if (ret.second){
 				realInputs.push_back(in);
+				size++;
 			}
 		}
 	}
 
-	void CSMTLDataset::AddVecDoublesToTask( vecDouble& inVec, vecDouble& outVec, string taskName )
+	void CSMTLDataset::AddVecDoublesToTask( vecDouble inVec, vecDouble outVec, string taskName )
 	{
 		Tasks::iterator task = taskList.find(taskName);
 		if (task == taskList.end()){
@@ -141,6 +144,7 @@ namespace JRNN {
 
 		if (ret.second){
 			realInputs.push_back(inVec);
+			size++;
 		}
 	}
 
@@ -324,7 +328,7 @@ namespace JRNN {
 		ints usedIndexes;
 		//TODO need to fix what happens if there is not enough data to fill a set.
  		
-		if (conceptData)
+		if (conceptData && indexQueues.size() == 2)
  		{
 			int numAvailable = 0;
 			numAvailable = indexQueues["0"].size() + indexQueues["1"].size();
@@ -345,6 +349,8 @@ namespace JRNN {
 				tmpCount = (int)floor((numExamples * tmpPerc) + 0.5);
 			}
 			
+			tmpCount = tmpCount == 0 ? 1 : tmpCount;
+
 			if (tmpCount > (numExamples - total)){
 				tmpCount = numExamples - total;
 			}
@@ -464,6 +470,11 @@ namespace JRNN {
 	void CSMTLDataset::SetConceptData( bool isConceptData )
 	{
 		this->conceptData = isConceptData;
+	}
+
+	bool CSMTLDataset::GetConceptData()
+	{
+		return conceptData;
 	}
 
 	vecDouble CSMTLDataset::Task::getNetOuts( vecDouble inputs )
