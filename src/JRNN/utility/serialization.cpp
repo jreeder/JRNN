@@ -501,4 +501,171 @@ namespace JRNN {
 		ofile.close();
 	}
 
+
+	void DataSetArchiver::SaveDStoFile( DatasetPtr dataset, string filename )
+	{
+		ofstream ofile;
+		ofile.open(filename, ios_base::out);
+
+		ofile.close();
+	}
+
+	JRNN::DatasetPtr DataSetArchiver::ReadDSfromFile( string filename )
+	{
+		ifstream ifile;
+		ifile.open(filename, ios_base::in);
+		//TODO finish these functions
+		ifile.close();
+	}
+
+	json_spirit::mObject DataSetArchiver::writeDataset( DatasetPtr dataset )
+	{
+		mObject retObj; 
+		retObj["size"] = dataset->size;
+		retObj["numInputs"] = dataset->numInputs;
+		retObj["numOutputs"] = dataset->numOutputs;
+		retObj["numTrain"] = dataset->numTrain;
+		retObj["numVal"] = dataset->numVal;
+		retObj["numTest"] = dataset->numTest;
+		retObj["randSeed"] = dataset->randSeed;
+		retObj["outputPerCategory"] = dataset->outputPerCategory;
+		retObj["normalizeReals"] = dataset->normalizeReals;
+		retObj["dsAnalyzed"] = dataset->dsAnalyzed;
+		retObj["randomRange"] = JSONConverter::ConvertVector(dataset->randomRange);
+		retObj["trainStdDev"] = dataset->trainStdDev;
+		retObj["testStdDev"] = dataset->testStdDev;
+		retObj["valStdDev"] = dataset->valStdDev;
+		retObj["stdDev"] = dataset->stdDev;
+		retObj["inputs"] = JSONConverter::ConvertMatDouble(dataset->inputs);
+		retObj["outputs"] = JSONConverter::ConvertMatDouble(dataset->outputs);
+		retObj["trainIns"] = JSONConverter::ConvertMatDouble(dataset->trainIns);
+		retObj["trainOuts"] = JSONConverter::ConvertMatDouble(dataset->trainOuts);
+		retObj["valIns"] = JSONConverter::ConvertMatDouble(dataset->valIns);
+		retObj["valOuts"] = JSONConverter::ConvertMatDouble(dataset->valOuts);
+		retObj["testIns"] = JSONConverter::ConvertMatDouble(dataset->testIns);
+		retObj["testOuts"] = JSONConverter::ConvertMatDouble(dataset->testOuts);
+		retObj["outClassIndexes"] = JSONConverter::ConvertHashedIntsMap(dataset->outClassIndexes);
+		retObj["outClassPercentage"] = JSONConverter::ConvertHashedDoubleMap(dataset->outClassPercentage);
+		retObj["outClassNames"] = JSONConverter::ConvertVector(dataset->outClassNames);
+		return retObj;
+	}
+
+
+	int JSONConverter::GetInt( mObject& obj, string name )
+	{
+		return findValue(obj, name).get_int();
+	}
+
+	json_spirit::mValue JSONConverter::findValue( const mObject& obj, const string& name )
+	{
+		mObject::const_iterator i = obj.find( name );
+
+		assert( i != obj.end() );
+		assert( i->first == name );
+
+		return i->second;
+	}
+
+	bool JSONConverter::GetBool( mObject& obj, string name )
+	{
+		return findValue(obj, name).get_bool();
+	}
+
+	double JSONConverter::GetDouble( mObject& obj, string name )
+	{
+		return findValue(obj, name).get_real();
+	}
+
+	json_spirit::mArray JSONConverter::ConvertVecDouble( vecDouble& vec )
+	{
+		return ConvertVector(vec);
+	}
+
+	JRNN::vecDouble JSONConverter::ConvertVecDouble( mArray& vec )
+	{
+		return ConvertVector<vecDouble>(vec);
+	}
+
+	json_spirit::mArray JSONConverter::ConvertMatDouble( matDouble& mat )
+	{
+		matDouble::iterator it = mat.begin();
+		mArray tmpMat;
+		for(;it != mat.end(); it++){
+			tmpMat.push_back(ConvertVector((*it)));
+		}
+		return tmpMat;
+	}
+
+	JRNN::matDouble JSONConverter::ConvertMatDouble( mArray& mat )
+	{
+		mArray::iterator it = mat.begin();
+		matDouble tmpMat;
+		for(;it != mat.end(); it++){
+			tmpMat.push_back(ConvertVector<vecDouble>((*it).get_array()));
+		}
+		return tmpMat;
+	}
+
+	json_spirit::mObject JSONConverter::ConvertHashedIntsMap( Dataset::hashedIntsMap& intMap )
+	{
+		mObject tmpMap;
+		Dataset::hashedIntsMap::iterator it = intMap.begin();
+		for (; it != intMap.end(); it++){
+			tmpMap[it->first] = ConvertVector(it->second);
+		}
+		return tmpMap;
+	}
+
+	Dataset::hashedIntsMap JSONConverter::ConvertHashedIntsMap( mObject& intMap )
+	{
+		Dataset::hashedIntsMap tmpMap;
+		mObject::iterator it = intMap.begin();
+		for(;it != intMap.end(); it++){
+			tmpMap[it->first] = ConvertVector<ints>(it->second.get_array());
+		}
+		return tmpMap;
+	}
+
+	json_spirit::mObject JSONConverter::ConvertHashedDoubleMap( hashedDoubleMap& doubleMap )
+	{
+		mObject tmpMap;
+		hashedDoubleMap::iterator it = doubleMap.begin();
+		for(;it != doubleMap.end(); it++){
+			tmpMap[it->first] = it->second;
+		}
+		return tmpMap;
+	}
+
+	JRNN::hashedDoubleMap JSONConverter::ConvertHashedDoubleMap( mObject& doubleMap )
+	{
+		hashedDoubleMap tmpMap;
+		mObject::iterator it = doubleMap.begin();
+		for(;it != doubleMap.end(); it++){
+			tmpMap[it->first] = it->second.get_real();
+		}
+		return tmpMap;
+	}
+
+	template<class V>
+	static mArray JSONConverter::ConvertVector(V& vec){
+		V::iterator it = vec.begin();
+		mArray tmpArray;
+		for(;it != vec.end();it++){
+			tmpArray.push_back(mValue((*it)));
+		}
+		return tmpArray;
+	}
+
+	template<class V>
+	static V JSONConverter::ConvertVector(mArray& vec){
+		mArray::iterator it = vec.begin();
+		V tmpArray;
+		typedef V::value_type value_type;
+		for(;it != vec.end(); it++){
+			tmpArray.push_back((*it).get_value<value_type>());
+		}
+		return tmpArray;
+	}
+
+
 }

@@ -13,6 +13,8 @@
 #include "structure/network.h"
 #include "networks/CCNetwork.h"
 #include "networks/FFMLPNetwork.h"
+#include "utility/dataset.h"
+#include "utility/csmtldataset.h"
 #include <iostream>
 #include <fstream>
 #include <json_spirit_reader_template.h>
@@ -138,5 +140,48 @@ namespace JRNN {
 		std::vector<serialize::Node> readNodes(mArray& nodes);
 		mArray writeNodes(std::vector<serialize::Node>& nodes);
 		
+	};
+
+	class JSONConverter {
+	public:
+		//Basic Find Value
+		static mValue findValue( const mObject& obj, const string& name  );
+
+		//Grab Basic types from an Object. The reverse is trivial
+		static int GetInt(mObject& obj, string name);
+		static bool GetBool(mObject& obj, string name);
+		static double GetDouble(mObject& obj, string name);
+
+		//More complicated conversions
+		template<class V>
+		static mArray ConvertVector(V& vec);
+		template<class V>
+		static V ConvertVector(mArray& vec);
+
+		static mArray ConvertVecDouble(vecDouble& vec);
+		static vecDouble ConvertVecDouble(mArray& vec);
+
+		static mArray ConvertMatDouble(matDouble& mat);
+		static matDouble ConvertMatDouble(mArray& mat);
+
+		static mObject ConvertHashedIntsMap(Dataset::hashedIntsMap& intMap);
+		static Dataset::hashedIntsMap ConvertHashedIntsMap(mObject& intMap);
+
+		static mObject ConvertHashedDoubleMap(hashedDoubleMap& doubleMap);
+		static hashedDoubleMap ConvertHashedDoubleMap(mObject& doubleMap);
+
+	};
+
+	class DataSetArchiver {
+
+	public:
+		void SaveDStoFile(DatasetPtr dataset, string filename);
+		DatasetPtr ReadDSfromFile(string filename);
+
+	private:
+		mObject writeDataset(DatasetPtr dataset);
+		DatasetPtr readDataset(mObject& dataset);
+		mObject writeCSMTLDataset(CSMTLDatasetPtr dataset);
+		CSMTLDatasetPtr readCSMTLDataset(mObject& dataset);
 	};
 }

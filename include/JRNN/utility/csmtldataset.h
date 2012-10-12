@@ -19,9 +19,14 @@ namespace JRNN {
 	class CSMTLDataset;
 	typedef boost::shared_ptr<CSMTLDataset> CSMTLDatasetPtr;
 
+	class DataSetArchiver;
+
 	class CSMTLDataset : public Dataset {
 
 	public:
+
+		friend class DataSetArchiver;
+
 		CSMTLDataset();
 		CSMTLDataset(const CSMTLDataset& orig);
 		void SetView(strings view);
@@ -43,6 +48,8 @@ namespace JRNN {
 		class Task {
 		public:
 			friend class CSMTLDataset;
+			friend class DataSetArchiver;
+
 		private:
 			string name;
 			ints indexes;

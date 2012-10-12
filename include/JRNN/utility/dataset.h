@@ -16,10 +16,14 @@ namespace JRNN {
 	class Dataset;
 	typedef boost::shared_ptr<Dataset> DatasetPtr;
 
+	class DataSetArchiver;
+
     class Dataset {
 
     public:
 		typedef boost::unordered_map<std::string, std::vector<int> > hashedIntsMap;
+
+		friend class DataSetArchiver;
 
         enum datatype {
             TRAIN,
