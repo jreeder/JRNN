@@ -179,9 +179,9 @@ namespace JRNN {
 		DatasetPtr ReadDSfromFile(string filename);
 
 	private:
-		mObject writeDataset(DatasetPtr dataset);
-		DatasetPtr readDataset(mObject& dataset);
-		mObject writeCSMTLDataset(CSMTLDatasetPtr dataset);
-		CSMTLDatasetPtr readCSMTLDataset(mObject& dataset);
+		void writeDataset(DatasetPtr dataset, mObject& retObj);
+		void readDataset(mObject& dataset, DatasetPtr outDS);
+		void writeCSMTLDataset(CSMTLDatasetPtr dataset, mObject& retObj);
+		void readCSMTLDataset(mObject& dataset, CSMTLDatasetPtr outDS);
 	};
 }

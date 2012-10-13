@@ -513,14 +513,15 @@ namespace JRNN {
 	JRNN::DatasetPtr DataSetArchiver::ReadDSfromFile( string filename )
 	{
 		ifstream ifile;
+		DatasetPtr ds(new Dataset());
 		ifile.open(filename, ios_base::in);
 		//TODO finish these functions
 		ifile.close();
+		return ds;
 	}
 
-	json_spirit::mObject DataSetArchiver::writeDataset( DatasetPtr dataset )
-	{
-		mObject retObj; 
+	void DataSetArchiver::writeDataset( DatasetPtr dataset, mObject& retObj )
+	{ 
 		retObj["size"] = dataset->size;
 		retObj["numInputs"] = dataset->numInputs;
 		retObj["numOutputs"] = dataset->numOutputs;
@@ -547,7 +548,36 @@ namespace JRNN {
 		retObj["outClassIndexes"] = JSONConverter::ConvertHashedIntsMap(dataset->outClassIndexes);
 		retObj["outClassPercentage"] = JSONConverter::ConvertHashedDoubleMap(dataset->outClassPercentage);
 		retObj["outClassNames"] = JSONConverter::ConvertVector(dataset->outClassNames);
-		return retObj;
+	}
+
+	void DataSetArchiver::readDataset( mObject& dataset, DatasetPtr outDS )
+	{
+		outDS->size = dataset["size"].get_int();
+		outDS->numInputs = dataset["numInputs"].get_int();
+		outDS->numOutputs = dataset["numOutputs"].get_int();
+		outDS->numTrain = dataset["numTrain"].get_int();
+		outDS->numVal = dataset["numVal"].get_int();
+		outDS->numTest = dataset["numTest"].get_int();
+		outDS->randSeed = dataset["randSeed"].get_int();
+		outDS->outputPerCategory = dataset["outputPerCategory"].get_bool();
+		outDS->normalizeReals = dataset["normalizeReals"].get_bool();
+		outDS->dsAnalyzed = dataset["dsAnalyzed"].get_bool();
+		outDS->randomRange = JSONConverter::ConvertVector<ints>(dataset["randomRange"].get_array());
+		outDS->trainStdDev = dataset["trainStdDev"].get_real();
+		outDS->testStdDev = dataset["testStdDev"].get_real();
+		outDS->valStdDev = dataset["valStdDev"].get_real();
+		outDS->stdDev = dataset["stdDev"].get_real();
+		outDS->inputs = JSONConverter::ConvertMatDouble(dataset["inputs"].get_array());
+		outDS->outputs = JSONConverter::ConvertMatDouble(dataset["outputs"].get_array());
+		outDS->trainIns = JSONConverter::ConvertMatDouble(dataset["trainIns"].get_array());
+		outDS->trainOuts = JSONConverter::ConvertMatDouble(dataset["trainOuts"].get_array());
+		outDS->valIns = JSONConverter::ConvertMatDouble(dataset["valIns"].get_array());
+		outDS->valOuts = JSONConverter::ConvertMatDouble(dataset["valOuts"].get_array());
+		outDS->testIns = JSONConverter::ConvertMatDouble(dataset["testIns"].get_array());
+		outDS->testOuts = JSONConverter::ConvertMatDouble(dataset["testOuts"].get_array());
+		outDS->outClassIndexes = JSONConverter::ConvertHashedIntsMap(dataset["outClassIndexes"].get_obj());
+		outDS->outClassPercentage = JSONConverter::ConvertHashedDoubleMap(dataset["outClassPercentage"].get_obj());
+		outDS->outClassNames = JSONConverter::ConvertVector<strings>(dataset["outClassNames"].get_array());
 	}
 
 
@@ -583,7 +613,15 @@ namespace JRNN {
 
 	JRNN::vecDouble JSONConverter::ConvertVecDouble( mArray& vec )
 	{
-		return ConvertVector<vecDouble>(vec);
+		//Can't do this the same as the other direction because the pyublas vecDouble doesn't have push_back
+		//return ConvertVector<vecDouble>(vec);
+		vecDouble retVec(vec.size());
+		mArray::iterator it = vec.begin();
+		vecDouble::iterator it2 = retVec.begin();
+		for(;it != vec.end(); it++, it2++){
+			(*it2) = (*it).get_real();
+		}
+		return retVec;
 	}
 
 	json_spirit::mArray JSONConverter::ConvertMatDouble( matDouble& mat )
@@ -601,7 +639,7 @@ namespace JRNN {
 		mArray::iterator it = mat.begin();
 		matDouble tmpMat;
 		for(;it != mat.end(); it++){
-			tmpMat.push_back(ConvertVector<vecDouble>((*it).get_array()));
+			tmpMat.push_back(ConvertVecDouble((*it).get_array()));
 		}
 		return tmpMat;
 	}
