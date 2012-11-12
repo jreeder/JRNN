@@ -494,4 +494,25 @@ namespace JRNN {
 		return varyActFunc;
 	}
 
+	void CCNetwork::AppendInputNode( NodePtr node )
+	{
+		LayerPtr inputLayer = layers["input"];
+		inputLayer->AddNode(node);
+		this->numIn++;
+		//connect this new input node to all the outputs. 
+		//The hidden layer nodes if they are connected will be handled by the trainer. 
+		NodeList outNodes = layers["out"]->GetNodes();
+		BOOST_FOREACH(NodePtr outNode, outNodes){
+			AddConnection(Connection::Connect(node, outNode));
+		}
+	}
+
+	void CCNetwork::AppendNewInputNode()
+	{
+		int height = layers["input"]->GetHeight();
+		string name = "tmpName";
+		NodePtr newNode = Node::CreateNode<Linear>(height,name);
+		AppendInputNode(newNode);
+	}
+
 }
