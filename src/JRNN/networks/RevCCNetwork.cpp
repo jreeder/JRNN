@@ -155,4 +155,9 @@ namespace JRNN {
 		}
 	}
 
+	vecDouble RevCCNetwork::GetTrueOutputs()
+	{
+		return normOutLayer->GetOutput();
+	}
+
 }

@@ -105,9 +105,21 @@ namespace JRNN {
 
 	vecDouble RevCCTrainer::ActivateNet( vecDouble inPoint, vecDouble outPoint )
 	{
+		//used to make the subclassing easier. 
+		//This just activates the network and passes the correct desired out
+		//back to be used 
 		vecDouble retVal;
 		retVal = ConcatVec(outPoint, inPoint);
 		network->Activate(inPoint);
+		return retVal;
+	}
+
+	vecDouble RevCCTrainer::Activate( vecDouble inPoint )
+	{
+		//This is for convenience to activate the primary network and return it's true outs. 
+		vecDouble retVal;
+		net1->Activate(inPoint);
+		retVal = net1->GetTrueOutputs();
 		return retVal;
 	}
 

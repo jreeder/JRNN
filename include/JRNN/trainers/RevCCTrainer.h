@@ -65,6 +65,8 @@ namespace JRNN {
 		double TestOnData(DatasetPtr testData, Dataset::datatype type);
 		hashedDoubleMap TestWiClass(DatasetPtr testData, Dataset::datatype type);
 
+		vecDouble Activate(vecDouble inPoint);
+
 		const TestResults& getTestWhileTrainResults();
 
 		void SetScaleAndOffset(double scale, double offset);
