@@ -300,9 +300,11 @@ namespace JRNN{
 		 connections.insert(ConPair(con->GetName(),con));
 	 }
 
-	 void Network::RemoveConnection( ConPtr con )
+	 void Network::RemoveConnection( ConPtr con, bool disconnect /*= true*/ )
 	 {
-		 con->Disconnect();
+		 if(disconnect){
+			 con->Disconnect();
+		 }
 		 connections.erase(con->GetName());
 	 }
 
@@ -420,6 +422,32 @@ namespace JRNN{
 			next->SetHeight(tmpHeight + 1);
 			current = next;
 			next = next->GetNextLayer();
+		}
+	}
+
+	void Network::ResetNames()
+	{
+		LayerPtr current = layers["input"];
+		LayerPtr next = current->GetNextLayer();
+		while(next){
+			NodeList changedNodes = current->ResetNodeNames();
+			for (int i = 0; i < changedNodes.size(); i++){
+				ConList inCons = changedNodes[i]->GetConnections(IN);
+				ResetConnectionNames(inCons);
+				ConList outCons = changedNodes[i]->GetConnections(OUT);
+				ResetConnectionNames(outCons);
+			}
+			current = next;
+			next = next->GetNextLayer();
+		}
+	}
+
+	void Network::ResetConnectionNames( ConList Cons )
+	{
+		BOOST_FOREACH(ConPtr con, Cons){
+			RemoveConnection(con, false); //remove the connection but don't disconnect it
+			con->SetName();
+			AddConnection(con);
 		}
 	}
 

@@ -160,7 +160,7 @@ void Layer::SetHeight( int newHeight ){
 
 void Layer::AddNode( NodePtr node ){
 	string tmpName = name + "_";
-	tmpName += lexical_cast<string>(layerSize + 1);
+	tmpName += lexical_cast<string>(layerSize); //Numbers should start with zero so size is the next number
 	node->SetName(tmpName);
 	node->SetHeight(height);
 	nodes.push_back(node);
@@ -293,4 +293,19 @@ string Layer::GetTypeName()
 	default:
 		return "";
 	}
+}
+
+NodeList Layer::ResetNodeNames()
+{
+	NodeList nodesChanged;
+
+	for (int i = 0; i < this->nodes.size(); i++){
+		NodePtr node = this->nodes[i];
+		string nodeName = this->name + "_" + lexical_cast<string>(i);
+		if (nodeName != node->GetName()){
+			node->SetName(nodeName);
+			nodesChanged.push_back(node);
+		}
+	}
+	return nodesChanged;
 }

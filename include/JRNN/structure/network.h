@@ -57,13 +57,17 @@ namespace JRNN{
         ConMap& GetConnections();
 		LayerMap& GetLayers();
 		void AddConnection(ConPtr con);
-		void RemoveConnection(ConPtr con);
+		void RemoveConnection(ConPtr con, bool disconnect = true);
 		void RemoveConnections(ConList cons);
         hashedDoubleMap GetWeights();
         virtual void SetWeights(hashedDoubleMap weights);
         virtual void Reset();
 		void ResetHeights();
-        void PrintConnections();
+		void ResetNames();
+
+		void ResetConnectionNames( ConList inCons );
+
+		void PrintConnections();
 		//bool AddHiddenLayer(LayerPtr newLayer);
 		//bool AddCascadedLayer(LayerPtr newLayer);
         //static NetworkPtr CreateFFMLPNetwork(int numIn, int numHid, int numOut);

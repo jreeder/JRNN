@@ -69,6 +69,7 @@ namespace JRNN {
 
         void SetName(string newName);
         const string& GetName();
+		NodeList ResetNodeNames();
 
 		void AddNode(NodePtr node);
 		void AddNode( NodePtr node, bool createName);
