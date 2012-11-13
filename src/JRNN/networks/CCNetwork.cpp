@@ -515,4 +515,23 @@ namespace JRNN {
 		AppendInputNode(newNode);
 	}
 
+	void CCNetwork::InsertNewInputNode(int pos){
+		int height = layers["input"]->GetHeight();
+		string name = "tmpName";
+		NodePtr newNode = Node::CreateNode<Linear>(height, name);
+		InsertInputNode(newNode, pos);
+	}
+
+	void CCNetwork::InsertInputNode( NodePtr newNode, int pos )
+	{
+		LayerPtr inputLayer = layers["input"];
+		inputLayer->InsertNode(newNode, pos);
+		this->numIn++;
+		NodeList outNodes = layers["out"]->GetNodes();
+		ResetNames();
+		BOOST_FOREACH(NodePtr outNode, outNodes){
+			AddConnection(Connection::Connect(newNode, outNode));
+		}
+	}
+
 }

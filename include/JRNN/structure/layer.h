@@ -73,6 +73,7 @@ namespace JRNN {
 
 		void AddNode(NodePtr node);
 		void AddNode( NodePtr node, bool createName);
+		void InsertNode(NodePtr node, int pos);
 		void RemoveNode(NodePtr node);
 		int RemoveUnconnectedNodes();
 

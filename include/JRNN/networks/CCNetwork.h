@@ -34,6 +34,8 @@ namespace JRNN {
 		void CreateCandLayer(int numCand);
 		void AppendNewInputNode();
 		void AppendInputNode(NodePtr node);
+		void InsertInputNode( NodePtr newNode, int pos );
+		void InsertNewInputNode(int pos);
 		virtual void InstallCandidate(NodePtr node, vecDouble outWeights = vecDouble(0));
 		virtual void Build(int numIn, int numOut, bool cloneouts = false, bool useSDCC = false, bool varyActFunc = false);
 		virtual void Reset();

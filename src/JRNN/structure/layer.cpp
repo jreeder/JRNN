@@ -176,6 +176,31 @@ void Layer::AddNode( NodePtr node, bool createName){
 	}
 }
 
+void Layer::InsertNode( NodePtr node, int pos )
+{
+	string tmpName = name + "_" + lexical_cast<string>(pos);
+	NodeList::iterator it = nodes.begin();
+	node->SetName(tmpName);
+	node->SetHeight(this->height);
+	nodes.insert(it+pos, node);
+	layerSize++;
+}
+
+NodeList Layer::ResetNodeNames()
+{
+	NodeList nodesChanged;
+
+	for (int i = 0; i < this->nodes.size(); i++){
+		NodePtr node = this->nodes[i];
+		string nodeName = this->name + "_" + lexical_cast<string>(i);
+		if (nodeName != node->GetName()){
+			node->SetName(nodeName);
+			nodesChanged.push_back(node);
+		}
+	}
+	return nodesChanged;
+}
+
 void Layer::RemoveNode(NodePtr node){
 	NodeList::iterator it = nodes.begin();
 	while (it != nodes.end()){
@@ -293,19 +318,4 @@ string Layer::GetTypeName()
 	default:
 		return "";
 	}
-}
-
-NodeList Layer::ResetNodeNames()
-{
-	NodeList nodesChanged;
-
-	for (int i = 0; i < this->nodes.size(); i++){
-		NodePtr node = this->nodes[i];
-		string nodeName = this->name + "_" + lexical_cast<string>(i);
-		if (nodeName != node->GetName()){
-			node->SetName(nodeName);
-			nodesChanged.push_back(node);
-		}
-	}
-	return nodesChanged;
 }
