@@ -35,6 +35,7 @@ namespace JRNN {
         void SetInNode(NodePtr newInnode);
         void SetOutNode(NodePtr newOutnode);
         void SetLocked(bool lock);
+		bool GetLocked();
         void SetWeight(double weight);
 		void SetScaleAndOffset(double scale, double offset);
         void Disconnect();

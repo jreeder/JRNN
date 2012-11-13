@@ -59,6 +59,7 @@ namespace JRNN{
 		void AddConnection(ConPtr con);
 		void RemoveConnection(ConPtr con, bool disconnect = true);
 		void RemoveConnections(ConList cons);
+		void LockConnections(bool locked);
         hashedDoubleMap GetWeights();
         virtual void SetWeights(hashedDoubleMap weights);
         virtual void Reset();

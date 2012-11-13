@@ -31,6 +31,8 @@ namespace JRNN {
 
 		void SetDataSet(DatasetPtr dataset);
 
+		void AddNewInputs(ints inputIndexes, DatasetPtr newData, bool connectToHidden = false);
+
 		//Training Methods
 		void TrainToValConv(int maxEpochs);
 		void TrainToConvergence(int maxEpochs, bool validate = false);

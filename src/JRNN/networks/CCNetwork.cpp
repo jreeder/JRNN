@@ -507,19 +507,22 @@ namespace JRNN {
 		}
 	}
 
-	void CCNetwork::AppendNewInputNode()
+	NodePtr CCNetwork::AppendNewInputNode()
 	{
 		int height = layers["input"]->GetHeight();
 		string name = "tmpName";
 		NodePtr newNode = Node::CreateNode<Linear>(height,name);
 		AppendInputNode(newNode);
+		return newNode;
 	}
 
-	void CCNetwork::InsertNewInputNode(int pos){
+	JRNN::NodePtr CCNetwork::InsertNewInputNode( int pos )
+	{
 		int height = layers["input"]->GetHeight();
 		string name = "tmpName";
 		NodePtr newNode = Node::CreateNode<Linear>(height, name);
 		InsertInputNode(newNode, pos);
+		return newNode;
 	}
 
 	void CCNetwork::InsertInputNode( NodePtr newNode, int pos )

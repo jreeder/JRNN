@@ -136,6 +136,11 @@ void Connection::SetLocked(bool lock){
     locked = lock;
 }
 
+bool Connection::GetLocked()
+{
+	return locked;
+}
+
 void Connection::Update(){
     value = inNode->GetOut();
     weightedValue = weight * value;
@@ -146,7 +151,9 @@ void Connection::Reset(){
 }
 
 void Connection::SetWeight(double weight) {
-    this->weight = weight;
+	if (!locked){
+		this->weight = weight;
+	}
 }
 double Connection::GetWeight() const {
     return weight;
@@ -189,14 +196,14 @@ const string& Connection::GetInNodeName(){
     return inNode->GetName();
 }
 
-void JRNN::Connection::SetScaleAndOffset( double scale, double offset )
+void Connection::SetScaleAndOffset( double scale, double offset )
 {
 	this->scale = scale;
 	this->offset = offset;
 }
 
 //Static Function to get a random weight using the connection random generator
-double JRNN::Connection::GetRandWeight(double inScale, double inOffset)
+double Connection::GetRandWeight(double inScale, double inOffset)
 {
 	double tmpDouble;
 	tmpDouble = ((cRand() * inScale)) - inOffset;

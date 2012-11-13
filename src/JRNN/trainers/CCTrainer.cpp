@@ -915,4 +915,28 @@ namespace JRNN {
 		}
 	}
 
+	/*
+	 *	The indexes should be -1 for an append. The number of new inputs will match the size of the indexes vector
+	 */
+	void CCTrainer::AddNewInputs( ints inputIndexes, DatasetPtr newData, bool connectToHidden /*= False*/ )
+	{
+		SetDataSet(newData);
+		NodeList addedNodes;
+		BOOST_FOREACH(int index, inputIndexes){
+			//index of -1 means append to the end. 
+			NodePtr newNode;
+			if (index == -1){
+				newNode = this->network->AppendNewInputNode();
+				//Add stuff here to do things if connectToHidden is set
+			}
+			else {
+				newNode = this->network->InsertNewInputNode(index);
+				//add stuff here to do things if connectToHidden is set. 
+				//will probably involve getting a pointer to the new node. 
+				//And setting some new parameter of the weights that need to be updated
+				//Like freezing the existing weights or something like that. 
+			}
+		}
+	}
+
 }

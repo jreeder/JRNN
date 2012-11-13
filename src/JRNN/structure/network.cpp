@@ -451,4 +451,12 @@ namespace JRNN{
 		}
 	}
 
+	//True will lock all the connections
+	void Network::LockConnections(bool locked)
+	{
+		BOOST_FOREACH(ConPair con, connections){
+			con.second->SetLocked(locked);
+		}
+	}
+
 }
