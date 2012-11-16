@@ -201,16 +201,26 @@ namespace JRNN {
 		out.conDeltas.clear();
 		out.conPSlopes.clear();
 		out.conSlopes.clear();
+		out.localGradients.clear();
 	}
 
 	void CCTrainer::resetCandValues(){
 		cand.conDeltas.clear();
 		cand.conPSlopes.clear();
 		cand.conSlopes.clear();
+		cand.localGradients.clear();
 		candSumVals.clear();
 		candCorr.clear();
 		candPCorr.clear();
 		candBestScore = 0.0;
+	}
+
+	void CCTrainer::resetUpdateValues()
+	{
+		net.conDeltas.clear();
+		net.conPSlopes.clear();
+		net.conSlopes.clear();
+		net.localGradients.clear();
 	}
 
 	void CCTrainer::Reset()
@@ -304,6 +314,58 @@ namespace JRNN {
 		return CCTrainer::TIMEOUT;
 	}
 
+	CCTrainer::status CCTrainer::UpdateNet()
+	{
+		int quitEpoch = 0;
+		double lastError = 0.0;
+		int startEpoch = epoch;
+		resetUpdateValues();
+		for (int i = 0; i < parms.out.epochs; i++){
+			resetError(err);
+
+			UpdateNetEpoch();
+
+			if ((err.measure == BITS) && (err.bits == 0)) {
+				return CCTrainer::WIN;
+			}
+			else if (err.measure == INDEX) {
+				double index = ErrorIndex(err.trueErr,1,nTrainOutVals);
+				if (index < parms.indexThreshold){
+					return CCTrainer::WIN;
+				}
+			}
+
+			UpdateNetWeights();
+			epoch++;
+
+//			if (resetFlag == true){ //this is not used currently. 
+//				epoch = startEpoch;
+//				i = 0;
+//				quitEpoch = 0;
+//				lastError = 0.0;
+//				resetTrainOuts();
+//				resetFlag = false;
+//#ifdef _DEBUG
+//				cout << "Reset Train Outs" << endl;
+//#endif // _DEBUG
+//				continue;
+//			}
+
+			if (i == 0){
+				lastError = err.trueErr;
+				quitEpoch = epoch + parms.out.patience;
+			}
+			else if (fabs(err.trueErr - lastError) > lastError * parms.out.changeThreshold){
+				lastError = err.trueErr;
+				quitEpoch = epoch + parms.out.patience;
+			}
+			else if (epoch == quitEpoch){
+				return CCTrainer::STAGNANT;
+			}
+		}
+		return CCTrainer::TIMEOUT;
+	}
+
 	void CCTrainer::OutputEpoch()
 	{
 		matDouble ins = data->GetInputs(Dataset::TRAIN);
@@ -328,6 +390,27 @@ namespace JRNN {
 		MSE_Rec.push_back(MSE);
 	}
 
+	void CCTrainer::UpdateNetEpoch()
+	{
+		matDouble trainingIns = data->GetInputs(Dataset::TRAIN);
+		matDouble trainingOuts = data->GetOutputs(Dataset::TRAIN);
+		matDouble::iterator itIns;
+		matDouble::iterator itOuts;
+		itIns = trainingIns.begin();
+		itOuts = trainingOuts.begin();
+		LayerPtr outLayer = network->GetLayer("out");
+
+		while(itIns != trainingIns.end()){
+			vecDouble desiredOut = ActivateNet((*itIns), (*itOuts));
+			ComputeNetWeightUpdates(outLayer, desiredOut);
+			itIns++;
+			itOuts++;
+			
+		}
+		double MSE = err.trueErr / (double)nTrainOutVals;
+		MSE_Rec.push_back(MSE);
+	}
+
 	vecDouble CCTrainer::ActivateNet( vecDouble inPoint, vecDouble outPoint )
 	{
 		//this basically doesn't do anything but it allows me to subclass alot less
@@ -345,6 +428,17 @@ namespace JRNN {
 			BOOST_FOREACH(ConPtr con, cons){
 				QuickProp(con,out,parms.out.scaledEpsilon,parms.out.decay,
 							parms.out.mu,parms.out.shrinkFactor);
+			}
+		}
+	}
+
+	void CCTrainer::UpdateNetWeights()
+	{
+		BOOST_FOREACH(ConPair conP, network->GetConnections()){
+			ConPtr con = conP.second;
+			if (!con->GetLocked()){
+				QuickProp(con, net, parms.out.scaledEpsilon, parms.out.decay,
+							parms.out.mu, parms.out.shrinkFactor);
 			}
 		}
 	}
@@ -476,6 +570,69 @@ namespace JRNN {
 		}
 	}
 
+	void CCTrainer::ComputeNetWeightUpdates( LayerPtr layer, vecDouble desiredOut /*= vecDouble(0)*/ )
+	{
+		if (layer->GetType() != Layer::input){
+			NodeList& nodes = layer->GetNodes();
+			vecDouble output, error, tmpPrimes, outPrimes, errPrimes, sqError, nPrimes;
+			switch(layer->GetType()){
+			case Layer::out:
+				output = network->GetOutputs();
+				error = Error(output, desiredOut);
+				tmpPrimes = network->GetPrimes(string("out"));
+				outPrimes = VecAddScalar(tmpPrimes, parms.primeOffset);
+				errPrimes = VecMultiply(error, outPrimes);
+				sqError = SquareVec(error);
+				err.errors = errPrimes;
+
+				//Alter Stats
+				err.bits += CalcErrorBits(FilterError(error, primaryIndexes));
+				err.sumErrs += errPrimes;
+				err.sumSqErr += ublas::sum(SquareVec(errPrimes));
+				err.trueErr += ublas::sum(FilterError(sqError, primaryIndexes));
+
+				//Update Slopes
+				for (int i = 0; i < layer->GetSize(); i++){
+					string name = nodes[i]->GetName();
+					net.localGradients[name] = errPrimes[i];
+					ConList cons = nodes[i]->GetConnections(IN);
+					BOOST_FOREACH(ConPtr con, cons){
+						net.conSlopes[con->GetName()] += errPrimes[i] * con->GetValue();
+					}
+				}
+				break;
+
+			case Layer::hidden:
+				output = network->GetOutputs();
+				error = Error(output, desiredOut);
+				tmpPrimes = network->GetPrimes(layer->GetName());
+				nPrimes = VecAddScalar(tmpPrimes, parms.primeOffset);
+				//vecDouble errPrimes = VecMultiply(error, outPrimes);
+				//vecDouble sqError = SquareVec(error);
+				for (int i = 0; i < layer->GetSize(); i++){
+					string name = nodes[i]->GetName();
+					ConList outCons = nodes[i]->GetConnections(OUT);
+					double sumOfChildError = 0;
+					BOOST_FOREACH(ConPtr con, outCons){
+						sumOfChildError += net.localGradients[con->GetOutNodeName()] * con->GetWeight();
+					}
+					double delta = nPrimes[i] * sumOfChildError;
+					net.localGradients[name] = delta;
+					ConList inCons = nodes[i]->GetConnections(IN);
+					BOOST_FOREACH(ConPtr con, inCons){
+						net.conSlopes[con->GetName()] += delta * con->GetValue(); //might be able to save some time here if I check for locked cons. Only if it seems to be a problem. 
+					}
+				}
+
+				break;
+
+			default:
+				break;
+			}
+			ComputeNetWeightUpdates(layer->GetPrevLayer());
+		}
+	}
+
 	void CCTrainer::ComputeCorrelations()
 	{
 		double sum,val;
@@ -523,11 +680,8 @@ namespace JRNN {
 				cor = ((*curCorr)[j] - avgValue * err.sumErrs[j]) / err.sumSqErr;
 				(*prevCorr)[j] = cor;
 				(*curCorr)[j] = 0.0;
-				score += fabs (cor); //need to add the modifier for sib/dec training.
+				score += fabs (cor);
 			}
-
-			//TODO Need to add code here to weight the scores.
-			//Positively for primary task and tending to zero for unrelated tasks.
 
 			if (parms.useSDCC)
 			{
@@ -600,13 +754,11 @@ namespace JRNN {
 			actPrime /= err.sumSqErr; //This is a slight modification to the original. 
 									//It's equivalent, but I'm not sure why I did this maybe optimizing. 
 
-			//TODO need to look into making changes here for eta MTL style focusing. 
-
 			//compute correlations to each output
 			for (int j = 0; j < nOuts; j++){
 				error = err.errors[j];
 				direction = ((*cPCorr)[j] < 0.0) ? -1.0 : 1.0;
-				change -= direction * actPrime * (error - err.sumErrs[j]); //Probably could add eta mtl change here if need be. 
+				change -= direction * actPrime * (error - err.sumErrs[j]); 
 				(*cCorr)[j] += error * value;
 			}
 
@@ -929,13 +1081,20 @@ namespace JRNN {
 				newNode = this->network->AppendNewInputNode();
 				//Add stuff here to do things if connectToHidden is set
 			}
-			else {
+			else if (index < network->GetNumIn()){
 				newNode = this->network->InsertNewInputNode(index);
 				//add stuff here to do things if connectToHidden is set. 
 				//will probably involve getting a pointer to the new node. 
 				//And setting some new parameter of the weights that need to be updated
 				//Like freezing the existing weights or something like that. 
 			}
+			addedNodes.push_back(newNode);
+		}
+		if (connectToHidden){
+			network->ConnectToHiddenNodes(addedNodes);
+			network->LockConnections(true, addedNodes);
+			UpdateNet();
+			network->LockConnections(false);
 		}
 	}
 

@@ -452,11 +452,37 @@ namespace JRNN{
 	}
 
 	//True will lock all the connections
-	void Network::LockConnections(bool locked)
+	void Network::LockConnections( bool locked, NodeList except /*= NodeList(0)*/ )
 	{
 		BOOST_FOREACH(ConPair con, connections){
 			con.second->SetLocked(locked);
 		}
+		if (except.size() > 0){ //does the opposite of locked for all connections attached to the nodelist
+			ConList exceptedCons = GetNodeConnections(except);
+			BOOST_FOREACH(ConPtr con, exceptedCons){
+				con->SetLocked(!locked);
+			}
+		}
+	}
+
+	JRNN::ConList Network::GetNodeConnections( NodePtr node )
+	{
+		ConList nodeConnections;
+		ConList inCons = node->GetConnections(IN);
+		ConList outCons = node->GetConnections(OUT);
+		nodeConnections.insert(nodeConnections.end(), inCons.begin(), inCons.end());
+		nodeConnections.insert(nodeConnections.end(), outCons.begin(), outCons.end());
+		return nodeConnections;
+	}
+
+	JRNN::ConList Network::GetNodeConnections( NodeList nodes )
+	{
+		ConList listConnections;
+		BOOST_FOREACH(NodePtr node, nodes){
+			ConList tmpList = GetNodeConnections(node);
+			listConnections.insert(listConnections.end(), tmpList.begin(), tmpList.end());
+		}
+		return listConnections;
 	}
 
 }

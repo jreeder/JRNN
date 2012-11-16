@@ -503,7 +503,7 @@ namespace JRNN {
 		//The hidden layer nodes if they are connected will be handled by the trainer. 
 		NodeList outNodes = layers["out"]->GetNodes();
 		BOOST_FOREACH(NodePtr outNode, outNodes){
-			AddConnection(Connection::Connect(node, outNode));
+			AddConnection(Connect(node, outNode));
 		}
 	}
 
@@ -533,7 +533,23 @@ namespace JRNN {
 		NodeList outNodes = layers["out"]->GetNodes();
 		ResetNames();
 		BOOST_FOREACH(NodePtr outNode, outNodes){
-			AddConnection(Connection::Connect(newNode, outNode));
+			AddConnection(Connect(newNode, outNode));
+		}
+	}
+
+	void CCNetwork::ConnectToHiddenNodes( NodePtr node )
+	{
+		BOOST_FOREACH(LayerPtr layer, hiddenLayers){
+			BOOST_FOREACH(NodePtr hidNode, layer->GetNodes()){
+				AddConnection(Connect(node, hidNode));
+			}
+		}
+	}
+
+	void CCNetwork::ConnectToHiddenNodes( NodeList nodes )
+	{
+		BOOST_FOREACH(NodePtr node, nodes){
+			ConnectToHiddenNodes(node);
 		}
 	}
 

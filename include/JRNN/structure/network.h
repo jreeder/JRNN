@@ -55,11 +55,13 @@ namespace JRNN{
         LayerPtr GetLayer(string layerName);
 		NodePtr GetNode(string nodeName);
         ConMap& GetConnections();
+		ConList GetNodeConnections(NodePtr node);
+		ConList GetNodeConnections(NodeList nodes);
 		LayerMap& GetLayers();
 		void AddConnection(ConPtr con);
 		void RemoveConnection(ConPtr con, bool disconnect = true);
 		void RemoveConnections(ConList cons);
-		void LockConnections(bool locked);
+		void LockConnections(bool locked, NodeList except = NodeList(0));
         hashedDoubleMap GetWeights();
         virtual void SetWeights(hashedDoubleMap weights);
         virtual void Reset();

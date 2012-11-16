@@ -131,7 +131,8 @@ namespace JRNN {
 			hashedDoubleMap conDeltas; //deltas for each weight
 			hashedDoubleMap conPSlopes; //current slopes for each weight
 			hashedDoubleMap conSlopes; //previous slopes for each weight
-		} out, cand;
+			hashedDoubleMap localGradients; //used only for whole net quickprop
+		} out, cand, net;
 
 		struct errVars 
 		{
@@ -167,7 +168,14 @@ namespace JRNN {
 		void resetTrainOuts();
 		void OutputEpoch(); 
 
-		void ComputeError( vecDouble desiredOut, errVars& errs, NodeList &outNodes, bool alterStats, bool updateSlopes);
+		//Retraining methods. Used when adding a new input or to allow all weights to move. 
+		status UpdateNet();
+		void resetUpdateValues();
+		void UpdateNetEpoch();
+		void ComputeNetWeightUpdates(LayerPtr layer, vecDouble desiredOut = vecDouble(0));
+		void UpdateNetWeights();
+
+		void ComputeError(vecDouble desiredOut, errVars& errs, NodeList& outNodes, bool alterStats, bool updateSlopes);
 
 		//void ComputeOutError();
 		void UpdateOutWeights(); //Adjust output weights.
@@ -191,9 +199,10 @@ namespace JRNN {
 		status TestImprovement();
 		
 		//Utility Methods - Make it easier for my subclass. This is hacky should probably change. 
-
 		virtual vecDouble ActivateNet(vecDouble inPoint, vecDouble outPoint);
 
+		//Used for adding new inputs. Done in the ccnetwork class
+		//void ConnectToHiddenNodes( NodeList addedNodes );
 	};
 }
 
