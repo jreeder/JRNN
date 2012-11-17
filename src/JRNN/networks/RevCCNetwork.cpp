@@ -71,7 +71,7 @@ namespace JRNN {
 		layers["autoassoc"]->BuildLayer<ASigmoid>();
 		autoAssocLayer = layers["autoassoc"];
 		FullyConnectAutoAssoc(layers["bias"]);
-		layers.insert(LayerPair("normout", Layer::CreateLayer(Layer::spec, numOut, -1, "normout")));
+		layers.insert(LayerPair("normout", Layer::CreateLayer(Layer::spec, 0, -1, "normout"))); //size will be set by the shallowcopy. 
 		normOutLayer = layers["normout"];
 		LayerPtr tmpOutLayer = layers["out"];
 		normOutLayer->ShallowCopy(tmpOutLayer);
@@ -79,7 +79,7 @@ namespace JRNN {
 			tmpOutLayer->AddNode(node);
 			this->numOut++;
 		}
-		
+		ResetConMap();
 	}
 
 	void RevCCNetwork::InstallCandidate(NodePtr node, vecDouble outWeights /* = vecDouble */, vecDouble assocWeights /*=vecDouble*/){
@@ -158,6 +158,62 @@ namespace JRNN {
 	vecDouble RevCCNetwork::GetTrueOutputs()
 	{
 		return normOutLayer->GetOutput();
+	}
+
+	void RevCCNetwork::AppendInputNode( NodePtr node )
+	{
+		LayerPtr inputLayer = layers["input"];
+		inputLayer->AddNode(node);
+		this->numIn++;
+		//connect this new input node to all the outputs. 
+		//The hidden layer nodes if they are connected will be handled by the trainer. 
+		NodeList outNodes = normOutLayer->GetNodes(); //normouts are the regular outputs.
+		BOOST_FOREACH(NodePtr outNode, outNodes){
+			AddConnection(Connect(node, outNode));
+		}
+		AppendNewAutoAssocNode();
+
+	}
+
+	void RevCCNetwork::InsertInputNode( NodePtr newNode, int pos )
+	{
+		LayerPtr inputLayer = layers["input"];
+		inputLayer->InsertNode(newNode, pos);
+		this->numIn++;
+		NodeList outNodes = normOutLayer->GetNodes();
+		ResetNames();
+		BOOST_FOREACH(NodePtr outNode, outNodes){
+			AddConnection(Connect(newNode, outNode));
+		}
+		InsertNewAutoAssocNode(pos);
+	}
+
+	void RevCCNetwork::AppendNewAutoAssocNode()
+	{
+		int height = layers["out"]->GetHeight();
+		string name = "tmpName";
+		NodePtr newOutNode = Node::CreateNode<ASigmoid>(height, name);
+		layers["out"]->AddNode(newOutNode);
+		autoAssocLayer->AddNode(newOutNode, false);
+		ConnectNodeToLayer(newOutNode, layers["bias"], IN);
+		ConnectToHiddenNodes(newOutNode, IN);
+		this->numOut++;
+	}
+
+	void RevCCNetwork::InsertNewAutoAssocNode( int pos )
+	{
+		LayerPtr outLayer = layers["out"];
+		int height = outLayer->GetHeight();
+		string name = "tmpName";
+		NodePtr newOutNode = Node::CreateNode<ASigmoid>(height,name);
+		int normOutSize = normOutLayer->GetSize();
+		int outPos = normOutSize + pos;
+		outLayer->InsertNode(newOutNode, outPos);
+		autoAssocLayer->InsertNode(newOutNode, pos, true);
+		ResetNames();
+		ConnectNodeToLayer(newOutNode, layers["bias"], IN);
+		ConnectToHiddenNodes(newOutNode, IN);
+		this->numOut++;
 	}
 
 }

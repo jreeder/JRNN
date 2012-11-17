@@ -140,6 +140,9 @@ void Layer::SetName(string newName){
 }
 
 int Layer::GetSize(){
+	if (layerSize != nodes.size()){
+		layerSize = nodes.size(); //just incase it gets out of sync. 
+	}
     return layerSize;
 }
 
@@ -173,15 +176,18 @@ void Layer::AddNode( NodePtr node, bool createName){
 	}
 	else {
 		nodes.push_back(node);
+		layerSize++;
 	}
 }
 
-void Layer::InsertNode( NodePtr node, int pos )
+void Layer::InsertNode( NodePtr node, int pos, bool shallow /*= false*/ )
 {
-	string tmpName = name + "_" + lexical_cast<string>(pos);
+	if (!shallow){
+		string tmpName = name + "_" + lexical_cast<string>(pos);
+		node->SetName(tmpName);
+		node->SetHeight(this->height);
+	}
 	NodeList::iterator it = nodes.begin();
-	node->SetName(tmpName);
-	node->SetHeight(this->height);
 	nodes.insert(it+pos, node);
 	layerSize++;
 }
@@ -266,6 +272,7 @@ void Layer::ShallowCopy(LayerPtr layer){
 	NodeList origNodes = layer->GetNodes();
 	BOOST_FOREACH(NodePtr node, origNodes){
 		nodes.push_back(node);
+		layerSize++;
 	}
 }
 

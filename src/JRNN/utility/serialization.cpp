@@ -194,7 +194,7 @@ namespace JRNN {
 	}
 
 	LayerPtr Serializer::ConvLayer (serialize::Layer& layer){
-		LayerPtr sLayer = Layer::CreateLayer(Layer::hidden,layer.size,layer.height,layer.name);
+		LayerPtr sLayer = Layer::CreateLayer(Layer::hidden,0,layer.height,layer.name); //The size will be incremented by adding nodes
 		sLayer->SetTypeByName(layer.type);
 		BOOST_FOREACH(serialize::Node node, layer.nodes){
 			sLayer->AddNode(ConvNode(node),false);

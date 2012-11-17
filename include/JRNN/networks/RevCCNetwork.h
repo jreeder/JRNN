@@ -35,6 +35,13 @@ namespace JRNN {
 		virtual void InstallCandidate(NodePtr node, vecDouble outWeights = vecDouble(0), vecDouble assocWeights = vecDouble(0));
 		virtual void Build(int numIn, int numOut, bool cloneouts = false, bool useSDCC = false, bool varyActFunc = false);
 		virtual void Reset();
+		
+		//Add new inputs. Need to be overridden so that we handle the auto associative stuff correctly.
+		virtual void AppendInputNode( NodePtr node );
+		void AppendNewAutoAssocNode();
+
+		virtual void InsertInputNode( NodePtr newNode, int pos );
+
 		bool getTrueOuts;
 
 	protected:		
@@ -43,6 +50,9 @@ namespace JRNN {
 		//TODO:might make this network context are soon. 
 		void FullyConnectAutoAssoc(LayerPtr layer);
 		void FullyConnectAutoAssoc(LayerPtr layer, vecDouble outWeights);
+		void InsertNewAutoAssocNode( int pos );
+		
+
 	};
 
 }

@@ -485,4 +485,30 @@ namespace JRNN{
 		return listConnections;
 	}
 
+	void Network::ResetConMap()
+	{
+		ConList changedCons;
+		BOOST_FOREACH(ConPair conP, connections){
+			if (conP.first != conP.second->GetName()){
+				changedCons.push_back(conP.second);
+			}
+		}
+		BOOST_FOREACH(ConPtr con, changedCons){
+			RemoveConnection(con,false);
+			AddConnection(con);
+		}
+	}
+
+	void Network::ConnectNodeToLayer( NodePtr node, LayerPtr layer, conType cType )
+	{
+		BOOST_FOREACH(NodePtr lNode, layer->GetNodes()){
+			if (cType == OUT){
+				AddConnection(Connect(node,lNode));
+			}
+			else {
+				AddConnection(Connect(lNode,node));
+			}
+		}
+	}
+
 }

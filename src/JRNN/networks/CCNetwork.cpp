@@ -537,19 +537,24 @@ namespace JRNN {
 		}
 	}
 
-	void CCNetwork::ConnectToHiddenNodes( NodePtr node )
+	void CCNetwork::ConnectToHiddenNodes( NodePtr node, conType cType /*= OUT*/ )
 	{
 		BOOST_FOREACH(LayerPtr layer, hiddenLayers){
 			BOOST_FOREACH(NodePtr hidNode, layer->GetNodes()){
-				AddConnection(Connect(node, hidNode));
+				if (cType == OUT){
+					AddConnection(Connect(node, hidNode));
+				}
+				else {
+					AddConnection(Connect(hidNode, node));
+				}
 			}
 		}
 	}
 
-	void CCNetwork::ConnectToHiddenNodes( NodeList nodes )
+	void CCNetwork::ConnectToHiddenNodes( NodeList nodes, conType cType /*= OUT*/ )
 	{
 		BOOST_FOREACH(NodePtr node, nodes){
-			ConnectToHiddenNodes(node);
+			ConnectToHiddenNodes(node, cType);
 		}
 	}
 

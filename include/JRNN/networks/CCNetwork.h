@@ -34,12 +34,12 @@ namespace JRNN {
 		void CreateCandLayer(int numCand);
 		
 		//Functions for adding new inputs
-		NodePtr AppendNewInputNode();
-		void AppendInputNode(NodePtr node);
-		void InsertInputNode( NodePtr newNode, int pos );
-		NodePtr InsertNewInputNode(int pos);
-		void ConnectToHiddenNodes(NodePtr node);
-		void ConnectToHiddenNodes(NodeList nodes);
+		virtual NodePtr AppendNewInputNode();
+		virtual void AppendInputNode(NodePtr node);
+		virtual void InsertInputNode( NodePtr newNode, int pos );
+		virtual NodePtr InsertNewInputNode(int pos);
+		void ConnectToHiddenNodes(NodePtr node, conType cType = OUT);
+		void ConnectToHiddenNodes(NodeList nodes, conType cType = OUT);
 
 		virtual void InstallCandidate(NodePtr node, vecDouble outWeights = vecDouble(0));
 		virtual void Build(int numIn, int numOut, bool cloneouts = false, bool useSDCC = false, bool varyActFunc = false);
