@@ -67,11 +67,11 @@ namespace JRNN {
 		CCNetwork::Build(numIn, numOut, cloneouts, useSDCC, varyActFunc);
 		//The way I'm doing things right now will mean that I'll treat them as normal outs
 		//and will have a second special layer pointing to the original outs. 
-		layers.insert(LayerPair("autoassoc", Layer::CreateLayer(Layer::spec, numIn,-1,"autoassoc")));
+		layers.insert(LayerPair("autoassoc", Layer::CreateLayer(Layer::spec, numIn,-1,"autoassoc", true)));
 		layers["autoassoc"]->BuildLayer<ASigmoid>();
 		autoAssocLayer = layers["autoassoc"];
 		FullyConnectAutoAssoc(layers["bias"]);
-		layers.insert(LayerPair("normout", Layer::CreateLayer(Layer::spec, 0, -1, "normout"))); //size will be set by the shallowcopy. 
+		layers.insert(LayerPair("normout", Layer::CreateLayer(Layer::spec, 0, -1, "normout", true))); //size will be set by the shallowcopy. 
 		normOutLayer = layers["normout"];
 		LayerPtr tmpOutLayer = layers["out"];
 		normOutLayer->ShallowCopy(tmpOutLayer);
@@ -214,6 +214,16 @@ namespace JRNN {
 		ConnectNodeToLayer(newOutNode, layers["bias"], IN);
 		ConnectToHiddenNodes(newOutNode, IN);
 		this->numOut++;
+	}
+
+	void RevCCNetwork::SetAutoAssocLayerByName( string name )
+	{
+		this->autoAssocLayer = GetLayer(name);
+	}
+
+	void RevCCNetwork::SetNormOutLayerByName( string name )
+	{
+		this->normOutLayer = GetLayer(name);
 	}
 
 }

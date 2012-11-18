@@ -14,17 +14,19 @@ Layer::Layer(){
     layerSize = 0;
     height = 0;
     name = "NONE";
+	shallowLayer = false;
 }
 
-Layer::Layer(layerType type, int inLayerSize, int height, string name) {
+Layer::Layer(layerType type, int inLayerSize, int height, string name, bool shallow /*= false*/) {
     this->type = type;
     this->layerSize = inLayerSize;
     this->height = height;
     this->name = name;
+	this->shallowLayer = shallow;
 }
 
-LayerPtr Layer::CreateLayer(layerType type, int inLayerSize, int height, string name){
-	LayerPtr lp(new Layer(type,inLayerSize,height, name));
+LayerPtr Layer::CreateLayer(layerType type, int inLayerSize, int height, string name, bool shallow /*= false*/){
+	LayerPtr lp(new Layer(type,inLayerSize,height, name, shallow));
 	return lp;
 }
 
@@ -141,7 +143,7 @@ void Layer::SetName(string newName){
 
 int Layer::GetSize(){
 	if (layerSize != nodes.size()){
-		layerSize = nodes.size(); //just incase it gets out of sync. 
+		layerSize = nodes.size(); //just in case it gets out of sync. 
 	}
     return layerSize;
 }
@@ -161,28 +163,30 @@ void Layer::SetHeight( int newHeight ){
 	}
 }
 
-void Layer::AddNode( NodePtr node ){
-	string tmpName = name + "_";
-	tmpName += lexical_cast<string>(layerSize); //Numbers should start with zero so size is the next number
-	node->SetName(tmpName);
-	node->SetHeight(height);
+void Layer::AddNode( NodePtr node, bool shallow /*= false*/ ){
+	if (!shallow & !this->shallowLayer){
+		string tmpName = name + "_";
+		tmpName += lexical_cast<string>(layerSize); //Numbers should start with zero so size is the next number
+		node->SetName(tmpName);
+		node->SetHeight(height);
+	}
 	nodes.push_back(node);
 	layerSize++;
 }
 
-void Layer::AddNode( NodePtr node, bool createName){
-	if (createName){
-		AddNode(node);
-	}
-	else {
-		nodes.push_back(node);
-		layerSize++;
-	}
-}
+//void Layer::AddNode( NodePtr node, bool createName){
+//	if (createName){
+//		AddNode(node);
+//	}
+//	else {
+//		nodes.push_back(node);
+//		layerSize++;
+//	}
+//}
 
 void Layer::InsertNode( NodePtr node, int pos, bool shallow /*= false*/ )
 {
-	if (!shallow){
+	if (!shallow & !this->shallowLayer){
 		string tmpName = name + "_" + lexical_cast<string>(pos);
 		node->SetName(tmpName);
 		node->SetHeight(this->height);
@@ -196,12 +200,14 @@ NodeList Layer::ResetNodeNames()
 {
 	NodeList nodesChanged;
 
-	for (int i = 0; i < this->nodes.size(); i++){
-		NodePtr node = this->nodes[i];
-		string nodeName = this->name + "_" + lexical_cast<string>(i);
-		if (nodeName != node->GetName()){
-			node->SetName(nodeName);
-			nodesChanged.push_back(node);
+	if (!this->shallowLayer){
+		for (uint i = 0; i < this->nodes.size(); i++){
+			NodePtr node = this->nodes[i];
+			string nodeName = this->name + "_" + lexical_cast<string>(i);
+			if (nodeName != node->GetName()){
+				node->SetName(nodeName);
+				nodesChanged.push_back(node);
+			}
 		}
 	}
 	return nodesChanged;
@@ -305,6 +311,9 @@ void Layer::SetTypeByName( string type )
 	else if (type == "out"){
 		this->type = Layer::out;
 	}
+	else if (type == "spec"){
+		this->type = Layer::spec;
+	}
 	else {
 		this->type = Layer::hidden;
 	}
@@ -322,6 +331,8 @@ string Layer::GetTypeName()
 		return "input";
 	case Layer::out:
 		return "out";
+	case Layer::spec:
+		return "spec";
 	default:
 		return "";
 	}

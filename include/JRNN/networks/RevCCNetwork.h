@@ -30,6 +30,8 @@ namespace JRNN {
 		virtual NetworkPtr	Clone();
 		const LayerPtr GetAutoAssocLayer();
 		const LayerPtr GetNormOutLayer();
+		void SetAutoAssocLayerByName(string name);
+		void SetNormOutLayerByName(string name);
 		virtual vecDouble GetOutputs();
 		vecDouble GetTrueOutputs();
 		virtual void InstallCandidate(NodePtr node, vecDouble outWeights = vecDouble(0), vecDouble assocWeights = vecDouble(0));

@@ -12,6 +12,7 @@
 #include "JRNN.h"
 #include "structure/network.h"
 #include "networks/CCNetwork.h"
+#include "networks/RevCCNetwork.h"
 #include "networks/FFMLPNetwork.h"
 #include "utility/dataset.h"
 #include "utility/csmtldataset.h"
@@ -31,7 +32,8 @@ namespace JRNN {
 		enum NetType {
 			Normal,
 			FFMLP,
-			CC
+			CC, 
+			RevCC
 		};
 
 		struct Node {
@@ -51,6 +53,7 @@ namespace JRNN {
 			int size;
 			int height;
 			string name;
+			bool shallow;
 			string prevLayerName;
 			string nextLayerName;
 			std::vector<Node> nodes;
@@ -82,6 +85,13 @@ namespace JRNN {
 			bool varyActFunc;
 			virtual void ReadIn(CCNetworkPtr net);
 			virtual void WriteOut(CCNetworkPtr net);
+		};
+
+		struct RevCCNetwork : CCNetwork {
+			string autoAssocLayerName;
+			string normOutLayerName;
+			virtual void ReadIn(RevCCNetworkPtr net);
+			virtual void WriteOut(RevCCNetworkPtr net);
 		};
 	}
 
@@ -124,6 +134,8 @@ namespace JRNN {
 		void readFFNetwork(serialize::FFMLPNetwork& sNet, mObject& net);
 		void writeCCNetwork(mObject& outNet, serialize::CCNetwork& net);
 		void readCCNetwork(serialize::CCNetwork& sNet, mObject& net);
+		void writeRevCCNetwork(mObject& outNet, serialize::RevCCNetwork& net);
+		void readRevCCNetwork(serialize::RevCCNetwork& sNet, mObject& net);
 
 		mArray writeLayers(std::vector<serialize::Layer>& layers);
 		std::vector<serialize::Layer> readLayers(mArray& layers);

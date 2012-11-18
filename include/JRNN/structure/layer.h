@@ -32,13 +32,13 @@ namespace JRNN {
         };
 
         Layer();
-        Layer(layerType type, int inLayerSize, int height, string name);
+        Layer(layerType type, int inLayerSize, int height, string name, bool shallow = false);
         Layer(const Layer& orig);
         virtual ~Layer();
         void Activate();
         void Activate(vecDouble inputs);
         //void BuildLayer(Node::nodeType nType);
-		static LayerPtr CreateLayer(layerType type, int inLayerSize, int height, string name);
+		static LayerPtr CreateLayer(layerType type, int inLayerSize, int height, string name, bool shallow = false);
 		static LayerPtr Clone( LayerPtr layer );
 		void ShallowCopy (LayerPtr layer);
 		template<class T>
@@ -71,8 +71,8 @@ namespace JRNN {
         const string& GetName();
 		NodeList ResetNodeNames();
 
-		void AddNode(NodePtr node);
-		void AddNode( NodePtr node, bool createName);
+		void AddNode(NodePtr node, bool shallow = false);
+		//void AddNode( NodePtr node, bool createName);
 		void InsertNode(NodePtr node, int pos, bool shallow = false);
 		void RemoveNode(NodePtr node);
 		int RemoveUnconnectedNodes();
@@ -83,6 +83,8 @@ namespace JRNN {
 		int GetHeight();
 		void SetHeight(int newHeight);
 		vecDouble GetPrimes();
+		bool GetShallowLayer() const { return shallowLayer; }
+		void SetShallowLayer(bool val) { shallowLayer = val; }
 
 	private:
         layerType type;
@@ -93,6 +95,7 @@ namespace JRNN {
         LayerPtr prevLayer;
         LayerPtr nextLayer;
         NodeList nodes;
+		bool shallowLayer;
     };
 
 	template<class T>

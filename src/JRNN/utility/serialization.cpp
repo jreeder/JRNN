@@ -80,8 +80,20 @@ namespace JRNN {
 		net->SetNumIn(numIn);
 		net->SetNumOut(numOut);
 		net->SetNumHidLayers(numHidLayers);
+		vector<serialize::Layer> shallowLayers;
 		BOOST_FOREACH(serialize::Layer layer, layers){
 			net->GetLayers().insert(LayerPair(layer.name,Serializer::ConvLayer(layer)));
+			if (layer.shallow){
+				shallowLayers.push_back(layer);
+			}
+		}
+		BOOST_FOREACH(serialize::Layer sLayer, shallowLayers){
+			LayerPtr tmpLayer = net->GetLayer(sLayer.name);
+			BOOST_FOREACH(serialize::Node node, sLayer.nodes){
+				NodePtr tmpNode = net->GetNode(node.name);
+				assert(tmpNode.get() != 0);
+				tmpLayer->AddNode(tmpNode, true);
+			}
 		}
 		BOOST_FOREACH(serialize::Layer layer, layers){
 			LayerPtr sLayer = net->GetLayer(layer.name);
@@ -129,6 +141,24 @@ namespace JRNN {
 		for (;it != hiddenLayerNames.end(); it++){
 			layerl.push_back(net->GetLayer((*it)));
 		}
+	}
+
+	void serialize::RevCCNetwork::ReadIn( RevCCNetworkPtr net )
+	{
+		CCNetwork::ReadIn(net);
+		netType = RevCC;
+		autoAssocLayerName = net->GetAutoAssocLayer()->GetName();
+		normOutLayerName = net->GetNormOutLayer()->GetName();
+	}
+
+	void serialize::RevCCNetwork::WriteOut( RevCCNetworkPtr net )
+	{
+		if (!net){
+			assert(0);
+		}
+		CCNetwork::WriteOut(net);
+		net->SetAutoAssocLayerByName(autoAssocLayerName);
+		net->SetNormOutLayerByName(normOutLayerName);
 	}
 
 	void serialize::FFMLPNetwork::ReadIn(FFMLPNetPtr net){
@@ -182,6 +212,7 @@ namespace JRNN {
 		serialize::Layer sLayer;
 		sLayer.height = layer->GetHeight();
 		sLayer.name = layer->GetName();
+		sLayer.shallow = layer->GetShallowLayer();
 		sLayer.nextLayerName = layer->HasNextL() ? layer->GetNextLayer()->GetName() : "";
 		sLayer.prevLayerName = layer->HasPrevL() ? layer->GetPrevLayer()->GetName() : "";
 		sLayer.size	= layer->GetSize();
@@ -194,10 +225,12 @@ namespace JRNN {
 	}
 
 	LayerPtr Serializer::ConvLayer (serialize::Layer& layer){
-		LayerPtr sLayer = Layer::CreateLayer(Layer::hidden,0,layer.height,layer.name); //The size will be incremented by adding nodes
+		LayerPtr sLayer = Layer::CreateLayer(Layer::hidden,0,layer.height,layer.name,layer.shallow); //The size will be incremented by adding nodes
 		sLayer->SetTypeByName(layer.type);
-		BOOST_FOREACH(serialize::Node node, layer.nodes){
-			sLayer->AddNode(ConvNode(node),false);
+		if (!layer.shallow){
+			BOOST_FOREACH(serialize::Node node, layer.nodes){
+				sLayer->AddNode(ConvNode(node),false);
+			}
 		}
 		return sLayer;
 	}
@@ -277,6 +310,29 @@ namespace JRNN {
 		sNet.varyActFunc = findValue(net, "varyActFunc").get_bool();
 	}
 
+
+
+	void JSONArchiver::writeRevCCNetwork( mObject& outNet, serialize::RevCCNetwork& net )
+	{
+		//Standard CC
+		writeCCNetwork(outNet, net);
+
+		//Special shallow layers in RevCC
+		outNet["autoAssocLayerName"] = net.autoAssocLayerName;
+		outNet["normOutLayerName"] = net.normOutLayerName;
+	}
+
+	void JSONArchiver::readRevCCNetwork( serialize::RevCCNetwork& sNet, mObject& net )
+	{
+		//Standard CC Stuff
+		readCCNetwork(sNet, net);
+
+		//Special Rev CC Stuff
+		sNet.autoAssocLayerName = findValue(net, "autoAssocLayerName").get_str();
+		sNet.normOutLayerName = findValue(net, "normOutLayerName").get_str();
+	}
+
+
 	mArray JSONArchiver::writeLayers( std::vector<serialize::Layer>& layers )
 	{
 		mArray newLayers;
@@ -304,6 +360,7 @@ namespace JRNN {
 		newLayer["size"] = layer.size;
 		newLayer["height"] = layer.height;
 		newLayer["name"] = layer.name;
+		newLayer["shallow"] = layer.shallow;
 		newLayer["prevLayerName"] = layer.prevLayerName;
 		newLayer["nextLayerName"] = layer.nextLayerName;
 		newLayer["nodes"] = writeNodes(layer.nodes);
@@ -317,6 +374,7 @@ namespace JRNN {
 		newLayer.size = findValue(layer, "size").get_int();
 		newLayer.height = findValue(layer, "height").get_int();
 		newLayer.name = findValue(layer, "name").get_str();
+		newLayer.shallow = findValue(layer, "shallow").get_bool();
 		newLayer.prevLayerName = findValue(layer, "prevLayerName").get_str();
 		newLayer.nextLayerName = findValue(layer, "nextLayerName").get_str();
 		mArray nodes = findValue(layer, "nodes").get_array();
@@ -448,6 +506,13 @@ namespace JRNN {
 			sNetCC.WriteOut(tmpNetCC);
 			retNet = tmpNetCC;
 		}
+		else if (netType == serialize::RevCC){
+			serialize::RevCCNetwork sNetRev;
+			readRevCCNetwork(sNetRev,inNet);
+			RevCCNetworkPtr tmpNetRev = RevCCNetwork::Create();
+			sNetRev.WriteOut(tmpNetRev);
+			retNet = tmpNetRev;
+		}
 		else {
 			assert(0);
 		}
@@ -469,6 +534,11 @@ namespace JRNN {
 			serialize::FFMLPNetwork sNet;
 			sNet.ReadIn(dynamic_pointer_cast<FFMLPNetwork>(inNet));
 			writeFFNetwork(outNet,sNet);
+		}
+		else if (typeid(RevCCNetwork) == typeid((*inNet))){
+			serialize::RevCCNetwork sNet;
+			sNet.ReadIn(dynamic_pointer_cast<RevCCNetwork>(inNet));
+			writeRevCCNetwork(outNet, sNet);
 		}
 		else {
 			serialize::Network sNet;
@@ -500,7 +570,6 @@ namespace JRNN {
 		this->Save(inNet, ofile);
 		ofile.close();
 	}
-
 
 	void DataSetArchiver::SaveDStoFile( DatasetPtr dataset, string filename )
 	{
@@ -704,6 +773,7 @@ namespace JRNN {
 		}
 		return tmpArray;
 	}
+
 
 
 }
