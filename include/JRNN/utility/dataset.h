@@ -49,6 +49,8 @@ namespace JRNN {
         virtual void DistData(int numTrain, int numVal, int numTest);
         virtual void RedistData();
 		void Clear();
+		bool AllowShuffle() const;
+		void AllowShuffle(bool val);
 
     protected:
         int size;
@@ -61,7 +63,8 @@ namespace JRNN {
 		bool outputPerCategory;
 		bool normalizeReals;
 		bool dsAnalyzed;
-        std::vector<int> randomRange;
+		bool allowShuffle;
+		std::vector<int> randomRange;
 		static RandomGeneratorInt dRand;
 		double trainStdDev;
 		double testStdDev;

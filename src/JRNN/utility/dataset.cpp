@@ -21,6 +21,7 @@ Dataset::Dataset() {
 	outClassIndexes.clear();
 	outClassPercentage.clear();
 	outClassNames.clear();
+	allowShuffle = true;
 }
 
 Dataset::Dataset(const Dataset& orig) {
@@ -50,6 +51,7 @@ Dataset::Dataset(const Dataset& orig) {
 	outClassNames = orig.outClassNames;
 	dsAnalyzed = orig.dsAnalyzed;
 	size = orig.size;
+	allowShuffle = orig.allowShuffle;
 }
 
 Dataset::~Dataset() {
@@ -446,14 +448,16 @@ void Dataset::GenRandRange(){
 }
 
 void Dataset::Shuffle(ints &indexes){
-	dRand.gen.seed((unsigned int)time(NULL));
-	int tmpSize = indexes.size();
-	int tmpIndex = 0;
-	for (int i = tmpSize - 1; i > 0; i--){
-		int j = dRand() % (i+1);
-		tmpIndex = indexes[i];
-		indexes[i] = indexes[j];
-		indexes[j] = tmpIndex;
+	if(allowShuffle){
+		dRand.gen.seed((unsigned int)time(NULL));
+		int tmpSize = indexes.size();
+		int tmpIndex = 0;
+		for (int i = tmpSize - 1; i > 0; i--){
+			int j = dRand() % (i+1);
+			tmpIndex = indexes[i];
+			indexes[i] = indexes[j];
+			indexes[j] = tmpIndex;
+		}
 	}
 }
 
@@ -474,39 +478,41 @@ void Dataset::Reshuffle(){
 
 //Shuffles the subsets so that they are in random order. 
 void Dataset::ShuffleSubsets(){
-	dRand.gen.seed((unsigned int)time(NULL));
-	int tmpSize = trainIns.size();
-	vecDouble tmpInVec, tmpOutVec;
-	for (int i = tmpSize - 1; i > 0; i--){
-		int j = dRand() % (i + 1);
-		tmpInVec = trainIns[i];
-		tmpOutVec = trainOuts[i];
-		trainIns[i] = trainIns[j];
-		trainIns[j] = tmpInVec;
-		trainOuts[i] = trainOuts[j];
-		trainOuts[j] = tmpOutVec;
-	}
+	if (allowShuffle){
+		dRand.gen.seed((unsigned int)time(NULL));
+		int tmpSize = trainIns.size();
+		vecDouble tmpInVec, tmpOutVec;
+		for (int i = tmpSize - 1; i > 0; i--){
+			int j = dRand() % (i + 1);
+			tmpInVec = trainIns[i];
+			tmpOutVec = trainOuts[i];
+			trainIns[i] = trainIns[j];
+			trainIns[j] = tmpInVec;
+			trainOuts[i] = trainOuts[j];
+			trainOuts[j] = tmpOutVec;
+		}
 
-	tmpSize = valIns.size();
-	for (int i = tmpSize - 1; i > 0; i--){
-		int j = dRand() % (i + 1);
-		tmpInVec = valIns[i];
-		tmpOutVec = valOuts[i];
-		valIns[i] = valIns[j];
-		valIns[j] = tmpInVec;
-		valOuts[i] = valOuts[j];
-		valOuts[j] = tmpOutVec;
-	}
+		tmpSize = valIns.size();
+		for (int i = tmpSize - 1; i > 0; i--){
+			int j = dRand() % (i + 1);
+			tmpInVec = valIns[i];
+			tmpOutVec = valOuts[i];
+			valIns[i] = valIns[j];
+			valIns[j] = tmpInVec;
+			valOuts[i] = valOuts[j];
+			valOuts[j] = tmpOutVec;
+		}
 
-	tmpSize = testIns.size();
-	for (int i = tmpSize - 1; i > 0; i--){
-		int j = dRand() % (i + 1);
-		tmpInVec = testIns[i];
-		tmpOutVec = testOuts[i];
-		testIns[i] = testIns[j];
-		testIns[j] = tmpInVec;
-		testOuts[i] = testOuts[j];
-		testOuts[j] = tmpOutVec;
+		tmpSize = testIns.size();
+		for (int i = tmpSize - 1; i > 0; i--){
+			int j = dRand() % (i + 1);
+			tmpInVec = testIns[i];
+			tmpOutVec = testOuts[i];
+			testIns[i] = testIns[j];
+			testIns[j] = tmpInVec;
+			testOuts[i] = testOuts[j];
+			testOuts[j] = tmpOutVec;
+		}
 	}
 }
 
@@ -595,4 +601,14 @@ void Dataset::MergeSubsets( DatasetPtr dsPtr, bool resetSubsetSize /*= false*/ )
 		numTest = valIns.size();
 	}
 	ShuffleSubsets();
+}
+
+bool JRNN::Dataset::AllowShuffle() const
+{
+	return allowShuffle;
+}
+
+void JRNN::Dataset::AllowShuffle( bool val )
+{
+	allowShuffle = val;
 }
