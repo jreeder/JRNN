@@ -50,8 +50,12 @@ void exportRevCCTrainer(){
 		def("SetScaleAndOffset", &RevCCTrainer::SetScaleAndOffset).
 		def("SetSDCCandVaryActFunc", &RevCCTrainer::SetSDCCandVaryActFunc).
 		def("getTestWhileTrainResults", &RevCCTrainer::getTestWhileTrainResults, return_value_policy<copy_const_reference>()).
+		def("AddNewInputs", &RevCCTrainer::AddNewInputs).
+		def("AddPrevTrainedNets", &RevCCTrainer::AddPrevTrainedNets).
 		def_readwrite("revparams", &RevCCTrainer::revparams).
 		def_readonly("net1vals", &RevCCTrainer::net1vals).
-		def_readonly("net2vals", &RevCCTrainer::net2vals)
+		def_readonly("net2vals", &RevCCTrainer::net2vals).
+		add_property("net1", &RevCCTrainer::GetNet1).
+		add_property("net2", &RevCCTrainer::GetNet2)
 		;
 }

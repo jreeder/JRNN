@@ -26,6 +26,7 @@ void exportRevCCNetwork(){
 		def("Create", &RevCCNetwork::Create).staticmethod("Create").
 		def("Build", &RevCCNetwork::Build, RevCCNetwork_buildoverloads()).
 		def("GetOutputs", &RevCCNetwork::GetOutputs).
+		def("GetTrueOutputs", &RevCCNetwork::GetTrueOutputs).
 		def("Reset", &RevCCNetwork::Reset).
 		def_readwrite("getTrueOuts", &RevCCNetwork::getTrueOuts).
 		def("Clone", ClonePtr)

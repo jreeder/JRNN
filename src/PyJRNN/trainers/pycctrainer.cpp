@@ -89,6 +89,7 @@ void exportCCTrainer(){
 		def("Reset", &CCTrainer::Reset).
 		def("RedistData", &CCTrainer::RedistData).
 		def("SetDataSet", &CCTrainer::SetDataSet).
+		def("AddNewInputs", &CCTrainer::AddNewInputs).
 		def("TrainToValConv", &CCTrainer::TrainToValConv).
 		def("TrainToConvergence", &CCTrainer::TrainToConvergence, CCTrainer_ttcoverloads()).
 		def("TestOnData", &CCTrainer::TestOnData, &CCTrainerWrap::default_TestOnData).
