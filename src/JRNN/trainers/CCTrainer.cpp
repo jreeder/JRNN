@@ -1079,20 +1079,19 @@ namespace JRNN {
 			NodePtr newNode;
 			if (index == -1){
 				newNode = this->network->AppendNewInputNode();
-				//Add stuff here to do things if connectToHidden is set
 			}
 			else if (index < network->GetNumIn()){
 				newNode = this->network->InsertNewInputNode(index);
-				//add stuff here to do things if connectToHidden is set. 
-				//will probably involve getting a pointer to the new node. 
-				//And setting some new parameter of the weights that need to be updated
-				//Like freezing the existing weights or something like that. 
+			}
+			else {
+				assert(0);
 			}
 			addedNodes.push_back(newNode);
 		}
 		if (connectToHidden){
 			network->ConnectToHiddenNodes(addedNodes);
 			network->LockConnections(true, addedNodes);
+			ResetVars();
 			UpdateNet();
 			network->LockConnections(false);
 		}

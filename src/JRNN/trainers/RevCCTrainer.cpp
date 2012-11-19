@@ -353,4 +353,54 @@ namespace JRNN {
 		this->net2->SetVaryActFunc(varyActFunc);
 	}
 
+	void RevCCTrainer::AddNewInputs( ints inputIndexes, DatasetPtr newData, bool connectToHidden /*= false */ )
+	{
+		network = net1;
+		NodeList addedNodes;
+		AddInputsToNet(inputIndexes, net1, addedNodes);
+		NodeList addedNodes2;
+		AddInputsToNet(inputIndexes, net2, addedNodes2);
+		SetDataSet(newData); //this is moved here so that the new outputs are used in calculating the neccessary values
+		FinishSetup(); //also used to update based on new AA outputs. 
+		if (connectToHidden){
+			network->ConnectToHiddenNodes(addedNodes);
+			network->LockConnections(true, addedNodes);
+			ResetVars();
+			UpdateNet();
+			network->LockConnections(false);
+
+			//Now deal with the backup network
+			bufferDS->Clear();
+			revNet = net1;
+			FillBufferDS(revparams.bufferSize);
+			network = net2; //This has to happen before SetDataset
+			SetDataSet(bufferDS);
+			network->ConnectToHiddenNodes(addedNodes2);
+			network->LockConnections(true, addedNodes2);
+			ResetVars();
+			UpdateNet();
+			network->LockConnections(false);
+		}
+		addedNodes.clear();
+		addedNodes2.clear();
+	}
+
+	void RevCCTrainer::AddInputsToNet( ints inputIndexes, RevCCNetworkPtr inNet, NodeList &addedNodes )
+	{
+		BOOST_FOREACH(int index, inputIndexes){
+			//index of -1 means append to the end. 
+			NodePtr newNode;
+			if (index == -1){
+				newNode = inNet->AppendNewInputNode();
+			}
+			else if (index < inNet->GetNumIn()){
+				newNode = inNet->InsertNewInputNode(index);
+			}
+			else {
+				assert(0);
+			}
+			addedNodes.push_back(newNode);
+		}
+	}
+
 }

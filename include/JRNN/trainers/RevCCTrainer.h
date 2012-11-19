@@ -73,6 +73,10 @@ namespace JRNN {
 
 		void SetSDCCandVaryActFunc( bool useSDCC, bool varyActFunc );
 
+		virtual void AddNewInputs( ints inputIndexes, DatasetPtr newData, bool connectToHidden = false );
+
+		void AddInputsToNet( ints inputIndexes, RevCCNetworkPtr inNet, NodeList &addedNodes );
+
 		void Reset();
 
 	protected:
@@ -113,7 +117,7 @@ namespace JRNN {
 		
 		//Overloaded so that I can insert tests after each epoch. 
 		CCTrainer::status TrainOuts();
-		
+
 		static RandomGenerator01 revRand;
 		//conVars assoc;
 
