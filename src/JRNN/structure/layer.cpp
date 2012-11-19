@@ -337,3 +337,13 @@ string Layer::GetTypeName()
 		return "";
 	}
 }
+
+bool JRNN::Layer::GetShallowLayer() const
+{
+	return shallowLayer;
+}
+
+void JRNN::Layer::SetShallowLayer( bool val )
+{
+	shallowLayer = val;
+}

@@ -83,8 +83,8 @@ namespace JRNN {
 		int GetHeight();
 		void SetHeight(int newHeight);
 		vecDouble GetPrimes();
-		bool GetShallowLayer() const { return shallowLayer; }
-		void SetShallowLayer(bool val) { shallowLayer = val; }
+		bool GetShallowLayer() const;
+		void SetShallowLayer(bool val);
 
 	private:
         layerType type;
