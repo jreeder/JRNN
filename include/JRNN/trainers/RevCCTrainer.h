@@ -75,7 +75,10 @@ namespace JRNN {
 
 		virtual void AddNewInputs( ints inputIndexes, DatasetPtr newData, bool connectToHidden = false );
 
-		void AddInputsToNet( ints inputIndexes, RevCCNetworkPtr inNet, NodeList &addedNodes );
+		//these functions are used to get and set the networks. So i can save them away. 
+		void AddPrevTrainedNets( RevCCNetworkPtr inNet1, RevCCNetworkPtr inNet2);
+		RevCCNetworkPtr GetNet1();
+		RevCCNetworkPtr GetNet2();
 
 		void Reset();
 
@@ -109,6 +112,8 @@ namespace JRNN {
 
 		virtual vecDouble ActivateNet(vecDouble inPoint, vecDouble outPoint);
 		
+		void AddInputsToNet( ints inputIndexes, RevCCNetworkPtr inNet, NodeList &addedNodes );
+
 		vecDouble ConcatVec( vecDouble first, vecDouble second );
 		void FinishSetup();
 		void FillBufferDS( int numPoints, bool validate = false );

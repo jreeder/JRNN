@@ -403,4 +403,21 @@ namespace JRNN {
 		}
 	}
 
+	void RevCCTrainer::AddPrevTrainedNets( RevCCNetworkPtr inNet1, RevCCNetworkPtr inNet2 )
+	{
+		net1 = inNet1;
+		net2 = inNet2;
+		firstTrained = true;
+	}
+
+	JRNN::RevCCNetworkPtr RevCCTrainer::GetNet1()
+	{
+		return net1;
+	}
+
+	JRNN::RevCCNetworkPtr RevCCTrainer::GetNet2()
+	{
+		return net2;
+	}
+
 }
