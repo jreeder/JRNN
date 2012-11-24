@@ -1,0 +1,413 @@
+04:14:16 **** Build of configuration DebugPython for project JRNN ****
+make all 
+Building file: /Users/jreeder/Code/JRNN/src/JRNN/utility/activationfunctions.cpp
+Invoking: GCC C++ Compiler
+g++ -DJRNN_USE_NUMPY_FOR_PYTHON_BINDING -I"/Users/jreeder/Code/JRNN/include/JRNN" -I/Users/jreeder/Code/json-spirit/json_spirit -I/usr/local/include/python2.7 -I/usr/local/lib/python2.7/site-packages/PyUblas-2011.1-py2.7-macosx-10.8-x86_64.egg/include -I/Users/jreeder/Code/src/numpy/numpy/core/include -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/utility/activationfunctions.d" -MT"src/utility/activationfunctions.d" -o "src/utility/activationfunctions.o" "/Users/jreeder/Code/JRNN/src/JRNN/utility/activationfunctions.cpp"
+In file included from /Users/jreeder/Code/src/numpy/numpy/core/include/numpy/ndarraytypes.h:1725,
+                 from /Users/jreeder/Code/src/numpy/numpy/core/include/numpy/ndarrayobject.h:17,
+                 from /Users/jreeder/Code/src/numpy/numpy/core/include/numpy/arrayobject.h:15,
+                 from /usr/local/lib/python2.7/site-packages/PyUblas-2011.1-py2.7-macosx-10.8-x86_64.egg/include/pyublas/numpy.hpp:40,
+                 from /Users/jreeder/Code/JRNN/include/JRNN/JRNN.h:40,
+                 from /Users/jreeder/Code/JRNN/src/JRNN/utility/activationfunctions.cpp:7:
+/Users/jreeder/Code/src/numpy/numpy/core/include/numpy/npy_deprecated_api.h:11:2: warning: #warning "Using deprecated NumPy API, disable it by #defining NPY_NO_DEPRECATED_API NPY_1_7_API_VERSION"
+In file included from /Users/jreeder/Code/JRNN/include/JRNN/JRNN.h:93,
+                 from /Users/jreeder/Code/JRNN/src/JRNN/utility/activationfunctions.cpp:7:
+/Users/jreeder/Code/JRNN/include/JRNN/utility/utility.h: In function 'JRNN::vecDouble JRNN::ConcatVec(JRNN::vecDouble, JRNN::vecDouble)':
+/Users/jreeder/Code/JRNN/include/JRNN/utility/utility.h:89: warning: unused variable 'newSize'
+Finished building: /Users/jreeder/Code/JRNN/src/JRNN/utility/activationfunctions.cpp
+ 
+Building file: /Users/jreeder/Code/JRNN/src/JRNN/utility/csmtldataset.cpp
+Invoking: GCC C++ Compiler
+g++ -DJRNN_USE_NUMPY_FOR_PYTHON_BINDING -I"/Users/jreeder/Code/JRNN/include/JRNN" -I/Users/jreeder/Code/json-spirit/json_spirit -I/usr/local/include/python2.7 -I/usr/local/lib/python2.7/site-packages/PyUblas-2011.1-py2.7-macosx-10.8-x86_64.egg/include -I/Users/jreeder/Code/src/numpy/numpy/core/include -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/utility/csmtldataset.d" -MT"src/utility/csmtldataset.d" -o "src/utility/csmtldataset.o" "/Users/jreeder/Code/JRNN/src/JRNN/utility/csmtldataset.cpp"
+In file included from /Users/jreeder/Code/src/numpy/numpy/core/include/numpy/ndarraytypes.h:1725,
+                 from /Users/jreeder/Code/src/numpy/numpy/core/include/numpy/ndarrayobject.h:17,
+                 from /Users/jreeder/Code/src/numpy/numpy/core/include/numpy/arrayobject.h:15,
+                 from /usr/local/lib/python2.7/site-packages/PyUblas-2011.1-py2.7-macosx-10.8-x86_64.egg/include/pyublas/numpy.hpp:40,
+                 from /Users/jreeder/Code/JRNN/include/JRNN/JRNN.h:40,
+                 from /Users/jreeder/Code/JRNN/src/JRNN/utility/csmtldataset.cpp:10:
+/Users/jreeder/Code/src/numpy/numpy/core/include/numpy/npy_deprecated_api.h:11:2: warning: #warning "Using deprecated NumPy API, disable it by #defining NPY_NO_DEPRECATED_API NPY_1_7_API_VERSION"
+In file included from /Users/jreeder/Code/JRNN/include/JRNN/JRNN.h:93,
+                 from /Users/jreeder/Code/JRNN/src/JRNN/utility/csmtldataset.cpp:10:
+/Users/jreeder/Code/JRNN/include/JRNN/utility/utility.h: In function 'JRNN::vecDouble JRNN::ConcatVec(JRNN::vecDouble, JRNN::vecDouble)':
+/Users/jreeder/Code/JRNN/include/JRNN/utility/utility.h:89: warning: unused variable 'newSize'
+/Users/jreeder/Code/JRNN/src/JRNN/utility/csmtldataset.cpp: In member function 'virtual void JRNN::CSMTLDataset::AnalyzeDS()':
+/Users/jreeder/Code/JRNN/src/JRNN/utility/csmtldataset.cpp:317: warning: unused variable 'tmp1'
+/Users/jreeder/Code/JRNN/src/JRNN/utility/csmtldataset.cpp:318: warning: unused variable 'tmp2'
+/Users/jreeder/Code/JRNN/src/JRNN/utility/csmtldataset.cpp: In member function 'virtual void JRNN::CSMTLDataset::FillSubset(JRNN::matDouble&, JRNN::matDouble&, int, boost::unordered::unordered_map<std::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::vector<int, std::allocator<int> >, boost::hash<std::basic_string<char, std::char_traits<char>, std::allocator<char> > >, std::equal_to<std::basic_string<char, std::char_traits<char>, std::allocator<char> > >, std::allocator<std::pair<const std::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::vector<int, std::allocator<int> > > > >&, boost::shared_ptr<JRNN::CSMTLDataset::Task>, int)':
+/Users/jreeder/Code/JRNN/src/JRNN/utility/csmtldataset.cpp:358: warning: unused variable 'tmp'
+Finished building: /Users/jreeder/Code/JRNN/src/JRNN/utility/csmtldataset.cpp
+ 
+Building file: /Users/jreeder/Code/JRNN/src/JRNN/utility/dataset.cpp
+Invoking: GCC C++ Compiler
+g++ -DJRNN_USE_NUMPY_FOR_PYTHON_BINDING -I"/Users/jreeder/Code/JRNN/include/JRNN" -I/Users/jreeder/Code/json-spirit/json_spirit -I/usr/local/include/python2.7 -I/usr/local/lib/python2.7/site-packages/PyUblas-2011.1-py2.7-macosx-10.8-x86_64.egg/include -I/Users/jreeder/Code/src/numpy/numpy/core/include -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/utility/dataset.d" -MT"src/utility/dataset.d" -o "src/utility/dataset.o" "/Users/jreeder/Code/JRNN/src/JRNN/utility/dataset.cpp"
+In file included from /Users/jreeder/Code/src/numpy/numpy/core/include/numpy/ndarraytypes.h:1725,
+                 from /Users/jreeder/Code/src/numpy/numpy/core/include/numpy/ndarrayobject.h:17,
+                 from /Users/jreeder/Code/src/numpy/numpy/core/include/numpy/arrayobject.h:15,
+                 from /usr/local/lib/python2.7/site-packages/PyUblas-2011.1-py2.7-macosx-10.8-x86_64.egg/include/pyublas/numpy.hpp:40,
+                 from /Users/jreeder/Code/JRNN/include/JRNN/JRNN.h:40,
+                 from /Users/jreeder/Code/JRNN/src/JRNN/utility/dataset.cpp:7:
+/Users/jreeder/Code/src/numpy/numpy/core/include/numpy/npy_deprecated_api.h:11:2: warning: #warning "Using deprecated NumPy API, disable it by #defining NPY_NO_DEPRECATED_API NPY_1_7_API_VERSION"
+In file included from /Users/jreeder/Code/JRNN/include/JRNN/JRNN.h:93,
+                 from /Users/jreeder/Code/JRNN/src/JRNN/utility/dataset.cpp:7:
+/Users/jreeder/Code/JRNN/include/JRNN/utility/utility.h: In function 'JRNN::vecDouble JRNN::ConcatVec(JRNN::vecDouble, JRNN::vecDouble)':
+/Users/jreeder/Code/JRNN/include/JRNN/utility/utility.h:89: warning: unused variable 'newSize'
+Finished building: /Users/jreeder/Code/JRNN/src/JRNN/utility/dataset.cpp
+ 
+Building file: /Users/jreeder/Code/JRNN/src/JRNN/utility/etamtlhelper.cpp
+Invoking: GCC C++ Compiler
+g++ -DJRNN_USE_NUMPY_FOR_PYTHON_BINDING -I"/Users/jreeder/Code/JRNN/include/JRNN" -I/Users/jreeder/Code/json-spirit/json_spirit -I/usr/local/include/python2.7 -I/usr/local/lib/python2.7/site-packages/PyUblas-2011.1-py2.7-macosx-10.8-x86_64.egg/include -I/Users/jreeder/Code/src/numpy/numpy/core/include -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/utility/etamtlhelper.d" -MT"src/utility/etamtlhelper.d" -o "src/utility/etamtlhelper.o" "/Users/jreeder/Code/JRNN/src/JRNN/utility/etamtlhelper.cpp"
+In file included from /Users/jreeder/Code/src/numpy/numpy/core/include/numpy/ndarraytypes.h:1725,
+                 from /Users/jreeder/Code/src/numpy/numpy/core/include/numpy/ndarrayobject.h:17,
+                 from /Users/jreeder/Code/src/numpy/numpy/core/include/numpy/arrayobject.h:15,
+                 from /usr/local/lib/python2.7/site-packages/PyUblas-2011.1-py2.7-macosx-10.8-x86_64.egg/include/pyublas/numpy.hpp:40,
+                 from /Users/jreeder/Code/JRNN/include/JRNN/JRNN.h:40,
+                 from /Users/jreeder/Code/JRNN/src/JRNN/utility/etamtlhelper.cpp:11:
+/Users/jreeder/Code/src/numpy/numpy/core/include/numpy/npy_deprecated_api.h:11:2: warning: #warning "Using deprecated NumPy API, disable it by #defining NPY_NO_DEPRECATED_API NPY_1_7_API_VERSION"
+In file included from /Users/jreeder/Code/JRNN/include/JRNN/JRNN.h:93,
+                 from /Users/jreeder/Code/JRNN/src/JRNN/utility/etamtlhelper.cpp:11:
+/Users/jreeder/Code/JRNN/include/JRNN/utility/utility.h: In function 'JRNN::vecDouble JRNN::ConcatVec(JRNN::vecDouble, JRNN::vecDouble)':
+/Users/jreeder/Code/JRNN/include/JRNN/utility/utility.h:89: warning: unused variable 'newSize'
+/Users/jreeder/Code/JRNN/src/JRNN/utility/etamtlhelper.cpp: In member function 'void JRNN::EtaMTLHelper::CalcDks(JRNN::NodeList&)':
+/Users/jreeder/Code/JRNN/src/JRNN/utility/etamtlhelper.cpp:58: warning: comparison between signed and unsigned integer expressions
+Finished building: /Users/jreeder/Code/JRNN/src/JRNN/utility/etamtlhelper.cpp
+ 
+Building file: /Users/jreeder/Code/JRNN/src/JRNN/utility/mtldataset.cpp
+Invoking: GCC C++ Compiler
+g++ -DJRNN_USE_NUMPY_FOR_PYTHON_BINDING -I"/Users/jreeder/Code/JRNN/include/JRNN" -I/Users/jreeder/Code/json-spirit/json_spirit -I/usr/local/include/python2.7 -I/usr/local/lib/python2.7/site-packages/PyUblas-2011.1-py2.7-macosx-10.8-x86_64.egg/include -I/Users/jreeder/Code/src/numpy/numpy/core/include -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/utility/mtldataset.d" -MT"src/utility/mtldataset.d" -o "src/utility/mtldataset.o" "/Users/jreeder/Code/JRNN/src/JRNN/utility/mtldataset.cpp"
+In file included from /Users/jreeder/Code/src/numpy/numpy/core/include/numpy/ndarraytypes.h:1725,
+                 from /Users/jreeder/Code/src/numpy/numpy/core/include/numpy/ndarrayobject.h:17,
+                 from /Users/jreeder/Code/src/numpy/numpy/core/include/numpy/arrayobject.h:15,
+                 from /usr/local/lib/python2.7/site-packages/PyUblas-2011.1-py2.7-macosx-10.8-x86_64.egg/include/pyublas/numpy.hpp:40,
+                 from /Users/jreeder/Code/JRNN/include/JRNN/JRNN.h:40,
+                 from /Users/jreeder/Code/JRNN/src/JRNN/utility/mtldataset.cpp:8:
+/Users/jreeder/Code/src/numpy/numpy/core/include/numpy/npy_deprecated_api.h:11:2: warning: #warning "Using deprecated NumPy API, disable it by #defining NPY_NO_DEPRECATED_API NPY_1_7_API_VERSION"
+In file included from /Users/jreeder/Code/JRNN/include/JRNN/JRNN.h:93,
+                 from /Users/jreeder/Code/JRNN/src/JRNN/utility/mtldataset.cpp:8:
+/Users/jreeder/Code/JRNN/include/JRNN/utility/utility.h: In function 'JRNN::vecDouble JRNN::ConcatVec(JRNN::vecDouble, JRNN::vecDouble)':
+/Users/jreeder/Code/JRNN/include/JRNN/utility/utility.h:89: warning: unused variable 'newSize'
+/Users/jreeder/Code/JRNN/src/JRNN/utility/mtldataset.cpp: In member function 'void JRNN::MTLDataset::AddTaskFromFile(std::string, std::string, int, int)':
+/Users/jreeder/Code/JRNN/src/JRNN/utility/mtldataset.cpp:102: warning: comparison between signed and unsigned integer expressions
+/Users/jreeder/Code/JRNN/src/JRNN/utility/mtldataset.cpp: In member function 'virtual void JRNN::MTLDataset::Distribute()':
+/Users/jreeder/Code/JRNN/src/JRNN/utility/mtldataset.cpp:231: warning: unused variable 'numClasses'
+Finished building: /Users/jreeder/Code/JRNN/src/JRNN/utility/mtldataset.cpp
+ 
+Building file: /Users/jreeder/Code/JRNN/src/JRNN/utility/nodebuffer.cpp
+Invoking: GCC C++ Compiler
+g++ -DJRNN_USE_NUMPY_FOR_PYTHON_BINDING -I"/Users/jreeder/Code/JRNN/include/JRNN" -I/Users/jreeder/Code/json-spirit/json_spirit -I/usr/local/include/python2.7 -I/usr/local/lib/python2.7/site-packages/PyUblas-2011.1-py2.7-macosx-10.8-x86_64.egg/include -I/Users/jreeder/Code/src/numpy/numpy/core/include -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/utility/nodebuffer.d" -MT"src/utility/nodebuffer.d" -o "src/utility/nodebuffer.o" "/Users/jreeder/Code/JRNN/src/JRNN/utility/nodebuffer.cpp"
+In file included from /Users/jreeder/Code/src/numpy/numpy/core/include/numpy/ndarraytypes.h:1725,
+                 from /Users/jreeder/Code/src/numpy/numpy/core/include/numpy/ndarrayobject.h:17,
+                 from /Users/jreeder/Code/src/numpy/numpy/core/include/numpy/arrayobject.h:15,
+                 from /usr/local/lib/python2.7/site-packages/PyUblas-2011.1-py2.7-macosx-10.8-x86_64.egg/include/pyublas/numpy.hpp:40,
+                 from /Users/jreeder/Code/JRNN/include/JRNN/JRNN.h:40,
+                 from /Users/jreeder/Code/JRNN/src/JRNN/utility/nodebuffer.cpp:1:
+/Users/jreeder/Code/src/numpy/numpy/core/include/numpy/npy_deprecated_api.h:11:2: warning: #warning "Using deprecated NumPy API, disable it by #defining NPY_NO_DEPRECATED_API NPY_1_7_API_VERSION"
+In file included from /Users/jreeder/Code/JRNN/include/JRNN/JRNN.h:93,
+                 from /Users/jreeder/Code/JRNN/src/JRNN/utility/nodebuffer.cpp:1:
+/Users/jreeder/Code/JRNN/include/JRNN/utility/utility.h: In function 'JRNN::vecDouble JRNN::ConcatVec(JRNN::vecDouble, JRNN::vecDouble)':
+/Users/jreeder/Code/JRNN/include/JRNN/utility/utility.h:89: warning: unused variable 'newSize'
+Finished building: /Users/jreeder/Code/JRNN/src/JRNN/utility/nodebuffer.cpp
+ 
+Building file: /Users/jreeder/Code/JRNN/src/JRNN/utility/serialization.cpp
+Invoking: GCC C++ Compiler
+g++ -DJRNN_USE_NUMPY_FOR_PYTHON_BINDING -I"/Users/jreeder/Code/JRNN/include/JRNN" -I/Users/jreeder/Code/json-spirit/json_spirit -I/usr/local/include/python2.7 -I/usr/local/lib/python2.7/site-packages/PyUblas-2011.1-py2.7-macosx-10.8-x86_64.egg/include -I/Users/jreeder/Code/src/numpy/numpy/core/include -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/utility/serialization.d" -MT"src/utility/serialization.d" -o "src/utility/serialization.o" "/Users/jreeder/Code/JRNN/src/JRNN/utility/serialization.cpp"
+In file included from /Users/jreeder/Code/src/numpy/numpy/core/include/numpy/ndarraytypes.h:1725,
+                 from /Users/jreeder/Code/src/numpy/numpy/core/include/numpy/ndarrayobject.h:17,
+                 from /Users/jreeder/Code/src/numpy/numpy/core/include/numpy/arrayobject.h:15,
+                 from /usr/local/lib/python2.7/site-packages/PyUblas-2011.1-py2.7-macosx-10.8-x86_64.egg/include/pyublas/numpy.hpp:40,
+                 from /Users/jreeder/Code/JRNN/include/JRNN/JRNN.h:40,
+                 from /Users/jreeder/Code/JRNN/src/JRNN/utility/serialization.cpp:11:
+/Users/jreeder/Code/src/numpy/numpy/core/include/numpy/npy_deprecated_api.h:11:2: warning: #warning "Using deprecated NumPy API, disable it by #defining NPY_NO_DEPRECATED_API NPY_1_7_API_VERSION"
+In file included from /Users/jreeder/Code/JRNN/include/JRNN/JRNN.h:93,
+                 from /Users/jreeder/Code/JRNN/src/JRNN/utility/serialization.cpp:11:
+/Users/jreeder/Code/JRNN/include/JRNN/utility/utility.h: In function 'JRNN::vecDouble JRNN::ConcatVec(JRNN::vecDouble, JRNN::vecDouble)':
+/Users/jreeder/Code/JRNN/include/JRNN/utility/utility.h:89: warning: unused variable 'newSize'
+Finished building: /Users/jreeder/Code/JRNN/src/JRNN/utility/serialization.cpp
+ 
+Building file: /Users/jreeder/Code/JRNN/src/JRNN/trainers/BackPropTrainer.cpp
+Invoking: GCC C++ Compiler
+g++ -DJRNN_USE_NUMPY_FOR_PYTHON_BINDING -I"/Users/jreeder/Code/JRNN/include/JRNN" -I/Users/jreeder/Code/json-spirit/json_spirit -I/usr/local/include/python2.7 -I/usr/local/lib/python2.7/site-packages/PyUblas-2011.1-py2.7-macosx-10.8-x86_64.egg/include -I/Users/jreeder/Code/src/numpy/numpy/core/include -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/trainers/BackPropTrainer.d" -MT"src/trainers/BackPropTrainer.d" -o "src/trainers/BackPropTrainer.o" "/Users/jreeder/Code/JRNN/src/JRNN/trainers/BackPropTrainer.cpp"
+In file included from /Users/jreeder/Code/src/numpy/numpy/core/include/numpy/ndarraytypes.h:1725,
+                 from /Users/jreeder/Code/src/numpy/numpy/core/include/numpy/ndarrayobject.h:17,
+                 from /Users/jreeder/Code/src/numpy/numpy/core/include/numpy/arrayobject.h:15,
+                 from /usr/local/lib/python2.7/site-packages/PyUblas-2011.1-py2.7-macosx-10.8-x86_64.egg/include/pyublas/numpy.hpp:40,
+                 from /Users/jreeder/Code/JRNN/include/JRNN/JRNN.h:40,
+                 from /Users/jreeder/Code/JRNN/src/JRNN/trainers/BackPropTrainer.cpp:7:
+/Users/jreeder/Code/src/numpy/numpy/core/include/numpy/npy_deprecated_api.h:11:2: warning: #warning "Using deprecated NumPy API, disable it by #defining NPY_NO_DEPRECATED_API NPY_1_7_API_VERSION"
+In file included from /Users/jreeder/Code/JRNN/include/JRNN/JRNN.h:93,
+                 from /Users/jreeder/Code/JRNN/src/JRNN/trainers/BackPropTrainer.cpp:7:
+/Users/jreeder/Code/JRNN/include/JRNN/utility/utility.h: In function 'JRNN::vecDouble JRNN::ConcatVec(JRNN::vecDouble, JRNN::vecDouble)':
+/Users/jreeder/Code/JRNN/include/JRNN/utility/utility.h:89: warning: unused variable 'newSize'
+/Users/jreeder/Code/JRNN/src/JRNN/trainers/BackPropTrainer.cpp: In member function 'double JRNN::BackPropTrainer::TrainEpoch()':
+/Users/jreeder/Code/JRNN/src/JRNN/trainers/BackPropTrainer.cpp:75: warning: unused variable 'tmp'
+/Users/jreeder/Code/JRNN/src/JRNN/trainers/BackPropTrainer.cpp: In member function 'JRNN::hashedDoubleMap JRNN::BackPropTrainer::TestWiClass(JRNN::Dataset::datatype)':
+/Users/jreeder/Code/JRNN/src/JRNN/trainers/BackPropTrainer.cpp:133: warning: unused variable 'tmp'
+/Users/jreeder/Code/JRNN/src/JRNN/trainers/BackPropTrainer.cpp:119: warning: unused variable 'numInCorrect'
+/Users/jreeder/Code/JRNN/src/JRNN/trainers/BackPropTrainer.cpp: In member function 'void JRNN::BackPropTrainer::CalcWeightUpdates(JRNN::LayerPtr, JRNN::vecDouble)':
+/Users/jreeder/Code/JRNN/src/JRNN/trainers/BackPropTrainer.cpp:175: warning: unused variable 'act'
+Finished building: /Users/jreeder/Code/JRNN/src/JRNN/trainers/BackPropTrainer.cpp
+ 
+Building file: /Users/jreeder/Code/JRNN/src/JRNN/trainers/CCTrainer.cpp
+Invoking: GCC C++ Compiler
+g++ -DJRNN_USE_NUMPY_FOR_PYTHON_BINDING -I"/Users/jreeder/Code/JRNN/include/JRNN" -I/Users/jreeder/Code/json-spirit/json_spirit -I/usr/local/include/python2.7 -I/usr/local/lib/python2.7/site-packages/PyUblas-2011.1-py2.7-macosx-10.8-x86_64.egg/include -I/Users/jreeder/Code/src/numpy/numpy/core/include -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/trainers/CCTrainer.d" -MT"src/trainers/CCTrainer.d" -o "src/trainers/CCTrainer.o" "/Users/jreeder/Code/JRNN/src/JRNN/trainers/CCTrainer.cpp"
+In file included from /Users/jreeder/Code/src/numpy/numpy/core/include/numpy/ndarraytypes.h:1725,
+                 from /Users/jreeder/Code/src/numpy/numpy/core/include/numpy/ndarrayobject.h:17,
+                 from /Users/jreeder/Code/src/numpy/numpy/core/include/numpy/arrayobject.h:15,
+                 from /usr/local/lib/python2.7/site-packages/PyUblas-2011.1-py2.7-macosx-10.8-x86_64.egg/include/pyublas/numpy.hpp:40,
+                 from /Users/jreeder/Code/JRNN/include/JRNN/JRNN.h:40,
+                 from /Users/jreeder/Code/JRNN/src/JRNN/trainers/CCTrainer.cpp:7:
+/Users/jreeder/Code/src/numpy/numpy/core/include/numpy/npy_deprecated_api.h:11:2: warning: #warning "Using deprecated NumPy API, disable it by #defining NPY_NO_DEPRECATED_API NPY_1_7_API_VERSION"
+In file included from /Users/jreeder/Code/JRNN/include/JRNN/JRNN.h:93,
+                 from /Users/jreeder/Code/JRNN/src/JRNN/trainers/CCTrainer.cpp:7:
+/Users/jreeder/Code/JRNN/include/JRNN/utility/utility.h: In function 'JRNN::vecDouble JRNN::ConcatVec(JRNN::vecDouble, JRNN::vecDouble)':
+/Users/jreeder/Code/JRNN/include/JRNN/utility/utility.h:89: warning: unused variable 'newSize'
+/Users/jreeder/Code/JRNN/src/JRNN/trainers/CCTrainer.cpp: In member function 'JRNN::CCTrainer::status JRNN::CCTrainer::UpdateNet()':
+/Users/jreeder/Code/JRNN/src/JRNN/trainers/CCTrainer.cpp:321: warning: unused variable 'startEpoch'
+/Users/jreeder/Code/JRNN/src/JRNN/trainers/CCTrainer.cpp: In member function 'virtual void JRNN::CCTrainer::UpdateCorrelations()':
+/Users/jreeder/Code/JRNN/src/JRNN/trainers/CCTrainer.cpp:676: warning: comparison between signed and unsigned integer expressions
+/Users/jreeder/Code/JRNN/src/JRNN/trainers/CCTrainer.cpp: In member function 'virtual JRNN::hashedDoubleMap JRNN::CCTrainer::TestWiClass(JRNN::Dataset::datatype)':
+/Users/jreeder/Code/JRNN/src/JRNN/trainers/CCTrainer.cpp:816: warning: unused variable 'tmp'
+/Users/jreeder/Code/JRNN/src/JRNN/trainers/CCTrainer.cpp:802: warning: unused variable 'numInCorrect'
+Finished building: /Users/jreeder/Code/JRNN/src/JRNN/trainers/CCTrainer.cpp
+ 
+Building file: /Users/jreeder/Code/JRNN/src/JRNN/trainers/EtaMTLRPropTrainer.cpp
+Invoking: GCC C++ Compiler
+g++ -DJRNN_USE_NUMPY_FOR_PYTHON_BINDING -I"/Users/jreeder/Code/JRNN/include/JRNN" -I/Users/jreeder/Code/json-spirit/json_spirit -I/usr/local/include/python2.7 -I/usr/local/lib/python2.7/site-packages/PyUblas-2011.1-py2.7-macosx-10.8-x86_64.egg/include -I/Users/jreeder/Code/src/numpy/numpy/core/include -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/trainers/EtaMTLRPropTrainer.d" -MT"src/trainers/EtaMTLRPropTrainer.d" -o "src/trainers/EtaMTLRPropTrainer.o" "/Users/jreeder/Code/JRNN/src/JRNN/trainers/EtaMTLRPropTrainer.cpp"
+In file included from /Users/jreeder/Code/src/numpy/numpy/core/include/numpy/ndarraytypes.h:1725,
+                 from /Users/jreeder/Code/src/numpy/numpy/core/include/numpy/ndarrayobject.h:17,
+                 from /Users/jreeder/Code/src/numpy/numpy/core/include/numpy/arrayobject.h:15,
+                 from /usr/local/lib/python2.7/site-packages/PyUblas-2011.1-py2.7-macosx-10.8-x86_64.egg/include/pyublas/numpy.hpp:40,
+                 from /Users/jreeder/Code/JRNN/include/JRNN/JRNN.h:40,
+                 from /Users/jreeder/Code/JRNN/src/JRNN/trainers/EtaMTLRPropTrainer.cpp:10:
+/Users/jreeder/Code/src/numpy/numpy/core/include/numpy/npy_deprecated_api.h:11:2: warning: #warning "Using deprecated NumPy API, disable it by #defining NPY_NO_DEPRECATED_API NPY_1_7_API_VERSION"
+In file included from /Users/jreeder/Code/JRNN/include/JRNN/JRNN.h:93,
+                 from /Users/jreeder/Code/JRNN/src/JRNN/trainers/EtaMTLRPropTrainer.cpp:10:
+/Users/jreeder/Code/JRNN/include/JRNN/utility/utility.h: In function 'JRNN::vecDouble JRNN::ConcatVec(JRNN::vecDouble, JRNN::vecDouble)':
+/Users/jreeder/Code/JRNN/include/JRNN/utility/utility.h:89: warning: unused variable 'newSize'
+/Users/jreeder/Code/JRNN/src/JRNN/trainers/EtaMTLRPropTrainer.cpp: In member function 'virtual double JRNN::EtaMTLRPropTrainer::TrainEpoch()':
+/Users/jreeder/Code/JRNN/src/JRNN/trainers/EtaMTLRPropTrainer.cpp:47: warning: unused variable 'tmp'
+/Users/jreeder/Code/JRNN/src/JRNN/trainers/EtaMTLRPropTrainer.cpp: In member function 'virtual void JRNN::EtaMTLRPropTrainer::CalcWeightUpdates(JRNN::LayerPtr, JRNN::vecDouble)':
+/Users/jreeder/Code/JRNN/src/JRNN/trainers/EtaMTLRPropTrainer.cpp:92: warning: unused variable 'act'
+Finished building: /Users/jreeder/Code/JRNN/src/JRNN/trainers/EtaMTLRPropTrainer.cpp
+ 
+Building file: /Users/jreeder/Code/JRNN/src/JRNN/trainers/MTLCCTrainer.cpp
+Invoking: GCC C++ Compiler
+g++ -DJRNN_USE_NUMPY_FOR_PYTHON_BINDING -I"/Users/jreeder/Code/JRNN/include/JRNN" -I/Users/jreeder/Code/json-spirit/json_spirit -I/usr/local/include/python2.7 -I/usr/local/lib/python2.7/site-packages/PyUblas-2011.1-py2.7-macosx-10.8-x86_64.egg/include -I/Users/jreeder/Code/src/numpy/numpy/core/include -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/trainers/MTLCCTrainer.d" -MT"src/trainers/MTLCCTrainer.d" -o "src/trainers/MTLCCTrainer.o" "/Users/jreeder/Code/JRNN/src/JRNN/trainers/MTLCCTrainer.cpp"
+In file included from /Users/jreeder/Code/src/numpy/numpy/core/include/numpy/ndarraytypes.h:1725,
+                 from /Users/jreeder/Code/src/numpy/numpy/core/include/numpy/ndarrayobject.h:17,
+                 from /Users/jreeder/Code/src/numpy/numpy/core/include/numpy/arrayobject.h:15,
+                 from /usr/local/lib/python2.7/site-packages/PyUblas-2011.1-py2.7-macosx-10.8-x86_64.egg/include/pyublas/numpy.hpp:40,
+                 from /Users/jreeder/Code/JRNN/include/JRNN/JRNN.h:40,
+                 from /Users/jreeder/Code/JRNN/src/JRNN/trainers/MTLCCTrainer.cpp:10:
+/Users/jreeder/Code/src/numpy/numpy/core/include/numpy/npy_deprecated_api.h:11:2: warning: #warning "Using deprecated NumPy API, disable it by #defining NPY_NO_DEPRECATED_API NPY_1_7_API_VERSION"
+In file included from /Users/jreeder/Code/JRNN/include/JRNN/JRNN.h:93,
+                 from /Users/jreeder/Code/JRNN/src/JRNN/trainers/MTLCCTrainer.cpp:10:
+/Users/jreeder/Code/JRNN/include/JRNN/utility/utility.h: In function 'JRNN::vecDouble JRNN::ConcatVec(JRNN::vecDouble, JRNN::vecDouble)':
+/Users/jreeder/Code/JRNN/include/JRNN/utility/utility.h:89: warning: unused variable 'newSize'
+/Users/jreeder/Code/JRNN/src/JRNN/trainers/MTLCCTrainer.cpp: In member function 'virtual void JRNN::MTLCCTrainer::UpdateCorrelations()':
+/Users/jreeder/Code/JRNN/src/JRNN/trainers/MTLCCTrainer.cpp:45: warning: comparison between signed and unsigned integer expressions
+Finished building: /Users/jreeder/Code/JRNN/src/JRNN/trainers/MTLCCTrainer.cpp
+ 
+Building file: /Users/jreeder/Code/JRNN/src/JRNN/trainers/RPropTrainer.cpp
+Invoking: GCC C++ Compiler
+g++ -DJRNN_USE_NUMPY_FOR_PYTHON_BINDING -I"/Users/jreeder/Code/JRNN/include/JRNN" -I/Users/jreeder/Code/json-spirit/json_spirit -I/usr/local/include/python2.7 -I/usr/local/lib/python2.7/site-packages/PyUblas-2011.1-py2.7-macosx-10.8-x86_64.egg/include -I/Users/jreeder/Code/src/numpy/numpy/core/include -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/trainers/RPropTrainer.d" -MT"src/trainers/RPropTrainer.d" -o "src/trainers/RPropTrainer.o" "/Users/jreeder/Code/JRNN/src/JRNN/trainers/RPropTrainer.cpp"
+In file included from /Users/jreeder/Code/src/numpy/numpy/core/include/numpy/ndarraytypes.h:1725,
+                 from /Users/jreeder/Code/src/numpy/numpy/core/include/numpy/ndarrayobject.h:17,
+                 from /Users/jreeder/Code/src/numpy/numpy/core/include/numpy/arrayobject.h:15,
+                 from /usr/local/lib/python2.7/site-packages/PyUblas-2011.1-py2.7-macosx-10.8-x86_64.egg/include/pyublas/numpy.hpp:40,
+                 from /Users/jreeder/Code/JRNN/include/JRNN/JRNN.h:40,
+                 from /Users/jreeder/Code/JRNN/src/JRNN/trainers/RPropTrainer.cpp:8:
+/Users/jreeder/Code/src/numpy/numpy/core/include/numpy/npy_deprecated_api.h:11:2: warning: #warning "Using deprecated NumPy API, disable it by #defining NPY_NO_DEPRECATED_API NPY_1_7_API_VERSION"
+In file included from /Users/jreeder/Code/JRNN/include/JRNN/JRNN.h:93,
+                 from /Users/jreeder/Code/JRNN/src/JRNN/trainers/RPropTrainer.cpp:8:
+/Users/jreeder/Code/JRNN/include/JRNN/utility/utility.h: In function 'JRNN::vecDouble JRNN::ConcatVec(JRNN::vecDouble, JRNN::vecDouble)':
+/Users/jreeder/Code/JRNN/include/JRNN/utility/utility.h:89: warning: unused variable 'newSize'
+/Users/jreeder/Code/JRNN/src/JRNN/trainers/RPropTrainer.cpp: In member function 'virtual double JRNN::RPropTrainer::TrainEpoch()':
+/Users/jreeder/Code/JRNN/src/JRNN/trainers/RPropTrainer.cpp:108: warning: unused variable 'tmp'
+/Users/jreeder/Code/JRNN/src/JRNN/trainers/RPropTrainer.cpp: In member function 'JRNN::hashedDoubleMap JRNN::RPropTrainer::TestWiClass(JRNN::Dataset::datatype)':
+/Users/jreeder/Code/JRNN/src/JRNN/trainers/RPropTrainer.cpp:179: warning: unused variable 'tmp'
+/Users/jreeder/Code/JRNN/src/JRNN/trainers/RPropTrainer.cpp:164: warning: unused variable 'numInCorrect'
+/Users/jreeder/Code/JRNN/src/JRNN/trainers/RPropTrainer.cpp: In member function 'virtual void JRNN::RPropTrainer::CalcWeightUpdates(JRNN::LayerPtr, JRNN::vecDouble)':
+/Users/jreeder/Code/JRNN/src/JRNN/trainers/RPropTrainer.cpp:221: warning: unused variable 'act'
+Finished building: /Users/jreeder/Code/JRNN/src/JRNN/trainers/RPropTrainer.cpp
+ 
+Building file: /Users/jreeder/Code/JRNN/src/JRNN/trainers/RevCCTrainer.cpp
+Invoking: GCC C++ Compiler
+g++ -DJRNN_USE_NUMPY_FOR_PYTHON_BINDING -I"/Users/jreeder/Code/JRNN/include/JRNN" -I/Users/jreeder/Code/json-spirit/json_spirit -I/usr/local/include/python2.7 -I/usr/local/lib/python2.7/site-packages/PyUblas-2011.1-py2.7-macosx-10.8-x86_64.egg/include -I/Users/jreeder/Code/src/numpy/numpy/core/include -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/trainers/RevCCTrainer.d" -MT"src/trainers/RevCCTrainer.d" -o "src/trainers/RevCCTrainer.o" "/Users/jreeder/Code/JRNN/src/JRNN/trainers/RevCCTrainer.cpp"
+In file included from /Users/jreeder/Code/src/numpy/numpy/core/include/numpy/ndarraytypes.h:1725,
+                 from /Users/jreeder/Code/src/numpy/numpy/core/include/numpy/ndarrayobject.h:17,
+                 from /Users/jreeder/Code/src/numpy/numpy/core/include/numpy/arrayobject.h:15,
+                 from /usr/local/lib/python2.7/site-packages/PyUblas-2011.1-py2.7-macosx-10.8-x86_64.egg/include/pyublas/numpy.hpp:40,
+                 from /Users/jreeder/Code/JRNN/include/JRNN/JRNN.h:40,
+                 from /Users/jreeder/Code/JRNN/src/JRNN/trainers/RevCCTrainer.cpp:10:
+/Users/jreeder/Code/src/numpy/numpy/core/include/numpy/npy_deprecated_api.h:11:2: warning: #warning "Using deprecated NumPy API, disable it by #defining NPY_NO_DEPRECATED_API NPY_1_7_API_VERSION"
+In file included from /Users/jreeder/Code/JRNN/include/JRNN/JRNN.h:93,
+                 from /Users/jreeder/Code/JRNN/src/JRNN/trainers/RevCCTrainer.cpp:10:
+/Users/jreeder/Code/JRNN/include/JRNN/utility/utility.h: In function 'JRNN::vecDouble JRNN::ConcatVec(JRNN::vecDouble, JRNN::vecDouble)':
+/Users/jreeder/Code/JRNN/include/JRNN/utility/utility.h:89: warning: unused variable 'newSize'
+/Users/jreeder/Code/JRNN/src/JRNN/trainers/RevCCTrainer.cpp: In member function 'JRNN::vecDouble JRNN::RevCCTrainer::ConcatVec(JRNN::vecDouble, JRNN::vecDouble)':
+/Users/jreeder/Code/JRNN/src/JRNN/trainers/RevCCTrainer.cpp:129: warning: unused variable 'newSize'
+Finished building: /Users/jreeder/Code/JRNN/src/JRNN/trainers/RevCCTrainer.cpp
+ 
+Building file: /Users/jreeder/Code/JRNN/src/JRNN/structure/connection.cpp
+Invoking: GCC C++ Compiler
+g++ -DJRNN_USE_NUMPY_FOR_PYTHON_BINDING -I"/Users/jreeder/Code/JRNN/include/JRNN" -I/Users/jreeder/Code/json-spirit/json_spirit -I/usr/local/include/python2.7 -I/usr/local/lib/python2.7/site-packages/PyUblas-2011.1-py2.7-macosx-10.8-x86_64.egg/include -I/Users/jreeder/Code/src/numpy/numpy/core/include -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/structure/connection.d" -MT"src/structure/connection.d" -o "src/structure/connection.o" "/Users/jreeder/Code/JRNN/src/JRNN/structure/connection.cpp"
+In file included from /Users/jreeder/Code/src/numpy/numpy/core/include/numpy/ndarraytypes.h:1725,
+                 from /Users/jreeder/Code/src/numpy/numpy/core/include/numpy/ndarrayobject.h:17,
+                 from /Users/jreeder/Code/src/numpy/numpy/core/include/numpy/arrayobject.h:15,
+                 from /usr/local/lib/python2.7/site-packages/PyUblas-2011.1-py2.7-macosx-10.8-x86_64.egg/include/pyublas/numpy.hpp:40,
+                 from /Users/jreeder/Code/JRNN/include/JRNN/JRNN.h:40,
+                 from /Users/jreeder/Code/JRNN/src/JRNN/structure/connection.cpp:7:
+/Users/jreeder/Code/src/numpy/numpy/core/include/numpy/npy_deprecated_api.h:11:2: warning: #warning "Using deprecated NumPy API, disable it by #defining NPY_NO_DEPRECATED_API NPY_1_7_API_VERSION"
+In file included from /Users/jreeder/Code/JRNN/include/JRNN/JRNN.h:93,
+                 from /Users/jreeder/Code/JRNN/src/JRNN/structure/connection.cpp:7:
+/Users/jreeder/Code/JRNN/include/JRNN/utility/utility.h: In function 'JRNN::vecDouble JRNN::ConcatVec(JRNN::vecDouble, JRNN::vecDouble)':
+/Users/jreeder/Code/JRNN/include/JRNN/utility/utility.h:89: warning: unused variable 'newSize'
+Finished building: /Users/jreeder/Code/JRNN/src/JRNN/structure/connection.cpp
+ 
+Building file: /Users/jreeder/Code/JRNN/src/JRNN/structure/layer.cpp
+Invoking: GCC C++ Compiler
+g++ -DJRNN_USE_NUMPY_FOR_PYTHON_BINDING -I"/Users/jreeder/Code/JRNN/include/JRNN" -I/Users/jreeder/Code/json-spirit/json_spirit -I/usr/local/include/python2.7 -I/usr/local/lib/python2.7/site-packages/PyUblas-2011.1-py2.7-macosx-10.8-x86_64.egg/include -I/Users/jreeder/Code/src/numpy/numpy/core/include -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/structure/layer.d" -MT"src/structure/layer.d" -o "src/structure/layer.o" "/Users/jreeder/Code/JRNN/src/JRNN/structure/layer.cpp"
+In file included from /Users/jreeder/Code/src/numpy/numpy/core/include/numpy/ndarraytypes.h:1725,
+                 from /Users/jreeder/Code/src/numpy/numpy/core/include/numpy/ndarrayobject.h:17,
+                 from /Users/jreeder/Code/src/numpy/numpy/core/include/numpy/arrayobject.h:15,
+                 from /usr/local/lib/python2.7/site-packages/PyUblas-2011.1-py2.7-macosx-10.8-x86_64.egg/include/pyublas/numpy.hpp:40,
+                 from /Users/jreeder/Code/JRNN/include/JRNN/JRNN.h:40,
+                 from /Users/jreeder/Code/JRNN/src/JRNN/structure/layer.cpp:7:
+/Users/jreeder/Code/src/numpy/numpy/core/include/numpy/npy_deprecated_api.h:11:2: warning: #warning "Using deprecated NumPy API, disable it by #defining NPY_NO_DEPRECATED_API NPY_1_7_API_VERSION"
+In file included from /Users/jreeder/Code/JRNN/include/JRNN/JRNN.h:93,
+                 from /Users/jreeder/Code/JRNN/src/JRNN/structure/layer.cpp:7:
+/Users/jreeder/Code/JRNN/include/JRNN/utility/utility.h: In function 'JRNN::vecDouble JRNN::ConcatVec(JRNN::vecDouble, JRNN::vecDouble)':
+/Users/jreeder/Code/JRNN/include/JRNN/utility/utility.h:89: warning: unused variable 'newSize'
+/Users/jreeder/Code/JRNN/src/JRNN/structure/layer.cpp: In member function 'void JRNN::Layer::Activate(JRNN::vecDouble)':
+/Users/jreeder/Code/JRNN/src/JRNN/structure/layer.cpp:106: warning: comparison between signed and unsigned integer expressions
+/Users/jreeder/Code/JRNN/src/JRNN/structure/layer.cpp: In member function 'int JRNN::Layer::GetSize()':
+/Users/jreeder/Code/JRNN/src/JRNN/structure/layer.cpp:145: warning: comparison between signed and unsigned integer expressions
+/Users/jreeder/Code/JRNN/src/JRNN/structure/layer.cpp: In member function 'JRNN::NodePtr JRNN::Layer::GetNodeByName(std::string)':
+/Users/jreeder/Code/JRNN/src/JRNN/structure/layer.cpp:290: warning: comparison between signed and unsigned integer expressions
+Finished building: /Users/jreeder/Code/JRNN/src/JRNN/structure/layer.cpp
+ 
+Building file: /Users/jreeder/Code/JRNN/src/JRNN/structure/network.cpp
+Invoking: GCC C++ Compiler
+g++ -DJRNN_USE_NUMPY_FOR_PYTHON_BINDING -I"/Users/jreeder/Code/JRNN/include/JRNN" -I/Users/jreeder/Code/json-spirit/json_spirit -I/usr/local/include/python2.7 -I/usr/local/lib/python2.7/site-packages/PyUblas-2011.1-py2.7-macosx-10.8-x86_64.egg/include -I/Users/jreeder/Code/src/numpy/numpy/core/include -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/structure/network.d" -MT"src/structure/network.d" -o "src/structure/network.o" "/Users/jreeder/Code/JRNN/src/JRNN/structure/network.cpp"
+In file included from /Users/jreeder/Code/src/numpy/numpy/core/include/numpy/ndarraytypes.h:1725,
+                 from /Users/jreeder/Code/src/numpy/numpy/core/include/numpy/ndarrayobject.h:17,
+                 from /Users/jreeder/Code/src/numpy/numpy/core/include/numpy/arrayobject.h:15,
+                 from /usr/local/lib/python2.7/site-packages/PyUblas-2011.1-py2.7-macosx-10.8-x86_64.egg/include/pyublas/numpy.hpp:40,
+                 from /Users/jreeder/Code/JRNN/include/JRNN/JRNN.h:40,
+                 from /Users/jreeder/Code/JRNN/src/JRNN/structure/network.cpp:7:
+/Users/jreeder/Code/src/numpy/numpy/core/include/numpy/npy_deprecated_api.h:11:2: warning: #warning "Using deprecated NumPy API, disable it by #defining NPY_NO_DEPRECATED_API NPY_1_7_API_VERSION"
+In file included from /Users/jreeder/Code/JRNN/include/JRNN/JRNN.h:93,
+                 from /Users/jreeder/Code/JRNN/src/JRNN/structure/network.cpp:7:
+/Users/jreeder/Code/JRNN/include/JRNN/utility/utility.h: In function 'JRNN::vecDouble JRNN::ConcatVec(JRNN::vecDouble, JRNN::vecDouble)':
+/Users/jreeder/Code/JRNN/include/JRNN/utility/utility.h:89: warning: unused variable 'newSize'
+/Users/jreeder/Code/JRNN/src/JRNN/structure/network.cpp: In member function 'JRNN::NodePtr JRNN::Network::GetNode(std::string)':
+/Users/jreeder/Code/JRNN/src/JRNN/structure/network.cpp:356: warning: comparison between signed and unsigned integer expressions
+/Users/jreeder/Code/JRNN/src/JRNN/structure/network.cpp: In member function 'virtual void JRNN::Network::ResetNames()':
+/Users/jreeder/Code/JRNN/src/JRNN/structure/network.cpp:434: warning: comparison between signed and unsigned integer expressions
+Finished building: /Users/jreeder/Code/JRNN/src/JRNN/structure/network.cpp
+ 
+Building file: /Users/jreeder/Code/JRNN/src/JRNN/structure/node.cpp
+Invoking: GCC C++ Compiler
+g++ -DJRNN_USE_NUMPY_FOR_PYTHON_BINDING -I"/Users/jreeder/Code/JRNN/include/JRNN" -I/Users/jreeder/Code/json-spirit/json_spirit -I/usr/local/include/python2.7 -I/usr/local/lib/python2.7/site-packages/PyUblas-2011.1-py2.7-macosx-10.8-x86_64.egg/include -I/Users/jreeder/Code/src/numpy/numpy/core/include -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/structure/node.d" -MT"src/structure/node.d" -o "src/structure/node.o" "/Users/jreeder/Code/JRNN/src/JRNN/structure/node.cpp"
+In file included from /Users/jreeder/Code/src/numpy/numpy/core/include/numpy/ndarraytypes.h:1725,
+                 from /Users/jreeder/Code/src/numpy/numpy/core/include/numpy/ndarrayobject.h:17,
+                 from /Users/jreeder/Code/src/numpy/numpy/core/include/numpy/arrayobject.h:15,
+                 from /usr/local/lib/python2.7/site-packages/PyUblas-2011.1-py2.7-macosx-10.8-x86_64.egg/include/pyublas/numpy.hpp:40,
+                 from /Users/jreeder/Code/JRNN/include/JRNN/JRNN.h:40,
+                 from /Users/jreeder/Code/JRNN/src/JRNN/structure/node.cpp:7:
+/Users/jreeder/Code/src/numpy/numpy/core/include/numpy/npy_deprecated_api.h:11:2: warning: #warning "Using deprecated NumPy API, disable it by #defining NPY_NO_DEPRECATED_API NPY_1_7_API_VERSION"
+In file included from /Users/jreeder/Code/JRNN/include/JRNN/JRNN.h:93,
+                 from /Users/jreeder/Code/JRNN/src/JRNN/structure/node.cpp:7:
+/Users/jreeder/Code/JRNN/include/JRNN/utility/utility.h: In function 'JRNN::vecDouble JRNN::ConcatVec(JRNN::vecDouble, JRNN::vecDouble)':
+/Users/jreeder/Code/JRNN/include/JRNN/utility/utility.h:89: warning: unused variable 'newSize'
+Finished building: /Users/jreeder/Code/JRNN/src/JRNN/structure/node.cpp
+ 
+Building file: /Users/jreeder/Code/JRNN/src/JRNN/networks/CCNetwork.cpp
+Invoking: GCC C++ Compiler
+g++ -DJRNN_USE_NUMPY_FOR_PYTHON_BINDING -I"/Users/jreeder/Code/JRNN/include/JRNN" -I/Users/jreeder/Code/json-spirit/json_spirit -I/usr/local/include/python2.7 -I/usr/local/lib/python2.7/site-packages/PyUblas-2011.1-py2.7-macosx-10.8-x86_64.egg/include -I/Users/jreeder/Code/src/numpy/numpy/core/include -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/networks/CCNetwork.d" -MT"src/networks/CCNetwork.d" -o "src/networks/CCNetwork.o" "/Users/jreeder/Code/JRNN/src/JRNN/networks/CCNetwork.cpp"
+In file included from /Users/jreeder/Code/src/numpy/numpy/core/include/numpy/ndarraytypes.h:1725,
+                 from /Users/jreeder/Code/src/numpy/numpy/core/include/numpy/ndarrayobject.h:17,
+                 from /Users/jreeder/Code/src/numpy/numpy/core/include/numpy/arrayobject.h:15,
+                 from /usr/local/lib/python2.7/site-packages/PyUblas-2011.1-py2.7-macosx-10.8-x86_64.egg/include/pyublas/numpy.hpp:40,
+                 from /Users/jreeder/Code/JRNN/include/JRNN/JRNN.h:40,
+                 from /Users/jreeder/Code/JRNN/src/JRNN/networks/CCNetwork.cpp:8:
+/Users/jreeder/Code/src/numpy/numpy/core/include/numpy/npy_deprecated_api.h:11:2: warning: #warning "Using deprecated NumPy API, disable it by #defining NPY_NO_DEPRECATED_API NPY_1_7_API_VERSION"
+In file included from /Users/jreeder/Code/JRNN/include/JRNN/JRNN.h:93,
+                 from /Users/jreeder/Code/JRNN/src/JRNN/networks/CCNetwork.cpp:8:
+/Users/jreeder/Code/JRNN/include/JRNN/utility/utility.h: In function 'JRNN::vecDouble JRNN::ConcatVec(JRNN::vecDouble, JRNN::vecDouble)':
+/Users/jreeder/Code/JRNN/include/JRNN/utility/utility.h:89: warning: unused variable 'newSize'
+Finished building: /Users/jreeder/Code/JRNN/src/JRNN/networks/CCNetwork.cpp
+ 
+Building file: /Users/jreeder/Code/JRNN/src/JRNN/networks/CSLLLFFMLPNetwork.cpp
+Invoking: GCC C++ Compiler
+g++ -DJRNN_USE_NUMPY_FOR_PYTHON_BINDING -I"/Users/jreeder/Code/JRNN/include/JRNN" -I/Users/jreeder/Code/json-spirit/json_spirit -I/usr/local/include/python2.7 -I/usr/local/lib/python2.7/site-packages/PyUblas-2011.1-py2.7-macosx-10.8-x86_64.egg/include -I/Users/jreeder/Code/src/numpy/numpy/core/include -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/networks/CSLLLFFMLPNetwork.d" -MT"src/networks/CSLLLFFMLPNetwork.d" -o "src/networks/CSLLLFFMLPNetwork.o" "/Users/jreeder/Code/JRNN/src/JRNN/networks/CSLLLFFMLPNetwork.cpp"
+In file included from /Users/jreeder/Code/src/numpy/numpy/core/include/numpy/ndarraytypes.h:1725,
+                 from /Users/jreeder/Code/src/numpy/numpy/core/include/numpy/ndarrayobject.h:17,
+                 from /Users/jreeder/Code/src/numpy/numpy/core/include/numpy/arrayobject.h:15,
+                 from /usr/local/lib/python2.7/site-packages/PyUblas-2011.1-py2.7-macosx-10.8-x86_64.egg/include/pyublas/numpy.hpp:40,
+                 from /Users/jreeder/Code/JRNN/include/JRNN/JRNN.h:40,
+                 from /Users/jreeder/Code/JRNN/src/JRNN/networks/CSLLLFFMLPNetwork.cpp:12:
+/Users/jreeder/Code/src/numpy/numpy/core/include/numpy/npy_deprecated_api.h:11:2: warning: #warning "Using deprecated NumPy API, disable it by #defining NPY_NO_DEPRECATED_API NPY_1_7_API_VERSION"
+In file included from /Users/jreeder/Code/JRNN/include/JRNN/JRNN.h:93,
+                 from /Users/jreeder/Code/JRNN/src/JRNN/networks/CSLLLFFMLPNetwork.cpp:12:
+/Users/jreeder/Code/JRNN/include/JRNN/utility/utility.h: In function 'JRNN::vecDouble JRNN::ConcatVec(JRNN::vecDouble, JRNN::vecDouble)':
+/Users/jreeder/Code/JRNN/include/JRNN/utility/utility.h:89: warning: unused variable 'newSize'
+Finished building: /Users/jreeder/Code/JRNN/src/JRNN/networks/CSLLLFFMLPNetwork.cpp
+ 
+Building file: /Users/jreeder/Code/JRNN/src/JRNN/networks/FFMLPNetwork.cpp
+Invoking: GCC C++ Compiler
+g++ -DJRNN_USE_NUMPY_FOR_PYTHON_BINDING -I"/Users/jreeder/Code/JRNN/include/JRNN" -I/Users/jreeder/Code/json-spirit/json_spirit -I/usr/local/include/python2.7 -I/usr/local/lib/python2.7/site-packages/PyUblas-2011.1-py2.7-macosx-10.8-x86_64.egg/include -I/Users/jreeder/Code/src/numpy/numpy/core/include -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/networks/FFMLPNetwork.d" -MT"src/networks/FFMLPNetwork.d" -o "src/networks/FFMLPNetwork.o" "/Users/jreeder/Code/JRNN/src/JRNN/networks/FFMLPNetwork.cpp"
+In file included from /Users/jreeder/Code/src/numpy/numpy/core/include/numpy/ndarraytypes.h:1725,
+                 from /Users/jreeder/Code/src/numpy/numpy/core/include/numpy/ndarrayobject.h:17,
+                 from /Users/jreeder/Code/src/numpy/numpy/core/include/numpy/arrayobject.h:15,
+                 from /usr/local/lib/python2.7/site-packages/PyUblas-2011.1-py2.7-macosx-10.8-x86_64.egg/include/pyublas/numpy.hpp:40,
+                 from /Users/jreeder/Code/JRNN/include/JRNN/JRNN.h:40,
+                 from /Users/jreeder/Code/JRNN/src/JRNN/networks/FFMLPNetwork.cpp:7:
+/Users/jreeder/Code/src/numpy/numpy/core/include/numpy/npy_deprecated_api.h:11:2: warning: #warning "Using deprecated NumPy API, disable it by #defining NPY_NO_DEPRECATED_API NPY_1_7_API_VERSION"
+In file included from /Users/jreeder/Code/JRNN/include/JRNN/JRNN.h:93,
+                 from /Users/jreeder/Code/JRNN/src/JRNN/networks/FFMLPNetwork.cpp:7:
+/Users/jreeder/Code/JRNN/include/JRNN/utility/utility.h: In function 'JRNN::vecDouble JRNN::ConcatVec(JRNN::vecDouble, JRNN::vecDouble)':
+/Users/jreeder/Code/JRNN/include/JRNN/utility/utility.h:89: warning: unused variable 'newSize'
+Finished building: /Users/jreeder/Code/JRNN/src/JRNN/networks/FFMLPNetwork.cpp
+ 
+Building file: /Users/jreeder/Code/JRNN/src/JRNN/networks/RevCCNetwork.cpp
+Invoking: GCC C++ Compiler
+g++ -DJRNN_USE_NUMPY_FOR_PYTHON_BINDING -I"/Users/jreeder/Code/JRNN/include/JRNN" -I/Users/jreeder/Code/json-spirit/json_spirit -I/usr/local/include/python2.7 -I/usr/local/lib/python2.7/site-packages/PyUblas-2011.1-py2.7-macosx-10.8-x86_64.egg/include -I/Users/jreeder/Code/src/numpy/numpy/core/include -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/networks/RevCCNetwork.d" -MT"src/networks/RevCCNetwork.d" -o "src/networks/RevCCNetwork.o" "/Users/jreeder/Code/JRNN/src/JRNN/networks/RevCCNetwork.cpp"
+In file included from /Users/jreeder/Code/src/numpy/numpy/core/include/numpy/ndarraytypes.h:1725,
+                 from /Users/jreeder/Code/src/numpy/numpy/core/include/numpy/ndarrayobject.h:17,
+                 from /Users/jreeder/Code/src/numpy/numpy/core/include/numpy/arrayobject.h:15,
+                 from /usr/local/lib/python2.7/site-packages/PyUblas-2011.1-py2.7-macosx-10.8-x86_64.egg/include/pyublas/numpy.hpp:40,
+                 from /Users/jreeder/Code/JRNN/include/JRNN/JRNN.h:40,
+                 from /Users/jreeder/Code/JRNN/src/JRNN/networks/RevCCNetwork.cpp:11:
+/Users/jreeder/Code/src/numpy/numpy/core/include/numpy/npy_deprecated_api.h:11:2: warning: #warning "Using deprecated NumPy API, disable it by #defining NPY_NO_DEPRECATED_API NPY_1_7_API_VERSION"
+In file included from /Users/jreeder/Code/JRNN/include/JRNN/JRNN.h:93,
+                 from /Users/jreeder/Code/JRNN/src/JRNN/networks/RevCCNetwork.cpp:11:
+/Users/jreeder/Code/JRNN/include/JRNN/utility/utility.h: In function 'JRNN::vecDouble JRNN::ConcatVec(JRNN::vecDouble, JRNN::vecDouble)':
+/Users/jreeder/Code/JRNN/include/JRNN/utility/utility.h:89: warning: unused variable 'newSize'
+Finished building: /Users/jreeder/Code/JRNN/src/JRNN/networks/RevCCNetwork.cpp
+ 
+Building file: /Users/jreeder/Code/JRNN/src/JRNN/JRNN.cpp
+Invoking: GCC C++ Compiler
+g++ -DJRNN_USE_NUMPY_FOR_PYTHON_BINDING -I"/Users/jreeder/Code/JRNN/include/JRNN" -I/Users/jreeder/Code/json-spirit/json_spirit -I/usr/local/include/python2.7 -I/usr/local/lib/python2.7/site-packages/PyUblas-2011.1-py2.7-macosx-10.8-x86_64.egg/include -I/Users/jreeder/Code/src/numpy/numpy/core/include -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/JRNN.d" -MT"src/JRNN.d" -o "src/JRNN.o" "/Users/jreeder/Code/JRNN/src/JRNN/JRNN.cpp"
+In file included from /Users/jreeder/Code/src/numpy/numpy/core/include/numpy/ndarraytypes.h:1725,
+                 from /Users/jreeder/Code/src/numpy/numpy/core/include/numpy/ndarrayobject.h:17,
+                 from /Users/jreeder/Code/src/numpy/numpy/core/include/numpy/arrayobject.h:15,
+                 from /usr/local/lib/python2.7/site-packages/PyUblas-2011.1-py2.7-macosx-10.8-x86_64.egg/include/pyublas/numpy.hpp:40,
+                 from /Users/jreeder/Code/JRNN/include/JRNN/JRNN.h:40,
+                 from /Users/jreeder/Code/JRNN/src/JRNN/JRNN.cpp:1:
+/Users/jreeder/Code/src/numpy/numpy/core/include/numpy/npy_deprecated_api.h:11:2: warning: #warning "Using deprecated NumPy API, disable it by #defining NPY_NO_DEPRECATED_API NPY_1_7_API_VERSION"
+In file included from /Users/jreeder/Code/JRNN/include/JRNN/JRNN.h:93,
+                 from /Users/jreeder/Code/JRNN/src/JRNN/JRNN.cpp:1:
+/Users/jreeder/Code/JRNN/include/JRNN/utility/utility.h: In function 'JRNN::vecDouble JRNN::ConcatVec(JRNN::vecDouble, JRNN::vecDouble)':
+/Users/jreeder/Code/JRNN/include/JRNN/utility/utility.h:89: warning: unused variable 'newSize'
+Finished building: /Users/jreeder/Code/JRNN/src/JRNN/JRNN.cpp
+ 
+Building target: libJRNN_pd.a
+Invoking: GCC Archiver
+ar -r  "libJRNN_pd.a"  ./src/utility/activationfunctions.o ./src/utility/csmtldataset.o ./src/utility/dataset.o ./src/utility/etamtlhelper.o ./src/utility/mtldataset.o ./src/utility/nodebuffer.o ./src/utility/serialization.o  ./src/trainers/BackPropTrainer.o ./src/trainers/CCTrainer.o ./src/trainers/EtaMTLRPropTrainer.o ./src/trainers/MTLCCTrainer.o ./src/trainers/RPropTrainer.o ./src/trainers/RevCCTrainer.o  ./src/structure/connection.o ./src/structure/layer.o ./src/structure/network.o ./src/structure/node.o  ./src/networks/CCNetwork.o ./src/networks/CSLLLFFMLPNetwork.o ./src/networks/FFMLPNetwork.o ./src/networks/RevCCNetwork.o  ./src/JRNN.o   
+ar: creating archive libJRNN_pd.a
+Finished building target: libJRNN_pd.a
+ 
+
+04:16:20 Build Finished (took 2m:4s.869ms)
+

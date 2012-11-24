@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;PyJRNN/PyJRNN&apos; to &apos;include&apos;" description="Rename resource &apos;PyJRNN&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="PyJRNN" name="include" stamp="1353656060772" updateReferences="true"/>
+</session>

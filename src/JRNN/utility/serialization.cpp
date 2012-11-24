@@ -557,7 +557,7 @@ namespace JRNN {
 	NetworkPtr JSONArchiver::LoadFromFile( string fileName )
 	{
 		ifstream ifile;
-		ifile.open(fileName, ios_base::in);
+		ifile.open(fileName.c_str(), ios_base::in);
 		NetworkPtr net = this->Load(ifile);
 		ifile.close();
 		return net;
@@ -566,7 +566,7 @@ namespace JRNN {
 	void JSONArchiver::SaveToFile( NetworkPtr inNet, string fileName )
 	{
 		ofstream ofile;
-		ofile.open(fileName, ios_base::out);
+		ofile.open(fileName.c_str(), ios_base::out);
 		this->Save(inNet, ofile);
 		ofile.close();
 	}
@@ -574,7 +574,7 @@ namespace JRNN {
 	void DataSetArchiver::SaveDStoFile( DatasetPtr dataset, string filename )
 	{
 		ofstream ofile;
-		ofile.open(filename, ios_base::out);
+		ofile.open(filename.c_str(), ios_base::out);
 
 		ofile.close();
 	}
@@ -583,7 +583,7 @@ namespace JRNN {
 	{
 		ifstream ifile;
 		DatasetPtr ds(new Dataset());
-		ifile.open(filename, ios_base::in);
+		ifile.open(filename.c_str(), ios_base::in);
 		//TODO finish these functions
 		ifile.close();
 		return ds;
@@ -754,8 +754,8 @@ namespace JRNN {
 	}
 
 	template<class V>
-	static mArray JSONConverter::ConvertVector(V& vec){
-		V::iterator it = vec.begin();
+	mArray JSONConverter::ConvertVector(V& vec){
+		typename V::iterator it = vec.begin();
 		mArray tmpArray;
 		for(;it != vec.end();it++){
 			tmpArray.push_back(mValue((*it)));
@@ -764,10 +764,10 @@ namespace JRNN {
 	}
 
 	template<class V>
-	static V JSONConverter::ConvertVector(mArray& vec){
+	V JSONConverter::ConvertVector(mArray& vec){
 		mArray::iterator it = vec.begin();
 		V tmpArray;
-		typedef V::value_type value_type;
+		typedef typename V::value_type value_type;
 		for(;it != vec.end(); it++){
 			tmpArray.push_back((*it).get_value<value_type>());
 		}
