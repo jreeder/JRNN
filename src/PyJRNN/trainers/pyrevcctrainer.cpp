@@ -14,6 +14,8 @@
 using namespace JRNN;
 using namespace boost::python;
 
+BOOST_PYTHON_MEMBER_FUNCTION_OVERLOADS(RevCCTrainer_traintaskoverloads, TrainTask, 3, 6);
+
 void exportRevCCTrainer(){
 
 	class_<RevCCTrainer::revparameters>("revparameters").
@@ -43,7 +45,7 @@ void exportRevCCTrainer(){
 	typedef boost::shared_ptr<RevCCTrainer> RevCCTrainerPtr;
 
 	class_<RevCCTrainer, RevCCTrainerPtr, bases<CCTrainer> >("RevCCTrainer", init<int, int, int>()).
-		def("TrainTask", &RevCCTrainer::TrainTask).
+		def("TrainTask", &RevCCTrainer::TrainTask, RevCCTrainer_traintaskoverloads()).
 		def("TestOnData", &RevCCTrainer::TestOnData).
 		def("TestWiClass", &RevCCTrainer::TestWiClass).
 		def("Activate", &RevCCTrainer::Activate, "Activates the primary network and returns the output").

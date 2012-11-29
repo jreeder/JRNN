@@ -21,7 +21,7 @@ void exportDatasets(){
 
 	class_<DSWrap, DatasetPtr>("Dataset").
 		def("LoadFromFile", &Dataset::LoadFromFile).
-		//def("LoadFromMatDoubles", &Dataset::LoadFromMatDoubles).
+		def("LoadFromMatDoubles", &Dataset::LoadFromMatDoubles).
 		def("DistData", &Dataset::DistData, &DSWrap::default_DistData).
 		def("RedistData", &Dataset::RedistData, &DSWrap::default_RedistData).
 		def("GetSize", &Dataset::GetSize).
