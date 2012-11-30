@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\..\src\JRNN_mtl\main.cpp">
+    <ClCompile Include="..\..\..\..\src\JRNN_exprun\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

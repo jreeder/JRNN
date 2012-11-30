@@ -31,6 +31,8 @@ namespace JRNN {
 		parms.useMaxWeight = true;
 		parms.maxResets = 10; //Not used right now
 		parms.primeOffset = 0.1;
+		parms.useSDCC = false;
+		parms.SDCCRatio = 0.8;
 
 		parms.out.epochs = 300; //200
 		parms.out.patience = 12;//12
@@ -603,8 +605,6 @@ namespace JRNN {
 				break;
 
 			case Layer::hidden:
-				output = network->GetOutputs();
-				error = Error(output, desiredOut);
 				tmpPrimes = network->GetPrimes(layer->GetName());
 				nPrimes = VecAddScalar(tmpPrimes, parms.primeOffset);
 				//vecDouble errPrimes = VecMultiply(error, outPrimes);

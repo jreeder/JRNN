@@ -77,7 +77,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\..\src\JRNN_mtl\main.cpp" />
+    <ClCompile Include="..\..\..\..\src\JRNN_exprun\main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\..\..\Experiments\config\Parameters.xml" />

@@ -39,28 +39,38 @@ void exportRevCCTrainer();
 void exportBackPropTrainer();
 void exportRPropTrainer();
 
+#ifdef _DEBUG
+	#define MODNAME "PyJRNN_d"
+#else
+	#define MODNAME "PyJRNN"
+#endif
+
+#ifdef _DEBUG
+BOOST_PYTHON_MODULE(PyJRNN_d)
+#else
 BOOST_PYTHON_MODULE(PyJRNN)
+#endif
 {
 	object package = scope();
 	package.attr("__path__") = "PyJRNN";
 	
-	object module0(handle<>(borrowed(PyImport_AddModule("PyJRNN.types"))));
+	object module0(handle<>(borrowed(PyImport_AddModule(MODNAME ".types"))));
 	package.attr("types") = module0;
 	scope module0_scope = module0;
 	exportTypeDefs();
 
-	object module1(handle<>(borrowed(PyImport_AddModule("PyJRNN.networks"))));
+	object module1(handle<>(borrowed(PyImport_AddModule(MODNAME ".networks"))));
 	package.attr("networks") = module1;
 	scope module1_scope = module1;
 	exportNetworks();
 
-	object module2(handle<>(borrowed(PyImport_AddModule("PyJRNN.utility"))));
+	object module2(handle<>(borrowed(PyImport_AddModule(MODNAME ".utility"))));
 	package.attr("utility") = module2;
 	scope module2_scope = module2;
 	exportDatasets();
 	exportSerialization();
 
-	object module3(handle<>(borrowed(PyImport_AddModule("PyJRNN.trainers"))));
+	object module3(handle<>(borrowed(PyImport_AddModule(MODNAME ".trainers"))));
 	package.attr("trainers") = module3;
 	scope module3_scope = module3;
 	exportCCTrainer();
