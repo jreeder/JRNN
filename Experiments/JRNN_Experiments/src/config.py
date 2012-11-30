@@ -53,8 +53,27 @@ def CalcMeanAndError(array, confidence = 0.95, rmoutliers = True):
     h = se * scistats.t._ppf((1+confidence)/2.0, n-1)
     return m, h
 
-from math import modf, floor
- 
+def LoadTabbedDataFiles(numInput, numOutput, path):
+    fileh = open(path)
+    inputs = []
+    outputs = []
+    for line in fileh:
+        line.rstrip("\n")
+        values = line.split("\t")
+        tmpIn = []
+        tmpOut = []
+        for i in range(numInputs + numOutputs):
+            if i < numInputs:
+                tmpIn.append(float(values[i]))
+            else:
+                tmpOut.append(float(values[i]))
+        
+        inputs.append(tmpIn)
+        outputs.append(tmpOut)
+        
+    retInputs = np.array(inputs)
+    retOutputs = np.array(outputs)
+    return (retInputs, retOutputs)
  
 def RemoveOutliers(array, verbose=False):
     """
