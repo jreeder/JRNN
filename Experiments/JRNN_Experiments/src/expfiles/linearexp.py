@@ -27,6 +27,8 @@ etamtlpath = 'linear/ETAMTLTest'
 csmtlpath = 'linear/CSMTLTest'
 gradurpath = 'linear/GRADURTest'
 
+reverbpath = 'linear/REVERBTest'
+
 gradurview1 = 'task1,task1,task1,task1,task1,task1'
 gradurview2 = 'task1,task1,task1,task1,task1,task2'
 gradurview3 = 'task1,task1,task1,task1,task2,task3'
@@ -177,6 +179,36 @@ mtlgur = [\
     ]
     
     
+standardvars.update({'numTasks':2, 'expFold': reverbpath, 'netType':'REVERB', 'numRuns':30, 'numTrain':regNumTrain\
+                     ,'primTask':0, 'useValidation':False, 'viewString':'task1,task2', 'revRatio':1, 'bufferSize':200\
+                     ,'subView1':'task1', 'subView2':'task2','testRecall':True})
+
+reverbNoValNumReverbsRecall = [\
+    cau(standardvars, {'outfile':'noreverbnovalrecall.txt', 'bufferSize':0}),\
+    cau(standardvars, {'outfile':'reverb0novalrecall.txt','numReverbs':0}),\
+    cau(standardvars, {'outfile':'reverb2novalrecall.txt', 'numReverbs':2}),\
+    cau(standardvars, {'outfile':'reverb4novalrecall.txt', 'numReverbs':4}),\
+    cau(standardvars, {'outfile':'reverb6novalrecall.txt', 'numReverbs':6}),\
+    cau(standardvars, {'outfile':'reverb8novalrecall.txt', 'numReverbs':8}),\
+    cau(standardvars, {'outfile':'reverb10novalrecall.txt', 'numReverbs':10}),\
+    cau(standardvars, {'outfile':'reverb12novalrecall.txt', 'numReverbs':12}),\
+    cau(standardvars, {'outfile':'reverb14novalrecall.txt', 'numReverbs':14}),\
+    ]
+
+standardvars.update({'useValidation':True})
+reverbValNumReverbsRecall = [\
+    cau(standardvars, {'outfile':'noreverbvalrecall.txt', 'bufferSize':0}),\
+    cau(standardvars, {'outfile':'reverb0valrecall.txt','numReverbs':0}),\
+    cau(standardvars, {'outfile':'reverb2valrecall.txt', 'numReverbs':2}),\
+    cau(standardvars, {'outfile':'reverb4valrecall.txt', 'numReverbs':4}),\
+    cau(standardvars, {'outfile':'reverb6valrecall.txt', 'numReverbs':6}),\
+    cau(standardvars, {'outfile':'reverb8valrecall.txt', 'numReverbs':8}),\
+    cau(standardvars, {'outfile':'reverb10valrecall.txt', 'numReverbs':10}),\
+    cau(standardvars, {'outfile':'reverb12valrecall.txt', 'numReverbs':12}),\
+    cau(standardvars, {'outfile':'reverb14valrecall.txt', 'numReverbs':14}),\
+    ]
+
+
 
 #Old Tests Here
 

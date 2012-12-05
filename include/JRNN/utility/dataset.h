@@ -42,7 +42,9 @@ namespace JRNN {
 		const int GetSize(datatype type);
 		double GetStdDev(datatype type);
         void SetNumInputs(int numInputs);
+		int GetNumInputs();
         void SetNumOutputs(int numOutputs);
+		int GetNumOutputs();
 		void SetOutputPerCategory(bool outPerClass);
 		void SetNormalizeReals(bool normReals);
 		void MergeSubsets(DatasetPtr dsPtr, bool resetSubsetSize = false);

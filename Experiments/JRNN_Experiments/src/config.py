@@ -53,7 +53,7 @@ def CalcMeanAndError(array, confidence = 0.95, rmoutliers = True):
     h = se * scistats.t._ppf((1+confidence)/2.0, n-1)
     return m, h
 
-def LoadTabbedDataFiles(numInput, numOutput, path):
+def LoadTabbedDataFiles(numInputs, numOutputs, path):
     fileh = open(path)
     inputs = []
     outputs = []

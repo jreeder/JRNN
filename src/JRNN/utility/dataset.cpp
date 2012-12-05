@@ -612,3 +612,13 @@ void JRNN::Dataset::AllowShuffle( bool val )
 {
 	allowShuffle = val;
 }
+
+int JRNN::Dataset::GetNumInputs()
+{
+	return numInputs;
+}
+
+int JRNN::Dataset::GetNumOutputs()
+{
+	return numOutputs;
+}

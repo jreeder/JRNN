@@ -28,7 +28,9 @@ void exportDatasets(){
 		def("GetStdDev", &Dataset::GetStdDev).
 		def("Clear", &Dataset::Clear).
 		def("GetInputs", &Dataset::GetInputs, return_value_policy<copy_const_reference>()).
-		def("GetOutputs", &Dataset::GetOutputs, return_value_policy<copy_const_reference>())
+		def("GetOutputs", &Dataset::GetOutputs, return_value_policy<copy_const_reference>()).
+		add_property("numInputs", &Dataset::GetNumInputs).
+		add_property("numOutputs", &Dataset::GetNumOutputs)
 		;
 
 	enum_<Dataset::datatype>("DSDatatype").
