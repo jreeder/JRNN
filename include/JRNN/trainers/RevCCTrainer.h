@@ -40,7 +40,7 @@ namespace JRNN {
 
 		struct revparameters {
 			uint numRev;
-			uint numRevTrainRatio; //multiplier for the number of rev training points to inject into net1
+			double numRevTrainRatio; //multiplier for the number of rev training points to inject into net1
 			int bufferSize;
 			bool cleanReverb;
 			int numContexts;

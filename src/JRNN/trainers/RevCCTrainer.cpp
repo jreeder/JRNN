@@ -202,7 +202,7 @@ namespace JRNN {
 				//Stage II
 				revNet = net2;
 				//right here we add validation items to the buffer ds so if we validate the new task we also validate the buffer
-				FillBufferDS(taskData->GetSize(Dataset::TRAIN) * revparams.numRevTrainRatio, validate);
+				FillBufferDS(static_cast<int>(floor(taskData->GetSize(Dataset::TRAIN) * revparams.numRevTrainRatio)), validate);
 				taskData->MergeSubsets(bufferDS);
 				bufferDS->Clear();
 				SetDataSet(taskData);
