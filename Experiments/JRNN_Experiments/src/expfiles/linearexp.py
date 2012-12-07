@@ -17,6 +17,7 @@ standardvars = {'dsname':'linear','numRuns':60, 'numInputs':2,'numOutputs':1,\
                 'outfile':'results.txt', 'netType':'BP', 'impNumTrain':0}
 
 impNumTrain = 10 # 5 seems too small
+regNumTrain = 100
 normnvpath = 'linear/NormSizeNV'
 largenvpath = 'linear/LargeSizeNV'
 smallnvpath = 'linear/SmallSizeNV'

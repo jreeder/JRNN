@@ -16,6 +16,7 @@ standardvars = {'dsname':'CirInSq','numRuns':60, 'numInputs':2,'numOutputs':1,\
                 'outfile':'results.txt', 'netType':'BP', 'impNumTrain':0}
 
 impNumTrain = 15
+regNumTrain = 100
 normnvpath = 'CirInSq/NormSizeNV'
 largenvpath = 'CirInSq/LargeSizeNV'
 smallnvpath = 'CirInSq/SmallSizeNV'
