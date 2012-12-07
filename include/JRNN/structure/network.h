@@ -50,6 +50,7 @@ namespace JRNN{
 		void SetScaleAndOffset(double scale, double offset);
 
         virtual vecDouble GetOutputs();
+		void SetOutputs(vecDouble newOutputs);
 		vecDouble GetPrimes(string layerName);
         void SetDesiredOut(vecDouble desiredOut);
         LayerPtr GetLayer(string layerName);

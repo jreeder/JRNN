@@ -60,6 +60,8 @@ namespace JRNN {
 	typedef boost::unordered_map<std::string, double> hashedDoubleMap;
     typedef boost::unordered_map<std::string, int> hashedIntMap;
 
+	typedef boost::unordered_map<std::string, hashedDoubleMap> hashedHashedDoubleMap;
+
 #ifdef JRNN_USE_NUMPY_FOR_PYTHON_BINDING
 	typedef pyublas::numpy_vector<double> vecDouble;
 #else

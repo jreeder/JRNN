@@ -155,6 +155,11 @@ namespace JRNN {
 			WIN
 		};
 
+		bool useNetCache;
+		hashedVecDoubleMap networkCache; //This is used to cache network response 
+		hashedHashedDoubleMap nodeCache; //First hash is stringed inputs, second is the node name
+		string currentInString; //used to pass the current input through the Candidate training
+
 		//Methods
 		void QuickProp(ConPtr con, conVars& vars, double epsilon, double decay, double mu, double shrinkFactor);
 		double ErrorIndex(double trueError, double stdDev, int nTrainOutVals);
@@ -201,6 +206,10 @@ namespace JRNN {
 		//Utility Methods - Make it easier for my subclass. This is hacky should probably change. 
 		virtual vecDouble ActivateNet(vecDouble inPoint, vecDouble outPoint);
 
+		vecDouble GetCachedOuts(vecDouble inVec);
+		void ClearCache();
+		void StoreNodeCache( string inString );
+		void CacheActivateCands( const LayerPtr candL );
 		//Used for adding new inputs. Done in the ccnetwork class
 		//void ConnectToHiddenNodes( NodeList addedNodes );
 	};

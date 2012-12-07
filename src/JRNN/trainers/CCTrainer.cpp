@@ -68,6 +68,9 @@ namespace JRNN {
 		valErr.measure = (ErrorType) parms.errorMeasure;
 		candCorr = hashedVecDoubleMap(numOut);
 		candPCorr = hashedVecDoubleMap(numOut);
+
+		networkCache = hashedVecDoubleMap(numOut);
+		useNetCache = false;
 		ResetVars();
 	}
 
@@ -121,6 +124,7 @@ namespace JRNN {
 		cand.conPSlopes.clear();
 		cand.conSlopes.clear();
 
+		useNetCache = false;
 		//Need to do this in the subclass when I know how many outs there will be. 
 		//and what the data will be. 
 		/*int numOut = network->GetNumOut();
@@ -256,6 +260,8 @@ namespace JRNN {
 		imp.bestPass = network->GetNumUnits();
 		vMSE_Rec.clear();
 		MSE_Rec.clear();
+		ClearCache();
+		useNetCache = false;
 	}
 
 	void CCTrainer::CreateCandidates()
@@ -417,8 +423,14 @@ namespace JRNN {
 	{
 		//this basically doesn't do anything but it allows me to subclass alot less
 		//for the rev cc algorithm. 
-		vecDouble retVal;
-		network->Activate(inPoint);
+		//Now it lets me put the caching in relatively easily. 
+		//vecDouble retVal;
+		if(useNetCache) {
+			network->SetOutputs(GetCachedOuts(inPoint)); 
+		}
+		else {
+			network->Activate(inPoint);
+		}
 		return outPoint;
 	}
 
@@ -459,6 +471,10 @@ namespace JRNN {
 
 	CCTrainer::status CCTrainer::TrainCandidates()
 	{
+#ifdef _CC_USE_CACHE_
+		useNetCache = true;
+		ClearCache();
+#endif
 		double lastScore = 0.0;
 		int quitEpoch = 0;
 		int startEpoch = epoch;
@@ -497,9 +513,15 @@ namespace JRNN {
 				lastScore = candBestScore;
 			}
 			else if (epoch == quitEpoch){
+#ifdef _CC_USE_CACHE_
+				useNetCache = false;
+#endif
 				return STAGNANT;
 			}
 		}
+#ifdef _CC_USE_CACHE_
+		useNetCache = false;
+#endif
 		return TIMEOUT;
 	}
 
@@ -740,7 +762,14 @@ namespace JRNN {
 					*cPCorr;
 
 		NodeList candNodes = network->GetCandLayer()->GetNodes();
-		network->GetCandLayer()->Activate();
+		if (useNetCache)
+		{
+			CacheActivateCands(network->GetCandLayer());
+		} 
+		else
+		{
+			network->GetCandLayer()->Activate(); 
+		}
 		int nOuts = network->GetNumOut();
 		BOOST_FOREACH(NodePtr candidate, candNodes){
 			string name = candidate->GetName();
@@ -852,7 +881,7 @@ namespace JRNN {
 			itOuts++;
 		}
 		SSE /= (double)ins.size();
-		return SSE;
+		return SSE; //This is now MSE 
 	}
 
 	void CCTrainer::InsertCandidate()
@@ -1094,6 +1123,54 @@ namespace JRNN {
 			ResetVars();
 			UpdateNet();
 			network->LockConnections(false);
+		}
+	}
+
+	JRNN::vecDouble CCTrainer::GetCachedOuts( vecDouble inVec )
+	{
+		string inString = StringFromVector(inVec);
+		currentInString = inString;
+		vecDouble retOut;
+		if (networkCache.find(inString)) {
+			retOut = networkCache[inString];
+		} 
+		else {
+			network->Activate(inVec);
+			retOut = network->GetOutputs();
+			networkCache[inString] = retOut;
+			StoreNodeCache(inString);
+		}
+		return retOut;
+	}
+
+	void CCTrainer::ClearCache()
+	{
+		networkCache.clear();
+		BOOST_FOREACH(hashedHashedDoubleMap::value_type nodeC, nodeCache){
+			nodeC.second.clear();
+		}
+		nodeCache.clear();
+	}
+
+	void CCTrainer::StoreNodeCache( string inString )
+	{
+		hashedDoubleMap tmpDM;
+		BOOST_FOREACH(LayerPair LayerP, network->GetLayers()){
+			BOOST_FOREACH(NodePtr nodeP, LayerP.second->GetNodes()){
+				tmpDM[nodeP->GetName()] = nodeP->GetOut();
+			}
+		}
+		nodeCache[inString] = tmpDM;
+	}
+
+	void CCTrainer::CacheActivateCands( const LayerPtr candL )
+	{
+		BOOST_FOREACH(NodePtr candN, candL->GetNodes()){
+			double tmpSum = 0;
+			BOOST_FOREACH(ConPtr con, candN->GetConnections(IN)){
+				tmpSum += con->GetWeight() * nodeCache[currentInString][con->GetInNodeName()];
+			}
+			candN->Activate(tmpSum);
 		}
 	}
 

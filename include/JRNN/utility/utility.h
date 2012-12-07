@@ -182,9 +182,20 @@ namespace JRNN {
 			}
 			
 		}
+		
 		void clear() {
 			storage.clear();
 		}
+
+		bool find(string name) {
+			if (storage.find(name) != storage.end()) {
+				return true;
+			}
+			else {
+				return false;
+			}
+		}
+
 	private:
 		int vecSize;
 		boost::unordered_map<string, vecDouble> storage;

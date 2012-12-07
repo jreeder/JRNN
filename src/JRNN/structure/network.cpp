@@ -511,4 +511,13 @@ namespace JRNN{
 		}
 	}
 
+	void Network::SetOutputs( vecDouble newOutputs )
+	{
+		//This is used for caching purposes. 
+		//Just set the output from a cache rather 
+		//than activating the network. 
+		//kind of hacky but it saves a lot of other code changes. 
+		this->outputs = newOutputs;
+	}
+
 }

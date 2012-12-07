@@ -48,6 +48,8 @@ namespace JRNN {
 		TestWhileTrainResults.clear();
 		outTestDS.reset();
 		bufferDS->Clear();
+		SaveNetParameters(net1vals);
+		SaveNetParameters(net2vals);
 	}
 
 	void RevCCTrainer::FinishSetup(){
@@ -60,6 +62,7 @@ namespace JRNN {
 		valErr.measure = (ErrorType) parms.errorMeasure;
 		candCorr = hashedVecDoubleMap(numOut);
 		candPCorr = hashedVecDoubleMap(numOut);
+		networkCache = hashedVecDoubleMap(numOut);
 		//ResetVars(); Not needed This is the first thing that traintoconvergence does.
 	}
 
@@ -110,7 +113,12 @@ namespace JRNN {
 		//back to be used 
 		vecDouble retVal;
 		retVal = ConcatVec(outPoint, inPoint);
-		network->Activate(inPoint);
+		if(useNetCache) {
+			network->SetOutputs(GetCachedOuts(inPoint)); 
+		}
+		else {
+			network->Activate(inPoint);
+		}
 		return retVal;
 	}
 
