@@ -16,6 +16,7 @@ namespace JRNN {
 		newData = true;
 		impoverish = false;
 		conceptData = true;
+		dsGenerated = false;
 		primaryTask = -1;
 		numImpTrain = 0;
 		size = 0;
@@ -35,6 +36,7 @@ namespace JRNN {
 		this->view = orig.view;
 		this->subView = orig.subView;
 		this->numRealInputs = orig.numRealInputs;
+		this->dsGenerated = orig.dsGenerated;
 	}
 
 	void CSMTLDataset::SetView(strings view)
@@ -43,6 +45,7 @@ namespace JRNN {
 		this->subView = view;
 		this->dsAnalyzed = false;
 		GenerateDS();
+		this->dsGenerated = true;
 		//This probably will change
 	}
 
@@ -54,7 +57,7 @@ namespace JRNN {
 		tp->numOuts = numOut;
 		taskList[taskName] = tp;
 		newData = true;
-
+		this->dsGenerated = false;
 		ifstream dataFile(fileName.c_str());
 		typedef boost::tokenizer<boost::char_separator<char> > tokenizer;
 		boost::char_separator<char> sep("\t");
@@ -98,6 +101,7 @@ namespace JRNN {
 
 	void CSMTLDataset::AddMatDoublesToTask( matDouble& inMat, matDouble& outMat, string taskName )
 	{
+		this->dsGenerated = false;
 		Tasks::iterator task = taskList.find(taskName);
 		if (task == taskList.end()){
 			TaskPtr tp(new Task());
@@ -127,6 +131,7 @@ namespace JRNN {
 
 	void CSMTLDataset::AddVecDoublesToTask( vecDouble inVec, vecDouble outVec, string taskName )
 	{
+		this->dsGenerated = false;
 		Tasks::iterator task = taskList.find(taskName);
 		if (task == taskList.end()){
 			TaskPtr tp(new Task());
@@ -150,6 +155,7 @@ namespace JRNN {
 
 	void CSMTLDataset::AddTaskFromNet( NetworkPtr net, string taskName )
 	{
+		this->dsGenerated = false;
 		TaskPtr tp(new Task());
 		tp->net = net;
 		tp->name = taskName;
@@ -248,7 +254,21 @@ namespace JRNN {
 
 	void CSMTLDataset::DistData( int numTrain, int numVal, int numTest, bool impoverish /*= false*/, int numImpTrain /*= 0*/, int primaryTask /*= -1*/)
 	{
-		//TODO:need to add some code here to make sure that the dataset has been generated before this happens
+		if (!dsGenerated)
+		{
+			if (view.size() > 0)
+			{
+				SetView(view);
+			}
+			else 
+			{
+				strings tmpView; //Loads all tasks into a view and generates the ds if no view has been set.
+				BOOST_FOREACH(TaskPair tp, taskList){
+					tmpView.push_back(tp.first);
+				}
+				SetView(tmpView);
+			}
+		}
 		this->numImpTrain = numImpTrain;
 		this->numTrain = numTrain;
 		this->numVal = numVal;
@@ -267,6 +287,9 @@ namespace JRNN {
 		outClassIndexes.clear();
 		outClassPercentage.clear();
 		outClassNames.clear();
+		if (realOuts){ // For this type of dataset this needs to be set explicitly through the setter func
+			conceptData = false;
+		}
 		BOOST_FOREACH(string taskName, view){
 			TaskPtr task = taskList[taskName];
 			task->outClassIndexes.clear();
@@ -274,7 +297,14 @@ namespace JRNN {
 			task->outClassNames.clear();
 			int taskSize = task->indexes.size();
 			for (int i = 0; i < taskSize; i++){
-				string outname = StringFromVector(outputs[task->indexes[i]]);
+				string outname;
+				if (realOuts)	
+				{
+					outname = "realouts";
+				}
+				else {
+					outname = StringFromVector(outputs[task->indexes[i]]);
+				}
 				task->outClassIndexes[outname].push_back(task->indexes[i]);
 				outClassIndexes[outname].push_back(task->indexes[i]);
 			}

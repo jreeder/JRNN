@@ -285,10 +285,18 @@ def CreateUserDatasets(userData, numFrames):
     
     minSize = min([len(x) for x in userData])
     strideSize = minSize / numFrames
+
+    def Norm01Array(inArray):
+        minval = np.min(inArray, axis=0)
+        maxval = np.max(inArray, axis=0)
+        inArray -= minval
+        inArray /= (maxval - minval + 0.000001)
+        return inArray
+
     def loadDataset(ds, userDataList):
         inputs = np.array([item['sensors'] for item in userDataList[-minSize::strideSize]])
         outputs = np.array([item['actions'] for item in userDataList[-minSize::strideSize]])
-        ds.LoadFromMatDoubles(matDoubleFromArray(inputs), matDoubleFromArray(outputs))
+        ds.LoadFromMatDoubles(matDoubleFromArray(Norm01Array(inputs)), matDoubleFromArray(Norm01Array(outputs)))
     
     loadDataset(train1, userData[1])
     loadDataset(train2, userData[2])
@@ -301,16 +309,69 @@ def CreateUserDatasets(userData, numFrames):
     
     return (train1, train2, train3, test1)
 
-(jtrain1, jtrain2, jtrain3, jtest1) = CreateUserDatasets(jamesdata, 900)
+(jtrain1, jtrain2, jtrain3, jtest1) = CreateUserDatasets(jamesdata, 100)
 
 revCC = pyj.trainers.RevCCTrainer(21, 2, 8)
 
-revCC.TrainTask(jtrain1, 3000, True)
+revCC.parms.useSDCC = True
+revCC.parms.SDCCRatio = 0.9
+revCC.revparams.numRevTrainRatio = 0.5
 
-result = revCC.TestOnData(jtest1, DSDatatype.TEST)
-print result
+def ConsolidatedTrainingTest(dstupple, numRuns, rCC, maxEpochs):
+    print "Loading Data"
+    tr1 = dstupple[0]
+    tr2 = dstupple[1]
+    tr3 = dstupple[2]
+    te1 = dstupple[3]
+    print "Finished Loading"
+    results = []
+    for i in range(numRuns):
+        print "starting run {0}".format(i)
+        resDict = {}
+        rCC.TrainTask(tr1, maxEpochs, True)
+        resDict['tr1.epochs'] = rCC.net1vals.epochs
+        resDict['tr1.hiddenLayers'] = rCC.net1vals.numHidLayers
+        resDict['tr1.testError'] = rCC.TestOnData(te1, DSDatatype.TEST)
+        print "Finished Train and Test 1"
+        
+        rCC.TrainTask(tr2, maxEpochs, True)
+        resDict['tr2.epochs'] = rCC.net1vals.epochs
+        resDict['tr2.hiddenLayers'] = rCC.net1vals.numHidLayers
+        resDict['tr2.testError'] = rCC.TestOnData(te1, DSDatatype.TEST)
+        print "Finished Train and Test 2"
+        
+        rCC.TrainTask(tr3, maxEpochs, True)
+        resDict['tr3.epochs'] = rCC.net1vals.epochs
+        resDict['tr3.hiddenLayers'] = rCC.net1vals.numHidLayers
+        resDict['tr3.testError'] = rCC.TestOnData(te1, DSDatatype.TEST)
+        print "Finished Train and Test 3"
+        
+        print resDict
+        
+        print "Resetting"
+        results.append(resDict)
+        rCC.Reset()
+        tr1.RedistData()
+        tr2.RedistData()
+        tr3.RedistData()
+        te1.RedistData()
+    
+    return results
 
-revCC.TrainTask(jtrain2, 3000, True)
 
-result2 = revCC.TestOnData(jtest1, DSDatatype.TEST)
-print result2
+jamesds = (jtrain1, jtrain2, jtrain3, jtest1)
+#import time
+#starttime = time.clock()
+#jamesresults = ConsolidatedTrainingTest(jamesds, 5, revCC, 2000)
+#elapsedtime = time.clock() - starttime
+#print elapsedtime
+
+#revCC.TrainTask(jtrain1, 3000, True)
+
+#result = revCC.TestOnData(jtest1, DSDatatype.TEST)
+#print result
+
+#revCC.TrainTask(jtrain2, 3000, True)
+
+#result2 = revCC.TestOnData(jtest1, DSDatatype.TEST)
+#print result2

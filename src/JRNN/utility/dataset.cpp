@@ -129,12 +129,13 @@ void Dataset::SetNormalizeReals( bool normReals )
 	normalizeReals = normReals;
 }
 
-void Dataset::LoadFromFile(string filepath, int numInputs, int numOutputs){
+void Dataset::LoadFromFile(string filepath, int numInputs, int numOutputs, bool inRealOuts /*= false*/){
 	//TODO: Need to read class when it loads here and store that information for later use.
 	//TODO: Need to analyze class distribution of data coming in. 
 	ifstream dataFile(filepath.c_str());
 	this->numInputs = numInputs;
 	this->numOutputs = numOutputs;
+	this->realOuts = inRealOuts;
 	typedef boost::tokenizer<boost::char_separator<char> > tokenizer;
 	boost::char_separator<char> sep("\t");
 	string line;
@@ -158,7 +159,13 @@ void Dataset::LoadFromFile(string filepath, int numInputs, int numOutputs){
 			}
 			inputs.push_back(in);
 			outputs.push_back(out);
-			string outname = StringFromVector(out);
+			string outname;
+			if (realOuts) {
+				outname = "realouts";
+			}
+			else {
+				outname = StringFromVector(out);
+			}
 			outClassIndexes[outname].push_back(count);
 			//if (outClassIndexes.find(outname) != outClassIndexes.end()){
 			//	outClassIndexes[outname].push_back(count);
@@ -190,10 +197,11 @@ void Dataset::LoadFromFile(string filepath, int numInputs, int numOutputs){
 
 }
 
-void Dataset::LoadFromMatDoubles( matDouble& newInputs, matDouble& newOutputs )
+void Dataset::LoadFromMatDoubles( matDouble& newInputs, matDouble& newOutputs, bool inRealOuts /*= false*/ )
 {
 	this->numInputs = newInputs[0].size();
 	this->numOutputs = newOutputs[0].size();
+	this->realOuts = inRealOuts;
 	size = newInputs.size();
 	matDouble::iterator itIns = newInputs.begin();
 	matDouble::iterator itOuts = newOutputs.begin();
@@ -201,7 +209,13 @@ void Dataset::LoadFromMatDoubles( matDouble& newInputs, matDouble& newOutputs )
 	while(itIns != newInputs.end()){
 		inputs.push_back((*itIns));
 		outputs.push_back((*itOuts));
-		string outname = StringFromVector((*itOuts));
+		string outname;
+		if(realOuts){
+			outname = "realouts";
+		}
+		else {
+			outname = StringFromVector((*itOuts));
+		}
 		outClassIndexes[outname].push_back(count);
 		count++;
 		itIns++;
@@ -246,7 +260,13 @@ void Dataset::AnalyzeDS(){
 	outClassPercentage.clear();
 	outClassNames.clear();
 	for (int i = 0; i < size; i++){
-		string outname = StringFromVector(outputs[i]);
+		string outname;
+		if(realOuts){
+			outname = "realouts";
+		}
+		else {
+			outname = StringFromVector(outputs[i]);
+		}
 		outClassIndexes[outname].push_back(i);
 	}
 	hashedIntsMap::iterator it = outClassIndexes.begin();
@@ -621,4 +641,14 @@ int JRNN::Dataset::GetNumInputs()
 int JRNN::Dataset::GetNumOutputs()
 {
 	return numOutputs;
+}
+
+bool JRNN::Dataset::getRealOuts() const
+{
+	return realOuts;
+}
+
+void JRNN::Dataset::setRealOuts( bool val )
+{
+	realOuts = val;
 }

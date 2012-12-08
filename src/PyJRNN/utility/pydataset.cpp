@@ -17,11 +17,14 @@ using namespace JRNN;
 void exportMTLDataset();
 void exportCSMTLDataset();
 
+BOOST_PYTHON_MEMBER_FUNCTION_OVERLOADS(Dataset_lff_overloads, LoadFromFile, 3, 4);
+BOOST_PYTHON_MEMBER_FUNCTION_OVERLOADS(Dataset_lfmd_overloads, LoadFromMatDoubles, 2,3);
+
 void exportDatasets(){
 
 	class_<DSWrap, DatasetPtr>("Dataset").
-		def("LoadFromFile", &Dataset::LoadFromFile).
-		def("LoadFromMatDoubles", &Dataset::LoadFromMatDoubles).
+		def("LoadFromFile", &Dataset::LoadFromFile, Dataset_lff_overloads()).
+		def("LoadFromMatDoubles", &Dataset::LoadFromMatDoubles, Dataset_lfmd_overloads()).
 		def("DistData", &Dataset::DistData, &DSWrap::default_DistData).
 		def("RedistData", &Dataset::RedistData, &DSWrap::default_RedistData).
 		def("GetSize", &Dataset::GetSize).
@@ -30,7 +33,8 @@ void exportDatasets(){
 		def("GetInputs", &Dataset::GetInputs, return_value_policy<copy_const_reference>()).
 		def("GetOutputs", &Dataset::GetOutputs, return_value_policy<copy_const_reference>()).
 		add_property("numInputs", &Dataset::GetNumInputs).
-		add_property("numOutputs", &Dataset::GetNumOutputs)
+		add_property("numOutputs", &Dataset::GetNumOutputs).
+		add_property("realOuts", &Dataset::getRealOuts, &Dataset::setRealOuts)
 		;
 
 	enum_<Dataset::datatype>("DSDatatype").

@@ -37,8 +37,8 @@ namespace JRNN {
         virtual ~Dataset();
         const matDouble& GetInputs(datatype type);
         const matDouble& GetOutputs(datatype type);
-        void LoadFromFile(string filepath, int numInputs, int numOutputs);
-		void LoadFromMatDoubles(matDouble& newInputs, matDouble& newOutputs);
+		void LoadFromFile(string filepath, int numInputs, int numOutputs, bool inRealOuts = false);
+		void LoadFromMatDoubles(matDouble& newInputs, matDouble& newOutputs, bool inRealOuts = false);
 		const int GetSize(datatype type);
 		double GetStdDev(datatype type);
         void SetNumInputs(int numInputs);
@@ -53,6 +53,8 @@ namespace JRNN {
 		void Clear();
 		bool AllowShuffle() const;
 		void AllowShuffle(bool val);
+		bool getRealOuts() const;
+		void setRealOuts(bool val);
 
     protected:
         int size;
@@ -66,6 +68,7 @@ namespace JRNN {
 		bool normalizeReals;
 		bool dsAnalyzed;
 		bool allowShuffle;
+		bool realOuts;
 		std::vector<int> randomRange;
 		static RandomGeneratorInt dRand;
 		double trainStdDev;

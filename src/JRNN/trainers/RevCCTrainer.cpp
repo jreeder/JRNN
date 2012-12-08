@@ -39,7 +39,9 @@ namespace JRNN {
 	}
 
 	void RevCCTrainer::Reset(){
-		ResetVars();
+		if(data.get() != 0){
+			ResetVars();
+		}
 		net1->Reset();
 		net2->Reset();
 		network = net1;

@@ -70,6 +70,17 @@ struct CCNetWrap : CCNetwork, wrapper<CCNetwork>
 	}
 
 	NetworkPtr default_Clone() {return this->CCNetwork::Clone();}
+
+	void Reset() {
+		if (override Reset = this->get_override("Reset")){
+			Reset();
+		}
+		else {
+			Network::Reset();
+		}
+	}
+
+	void default_Reset() {return this->CCNetwork::Reset();}
 };
 
 #endif

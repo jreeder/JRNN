@@ -31,6 +31,17 @@ struct CCTrainerWrap : CCTrainer, wrapper<CCTrainer> {
 	}
 
 	hashedDoubleMap default_TestWiClass(Dataset::datatype type) {return this->CCTrainer::TestWiClass(type);}
+
+	void Reset() {
+		if (override Reset = this->get_override("Reset")){
+			Reset();
+		}
+		else {
+			CCTrainer::Reset();
+		}
+	}
+
+	void default_Reset() {this->CCTrainer::Reset();}
 };
 
 void exportCCTrainer(){
@@ -86,7 +97,7 @@ void exportCCTrainer(){
 
 	class_<CCTrainerWrap, CCTrainerPtr, boost::noncopyable>("CCTrainer",init<CCNetworkPtr,DatasetPtr,int,optional<ints> >()).
 		def("ResetVars", &CCTrainer::ResetVars).
-		def("Reset", &CCTrainer::Reset).
+		def("Reset", &CCTrainer::Reset, &CCTrainerWrap::default_Reset).
 		def("RedistData", &CCTrainer::RedistData).
 		def("SetDataSet", &CCTrainer::SetDataSet).
 		def("AddNewInputs", &CCTrainer::AddNewInputs).

@@ -48,6 +48,7 @@ void exportRevCCTrainer(){
 		def("TrainTask", &RevCCTrainer::TrainTask, RevCCTrainer_traintaskoverloads()).
 		def("TestOnData", &RevCCTrainer::TestOnData).
 		def("TestWiClass", &RevCCTrainer::TestWiClass).
+		def("Reset", &RevCCTrainer::Reset).
 		def("Activate", &RevCCTrainer::Activate, "Activates the primary network and returns the output").
 		def("SetScaleAndOffset", &RevCCTrainer::SetScaleAndOffset).
 		def("SetSDCCandVaryActFunc", &RevCCTrainer::SetSDCCandVaryActFunc).

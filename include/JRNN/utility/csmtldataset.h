@@ -76,6 +76,7 @@ namespace JRNN {
 		bool newData;
 		bool impoverish; 
 		bool conceptData;
+		bool dsGenerated;
 		int primaryTask; 
 		int numImpTrain;
 		CSMTLDataStore dataStore;
