@@ -436,6 +436,9 @@ void Dataset::FillSubset( matDouble& ins, matDouble& outs, int numExamples, hash
 		double tmpPerc = outClassPercentage[className];
 		int tmpCount = 0;
 		tmpCount = (int)floor((numExamples * tmpPerc) + 0.5);
+		
+		tmpCount = tmpCount == 0 ? 1 : tmpCount;
+
 		if (tmpCount > (numExamples - total)){
 			tmpCount = numExamples - total;
 		}

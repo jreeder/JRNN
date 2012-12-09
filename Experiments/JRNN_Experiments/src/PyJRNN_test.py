@@ -221,6 +221,13 @@
 
 userspath = "D:\Users\John Reeder\Code\opennero\Build\dist\Debug\jrnnexp1\users"
 import os
+import re
+import json
+import PyJRNN_d as pyj
+import pyublas
+import numpy as np
+from PyJRNN_d.utility import DSDatatype
+
 
 def loadScenarioFiles(scenarioPath):
     scenariofiles = {}
@@ -241,15 +248,12 @@ def LoadUserData(username):
     
     return Scenarios
 
-jamesscenarios = LoadUserData('jcginn')
+#jamesscenarios = LoadUserData('Cong')
 
-jamestraining = jamesscenarios['Chase - 13Nov2012223245']['training']
+#jamestraining = jamesscenarios['Chase - 16Nov2012171621']['training']
 
-import re
+
 prog = re.compile('eps_(\d+)')
-print prog.search(jamestraining[0]).group(1)
-
-jamestraining.sort(key=lambda x: int(prog.search(x).group(1)))
 
 def LoadTrainingData(listOfTrainingFiles):
     dataArray = []
@@ -259,14 +263,8 @@ def LoadTrainingData(listOfTrainingFiles):
     
     return dataArray
 
-import json
-jamesdata = LoadTrainingData(jamestraining)
 
-
-import PyJRNN_d as pyj
-import pyublas
-import numpy as np
-from PyJRNN_d.utility import DSDatatype
+#jamesdata = LoadTrainingData(jamestraining)
 
 def matDoubleFromArray(inMat):
     newMat = pyj.types.matDouble()
@@ -296,7 +294,7 @@ def CreateUserDatasets(userData, numFrames):
     def loadDataset(ds, userDataList):
         inputs = np.array([item['sensors'] for item in userDataList[-minSize::strideSize]])
         outputs = np.array([item['actions'] for item in userDataList[-minSize::strideSize]])
-        ds.LoadFromMatDoubles(matDoubleFromArray(Norm01Array(inputs)), matDoubleFromArray(Norm01Array(outputs)))
+        ds.LoadFromMatDoubles(matDoubleFromArray(Norm01Array(inputs)), matDoubleFromArray(Norm01Array(outputs)), True)
     
     loadDataset(train1, userData[1])
     loadDataset(train2, userData[2])
@@ -309,13 +307,13 @@ def CreateUserDatasets(userData, numFrames):
     
     return (train1, train2, train3, test1)
 
-(jtrain1, jtrain2, jtrain3, jtest1) = CreateUserDatasets(jamesdata, 100)
+#(jtrain1, jtrain2, jtrain3, jtest1) = CreateUserDatasets(jamesdata, 100)
 
-revCC = pyj.trainers.RevCCTrainer(21, 2, 8)
+#revCC = pyj.trainers.RevCCTrainer(21, 2, 8)
 
-revCC.parms.useSDCC = True
-revCC.parms.SDCCRatio = 0.9
-revCC.revparams.numRevTrainRatio = 0.5
+#revCC.parms.useSDCC = True
+#revCC.parms.SDCCRatio = 0.9
+#revCC.revparams.numRevTrainRatio = 0.5
 
 def ConsolidatedTrainingTest(dstupple, numRuns, rCC, maxEpochs):
     print "Loading Data"
@@ -359,7 +357,7 @@ def ConsolidatedTrainingTest(dstupple, numRuns, rCC, maxEpochs):
     return results
 
 
-jamesds = (jtrain1, jtrain2, jtrain3, jtest1)
+#jamesds = (jtrain1, jtrain2, jtrain3, jtest1)
 #import time
 #starttime = time.clock()
 #jamesresults = ConsolidatedTrainingTest(jamesds, 5, revCC, 2000)
