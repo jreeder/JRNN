@@ -10,8 +10,8 @@ import re
 import json
 
 # <codecell>
-userspath = "D:\Users\John Reeder\Code\opennero\Build\dist\Debug\jrnnexp1\users" # For Titan
-
+#userspath = "D:\Users\John Reeder\Code\opennero\Build\dist\Debug\jrnnexp1\users" # For Titan
+userspath = "C:\Users\John\Documents\Source\opennero\Build\dist\Debug\jrnnexp1\Users" # For Lab Comp
 # <codecell>
 
 
