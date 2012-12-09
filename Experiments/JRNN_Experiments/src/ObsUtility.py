@@ -133,7 +133,7 @@ def CreateUserDatasets(userData, numFrames):
     def loadDataset(ds, userDataList):
         inputs = numpy.array([item['sensors'] for item in userDataList[-minSize::strideSize]])
         outputs = numpy.array([item['actions'] for item in userDataList[-minSize::strideSize]])
-        ds.LoadFromMatDoubles(matDoubleFromArray(inputs), matDoubleFromArray(outputs))
+        ds.LoadFromMatDoubles(matDoubleFromArray(inputs), matDoubleFromArray(outputs), True)
     
     loadDataset(train1, userData[1])
     loadDataset(train2, userData[2])
