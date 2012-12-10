@@ -10,8 +10,8 @@ import re
 import json
 
 # <codecell>
-#userspath = "D:\Users\John Reeder\Code\opennero\Build\dist\Debug\jrnnexp1\users" # For Titan
-userspath = "C:\Users\John\Documents\Source\opennero\Build\dist\Debug\jrnnexp1\Users" # For Lab Comp
+userspath = "D:\Users\John Reeder\Code\opennero\Build\dist\Debug\jrnnexp1\users" # For Titan
+#userspath = "C:\Users\John\Documents\Source\opennero\Build\dist\Debug\jrnnexp1\Users" # For Lab Comp
 # <codecell>
 
 
@@ -110,6 +110,13 @@ def LoadTrainingData(listOfTrainingFiles):
 # 14896 / (30*30)
 
 # <codecell>
+
+def Norm01Array(inArray):
+    minval = numpy.min(inArray, axis=0)
+    maxval = numpy.max(inArray, axis=0)
+    inArray -= minval
+    inArray /= (maxval - minval + 0.000001)
+    return inArray
 
 def matDoubleFromArray(inMat):
     newMat = PyJRNN.types.matDouble()
