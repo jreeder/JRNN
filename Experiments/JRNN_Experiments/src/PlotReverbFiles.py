@@ -18,7 +18,12 @@ from config import *
 
 def MakeGraph(title, filepath):
     title = title + "First Task Performance"
-    data = pe.ParseFile(filepath)
+
+    if isinstance(filepath, str):
+        data = pe.ParseFile(filepath)
+    else:
+        data = pe.ParseArray(filepath)
+    
     ftperf = data.ftwtrain
     minlen = float("inf")
     for d in ftperf:

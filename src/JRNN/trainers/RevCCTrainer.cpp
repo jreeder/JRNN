@@ -300,7 +300,7 @@ namespace JRNN {
 				if (realOuts)
 				{
 					hashedDoubleMap tmp;
-					tmp['task-0'] = TestOnData(outTestDS, outTestDStype);
+					tmp["task-0"] = TestOnData(outTestDS, outTestDStype);
 					tmpResult.result = tmp;
 				} 
 				else
