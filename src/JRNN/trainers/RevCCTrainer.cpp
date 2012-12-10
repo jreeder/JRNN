@@ -24,6 +24,7 @@ namespace JRNN {
 		network = net1;
 		firstTrained = false;
 		ScopedOut = false;
+		realOuts = false;
 		outTestDStype = Dataset::TEST;
 		bufferDS.reset(new Dataset());
 		bufferDS->SetNumInputs(numIn);
@@ -200,6 +201,7 @@ namespace JRNN {
 				//These only make since after the first round of training.
 				this->ScopedOut = testWhileTrain;
 				this->outTestDS = testData;
+				this->realOuts = testData->getRealOuts();
 				this->outTestDStype = testDataType;
 				//Stage II
 				revNet = net2;
@@ -295,7 +297,16 @@ namespace JRNN {
 			if (ScopedOut){
 				TestResult tmpResult;
 				tmpResult.epoch = epoch;
-				tmpResult.result = TestWiClass(outTestDS, outTestDStype);
+				if (realOuts)
+				{
+					hashedDoubleMap tmp;
+					tmp['task-0'] = TestOnData(outTestDS, outTestDStype);
+					tmpResult.result = tmp;
+				} 
+				else
+				{
+					tmpResult.result = TestWiClass(outTestDS, outTestDStype);
+				}
 				TestWhileTrainResults.push_back(tmpResult);
 #ifdef _DEBUG
 				cout << epoch << ":";

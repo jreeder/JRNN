@@ -86,6 +86,7 @@ namespace JRNN {
 		
 		bool firstTrained;
 		bool ScopedOut; //Do I want to monitor the performance of a previous dataset during training
+		bool realOuts;
 
 		RevCCNetworkPtr net1;
 		RevCCNetworkPtr net2;
