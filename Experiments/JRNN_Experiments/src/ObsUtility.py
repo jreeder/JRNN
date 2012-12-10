@@ -123,24 +123,24 @@ def matDoubleFromArray(inMat):
 # <codecell>
 
 def CreateUserDatasets(userData, numFrames):
-    train1 = pyj.utility.Dataset()
-    train2 = pyj.utility.Dataset()
-    train3 = pyj.utility.Dataset()
-    test1 = pyj.utility.Dataset()
+    train1 = PyJRNN.utility.Dataset()
+    train2 = PyJRNN.utility.Dataset()
+    train3 = PyJRNN.utility.Dataset()
+    test1 = PyJRNN.utility.Dataset()
     
     minSize = min([len(x) for x in userData])
     strideSize = minSize / numFrames
 
     def Norm01Array(inArray):
-        minval = np.min(inArray, axis=0)
-        maxval = np.max(inArray, axis=0)
+        minval = numpy.min(inArray, axis=0)
+        maxval = numpy.max(inArray, axis=0)
         inArray -= minval
         inArray /= (maxval - minval + 0.000001)
         return inArray
 
     def loadDataset(ds, userDataList):
-        inputs = np.array([item['sensors'] for item in userDataList[-minSize::strideSize]])
-        outputs = np.array([item['actions'] for item in userDataList[-minSize::strideSize]])
+        inputs = numpy.array([item['sensors'] for item in userDataList[-minSize::strideSize]])
+        outputs = numpy.array([item['actions'] for item in userDataList[-minSize::strideSize]])
         ds.LoadFromMatDoubles(matDoubleFromArray(Norm01Array(inputs)), matDoubleFromArray(Norm01Array(outputs)), True)
     
     loadDataset(train1, userData[1])
