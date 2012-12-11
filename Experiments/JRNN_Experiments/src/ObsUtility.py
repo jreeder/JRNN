@@ -1,22 +1,33 @@
 # -*- coding: utf-8 -*-
 # <nbformat>3.0</nbformat>
 
-import PyJRNN
+import PyJRNN_d
 import pyublas
 import numpy
-from PyJRNN.utility import DSDatatype
+from PyJRNN_d.utility import DSDatatype
 import os
 import re
 import json
+import pickle
+from localvars import sourcebase
 
 # <codecell>
-userspath = "D:\Users\John Reeder\Code\opennero\Build\dist\Debug\jrnnexp1\users" # For Titan
-#userspath = "C:\Users\John\Documents\Source\opennero\Build\dist\Debug\jrnnexp1\Users" # For Lab Comp
+#userspath = "D:\Users\John Reeder\Code\opennero\Build\dist\Debug\jrnnexp1\users" # For Titan
+userspath = sourcebase + "\opennero\Build\dist\Debug\jrnnexp1\Users" # For Lab Comp --- Should work for both now.
 # <codecell>
 
 
+class UserSettings:
+    def __init__(self, turnSensitivity=30, deadzone=15):
+        self.turnSensitivity = turnSensitivity
+        self.deadzone = deadzone
 
-# <codecell>
+
+def LoadUserSettings(user):
+    filepath = os.path.join(userspath, user, "settings.pickle")
+    uSettings = pickle.load(open(filepath))
+    return uSettings
+
 
 def loadScenarioFiles(scenarioPath):
     scenariofiles = {}
@@ -26,7 +37,7 @@ def loadScenarioFiles(scenarioPath):
     scenariofiles["history"] = [os.path.join(historydir, x) for x in os.listdir(historydir)]
     return scenariofiles
 
-# <codecell>
+
 
 def LoadUserData(username):
     global userspath
@@ -39,31 +50,8 @@ def LoadUserData(username):
     
     return Scenarios
 
-# <codecell>
-
-#jamesscenarios = LoadUserData('jcginn')
-
-# <codecell>
-
-# yinjiescenarios = LoadUserData('Yinjie')
-# congscenarios = LoadUserData('Cong')
-
-# <codecell>
-
-# jamestraining = jamesscenarios['Chase - 13Nov2012223245']['training']
-
-# <codecell>
-
 
 sortField = re.compile('eps_(\d+)')
-# print prog.search(jamestraining[0]).group(1)
-
-# <codecell>
-
-# jamestraining.sort(key=lambda x: int(prog.search(x).group(1)))
-
-# <codecell>
-
 
 
 def LoadTrainingData(listOfTrainingFiles):
@@ -74,42 +62,6 @@ def LoadTrainingData(listOfTrainingFiles):
     
     return dataArray
 
-# <codecell>
-
-# jamesdata = LoadTrainingData(jamestraining)
-
-# <codecell>
-
-# len(jamesdata)
-
-# <codecell>
-
-# lengths = [len(x) for x in jamesdata]
-
-# <codecell>
-
-# sum(lengths[1:]) / float(len(lengths[1:]))
-
-# <codecell>
-
-# min(lengths)
-
-# <codecell>
-
-
-# <codecell>
-
-# tmpList = jamesdata[1][-14896::16]
-
-# <codecell>
-
-# len(tmpList)
-
-# <codecell>
-
-# 14896 / (30*30)
-
-# <codecell>
 
 def Norm01Array(inArray):
     minval = numpy.min(inArray, axis=0)
@@ -118,8 +70,9 @@ def Norm01Array(inArray):
     inArray /= (maxval - minval + 0.000001)
     return inArray
 
+
 def matDoubleFromArray(inMat):
-    newMat = PyJRNN.types.matDouble()
+    newMat = PyJRNN_d.types.matDouble()
     for vec in inMat:
         if isinstance(vec, numpy.float64):
             newMat.append(numpy.array([vec]))
@@ -127,83 +80,60 @@ def matDoubleFromArray(inMat):
             newMat.append(vec)
     return newMat
 
-# <codecell>
+def SplitAndAdjustObsOutputs(array, settings=UserSettings()):
+    #This is purpose built for the outputs of the game
+    splitRange = CreateRanges(-1.0, 2, 2)
+    adjustArray = numpy.array([1, (100.0 / settings.turnSensitivity)])
+    tmpArray = array * adjustArray
+    tmpArray1 = numpy.array(map(lambda x: DiscritizeIntoRanges(x, splitRange, False), tmpArray[:,0]))
+    tmpArray2 = numpy.array(map(lambda x: DiscritizeIntoRanges(x, splitRange, False), tmpArray[:,1]))
+    retArray = numpy.concatenate((tmpArray1, tmpArray2), axis=1)
+    return retArray
 
-def CreateUserDatasets(userData, numFrames):
-    train1 = PyJRNN.utility.Dataset()
-    train2 = PyJRNN.utility.Dataset()
-    train3 = PyJRNN.utility.Dataset()
-    test1 = PyJRNN.utility.Dataset()
+
+def CreateUserDatasets(userData, numFrames, indexes = [1,2,3,4], distNums = (), normalize=True, splitOuts=True, settings=UserSettings()):
+    train1 = PyJRNN_d.utility.Dataset()
+    train2 = PyJRNN_d.utility.Dataset()
+    train3 = PyJRNN_d.utility.Dataset()
+    test1 = PyJRNN_d.utility.Dataset()
+
+    numTrain = 0
+    numVal = 0
+    numTest = 0
+    
+    if len(distNums) > 0:
+        numTrain = distNums[0]
+        numVal = distNums[1]
+        numTest = distNums[2]
+    else:
+        numTrain = 0.8 * numFrames
+        numVal = 0.2 * numFrames
+        numTest = numFrames
     
     minSize = min([len(x) for x in userData])
     strideSize = minSize / numFrames
 
-    def Norm01Array(inArray):
-        minval = numpy.min(inArray, axis=0)
-        maxval = numpy.max(inArray, axis=0)
-        inArray -= minval
-        inArray /= (maxval - minval + 0.000001)
-        return inArray
-
-    def loadDataset(ds, userDataList):
+    def loadDataset(ds, userDataList, settings, normalize=True, splitOuts=True):
         inputs = numpy.array([item['sensors'] for item in userDataList[-minSize::strideSize]])
         outputs = numpy.array([item['actions'] for item in userDataList[-minSize::strideSize]])
-        ds.LoadFromMatDoubles(matDoubleFromArray(Norm01Array(inputs)), matDoubleFromArray(Norm01Array(outputs)), True)
+        if splitOuts:
+            outputs = SplitAndAdjustObsOutputs(outputs, settings)
+        if normalize:
+            inputs = Norm01Array(inputs)
+            outputs = Norm01Array(outputs)
+        ds.LoadFromMatDoubles(matDoubleFromArray(inputs), matDoubleFromArray(outputs), True)
     
-    loadDataset(train1, userData[1])
-    loadDataset(train2, userData[2])
-    loadDataset(train3, userData[3])
-    loadDataset(test1, userData[4])
-    train1.DistData(int(numFrames * 0.8), int(numFrames * 0.2), 0)
-    train2.DistData(int(numFrames * 0.8), int(numFrames * 0.2), 0)
-    train3.DistData(int(numFrames * 0.8), int(numFrames * 0.2), 0)
-    test1.DistData(0,0,numFrames)
+    loadDataset(train1, userData[indexes[0]], settings, normalize, splitOuts)
+    loadDataset(train2, userData[indexes[1]], settings, normalize, splitOuts)
+    loadDataset(train3, userData[indexes[2]], settings, normalize, splitOuts)
+    loadDataset(test1, userData[indexes[3]], settings, normalize, splitOuts)
+    train1.DistData(int(numTrain), int(numVal), 0)
+    train2.DistData(int(numTrain), int(numVal), 0)
+    train3.DistData(int(numTrain), int(numVal), 0)
+    test1.DistData(0,0,numTest)
     
     return (train1, train2, train3, test1)
-# <codecell>
 
-# (jtrain1, jtrain2, jtrain3, jtest1) = CreateUserDatasets(jamesdata, 900)
-
-# <codecell>
-
-# print type(jtrain1)
-
-# <codecell>
-
-# print jtrain1.numInputs, jtrain1.numOutputs
-
-# <codecell>
-
-# revCC = PyJRNN.trainers.RevCCTrainer(21, 2, 8)
-
-# <codecell>
-
-# revCC.TrainTask(jtrain1, 3000, True)
-
-# <codecell>
-
-# result = revCC.TestOnData(jtest1, DSDatatype.TEST)
-# print result
-
-# <codecell>
-
-# revCC.TrainTask(jtrain2, 3000, True)
-
-# <codecell>
-
-# result2 = revCC.TestOnData(jtest1, DSDatatype.TEST)
-# print result2
-
-# <codecell>
-
-# revCC.TrainTask(jtrain3, 3000, True)
-
-# <codecell>
-
-# result3 = revCC.TestOnData(jtest1, DSDatatype.TEST)
-# print result3
-
-# <codecell>
 
 def ConsolidatedTrainingTest(dstupple, numRuns, rCC, maxEpochs, reshuffle=False):
     tr1 = dstupple[0]
@@ -244,19 +174,67 @@ def ConsolidatedTrainingTest(dstupple, numRuns, rCC, maxEpochs, reshuffle=False)
     
     return results
 
-# <codecell>
+def CreateRanges(minVal, dist, numRanges=5, percentages=[], symetric=False):
+    ranges = []
+    if len(percentages) == 0:
+        rangeWidth = dist / float(numRanges)
+        startp = minVal
+        for i in range(numRanges):
+            r = (startp, startp + rangeWidth)
+            ranges.append(r)
+            startp = startp + rangeWidth
+    else:
+        if symetric == False:
+            startp = minVal
+            for i, v in enumerate(percentages):
+                tmpWidth = dist * v
+                r = (startp, startp + tmpWidth)
+                ranges.append(r)
+                startp = startp + tmpWidth
+        else:
+            startp = minVal
+            for i, v in enumerate(percentages):
+                tmpWidth = dist * v
+                r = (startp, startp + tmpWidth)
+                ranges.append(r)
+                startp = startp + tmpWidth
+            
+            for i, v in enumerate(reversed(percentages)):
+                if i == 0:
+                    continue
+                tmpWidth = dist * v
+                r = (startp, startp + tmpWidth)
+                ranges.append(r)
+                startp = startp + tmpWidth
+                
+    return ranges
 
-# revCC.Reset()
 
-# <codecell>
+def GetIndexFromRange(value, ranges, absolute=True):
+    outIndex = -1
+    outValue = -1\
+    
+    #check to make sure that the value doesn't fall outside of the ranges
+    if value < ranges[0][0]:
+        value = ranges[0][0]
+    
+    if value > ranges[-1][1]:
+        value = ranges[-1][1]
+        
+    for i, v in enumerate(ranges):
+        if value >= v[0] and value <= v[1]:
+            if absolute:
+                return i, 1
+            else:
+                if value <= 0:
+                    outVal = (value - v[1]) / (v[0] - v[1])
+                else:
+                    outVal = (value - v[0]) / (v[1] - v[0])
+                return i, outVal
 
-# jamesds = (jtrain1, jtrain2, jtrain3, jtest1)
 
-# <codecell>
-
-# jamesresults = ConsolidatedTrainingTest(jamesds, 1, revCC, 3000)
-
-# <codecell>
-
-# jtrain1.GetSize(DSDatatype.TRAIN)
-
+def DiscritizeIntoRanges(Value, ranges, absolute=True):
+    outArray = numpy.zeros(len(ranges))
+    i, val = GetIndexFromRange(Value, ranges, absolute)
+    outArray[i] = val
+    return outArray
