@@ -85,8 +85,8 @@ def SplitAndAdjustObsOutputs(array, settings=UserSettings()):
     splitRange = CreateRanges(-1.0, 2, 2)
     adjustArray = numpy.array([1, (100.0 / settings.turnSensitivity)])
     tmpArray = array * adjustArray
-    tmpArray1 = numpy.array(map(lambda x: DiscritizeIntoRanges(x, splitRange, False), tmpArray[:,0]))
-    tmpArray2 = numpy.array(map(lambda x: DiscritizeIntoRanges(x, splitRange, False), tmpArray[:,1]))
+    tmpArray1 = map(lambda x: DiscritizeIntoRanges(x, splitRange, False), tmpArray[:,0])
+    tmpArray2 = map(lambda x: DiscritizeIntoRanges(x, splitRange, False), tmpArray[:,1])
     retArray = numpy.concatenate((tmpArray1, tmpArray2), axis=1)
     return retArray
 
