@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
 # <nbformat>3.0</nbformat>
 
-import PyJRNN_d
+import PyJRNN #_d as PyJRNN # for debugging
 import pyublas
 import numpy
-from PyJRNN_d.utility import DSDatatype
+#from PyJRNN_d.utility import DSDatatype
+from PyJRNN.utility import DSDatatype
 import os
 import re
 import json
@@ -13,7 +14,7 @@ from localvars import sourcebase
 
 # <codecell>
 #userspath = "D:\Users\John Reeder\Code\opennero\Build\dist\Debug\jrnnexp1\users" # For Titan
-userspath = sourcebase + "\opennero\Build\dist\Debug\jrnnexp1\Users" # For Lab Comp --- Should work for both now.
+userspath = sourcebase + "/opennero/Build/dist/Debug/jrnnexp1/Users" # For Lab Comp --- Should work for both now.
 # <codecell>
 
 
@@ -72,7 +73,7 @@ def Norm01Array(inArray):
 
 
 def matDoubleFromArray(inMat):
-    newMat = PyJRNN_d.types.matDouble()
+    newMat = PyJRNN.types.matDouble()
     for vec in inMat:
         if isinstance(vec, numpy.float64):
             newMat.append(numpy.array([vec]))
@@ -87,15 +88,16 @@ def SplitAndAdjustObsOutputs(array, settings=UserSettings()):
     tmpArray = array * adjustArray
     tmpArray1 = map(lambda x: DiscritizeIntoRanges(x, splitRange, False), tmpArray[:,0])
     tmpArray2 = map(lambda x: DiscritizeIntoRanges(x, splitRange, False), tmpArray[:,1])
-    retArray = numpy.concatenate((tmpArray1, tmpArray2), axis=1)
+    #retArray = numpy.concatenate((tmpArray1, tmpArray2), axis=1) this does weird things when checking the size
+    retArray = numpy.array([x[0] + x[1] for x in zip(tmpArray1, tmpArray2)])
     return retArray
 
 
 def CreateUserDatasets(userData, numFrames, indexes = [1,2,3,4], distNums = (), normalize=True, splitOuts=True, settings=UserSettings()):
-    train1 = PyJRNN_d.utility.Dataset()
-    train2 = PyJRNN_d.utility.Dataset()
-    train3 = PyJRNN_d.utility.Dataset()
-    test1 = PyJRNN_d.utility.Dataset()
+    train1 = PyJRNN.utility.Dataset()
+    train2 = PyJRNN.utility.Dataset()
+    train3 = PyJRNN.utility.Dataset()
+    test1 = PyJRNN.utility.Dataset()
 
     numTrain = 0
     numVal = 0
@@ -234,7 +236,7 @@ def GetIndexFromRange(value, ranges, absolute=True):
 
 
 def DiscritizeIntoRanges(Value, ranges, absolute=True):
-    outArray = numpy.zeros(len(ranges))
+    outArray = [0.0] * len(ranges)
     i, val = GetIndexFromRange(Value, ranges, absolute)
     outArray[i] = val
     return outArray

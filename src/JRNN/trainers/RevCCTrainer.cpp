@@ -201,7 +201,9 @@ namespace JRNN {
 				//These only make since after the first round of training.
 				this->ScopedOut = testWhileTrain;
 				this->outTestDS = testData;
-				this->realOuts = testData->getRealOuts();
+				if(testData.get() != 0){
+					this->realOuts = testData->getRealOuts();
+				}
 				this->outTestDStype = testDataType;
 				//Stage II
 				revNet = net2;

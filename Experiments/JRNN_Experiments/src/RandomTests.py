@@ -30,7 +30,7 @@
 
 #tmpArray2 = map(lambda x: DiscritizeIntoRanges(x, testranges2, False), newOutputs[:, 0])
 
-import PyJRNN_d as pyj
+import PyJRNN_d as PyJRNN
 import pyublas
 import numpy
 from PyJRNN_d.utility import DSDatatype
@@ -53,7 +53,7 @@ def parallelTest(user, scenario, maxEpochs=2000, numFrames=900, numCand=4, numRe
     del data
     numInputs = dstuple[0].numInputs
     numOutputs = dstuple[0].numOutputs
-    revCC = pyj.trainers.RevCCTrainer(numInputs,numOutputs,numCand)
+    revCC = PyJRNN.trainers.RevCCTrainer(numInputs,numOutputs,numCand)
     revCC.revparams.numRevTrainRatio = numRevTrainRatio
     revCC.revparams.numRev = numRev
     
@@ -64,6 +64,7 @@ def parallelTest(user, scenario, maxEpochs=2000, numFrames=900, numCand=4, numRe
     return returnVal
     #return "hello world"
     
+import wingdbstub
 
 maxEpochs=300
 numFrames=900
