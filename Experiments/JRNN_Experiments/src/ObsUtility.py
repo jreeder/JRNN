@@ -137,6 +137,22 @@ def CreateUserDatasets(userData, numFrames, indexes = [1,2,3,4], distNums = (), 
     return (train1, train2, train3, test1)
 
 
+def loadCSMTLDSfromData(outDS, data, indexes, numFrames, taskName, normalize=True, splitOuts=True, settings=UserSettings()):
+    subData = [data[x] for x in indexes]
+    minSize = min([len(x) for x in subData])
+    strideSize = minSize / numFrames
+    for d in subData:
+        inputs = numpy.array([item['sensors'] for item in d[-minSize::strideSize]])
+        outputs = numpy.array([item['actions'] for item in d[-minSize::strideSize]])
+        if splitOuts:
+            outputs = SplitAndAdjustObsOutputs(outputs, settings)
+        if normalize:
+            inputs = Norm01Array(inputs)
+            outputs = Norm01Array(outputs)
+            
+        outDS.AddMatDoublesToTask(matDoubleFromArray(inputs), matDoubleFromArray(outputs), taskName)
+
+
 def ConsolidatedTrainingTest(dstupple, numRuns, rCC, maxEpochs, reshuffle=False):
     tr1 = dstupple[0]
     tr2 = dstupple[1]
@@ -175,6 +191,111 @@ def ConsolidatedTrainingTest(dstupple, numRuns, rCC, maxEpochs, reshuffle=False)
             te1.RedistData()
     
     return results
+
+
+def RevCCWorker(RevCCTrainer, results, numRuns, subView1, subView2, cds, testRecall, useValidation=True, maxEpochs=3000):
+    dt = DSDatatype.TEST
+    if(testRecall):
+        dt = DSDatatype.TRAIN
+        
+    
+    useRealOuts = cds.realOuts
+    
+    def printHashedDoubleMap(DM):
+        returnStr = ""
+        for elm in DM:
+            returnStr += "{0}:{1}\t".format(elm.key(), elm.data())
+            
+        return returnStr
+    
+    
+    if (subView1 != '' and subView2 != ''):
+        subview = strings()
+        subview.append(subView1)
+        cds.DistSubview(subview)
+        firstDS = cds.SpawnDS()
+        del subview[:]
+        subview.append(subView2)
+        cds.DistSubview(subview)
+        secondDS = cds.SpawnDS()
+        
+        resultArray = []
+        
+        for i in range(numRuns):
+            resultDict = {'Chase':{}, 'ChaseObstacles':{}}
+            #Run First Task
+            RevCCTrainer.TrainTask(firstDS, maxEpochs, useValidation)
+            #First Task Results
+            resultDict['Chase']['epochs'] = RevCCTrainer.net1vals.epochs
+            resultDict['Chase']['hiddenLayers'] = RevCCTrainer.net1vals.hiddenLayers
+            resultDict['Chase']['numResets'] = RevCCTrainer.net1vals.hiddenLayers
+            resultDict['Chase']['MSERec'] = RevCCTrainer.net1vals.MSERec
+            #Test on second test before training on it. 
+            if useRealOuts:
+                firstResults = RevCCTrainer.TestOnData(secondDS, DSDatatype.TEST)
+            else:
+                firstResults = RevCCTrainer.TestWiClass(secondDS, DSDatatype.TEST)
+                
+            resultDict['Chase']['firstResults'] = firstResults
+            
+            #Run Second Task
+            RevCCTrainer.TrainTask(secondDS, maxEpochs, useValidation, True, firstDS, dt)
+            
+            #SecondTask Results
+            if useRealOuts:
+                secondResults = RevCCTrainer.TestOnData(secondDS, DSDatatype.TEST)
+            else:
+                secondResults = RevCCTrainer.TestWiClass(secondDS, DSDatatype.TEST)
+            hiddenLayers = RevCCTrainer.net1vals.numHidLayers
+            epochs = RevCCTrainer.net1vals.epochs
+            numResets = RevCCTrainer.net1vals.numResets
+            
+            resultDict['ChaseObstacles']['epochs'] = epochs
+            resultDict['ChaseObstacles']['hiddenLayers'] = hiddenLayers
+            resultDict['ChaseObstacles']['numResets'] = numResets
+            resultDict['ChaseObstacles']['secondResults'] = secondResults
+            
+            time = 0
+            result = ""
+            result += "{0}\t".format(epochs)
+            result += "{0}\t".format(time)
+            result += "{0}\t".format(hiddenLayers)
+            result += "{0}\t".format(numResets)
+            if useRealOuts:
+                result += "{0}:{1}\t|\t".format('task-0', secondResults)
+            else:
+                result += printHashedDoubleMap(secondResults) + "|\t"
+                
+            result += "\t".join([str(x) for x in RevCCTrainer.net1vals.MSERec]) + "\t|\t"
+        
+            resultDict['ChaseObstacles']['MSERec'] = RevCCTrainer.net1vals.MSERec
+        
+            if useRealOuts:
+                firstTaskResults = RevCCTrainer.TestOnData(firstDS, dt)
+                result += "{0}:{1}\t|\t".format('task-0', firstTaskResults)
+            else:
+                firstTaskResults = RevCCTrainer.TestWiClass(firstDS, dt)
+                result += printHashedDoubleMap(firstTaskResults) + "|\t"
+            
+            resultDict['ChaseObstacles']['firstTaskResults'] = firstTaskResults
+            
+            tmpResults = RevCCTrainer.getTestWhileTrainResults()
+            
+            resultDict['ChaseObstacles']['testWhileTrainResults'] = tmpResults
+            
+            for trainResult in tmpResults:
+                result += "*{0}!{1}".format(trainResult.epoch, printHashedDoubleMap(trainResult.result))
+            
+            result += "$\n"
+            results.append(result)
+            resultArray.append(resultDict)
+            result = ""
+            RevCCTrainer.Reset()
+            firstDS.RedistData()
+            secondDS.RedistData()
+            
+        return resultArray
+
 
 def CreateRanges(minVal, dist, numRanges=5, percentages=[], symetric=False):
     ranges = []
