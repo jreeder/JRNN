@@ -1,1 +1,0 @@
-Some of these runs will work. Particularly the 50 tr in trial 3

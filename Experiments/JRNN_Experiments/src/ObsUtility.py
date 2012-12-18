@@ -5,7 +5,9 @@ import PyJRNN #_d as PyJRNN # for debugging
 import pyublas
 import numpy
 #from PyJRNN_d.utility import DSDatatype
-from PyJRNN.utility import DSDatatype
+from PyJRNN.utility import DSDatatype, CSMTLDataset
+from PyJRNN.types import strings
+from PyJRNN.trainers import TestResults, TestResult
 import os
 import re
 import json
@@ -148,7 +150,7 @@ def CreateUserDatasets(userData, numFrames, indexes = [1,2,3,4], distNums = (), 
     return (train1, train2, train3, test1)
 
 
-def loadCSMTLDSfromData(outDS, data, indexes, numFrames, taskName, normalize=True, splitOuts=True, settings=UserSettings()):
+def loadCSMTLDSfromData(outDS, data, indexes, numFrames, taskName, normalize=True, splitOuts=True, useFannedTurn=True, settings=UserSettings()):
     subData = [data[x] for x in indexes]
     minSize = min([len(x) for x in subData])
     strideSize = minSize / numFrames
@@ -156,7 +158,7 @@ def loadCSMTLDSfromData(outDS, data, indexes, numFrames, taskName, normalize=Tru
         inputs = numpy.array([item['sensors'] for item in d[-minSize::strideSize]])
         outputs = numpy.array([item['actions'] for item in d[-minSize::strideSize]])
         if splitOuts:
-            outputs = SplitAndAdjustObsOutputs(outputs, settings)
+            outputs = SplitAndAdjustObsOutputs(outputs, settings, useFannedTurn)
         if normalize:
             inputs = Norm01Array(inputs)
             outputs = Norm01Array(outputs)
@@ -197,7 +199,7 @@ def ConsolidatedTrainingTest(dstupple, numRuns, rCC, maxEpochs, reshuffle=False,
             resDict['tr3.winError'] = TestWiWinners(te1, DSDatatype.TEST, rCC, WinnerGroups)        
         print "Finished Train and Test 3"
         
-        print resDict
+        #print resDict
         
         results.append(resDict)
         rCC.Reset()
@@ -257,6 +259,7 @@ def TestWiWinners(ds, dstype, rCC, winnerGroups):
 
 
 def RevCCWorker(RevCCTrainer, results, numRuns, subView1, subView2, cds, testRecall, useValidation=True, maxEpochs=3000):
+    print 'Worker Starting'
     dt = DSDatatype.TEST
     if(testRecall):
         dt = DSDatatype.TRAIN
@@ -270,6 +273,20 @@ def RevCCWorker(RevCCTrainer, results, numRuns, subView1, subView2, cds, testRec
             returnStr += "{0}:{1}\t".format(elm.key(), elm.data())
             
         return returnStr
+    
+    def ConvTestResults(testResults):
+        returnArray = []
+        for result in testResults:
+            returnArray.append((result.epoch, ConvHashedDM(result.result)))
+            
+        return returnArray
+    
+    def ConvHashedDM(hashedDM):
+        returnDict = {}
+        for elm in hashedDM:
+            returnDict[elm.key()] = elm.data()
+            
+        return returnDict
     
     
     if (subView1 != '' and subView2 != ''):
@@ -285,38 +302,46 @@ def RevCCWorker(RevCCTrainer, results, numRuns, subView1, subView2, cds, testRec
         resultArray = []
         
         for i in range(numRuns):
-            resultDict = {'Chase':{}, 'ChaseObstacles':{}}
+            print 'Starting Run {0}'.format(i)
+            
+            resultDict = {subView1:{}, subView2:{}}
             #Run First Task
             RevCCTrainer.TrainTask(firstDS, maxEpochs, useValidation)
+            print 'Finished First Task'
             #First Task Results
-            resultDict['Chase']['epochs'] = RevCCTrainer.net1vals.epochs
-            resultDict['Chase']['hiddenLayers'] = RevCCTrainer.net1vals.hiddenLayers
-            resultDict['Chase']['numResets'] = RevCCTrainer.net1vals.hiddenLayers
-            resultDict['Chase']['MSERec'] = RevCCTrainer.net1vals.MSERec
+            resultDict[subView1]['epochs'] = RevCCTrainer.net1vals.epochs
+            resultDict[subView1]['hiddenLayers'] = RevCCTrainer.net1vals.numHidLayers
+            resultDict[subView1]['numResets'] = RevCCTrainer.net1vals.numResets
+            resultDict[subView1]['MSERec'] = [x for x in RevCCTrainer.net1vals.MSERec]
             #Test on second test before training on it. 
             if useRealOuts:
                 firstResults = RevCCTrainer.TestOnData(secondDS, DSDatatype.TEST)
+                resultDict[subView1]['firstResults'] = firstResults
             else:
                 firstResults = RevCCTrainer.TestWiClass(secondDS, DSDatatype.TEST)
+                resultDict[subView1]['firstResults'] = ConvHashedDM(firstResults)
                 
-            resultDict['Chase']['firstResults'] = firstResults
+            
             
             #Run Second Task
             RevCCTrainer.TrainTask(secondDS, maxEpochs, useValidation, True, firstDS, dt)
-            
+            print 'Finished Second Task'
             #SecondTask Results
             if useRealOuts:
                 secondResults = RevCCTrainer.TestOnData(secondDS, DSDatatype.TEST)
+                resultDict[subView2]['secondResults'] = secondResults
             else:
                 secondResults = RevCCTrainer.TestWiClass(secondDS, DSDatatype.TEST)
+                resultDict[subView2]['secondResults'] = ConvHashedDM(secondResults)
+                
             hiddenLayers = RevCCTrainer.net1vals.numHidLayers
             epochs = RevCCTrainer.net1vals.epochs
             numResets = RevCCTrainer.net1vals.numResets
             
-            resultDict['ChaseObstacles']['epochs'] = epochs
-            resultDict['ChaseObstacles']['hiddenLayers'] = hiddenLayers
-            resultDict['ChaseObstacles']['numResets'] = numResets
-            resultDict['ChaseObstacles']['secondResults'] = secondResults
+            resultDict[subView2]['epochs'] = epochs
+            resultDict[subView2]['hiddenLayers'] = hiddenLayers
+            resultDict[subView2]['numResets'] = numResets
+            
             
             time = 0
             result = ""
@@ -331,20 +356,21 @@ def RevCCWorker(RevCCTrainer, results, numRuns, subView1, subView2, cds, testRec
                 
             result += "\t".join([str(x) for x in RevCCTrainer.net1vals.MSERec]) + "\t|\t"
         
-            resultDict['ChaseObstacles']['MSERec'] = RevCCTrainer.net1vals.MSERec
+            resultDict[subView2]['MSERec'] = [x for x in RevCCTrainer.net1vals.MSERec]
         
             if useRealOuts:
                 firstTaskResults = RevCCTrainer.TestOnData(firstDS, dt)
                 result += "{0}:{1}\t|\t".format('task-0', firstTaskResults)
+                resultDict[subView2]['firstTaskResults'] = firstTaskResults
             else:
                 firstTaskResults = RevCCTrainer.TestWiClass(firstDS, dt)
                 result += printHashedDoubleMap(firstTaskResults) + "|\t"
+                resultDict[subView2]['firstTaskResults'] = ConvHashedDM(firstTaskResults)
             
-            resultDict['ChaseObstacles']['firstTaskResults'] = firstTaskResults
             
             tmpResults = RevCCTrainer.getTestWhileTrainResults()
             
-            resultDict['ChaseObstacles']['testWhileTrainResults'] = tmpResults
+            resultDict[subView2]['testWhileTrainResults'] = ConvTestResults(tmpResults)
             
             for trainResult in tmpResults:
                 result += "*{0}!{1}".format(trainResult.epoch, printHashedDoubleMap(trainResult.result))
@@ -356,7 +382,9 @@ def RevCCWorker(RevCCTrainer, results, numRuns, subView1, subView2, cds, testRec
             RevCCTrainer.Reset()
             firstDS.RedistData()
             secondDS.RedistData()
+            print 'Run {0} complete'.format(i)
             
+        print 'Worker Done'
         return resultArray
 
 
