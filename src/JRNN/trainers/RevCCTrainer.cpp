@@ -236,6 +236,9 @@ namespace JRNN {
 		{
 			this->ScopedOut = testWhileTrain;
 			this->outTestDS = testData;
+			if(testData.get() != 0){
+				this->realOuts = testData->getRealOuts();
+			}
 			this->outTestDStype = testDataType;
 			SetDataSet(taskData);
 			network = net1;
