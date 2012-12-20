@@ -224,7 +224,7 @@ def GetWinnerIndex(vecD, indList):
     return highInd, highVal
 
 
-def TestWiWinners(ds, dstype, rCC, winnerGroups):
+def TestWiWinners(ds, dstype, rCC, winnerGroups): # This needs to be redone to give more meaningful results for the obs data. 
     inputs = ds.GetInputs(dstype)
     outputs = ds.GetOutputs(dstype)
     size = len(inputs)
@@ -248,10 +248,10 @@ def TestWiWinners(ds, dstype, rCC, winnerGroups):
             realError += (desWinVal - netWinVal)**2
             groupRealErr[i] += (desWinVal - netWinVal)**2
             
-    totalErrorRate = numInCorrect / (totalOpps * 1.0)
-    groupErrorRate = [x / (size *1.0) for x in groupInc]
-    totalMSE = realError / (totalOpps * 1.0)
-    groupMSE = [x / (size * 1.0) for x in groupRealErr]
+    totalErrorRate = numInCorrect / (totalOpps * 1.0) # This one kind of shows the distance from correct. 
+    groupErrorRate = [x / (size *1.0) for x in groupInc] # This just shows the percentage of the test set where the answer is wrong not how wrong like I wanted it to. 
+    totalMSE = realError / (totalOpps * 1.0) # this is basically meaningless
+    groupMSE = [x / (size * 1.0) for x in groupRealErr] # this is basically meaningless
     returnDict = {'totalErrorRate': totalErrorRate, 'groupErrorRate': groupErrorRate, \
                   'totalMSE': totalMSE, 'groupMSE': groupMSE}
     
@@ -452,3 +452,54 @@ def DiscritizeIntoRanges(Value, ranges, absolute=True):
     i, val = GetIndexFromRange(Value, ranges, absolute)
     outArray[i] = val
     return outArray
+
+
+
+
+def Create3DBars(datalist, firstKey, secondKey="", adjVal = 1.0):
+
+    def Plot3dBar(xvals, yvals, xinds, yinds, zvals):
+        fig = plt.figure()
+        ax = fig.gca(projection='3d')
+        sxvals = sorted(xvals)
+        syvals = sorted(yvals)
+        xvalli = list(sxvals)
+        yvalli = list(syvals)
+        XCoord = np.array([xvalli.index(x) for x in xinds])
+        YCoord = np.array([yvalli.index(x) for x in yinds])
+        ZCoord1 = np.array(zvals)
+        zinds = np.zeros_like(XCoord)
+        dx = np.ones_like(XCoord)
+        dy = np.ones_like(YCoord)
+        ax.bar3d(XCoord - 0.25, YCoord - 0.25, zinds, 0.5, 0.5, ZCoord1)
+        plt.xticks(range(len(sxvals)),[str(x) for x in sxvals])
+        plt.yticks(range(len(syvals)),[str(x) for x in syvals])
+        plt.show()
+
+    # This will index over numTrain and numRev x will be nT y will be numRev
+    global findNtr, findNrev
+    xvals = set()
+    yvals = set()
+    xinds = []
+    yinds = []
+    tr1z = []
+    tr2z = []
+    tr3z = []
+    for fileN in datalist:
+        xval = int(findNrev.search(fileN).group(0))
+        yval = int(findNtr.search(fileN).group(0))
+        xvals.add(xval)
+        yvals.add(yval)
+        xinds.append(xval)
+        yinds.append(yval)
+        tmpVal = None
+        if secondKey == "":
+            tmpVal = ParseObsResult(fileN, firstKey)
+        else:
+            tmpVal = ParseObsResult(fileN, firstKey, secondKey, adjVal)
+        
+        tr1z.append(tmpVal['Average']['tr1'])
+        tr2z.append(tmpVal['Average']['tr2'])
+        tr3z.append(tmpVal['Average']['tr3'])
+        
+    Plot3dBar(xvals, yvals, xinds, yinds, tr1z)
