@@ -155,6 +155,14 @@ namespace JRNN {
 		}
 	}
 
+	int RevCCNetwork::GetNumOut()
+	{
+		if (getTrueOuts){
+			return normOutLayer->GetSize();
+		}
+		else return Network::GetNumOut();
+	}
+
 	vecDouble RevCCNetwork::GetTrueOutputs()
 	{
 		return normOutLayer->GetOutput();

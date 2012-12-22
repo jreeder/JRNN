@@ -33,6 +33,7 @@ namespace JRNN {
 		void SetAutoAssocLayerByName(string name);
 		void SetNormOutLayerByName(string name);
 		virtual vecDouble GetOutputs();
+		virtual int GetNumOut();
 		vecDouble GetTrueOutputs();
 		virtual void InstallCandidate(NodePtr node, vecDouble outWeights = vecDouble(0), vecDouble assocWeights = vecDouble(0));
 		virtual void Build(int numIn, int numOut, bool cloneouts = false, bool useSDCC = false, bool varyActFunc = false);

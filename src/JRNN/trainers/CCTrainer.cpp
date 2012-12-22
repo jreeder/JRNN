@@ -876,11 +876,17 @@ namespace JRNN {
 			vecDouble output = network->GetOutputs();
 			vecDouble error = desiredOut - output;
 			vecDouble sqError = SquareVec(error);
-			SSE += ublas::sum(sqError);
+			SSE += ublas::sum(FilterError(sqError,primaryIndexes));
 			itIns++;
 			itOuts++;
 		}
 		SSE /= (double)ins.size();
+		if (primaryIndexes.size() > 0){
+			SSE /= (double)primaryIndexes.size();
+		}
+		else {
+			SSE /= (double)network->GetNumOut();
+		}
 		return SSE; //This is now MSE 
 	}
 

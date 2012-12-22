@@ -49,6 +49,14 @@ struct NetWrap : Network, wrapper<Network>
 
 	vecDouble default_GetOutputs() {return this->Network::GetOutputs();}
 
+	int GetNumOut() {
+		if (override GetNumOut = this->get_override("GetNumOut"))
+			return GetNumOut();
+		return Network::GetNumOut();
+	}
+
+	int default_GetNumOut() {return this->Network::GetNumOut();}
+
 	void Reset() {
 		if (override Reset = this->get_override("Reset")){
 			Reset();

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # <nbformat>3.0</nbformat>
 
-import PyJRNN#_d as PyJRNN # for debugging
+import PyJRNN #_d as PyJRNN # for debugging
 import pyublas
 import numpy
 #from PyJRNN_d.utility import DSDatatype, CSMTLDataset
@@ -14,11 +14,11 @@ import os
 import re
 import json
 import pickle
-from localvars import sourcebase
+from localvars import sourcebase, luserspath
 
 # <codecell>
 #userspath = "D:\Users\John Reeder\Code\opennero\Build\dist\Debug\jrnnexp1\users" # For Titan
-userspath = sourcebase + "/opennero/Build/dist/Debug/jrnnexp1/Users" # For Lab Comp --- Should work for both now.
+userspath = luserspath
 # <codecell>
 
 
@@ -243,13 +243,25 @@ def GetWinnerIndex(vecD, indList):
     return highInd, highVal
 
 
-def TestWiWinners(ds, dstype, rCC, winnerGroups): # This needs to be redone to give more meaningful results for the obs data. 
+def SumSquareError(desired, actual, indList = []):
+    indexes = indList if len(indList) > 0 else range(len(desired))
+    SSE = 0
+    for i in indexes:
+        SSE += (desired[i] - actual[i])**2
+        
+    return SSE
+
+
+def TestWiWinners(ds, dstype, rCC, winnerGroups):
     inputs = ds.GetInputs(dstype)
     outputs = ds.GetOutputs(dstype)
     size = len(inputs)
-    totalOpps = size * len(winnerGroups)
-    winnerOuts = sum([len(x) for x in winnerGroups])
-    assert winnerOuts == len(outputs[0])
+    #totalOpps = size * len(winnerGroups)
+    totalDist = size * sum([x[-1] - x[0] for x in winnerGroups])
+    grpDists = [size * x[-1] - x[0] for x in winnerGroups]
+    winnerOutsSize = sum([len(x) for x in winnerGroups])
+    grpOutsSize = [len(x) for x in winnerGroups]
+    assert winnerOutsSize == len(outputs[0])
     numInCorrect = 0
     realError = 0
     groupInc = [0] * len(winnerGroups)
@@ -262,15 +274,17 @@ def TestWiWinners(ds, dstype, rCC, winnerGroups): # This needs to be redone to g
             desWinInd, desWinVal = GetWinnerIndex(example[1], grp)
             if netWinInd != desWinInd:
                 numInCorrect += abs(netWinInd - desWinInd)  # This will give a more useful value when there are more than two in a group. It will give the distance away from the desired. 
-                groupInc[i] += 1
+                groupInc[i] += abs(netWinInd - desWinInd)
             
-            realError += (desWinVal - netWinVal)**2
-            groupRealErr[i] += (desWinVal - netWinVal)**2
+            groupRealErr[i] += SumSquareError(example[1], netOut, grp)
+            #realError += (desWinVal - netWinVal)**2
+            #groupRealErr[i] += (desWinVal - netWinVal)**2
+        realError += SumSquareError(example[1], netOut)
             
-    totalErrorRate = numInCorrect / (totalOpps * 1.0) # This one kind of shows the distance from correct. 
-    groupErrorRate = [x / (size *1.0) for x in groupInc] # This just shows the percentage of the test set where the answer is wrong not how wrong like I wanted it to. 
-    totalMSE = realError / (totalOpps * 1.0) # this is basically meaningless
-    groupMSE = [x / (size * 1.0) for x in groupRealErr] # this is basically meaningless
+    totalErrorRate = numInCorrect / (totalDist * 1.0) # Total Distance from correct as a percentage of max possible distance incorrect
+    groupErrorRate = [x / (grpDists[i] * 1.0) for i,x in enumerate(groupInc)] # Group Distance from correct as a percentage of max possible distance incorrect
+    totalMSE = realError / (size * winnerOutsSize * 1.0) # MSE of all outputs
+    groupMSE = [x / (size * grpOutsSize[i] * 1.0) for i, x in enumerate(groupRealErr)] # MSE of grouped outputs
     returnDict = {'totalErrorRate': totalErrorRate, 'groupErrorRate': groupErrorRate, \
                   'totalMSE': totalMSE, 'groupMSE': groupMSE}
     

@@ -44,7 +44,7 @@ namespace JRNN{
 		void SetNumIn(int numIn);
 		int GetNumIn();
 		void SetNumOut(int numOut);
-		int GetNumOut();
+		virtual int GetNumOut();
 		void SetNumHidLayers(int numHidLayers);
 		int GetNumHidLayers();
 		void SetScaleAndOffset(double scale, double offset);
