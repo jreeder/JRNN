@@ -39,6 +39,7 @@ import re
 import json
 import ObsUtility
 from ObsUtility import userspath, UserSettings
+from config import datapath, LoadTabbedDataFiles
 
 #def parallelTest(user, scenario, maxEpochs=2000, numFrames=900, numCand=4, numRev=5, numRevTrainRatio=1, indexes = [1,2,3,4], distNums = (), reshuffle=False):
     #global sortField
@@ -120,6 +121,50 @@ def parallelTest(user, scenario, maxEpochs=2000, numFrames=900, numCand=4, numRu
     return returnVal
     #return "hello world"
 
+def ParallelTabbedConsTest(dsname, numIns, numOuts, numTrain, numVal, numTest, numCand=8, numRuns=1, numRev=5, maxEpochs=2000, numRevTrainRatio=1, reshuffle=True, fileName=""):
+    def CreateTabbedConsDS(dsname, numIns, numOuts, numTrain, numVal, numTest):
+        global datapath
+        dspath = os.path.join(datapath, dsname)
+        ins, outs = LoadTabbedDataFiles(numIns, numOuts, dspath)
+        trainDSLength = numTrain + numVal
+        print trainDSLength
+    
+        ds1 = PyJRNN.utility.Dataset()
+        ds2 = PyJRNN.utility.Dataset()
+        ds3 = PyJRNN.utility.Dataset()
+        tr1 = PyJRNN.utility.Dataset()
+    
+        ds1.LoadFromMatDoubles(ObsUtility.matDoubleFromArray(ins[0:trainDSLength]), ObsUtility.matDoubleFromArray(outs[0:trainDSLength]))
+        ds2.LoadFromMatDoubles(ObsUtility.matDoubleFromArray(ins[trainDSLength:2*trainDSLength]), ObsUtility.matDoubleFromArray(outs[trainDSLength:2*trainDSLength]))
+        ds3.LoadFromMatDoubles(ObsUtility.matDoubleFromArray(ins[trainDSLength*2:trainDSLength*3]), ObsUtility.matDoubleFromArray(outs[trainDSLength*2:trainDSLength*3]))
+        tr1.LoadFromMatDoubles(ObsUtility.matDoubleFromArray(ins[trainDSLength*3:]), ObsUtility.matDoubleFromArray(outs[trainDSLength*3:]))
+    
+        del ins, outs
+        ds1.DistData(numTrain, numVal, 0)
+        ds2.DistData(numTrain, numVal, 0)
+        ds3.DistData(numTrain, numVal, 0)
+        tr1.DistData(0,0,numTest)
+    
+        return (ds1, ds2, ds3, tr1)
+    
+    dstuple = CreateTabbedConsDS(dsname, numIns, numOuts, numTrain, numVal, numTest)
+    revCC = PyJRNN.trainers.RevCCTrainer(numIns, numOuts, numCand)
+    revCC.revparams.numRevTrainRatio = numRevTrainRatio
+    if numRev == -1:
+        revCC.revparams.bufferSize = 0
+        numRev = 0
+    revCC.revparams.numRev = numRev
+    returnVal = ObsUtility.ConsolidatedTrainingTest(dstuple, numRuns, revCC, maxEpochs, reshuffle, realOuts=False)
+    for ds in dstuple[:]:
+        ds.Clear()
+        del ds
+    
+    if fileName != "":
+        with open(fileName, 'w') as fileh:
+            json.dump(returnVal, fileh)
+            
+    return returnVal
+
 import wingdbstub
 
 maxEpochs=1000
@@ -132,4 +177,6 @@ numRev=5
 reshuffle=True
 useFannedTurn=True
 
-parallelTest('Cong', 'Chase - 16Nov2012171621', maxEpochs=maxEpochs, numFrames=numFrames, indexes=indexes, distNums=distNums, numRev=numRev, reshuffle=reshuffle, useFannedTurn=useFannedTurn)
+#parallelTest('Cong', 'Chase - 16Nov2012171621', maxEpochs=maxEpochs, numFrames=numFrames, indexes=indexes, distNums=distNums, numRev=numRev, reshuffle=reshuffle, useFannedTurn=useFannedTurn)
+
+result = ParallelTabbedConsTest('band-task2.txt', 2, 1, 50, 100, 400, numRev=1)

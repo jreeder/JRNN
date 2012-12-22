@@ -13,7 +13,7 @@
 #include "networks/CCNetwork.h"
 #include "utility/dataset.h"
 
-#define _CC_USE_CACHE_
+//#define _CC_USE_CACHE_
 
 namespace JRNN {
 	//typedef boost::unordered_map<string, vecDouble> hashedVecDoubleMap;

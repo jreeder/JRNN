@@ -1,10 +1,12 @@
 # -*- coding: utf-8 -*-
 # <nbformat>3.0</nbformat>
 
-import PyJRNN #_d as PyJRNN # for debugging
+import PyJRNN#_d as PyJRNN # for debugging
 import pyublas
 import numpy
-#from PyJRNN_d.utility import DSDatatype
+#from PyJRNN_d.utility import DSDatatype, CSMTLDataset
+#from PyJRNN_d.types import strings
+#from PyJRNN_d.trainers import TestResults, TestResult
 from PyJRNN.utility import DSDatatype, CSMTLDataset
 from PyJRNN.types import strings
 from PyJRNN.trainers import TestResults, TestResult
@@ -24,6 +26,14 @@ class UserSettings:
     def __init__(self, turnSensitivity=30, deadzone=15):
         self.turnSensitivity = turnSensitivity
         self.deadzone = deadzone
+
+
+def ConvHashedDM(hashedDM):
+    returnDict = {}
+    for elm in hashedDM:
+        returnDict[elm.key()] = elm.data()
+        
+    return returnDict
 
 
 def ScoreFromInputs(inputVec):
@@ -166,7 +176,7 @@ def loadCSMTLDSfromData(outDS, data, indexes, numFrames, taskName, normalize=Tru
         outDS.AddMatDoublesToTask(matDoubleFromArray(inputs), matDoubleFromArray(outputs), taskName)
 
 
-def ConsolidatedTrainingTest(dstupple, numRuns, rCC, maxEpochs, reshuffle=False, WinnerGroups = []):
+def ConsolidatedTrainingTest(dstupple, numRuns, rCC, maxEpochs, reshuffle=False, WinnerGroups = [], realOuts = True):
     tr1 = dstupple[0]
     tr2 = dstupple[1]
     tr3 = dstupple[2]
@@ -178,7 +188,10 @@ def ConsolidatedTrainingTest(dstupple, numRuns, rCC, maxEpochs, reshuffle=False,
         rCC.TrainTask(tr1, maxEpochs, True)
         resDict['tr1.epochs'] = rCC.net1vals.epochs
         resDict['tr1.hiddenLayers'] = rCC.net1vals.numHidLayers
-        resDict['tr1.testError'] = rCC.TestOnData(te1, DSDatatype.TEST)
+        if realOuts:
+            resDict['tr1.testError'] = rCC.TestOnData(te1, DSDatatype.TEST)
+        else:
+            resDict['tr1.testError'] = ConvHashedDM(rCC.TestWiClass(te1, DSDatatype.TEST))
         if len(WinnerGroups) > 0:
             resDict['tr1.winError'] = TestWiWinners(te1, DSDatatype.TEST, rCC, WinnerGroups)
         print "Finished Train and Test 1"
@@ -186,7 +199,10 @@ def ConsolidatedTrainingTest(dstupple, numRuns, rCC, maxEpochs, reshuffle=False,
         rCC.TrainTask(tr2, maxEpochs, True)
         resDict['tr2.epochs'] = rCC.net1vals.epochs
         resDict['tr2.hiddenLayers'] = rCC.net1vals.numHidLayers
-        resDict['tr2.testError'] = rCC.TestOnData(te1, DSDatatype.TEST)
+        if realOuts:
+            resDict['tr2.testError'] = rCC.TestOnData(te1, DSDatatype.TEST)
+        else:
+            resDict['tr2.testError'] = ConvHashedDM(rCC.TestWiClass(te1, DSDatatype.TEST))
         if len(WinnerGroups) > 0:
             resDict['tr2.winError'] = TestWiWinners(te1, DSDatatype.TEST, rCC, WinnerGroups)        
         print "Finished Train and Test 2"
@@ -194,7 +210,10 @@ def ConsolidatedTrainingTest(dstupple, numRuns, rCC, maxEpochs, reshuffle=False,
         rCC.TrainTask(tr3, maxEpochs, True)
         resDict['tr3.epochs'] = rCC.net1vals.epochs
         resDict['tr3.hiddenLayers'] = rCC.net1vals.numHidLayers
-        resDict['tr3.testError'] = rCC.TestOnData(te1, DSDatatype.TEST)
+        if realOuts:
+            resDict['tr3.testError'] = rCC.TestOnData(te1, DSDatatype.TEST)
+        else:
+            resDict['tr3.testError'] = ConvHashedDM(rCC.TestWiClass(te1, DSDatatype.TEST))
         if len(WinnerGroups) > 0:
             resDict['tr3.winError'] = TestWiWinners(te1, DSDatatype.TEST, rCC, WinnerGroups)        
         print "Finished Train and Test 3"
