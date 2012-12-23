@@ -336,7 +336,7 @@ def RevCCWorker(RevCCTrainer, results, numRuns, subView1, subView2, cds, testRec
         
         for i in range(numRuns):
             print 'Starting Run {0}'.format(i)
-            
+            print 'useRealOuts: {0}'.format(cds.realOuts)
             resultDict = {subView1:{}, subView2:{}}
             #Run First Task
             RevCCTrainer.TrainTask(firstDS, maxEpochs, useValidation)
@@ -348,10 +348,10 @@ def RevCCWorker(RevCCTrainer, results, numRuns, subView1, subView2, cds, testRec
             resultDict[subView1]['MSERec'] = [x for x in RevCCTrainer.net1vals.MSERec]
             #Test on second test before training on it. 
             if useRealOuts:
-                firstResults = RevCCTrainer.TestOnData(secondDS, DSDatatype.TEST)
+                firstResults = RevCCTrainer.TestOnData(firstDS, DSDatatype.TEST)
                 resultDict[subView1]['firstResults'] = firstResults
             else:
-                firstResults = RevCCTrainer.TestWiClass(secondDS, DSDatatype.TEST)
+                firstResults = RevCCTrainer.TestWiClass(firstDS, DSDatatype.TEST)
                 resultDict[subView1]['firstResults'] = ConvHashedDM(firstResults)
                 
             

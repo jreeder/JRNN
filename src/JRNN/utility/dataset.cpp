@@ -22,6 +22,7 @@ Dataset::Dataset() {
 	outClassPercentage.clear();
 	outClassNames.clear();
 	allowShuffle = true;
+	realOuts = false;
 }
 
 Dataset::Dataset(const Dataset& orig) {
@@ -52,6 +53,7 @@ Dataset::Dataset(const Dataset& orig) {
 	dsAnalyzed = orig.dsAnalyzed;
 	size = orig.size;
 	allowShuffle = orig.allowShuffle;
+	realOuts = orig.realOuts;
 }
 
 Dataset::~Dataset() {
@@ -626,32 +628,32 @@ void Dataset::MergeSubsets( DatasetPtr dsPtr, bool resetSubsetSize /*= false*/ )
 	ShuffleSubsets();
 }
 
-bool JRNN::Dataset::AllowShuffle() const
+bool Dataset::AllowShuffle() const
 {
 	return allowShuffle;
 }
 
-void JRNN::Dataset::AllowShuffle( bool val )
+void Dataset::AllowShuffle( bool val )
 {
-	allowShuffle = val;
+	this->allowShuffle = val;
 }
 
-int JRNN::Dataset::GetNumInputs()
+int Dataset::GetNumInputs()
 {
 	return numInputs;
 }
 
-int JRNN::Dataset::GetNumOutputs()
+int Dataset::GetNumOutputs()
 {
 	return numOutputs;
 }
 
-bool JRNN::Dataset::getRealOuts() const
+bool Dataset::getRealOuts() const
 {
 	return realOuts;
 }
 
-void JRNN::Dataset::setRealOuts( bool val )
+void Dataset::setRealOuts( bool val )
 {
-	realOuts = val;
+	this->realOuts = val;
 }

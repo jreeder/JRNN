@@ -467,6 +467,7 @@ namespace JRNN {
 
 	void CSMTLDataset::ResetView(){
 		this->subView = this->view;
+		Distribute();
 	}
 
 	void CSMTLDataset::Reshuffle()
