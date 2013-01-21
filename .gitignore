@@ -19,3 +19,5 @@ ipch/
 ~*
 Thumbs.db
 localvars.py
+
+.DS_Store
