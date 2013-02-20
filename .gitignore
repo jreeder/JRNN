@@ -19,5 +19,6 @@ ipch/
 ~*
 Thumbs.db
 localvars.py
+*.sublime-workspace
 
 .DS_Store
