@@ -7,44 +7,43 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		45AABE4311C2F9490042B61E /* JRNN.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45AABE1B11C2F4DD0042B61E /* JRNN.cpp */; };
-		45AABE4411C2F9490042B61E /* connection.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45AABE1D11C2F4DD0042B61E /* connection.cpp */; };
-		45AABE4511C2F9490042B61E /* layer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45AABE1E11C2F4DD0042B61E /* layer.cpp */; };
-		45AABE4611C2F9490042B61E /* network.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45AABE1F11C2F4DD0042B61E /* network.cpp */; };
-		45AABE4711C2F9490042B61E /* node.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45AABE2011C2F4DD0042B61E /* node.cpp */; };
-		45AABE4811C2F9490042B61E /* BackPropTrainer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45AABE2211C2F4DD0042B61E /* BackPropTrainer.cpp */; };
-		45AABE4911C2F9490042B61E /* CCTrainer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45AABE2311C2F4DD0042B61E /* CCTrainer.cpp */; };
-		45AABE4A11C2F9490042B61E /* RPropTrainer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45AABE2411C2F4DD0042B61E /* RPropTrainer.cpp */; };
-		45AABE4B11C2F9490042B61E /* dataset.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45AABE2611C2F4DD0042B61E /* dataset.cpp */; };
-		45AABE4C11C2F9490042B61E /* nodebuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45AABE2711C2F4DD0042B61E /* nodebuffer.cpp */; };
+		4535150316D9D8F300B6795C /* JRNN.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 453514FE16D9D8F300B6795C /* JRNN.cpp */; };
+		4535150916D9D93600B6795C /* JRNN.h in Headers */ = {isa = PBXBuildFile; fileRef = 4535150416D9D93600B6795C /* JRNN.h */; };
+		4535151B16D9F4D500B6795C /* PyJRNN.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4535151816D9F4D500B6795C /* PyJRNN.cpp */; };
+		4535151F16D9F4F700B6795C /* JRNNTypeDefs.h in Headers */ = {isa = PBXBuildFile; fileRef = 4535151C16D9F4F700B6795C /* JRNNTypeDefs.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		45AABE1B11C2F4DD0042B61E /* JRNN.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = JRNN.cpp; path = ../../../src/JRNN/JRNN.cpp; sourceTree = SOURCE_ROOT; };
-		45AABE1D11C2F4DD0042B61E /* connection.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = connection.cpp; path = ../../../src/JRNN/structure/connection.cpp; sourceTree = SOURCE_ROOT; };
-		45AABE1E11C2F4DD0042B61E /* layer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = layer.cpp; path = ../../../src/JRNN/structure/layer.cpp; sourceTree = SOURCE_ROOT; };
-		45AABE1F11C2F4DD0042B61E /* network.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = network.cpp; path = ../../../src/JRNN/structure/network.cpp; sourceTree = SOURCE_ROOT; };
-		45AABE2011C2F4DD0042B61E /* node.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = node.cpp; path = ../../../src/JRNN/structure/node.cpp; sourceTree = SOURCE_ROOT; };
-		45AABE2211C2F4DD0042B61E /* BackPropTrainer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = BackPropTrainer.cpp; path = ../../../src/JRNN/trainers/BackPropTrainer.cpp; sourceTree = SOURCE_ROOT; };
-		45AABE2311C2F4DD0042B61E /* CCTrainer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCTrainer.cpp; path = ../../../src/JRNN/trainers/CCTrainer.cpp; sourceTree = SOURCE_ROOT; };
-		45AABE2411C2F4DD0042B61E /* RPropTrainer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = RPropTrainer.cpp; path = ../../../src/JRNN/trainers/RPropTrainer.cpp; sourceTree = SOURCE_ROOT; };
-		45AABE2611C2F4DD0042B61E /* dataset.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = dataset.cpp; path = ../../../src/JRNN/utility/dataset.cpp; sourceTree = SOURCE_ROOT; };
-		45AABE2711C2F4DD0042B61E /* nodebuffer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nodebuffer.cpp; path = ../../../src/JRNN/utility/nodebuffer.cpp; sourceTree = SOURCE_ROOT; };
-		45AABE2A11C2F53F0042B61E /* JRNN.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JRNN.h; path = ../../../include/JRNN/JRNN.h; sourceTree = SOURCE_ROOT; };
-		45AABE2C11C2F53F0042B61E /* connection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = connection.h; path = ../../../include/JRNN/structure/connection.h; sourceTree = SOURCE_ROOT; };
-		45AABE2D11C2F53F0042B61E /* layer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = layer.h; path = ../../../include/JRNN/structure/layer.h; sourceTree = SOURCE_ROOT; };
-		45AABE2E11C2F53F0042B61E /* network.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = network.h; path = ../../../include/JRNN/structure/network.h; sourceTree = SOURCE_ROOT; };
-		45AABE2F11C2F53F0042B61E /* node.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = node.h; path = ../../../include/JRNN/structure/node.h; sourceTree = SOURCE_ROOT; };
-		45AABE3111C2F53F0042B61E /* BackPropTrainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BackPropTrainer.h; path = ../../../include/JRNN/trainers/BackPropTrainer.h; sourceTree = SOURCE_ROOT; };
-		45AABE3211C2F53F0042B61E /* CCTrainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCTrainer.h; path = ../../../include/JRNN/trainers/CCTrainer.h; sourceTree = SOURCE_ROOT; };
-		45AABE3311C2F53F0042B61E /* RPropTrainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RPropTrainer.h; path = ../../../include/JRNN/trainers/RPropTrainer.h; sourceTree = SOURCE_ROOT; };
-		45AABE3511C2F53F0042B61E /* dataset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = dataset.h; path = ../../../include/JRNN/utility/dataset.h; sourceTree = SOURCE_ROOT; };
-		45AABE3611C2F53F0042B61E /* nodebuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nodebuffer.h; path = ../../../include/JRNN/utility/nodebuffer.h; sourceTree = SOURCE_ROOT; };
-		45AABE3711C2F53F0042B61E /* utility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = utility.h; path = ../../../include/JRNN/utility/utility.h; sourceTree = SOURCE_ROOT; };
+		453514FE16D9D8F300B6795C /* JRNN.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = JRNN.cpp; path = ../../../src/JRNN/JRNN.cpp; sourceTree = "<group>"; };
+		453514FF16D9D8F300B6795C /* networks */ = {isa = PBXFileReference; lastKnownFileType = folder; name = networks; path = ../../../src/JRNN/networks; sourceTree = "<group>"; };
+		4535150016D9D8F300B6795C /* structure */ = {isa = PBXFileReference; lastKnownFileType = folder; name = structure; path = ../../../src/JRNN/structure; sourceTree = "<group>"; };
+		4535150116D9D8F300B6795C /* trainers */ = {isa = PBXFileReference; lastKnownFileType = folder; name = trainers; path = ../../../src/JRNN/trainers; sourceTree = "<group>"; };
+		4535150216D9D8F300B6795C /* utility */ = {isa = PBXFileReference; lastKnownFileType = folder; name = utility; path = ../../../src/JRNN/utility; sourceTree = "<group>"; };
+		4535150416D9D93600B6795C /* JRNN.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JRNN.h; path = ../../../include/JRNN/JRNN.h; sourceTree = "<group>"; };
+		4535150516D9D93600B6795C /* networks */ = {isa = PBXFileReference; lastKnownFileType = folder; name = networks; path = ../../../include/JRNN/networks; sourceTree = "<group>"; };
+		4535150616D9D93600B6795C /* structure */ = {isa = PBXFileReference; lastKnownFileType = folder; name = structure; path = ../../../include/JRNN/structure; sourceTree = "<group>"; };
+		4535150716D9D93600B6795C /* trainers */ = {isa = PBXFileReference; lastKnownFileType = folder; name = trainers; path = ../../../include/JRNN/trainers; sourceTree = "<group>"; };
+		4535150816D9D93600B6795C /* utility */ = {isa = PBXFileReference; lastKnownFileType = folder; name = utility; path = ../../../include/JRNN/utility; sourceTree = "<group>"; };
+		4535151216D9F31B00B6795C /* libPyJRNN.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libPyJRNN.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
+		4535151616D9F4D500B6795C /* networks */ = {isa = PBXFileReference; lastKnownFileType = folder; name = networks; path = ../../../src/PyJRNN/networks; sourceTree = "<group>"; };
+		4535151716D9F4D500B6795C /* PyJRNN_test.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; name = PyJRNN_test.py; path = ../../../src/PyJRNN/PyJRNN_test.py; sourceTree = "<group>"; };
+		4535151816D9F4D500B6795C /* PyJRNN.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PyJRNN.cpp; path = ../../../src/PyJRNN/PyJRNN.cpp; sourceTree = "<group>"; };
+		4535151916D9F4D500B6795C /* trainers */ = {isa = PBXFileReference; lastKnownFileType = folder; name = trainers; path = ../../../src/PyJRNN/trainers; sourceTree = "<group>"; };
+		4535151A16D9F4D500B6795C /* utility */ = {isa = PBXFileReference; lastKnownFileType = folder; name = utility; path = ../../../src/PyJRNN/utility; sourceTree = "<group>"; };
+		4535151C16D9F4F700B6795C /* JRNNTypeDefs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JRNNTypeDefs.h; path = ../../../include/PyJRNN/JRNNTypeDefs.h; sourceTree = "<group>"; };
+		4535151D16D9F4F700B6795C /* networks */ = {isa = PBXFileReference; lastKnownFileType = folder; name = networks; path = ../../../include/PyJRNN/networks; sourceTree = "<group>"; };
+		4535151E16D9F4F700B6795C /* utility */ = {isa = PBXFileReference; lastKnownFileType = folder; name = utility; path = ../../../include/PyJRNN/utility; sourceTree = "<group>"; };
 		45AABE3C11C2F6330042B61E /* libJRNN.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libJRNN.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		4535150F16D9F31B00B6795C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		45AABE3A11C2F6330042B61E /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -55,55 +54,63 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		45AABE1111C2F4790042B61E = {
+		4535150A16D9EDEF00B6795C /* JRNN */ = {
 			isa = PBXGroup;
 			children = (
 				45AABE2911C2F52C0042B61E /* include */,
 				45AABE2811C2F51F0042B61E /* src */,
+			);
+			name = JRNN;
+			sourceTree = "<group>";
+		};
+		4535150B16D9EE1E00B6795C /* PyJRNN */ = {
+			isa = PBXGroup;
+			children = (
+				4535150C16D9EEC900B6795C /* include */,
+				4535150D16D9EED700B6795C /* src */,
+			);
+			name = PyJRNN;
+			sourceTree = "<group>";
+		};
+		4535150C16D9EEC900B6795C /* include */ = {
+			isa = PBXGroup;
+			children = (
+				4535151C16D9F4F700B6795C /* JRNNTypeDefs.h */,
+				4535151D16D9F4F700B6795C /* networks */,
+				4535151E16D9F4F700B6795C /* utility */,
+			);
+			name = include;
+			sourceTree = "<group>";
+		};
+		4535150D16D9EED700B6795C /* src */ = {
+			isa = PBXGroup;
+			children = (
+				4535151616D9F4D500B6795C /* networks */,
+				4535151716D9F4D500B6795C /* PyJRNN_test.py */,
+				4535151816D9F4D500B6795C /* PyJRNN.cpp */,
+				4535151916D9F4D500B6795C /* trainers */,
+				4535151A16D9F4D500B6795C /* utility */,
+			);
+			name = src;
+			sourceTree = "<group>";
+		};
+		45AABE1111C2F4790042B61E = {
+			isa = PBXGroup;
+			children = (
+				4535150B16D9EE1E00B6795C /* PyJRNN */,
+				4535150A16D9EDEF00B6795C /* JRNN */,
 				45AABE3D11C2F6330042B61E /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		45AABE1C11C2F4DD0042B61E /* structure */ = {
-			isa = PBXGroup;
-			children = (
-				45AABE1D11C2F4DD0042B61E /* connection.cpp */,
-				45AABE1E11C2F4DD0042B61E /* layer.cpp */,
-				45AABE1F11C2F4DD0042B61E /* network.cpp */,
-				45AABE2011C2F4DD0042B61E /* node.cpp */,
-			);
-			name = structure;
-			path = ../../../src/JRNN/structure;
-			sourceTree = SOURCE_ROOT;
-		};
-		45AABE2111C2F4DD0042B61E /* trainers */ = {
-			isa = PBXGroup;
-			children = (
-				45AABE2211C2F4DD0042B61E /* BackPropTrainer.cpp */,
-				45AABE2311C2F4DD0042B61E /* CCTrainer.cpp */,
-				45AABE2411C2F4DD0042B61E /* RPropTrainer.cpp */,
-			);
-			name = trainers;
-			path = ../../../src/JRNN/trainers;
-			sourceTree = SOURCE_ROOT;
-		};
-		45AABE2511C2F4DD0042B61E /* utility */ = {
-			isa = PBXGroup;
-			children = (
-				45AABE2611C2F4DD0042B61E /* dataset.cpp */,
-				45AABE2711C2F4DD0042B61E /* nodebuffer.cpp */,
-			);
-			name = utility;
-			path = ../../../src/JRNN/utility;
-			sourceTree = SOURCE_ROOT;
-		};
 		45AABE2811C2F51F0042B61E /* src */ = {
 			isa = PBXGroup;
 			children = (
-				45AABE1B11C2F4DD0042B61E /* JRNN.cpp */,
-				45AABE1C11C2F4DD0042B61E /* structure */,
-				45AABE2111C2F4DD0042B61E /* trainers */,
-				45AABE2511C2F4DD0042B61E /* utility */,
+				453514FE16D9D8F300B6795C /* JRNN.cpp */,
+				453514FF16D9D8F300B6795C /* networks */,
+				4535150016D9D8F300B6795C /* structure */,
+				4535150116D9D8F300B6795C /* trainers */,
+				4535150216D9D8F300B6795C /* utility */,
 			);
 			name = src;
 			sourceTree = "<group>";
@@ -111,52 +118,20 @@
 		45AABE2911C2F52C0042B61E /* include */ = {
 			isa = PBXGroup;
 			children = (
-				45AABE2A11C2F53F0042B61E /* JRNN.h */,
-				45AABE2B11C2F53F0042B61E /* structure */,
-				45AABE3011C2F53F0042B61E /* trainers */,
-				45AABE3411C2F53F0042B61E /* utility */,
+				4535150416D9D93600B6795C /* JRNN.h */,
+				4535150516D9D93600B6795C /* networks */,
+				4535150616D9D93600B6795C /* structure */,
+				4535150716D9D93600B6795C /* trainers */,
+				4535150816D9D93600B6795C /* utility */,
 			);
 			name = include;
 			sourceTree = "<group>";
-		};
-		45AABE2B11C2F53F0042B61E /* structure */ = {
-			isa = PBXGroup;
-			children = (
-				45AABE2C11C2F53F0042B61E /* connection.h */,
-				45AABE2D11C2F53F0042B61E /* layer.h */,
-				45AABE2E11C2F53F0042B61E /* network.h */,
-				45AABE2F11C2F53F0042B61E /* node.h */,
-			);
-			name = structure;
-			path = ../../../include/JRNN/structure;
-			sourceTree = SOURCE_ROOT;
-		};
-		45AABE3011C2F53F0042B61E /* trainers */ = {
-			isa = PBXGroup;
-			children = (
-				45AABE3111C2F53F0042B61E /* BackPropTrainer.h */,
-				45AABE3211C2F53F0042B61E /* CCTrainer.h */,
-				45AABE3311C2F53F0042B61E /* RPropTrainer.h */,
-			);
-			name = trainers;
-			path = ../../../include/JRNN/trainers;
-			sourceTree = SOURCE_ROOT;
-		};
-		45AABE3411C2F53F0042B61E /* utility */ = {
-			isa = PBXGroup;
-			children = (
-				45AABE3511C2F53F0042B61E /* dataset.h */,
-				45AABE3611C2F53F0042B61E /* nodebuffer.h */,
-				45AABE3711C2F53F0042B61E /* utility.h */,
-			);
-			name = utility;
-			path = ../../../include/JRNN/utility;
-			sourceTree = SOURCE_ROOT;
 		};
 		45AABE3D11C2F6330042B61E /* Products */ = {
 			isa = PBXGroup;
 			children = (
 				45AABE3C11C2F6330042B61E /* libJRNN.a */,
+				4535151216D9F31B00B6795C /* libPyJRNN.dylib */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -164,16 +139,42 @@
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
+		4535151016D9F31B00B6795C /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4535151F16D9F4F700B6795C /* JRNNTypeDefs.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		45AABE3811C2F6330042B61E /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4535150916D9D93600B6795C /* JRNN.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		4535151116D9F31B00B6795C /* PyJRNN */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4535151316D9F31B00B6795C /* Build configuration list for PBXNativeTarget "PyJRNN" */;
+			buildPhases = (
+				4535150E16D9F31B00B6795C /* Sources */,
+				4535150F16D9F31B00B6795C /* Frameworks */,
+				4535151016D9F31B00B6795C /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = PyJRNN;
+			productName = PyJRNN;
+			productReference = 4535151216D9F31B00B6795C /* libPyJRNN.dylib */;
+			productType = "com.apple.product-type.library.dynamic";
+		};
 		45AABE3B11C2F6330042B61E /* JRNN */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 45AABE4011C2F6340042B61E /* Build configuration list for PBXNativeTarget "JRNN" */;
@@ -198,38 +199,102 @@
 			isa = PBXProject;
 			buildConfigurationList = 45AABE1611C2F4790042B61E /* Build configuration list for PBXProject "JRNN" */;
 			compatibilityVersion = "Xcode 2.4";
+			developmentRegion = English;
 			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
 			mainGroup = 45AABE1111C2F4790042B61E;
 			productRefGroup = 45AABE3D11C2F6330042B61E /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
 				45AABE3B11C2F6330042B61E /* JRNN */,
+				4535151116D9F31B00B6795C /* PyJRNN */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXSourcesBuildPhase section */
+		4535150E16D9F31B00B6795C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4535151B16D9F4D500B6795C /* PyJRNN.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		45AABE3911C2F6330042B61E /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				45AABE4311C2F9490042B61E /* JRNN.cpp in Sources */,
-				45AABE4411C2F9490042B61E /* connection.cpp in Sources */,
-				45AABE4511C2F9490042B61E /* layer.cpp in Sources */,
-				45AABE4611C2F9490042B61E /* network.cpp in Sources */,
-				45AABE4711C2F9490042B61E /* node.cpp in Sources */,
-				45AABE4811C2F9490042B61E /* BackPropTrainer.cpp in Sources */,
-				45AABE4911C2F9490042B61E /* CCTrainer.cpp in Sources */,
-				45AABE4A11C2F9490042B61E /* RPropTrainer.cpp in Sources */,
-				45AABE4B11C2F9490042B61E /* dataset.cpp in Sources */,
-				45AABE4C11C2F9490042B61E /* nodebuffer.cpp in Sources */,
+				4535150316D9D8F300B6795C /* JRNN.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
+		4535151416D9F31B00B6795C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ONLY_ACTIVE_ARCH_PRE_XCODE_3_1)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				EXECUTABLE_PREFIX = lib;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				ONLY_ACTIVE_ARCH_PRE_XCODE_3_1 = "$(NATIVE_ARCH_64)";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		4535151516D9F31B00B6795C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT_PRE_XCODE_3_1)";
+				ARCHS_STANDARD_64_BIT_PRE_XCODE_3_1 = x86_64;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				EXECUTABLE_PREFIX = lib;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
 		45AABE1411C2F4790042B61E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -259,8 +324,9 @@
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				HEADER_SEARCH_PATHS = ../../../../boost_1_43_0;
+				HEADER_SEARCH_PATHS = /usr/local/include;
 				INSTALL_PATH = /usr/local/lib;
+				LIBRARY_SEARCH_PATHS = /usr/local/lib;
 				PREBINDING = NO;
 				PRODUCT_NAME = JRNN;
 				SKIP_INSTALL = NO;
@@ -277,8 +343,9 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_MODEL_TUNING = G5;
-				HEADER_SEARCH_PATHS = ../../../../boost_1_43_0;
+				HEADER_SEARCH_PATHS = /usr/local/include;
 				INSTALL_PATH = /usr/local/lib;
+				LIBRARY_SEARCH_PATHS = /usr/local/lib;
 				PREBINDING = NO;
 				PRODUCT_NAME = JRNN;
 				USER_HEADER_SEARCH_PATHS = ../../../include/JRNN;
@@ -289,6 +356,14 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		4535151316D9F31B00B6795C /* Build configuration list for PBXNativeTarget "PyJRNN" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4535151416D9F31B00B6795C /* Debug */,
+				4535151516D9F31B00B6795C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
 		45AABE1611C2F4790042B61E /* Build configuration list for PBXProject "JRNN" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
