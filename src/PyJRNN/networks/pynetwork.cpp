@@ -31,7 +31,7 @@ void exportNetworks(){
 		def("Clone", ClonePtr, &NetWrap::default_Clone).
 		def("Activate", ActivatePtr, &NetWrap::default_Activate).
 		def("GetOutputs", &Network::GetOutputs, &NetWrap::default_GetOutputs).
-		def("PrintConnectsion", &Network::PrintConnections).
+		def("PrintConnections", &Network::PrintConnections).
 		def("Reset", &Network::Reset, &NetWrap::default_Reset)
 		;
 
