@@ -520,4 +520,35 @@ namespace JRNN{
 		this->outputs = newOutputs;
 	}
 
+	bool Network::operator==( const Network& rhs ) const
+	{
+		if (this->numHidLayers != rhs.numHidLayers){
+			return false;
+		}
+		else if (this->connections.size() == rhs.connections.size()){
+			BOOST_FOREACH(ConPair conP, this->connections){
+				string thisName = conP.first;
+				ConMap::const_iterator found = rhs.connections.find(thisName);
+				if (found == rhs.connections.end()){
+					return false;
+				}
+				else {
+					if ((*conP.second) != (*found->second)){
+						return false;
+					}
+				}
+			}
+			return true;
+		}
+		else {
+			return false;
+		}
+		
+	}
+
+	bool Network::operator != (const Network& rhs) const 
+	{
+		return !(*this == rhs);
+	}
+
 }

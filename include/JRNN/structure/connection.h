@@ -71,6 +71,20 @@ namespace JRNN {
             return weight;
         }
 
+		bool operator== (const Connection& rhs) const{
+			if (this->name != rhs.name){
+				return false;
+			}
+			else if (this->weight != rhs.weight){
+				return false;
+			}
+			return true;
+		}
+
+		bool operator!= (const Connection& rhs) const{
+			return (*this == rhs);
+		}
+
     private:
         double weight;
         double value;

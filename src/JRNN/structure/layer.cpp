@@ -338,12 +338,40 @@ string Layer::GetTypeName()
 	}
 }
 
-bool JRNN::Layer::GetShallowLayer() const
+bool Layer::GetShallowLayer() const
 {
 	return shallowLayer;
 }
 
-void JRNN::Layer::SetShallowLayer( bool val )
+void Layer::SetShallowLayer( bool val )
 {
 	shallowLayer = val;
+}
+
+bool Layer::operator==( const Layer& rhs ) const
+{
+	if (this->layerSize != rhs.layerSize){
+		return false;
+	}
+	else if (this->type != rhs.type){
+		return false;
+	}
+	else if (this->name != rhs.name){
+		return false;
+	}
+	else {
+		NodeList::const_iterator thisIT = this->nodes.begin();
+		NodeList::const_iterator rhsIT = rhs.nodes.begin();
+		for (; thisIT != this->nodes.end(); thisIT++, rhsIT++){
+			if (**thisIT != **rhsIT){
+				return false;
+			}
+		}
+		return true;
+	}
+}
+
+bool Layer::operator != (const Layer& rhs) const 
+{
+	return !(*this == rhs);
 }

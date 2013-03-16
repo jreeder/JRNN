@@ -86,6 +86,9 @@ namespace JRNN {
 		bool GetShallowLayer() const;
 		void SetShallowLayer(bool val);
 
+		bool operator== (const Layer& rhs) const;
+		bool operator!= (const Layer& rhs) const;
+
 	private:
         layerType type;
         //vector<double> outBuffer;

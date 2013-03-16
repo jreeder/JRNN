@@ -32,7 +32,8 @@ void exportNetworks(){
 		def("Activate", ActivatePtr, &NetWrap::default_Activate).
 		def("GetOutputs", &Network::GetOutputs, &NetWrap::default_GetOutputs).
 		def("PrintConnections", &Network::PrintConnections).
-		def("Reset", &Network::Reset, &NetWrap::default_Reset)
+		def("Reset", &Network::Reset, &NetWrap::default_Reset).
+		def("Compare", &Network::Compare)
 		;
 
 	exportCCNetwork();

@@ -56,6 +56,8 @@ namespace JRNN {
 //        bool addConnections(nodeList inNodes, vector<double> conWeights);
 		//void SetType(nodeType inType);
 //        static vector<double> vecMul(vector<double> vec1, vector<double> vec2);
+		bool operator== (const Node& rhs) const;
+		bool operator!= (const Node& rhs) const;
 
 	private:
 		double sumOfIn;

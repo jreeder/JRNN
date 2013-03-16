@@ -40,6 +40,9 @@ namespace JRNN{
 		void SetInputs(vecDouble inputs);
 		void SetLocked(bool lock);
 		bool GetLocked();
+		bool Compare(NetworkPtr rhs){
+			return (*this == *rhs);
+		}
 
 		void SetNumIn(int numIn);
 		int GetNumIn();
@@ -78,6 +81,8 @@ namespace JRNN{
 		//bool AddCascadedLayer(LayerPtr newLayer);
         //static NetworkPtr CreateFFMLPNetwork(int numIn, int numHid, int numOut);
 		//static NetworkPtr CreateMinFFNetwork(int numIn, int numOut);
+		bool operator==(const Network& rhs) const;
+		bool operator!=(const Network& rhs) const;
         
     protected:
 		

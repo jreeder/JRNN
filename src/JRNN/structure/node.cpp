@@ -273,3 +273,38 @@ int Node::GetHeight()
 {
 	return height;
 }
+
+bool Node::operator==( const Node& rhs ) const
+{
+	if (this->name != rhs.name){
+		return false;
+	}
+	else if (this->inConnections.size() != rhs.inConnections.size() || this->outConnections.size() != rhs.outConnections.size()){
+		return false;
+	}
+	else if (this->actFunction->getType() != rhs.actFunction->getType()){
+		return false;
+	}
+	else {
+		ConList::const_iterator thisIT = this->inConnections.begin();
+		ConList::const_iterator rhsIT = rhs.inConnections.begin();
+		for (;thisIT != this->inConnections.end(); thisIT++, rhsIT++){
+			if (**thisIT != **rhsIT) {
+				return false;
+			}
+		}
+		thisIT = this->outConnections.begin();
+		rhsIT = rhs.outConnections.begin();
+		for (;thisIT != this->outConnections.end(); thisIT++, rhsIT++){
+			if (**thisIT != **rhsIT){
+				return false;
+			}
+		}
+		return true;
+	}
+}
+
+bool Node::operator != ( const Node& rhs) const
+{
+	return !(*this == rhs);
+}
