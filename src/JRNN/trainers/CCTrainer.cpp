@@ -15,6 +15,8 @@ namespace JRNN {
 		this->primaryIndexes = primaryIndexes;
 		resetFlag = false;
 		numResets = 0;
+		this->useTrainOutVal = true;
+		this->useValidation = false;
 		if(primaryIndexes.size() > 0){
 			nTrainOutVals = data->GetSize(Dataset::TRAIN) * primaryIndexes.size();
 		}
@@ -79,6 +81,8 @@ namespace JRNN {
 		this->primaryIndexes = ints(0);
 		resetFlag = false;
 		numResets = 0;
+		this->useTrainOutVal = true;
+		this->useValidation = false;
 		//Need to set this value in the subclass also. 
 		//if(primaryIndexes.size() > 0){
 		//	nTrainOutVals = data->GetSize(Dataset::TRAIN) * primaryIndexes.size();
@@ -275,6 +279,10 @@ namespace JRNN {
 		int quitEpoch = 0;
 		double lastError = 0.0;
 		int startEpoch = epoch;
+		double bestVERR = 0;
+		hashedDoubleMap bestWeights;
+		if (useTrainOutVal && useValidation)
+			bestVERR = TestOnData(Dataset::VAL);
 		//resetOutValues();
 		for (int i = 0; i < parms.out.epochs; i++){
 			resetError(err);
@@ -307,18 +315,34 @@ namespace JRNN {
 				continue;
 			}
 
-			if (i == 0){
-				lastError = err.trueErr;
-				quitEpoch = epoch + parms.out.patience;
+			if (useTrainOutVal && useValidation){ //this changes the condition for stagnation to performance on validation set. 
+				double curVERR = TestOnData(Dataset::VAL);
+				if (i == 0 || curVERR < bestVERR){
+					bestVERR = curVERR;
+					bestWeights = network->GetWeights();
+					quitEpoch = epoch + parms.out.patience;
+				}
+				else if (epoch == quitEpoch){
+					network->SetWeights(bestWeights);
+					return CCTrainer::STAGNANT;
+				}
 			}
-			else if (fabs(err.trueErr - lastError) > lastError * parms.out.changeThreshold){
-				lastError = err.trueErr;
-				quitEpoch = epoch + parms.out.patience;
-			}
-			else if (epoch == quitEpoch){
-				return CCTrainer::STAGNANT;
+			else {
+				/*if (i == 0){ This was redundant. 
+					lastError = err.trueErr;
+					quitEpoch = epoch + parms.out.patience;
+				}*/
+				if (i == 0 || fabs(err.trueErr - lastError) > lastError * parms.out.changeThreshold){
+					lastError = err.trueErr;
+					quitEpoch = epoch + parms.out.patience;
+				}
+				else if (epoch == quitEpoch){
+					return CCTrainer::STAGNANT;
+				}
 			}
 		}
+		if (useTrainOutVal && useValidation)
+			network->SetWeights(bestWeights);
 		return CCTrainer::TIMEOUT;
 	}
 
@@ -986,6 +1010,7 @@ namespace JRNN {
 		status outStatus;
 		status candStatus;
 		status impStatus;
+		this->useValidation = validate;
 		while(epoch < maxEpochs){
 			outStatus = TrainOuts();
 
@@ -1178,6 +1203,16 @@ namespace JRNN {
 			}
 			candN->Activate(tmpSum);
 		}
+	}
+
+	bool CCTrainer::GetUseTrainOutVal() const
+	{
+		return useTrainOutVal;
+	}
+
+	void CCTrainer::SetUseTrainOutVal( bool val )
+	{
+		useTrainOutVal = val;
 	}
 
 }

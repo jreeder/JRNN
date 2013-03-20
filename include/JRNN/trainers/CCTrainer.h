@@ -49,6 +49,9 @@ namespace JRNN {
 		int GetNumHidLayers();
 		doubles& GetMSERec();
 		doubles& GetVMSERec();
+
+		bool GetUseTrainOutVal() const;
+		void SetUseTrainOutVal(bool val);
 		
 		struct parameters
 		{
@@ -106,6 +109,9 @@ namespace JRNN {
 		ints primaryIndexes;
 		bool resetFlag;
 		int numResets;
+		bool useTrainOutVal;
+		bool useValidation;
+		
 		//LayerPtr candidateLayer;
 		//ConList candidateCons;
 		//TODO Implement Network caching
