@@ -73,10 +73,11 @@ namespace JRNN {
 
 	RevCCTrainer::reverbdpoint RevCCTrainer::ReverberateNetwork()
 	{
-
+		//changing the clean reverb to only threshold the outputs. 
+		//if the numcontexts is set above 0 then we'll get them from the dataset.
 		int inSize = revNet->GetNumIn();
-		if (revparams.cleanReverb){
-			assert(revparams.numContexts > 0);
+		if (revparams.numContexts > 0){
+			//assert(revparams.numContexts > 0);
 			inSize -= revparams.numContexts;
 		}
 
@@ -85,7 +86,7 @@ namespace JRNN {
 		{
 			tmpIn[i] = revRand();
 		}
-		if (revparams.cleanReverb){
+		if (revparams.numContexts > 0){
 			vecDouble randContext = dynamic_pointer_cast<CSMTLDataset>(data)->GetRandContext();
 			tmpIn = ConcatVec(tmpIn,randContext);
 		}
@@ -99,7 +100,7 @@ namespace JRNN {
 		retVal.inPoint = tmpIn;
 		retVal.outPoint = revNet->GetNormOutLayer()->GetOutput();
 
-		if(revparams.cleanReverb){
+		if(revparams.cleanReverb){ //This shouldn't be used when the outputs are real. 
 			retVal.outPoint = ApplyThreshold(retVal.outPoint);
 		}
 
@@ -280,6 +281,10 @@ namespace JRNN {
 		int quitEpoch = 0;
 		double lastError = 0.0;
 		int startEpoch = epoch;
+		double bestVERR = 0;
+		hashedDoubleMap bestWeights;
+		if (useTrainOutVal && useValidation)
+			bestVERR = CCTrainer::TestOnData(Dataset::VAL);
 		//resetOutValues();
 		for (int i = 0; i < parms.out.epochs; i++){
 			resetError(err);
@@ -336,18 +341,34 @@ namespace JRNN {
 				continue;
 			}
 
-			if (i == 0){
-				lastError = err.trueErr;
-				quitEpoch = epoch + parms.out.patience;
+			if (useTrainOutVal && useValidation){ //this changes the condition for stagnation to performance on validation set. 
+				double curVERR = CCTrainer::TestOnData(Dataset::VAL);
+				if (i == 0 || curVERR < bestVERR){
+					bestVERR = curVERR;
+					bestWeights = network->GetWeights();
+					quitEpoch = epoch + parms.out.patience;
+				}
+				else if (epoch == quitEpoch){
+					network->SetWeights(bestWeights);
+					return CCTrainer::STAGNANT;
+				}
 			}
-			else if (fabs(err.trueErr - lastError) > lastError * parms.out.changeThreshold){
-				lastError = err.trueErr;
-				quitEpoch = epoch + parms.out.patience;
-			}
-			else if (epoch == quitEpoch){
-				return CCTrainer::STAGNANT;
+			else {
+				/*if (i == 0){ This was redundant. 
+					lastError = err.trueErr;
+					quitEpoch = epoch + parms.out.patience;
+				}*/
+				if (i == 0 || fabs(err.trueErr - lastError) > lastError * parms.out.changeThreshold){
+					lastError = err.trueErr;
+					quitEpoch = epoch + parms.out.patience;
+				}
+				else if (epoch == quitEpoch){
+					return CCTrainer::STAGNANT;
+				}
 			}
 		}
+		if (useTrainOutVal && useValidation)
+			network->SetWeights(bestWeights);
 		return CCTrainer::TIMEOUT;
 	}
 

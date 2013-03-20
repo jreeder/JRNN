@@ -351,6 +351,17 @@ namespace JRNN {
 		int quitEpoch = 0;
 		double lastError = 0.0;
 		int startEpoch = epoch;
+		bool validate = false;
+		//automatically validate if the dataset has a validation set. 
+		//might make this explicit later but it serves the purpose right now. 
+		if (data->GetSize(Dataset::VAL) > 0)
+			validate = true;
+
+		double bestVERR = 0;
+		hashedDoubleMap bestWeights;
+		if (validate)
+			bestVERR = TestOnData(Dataset::VAL);
+
 		resetUpdateValues();
 		for (int i = 0; i < parms.out.epochs; i++){
 			resetError(err);
@@ -370,31 +381,34 @@ namespace JRNN {
 			UpdateNetWeights();
 			epoch++;
 
-//			if (resetFlag == true){ //this is not used currently. 
-//				epoch = startEpoch;
-//				i = 0;
-//				quitEpoch = 0;
-//				lastError = 0.0;
-//				resetTrainOuts();
-//				resetFlag = false;
-//#ifdef _DEBUG
-//				cout << "Reset Train Outs" << endl;
-//#endif // _DEBUG
-//				continue;
-//			}
-
-			if (i == 0){
-				lastError = err.trueErr;
-				quitEpoch = epoch + parms.out.patience;
+			if (validate){ //this changes the condition for stagnation to performance on validation set. 
+				double curVERR = TestOnData(Dataset::VAL);
+				if (i == 0 || curVERR < bestVERR){
+					bestVERR = curVERR;
+					bestWeights = network->GetWeights();
+					quitEpoch = epoch + parms.out.patience;
+				}
+				else if (epoch == quitEpoch){
+					network->SetWeights(bestWeights);
+					return CCTrainer::STAGNANT;
+				}
 			}
-			else if (fabs(err.trueErr - lastError) > lastError * parms.out.changeThreshold){
-				lastError = err.trueErr;
-				quitEpoch = epoch + parms.out.patience;
-			}
-			else if (epoch == quitEpoch){
-				return CCTrainer::STAGNANT;
+			else {
+				/*if (i == 0){ This was redundant. 
+					lastError = err.trueErr;
+					quitEpoch = epoch + parms.out.patience;
+				}*/
+				if (i == 0 || fabs(err.trueErr - lastError) > lastError * parms.out.changeThreshold){
+					lastError = err.trueErr;
+					quitEpoch = epoch + parms.out.patience;
+				}
+				else if (epoch == quitEpoch){
+					return CCTrainer::STAGNANT;
+				}
 			}
 		}
+		if (validate)
+			network->SetWeights(bestWeights);
 		return CCTrainer::TIMEOUT;
 	}
 
