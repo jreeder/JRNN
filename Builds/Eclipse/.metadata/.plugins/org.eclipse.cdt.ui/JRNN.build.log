@@ -1,6 +1,6 @@
-18:11:08 **** Incremental Build of configuration DebugPython for project JRNN ****
+03:51:18 **** Incremental Build of configuration ReleasePython for project JRNN ****
 make all 
 make: Nothing to be done for `all'.
 
-18:11:08 Build Finished (took 83ms)
+03:51:18 Build Finished (took 64ms)
 

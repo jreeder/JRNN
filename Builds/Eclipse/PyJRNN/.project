@@ -3,6 +3,7 @@
 	<name>PyJRNN</name>
 	<comment></comment>
 	<projects>
+		<project>JRNN</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
