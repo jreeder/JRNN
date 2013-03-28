@@ -34,22 +34,22 @@ namespace JRNN {
 		template<typename T>
 		static NodePtr CreateNode(int height, string name);
 		virtual ~Node();
-		void Activate();
+		virtual void Activate();
 		void Activate(double input);
 		void SetHeight(int newHeight);
 		int GetHeight();
-		double GetOut();
-		double GetPrime();
-		int GetNumConnections();
+		virtual double GetOut();
+		virtual double GetPrime();
+		virtual int GetNumConnections();
 		const string& GetName();
 		//double GetSigSteepness();
-		ConList& GetConnections(conType type);
-		string GetActFuncType();
+		virtual ConList& GetConnections(conType type);
+		virtual string GetActFuncType();
         
 		void SetName(string newName);
 //        void setNumIn(int newNumIn);
 //        void setNumOut(int newNumOut);
-		bool AddConnection(conType type, ConPtr newCon);
+		virtual bool AddConnection(conType type, ConPtr newCon);
 		void RemoveConnection(string name);
 		void Disconnect();
 //        bool addConnection(node* newNodeCon, double conWeight);

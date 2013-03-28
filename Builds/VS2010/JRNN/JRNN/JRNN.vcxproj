@@ -157,6 +157,7 @@
     <ClCompile Include="..\..\..\..\src\JRNN\networks\CSLLLFFMLPNetwork.cpp" />
     <ClCompile Include="..\..\..\..\src\JRNN\networks\FFMLPNetwork.cpp" />
     <ClCompile Include="..\..\..\..\src\JRNN\networks\RevCCNetwork.cpp" />
+    <ClCompile Include="..\..\..\..\src\JRNN\structure\networknode.cpp" />
     <ClCompile Include="..\..\..\..\src\JRNN\trainers\BackPropTrainer.cpp" />
     <ClCompile Include="..\..\..\..\src\JRNN\trainers\CCTrainer.cpp" />
     <ClCompile Include="..\..\..\..\src\JRNN\trainers\EtaMTLRPropTrainer.cpp" />
@@ -184,6 +185,7 @@
     <ClInclude Include="..\..\..\..\include\JRNN\structure\connection.h" />
     <ClInclude Include="..\..\..\..\include\JRNN\structure\layer.h" />
     <ClInclude Include="..\..\..\..\include\JRNN\structure\network.h" />
+    <ClInclude Include="..\..\..\..\include\JRNN\structure\networknode.h" />
     <ClInclude Include="..\..\..\..\include\JRNN\structure\node.h" />
     <ClInclude Include="..\..\..\..\include\JRNN\trainers\EtaMTLRPropTrainer.h" />
     <ClInclude Include="..\..\..\..\include\JRNN\trainers\MTLCCTrainer.h" />
