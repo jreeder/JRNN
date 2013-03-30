@@ -182,6 +182,9 @@
     <ClInclude Include="..\..\..\..\include\JRNN\structure\networknode.h">
       <Filter>Header Files\structure</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\..\include\JRNN\networks\KBCCNetwork.h">
+      <Filter>Header Files\networks</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt">
