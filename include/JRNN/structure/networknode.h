@@ -33,7 +33,7 @@ namespace JRNN {
 		
 		vecDouble GetOuts();
 		
-		matDouble GetPrimes();
+		hashedDoubleMap GetPrimes(hashedDoubleMap outGradients);
 		
 		virtual int GetNumConnections();
 
@@ -49,7 +49,14 @@ namespace JRNN {
 
 	private:
 		NetworkPtr intNet;
+		hashedDoubleMap inputGradients;
+		hashedDoubleMap localGradients;
+
+
+		void calcGradients();
+
 	};
+
 }
 
 #endif

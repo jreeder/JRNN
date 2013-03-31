@@ -1,6 +1,26 @@
-03:51:18 **** Incremental Build of configuration ReleasePython for project JRNN ****
+01:43:33 **** Incremental Build of configuration ReleasePython for project JRNN ****
 make all 
-make: Nothing to be done for `all'.
+Building file: /Users/jreeder/Code/JRNN/src/JRNN/structure/networknode.cpp
+Invoking: GCC C++ Compiler
+g++ -DJRNN_USE_NUMPY_FOR_PYTHON_BINDING -I"/Users/jreeder/Code/JRNN/include/JRNN" -I/usr/local/include -I/Users/jreeder/Code/json-spirit/json_spirit -I/usr/local/include/python2.7 -I/usr/local/lib/python2.7/site-packages/PyUblas-2011.1-py2.7-macosx-10.8-x86_64.egg/include -I/usr/local/lib/python2.7/site-packages/numpy/core/include -O3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/structure/networknode.d" -MT"src/structure/networknode.d" -o "src/structure/networknode.o" "/Users/jreeder/Code/JRNN/src/JRNN/structure/networknode.cpp"
+In file included from /usr/local/lib/python2.7/site-packages/numpy/core/include/numpy/ndarraytypes.h:1729,
+                 from /usr/local/lib/python2.7/site-packages/numpy/core/include/numpy/ndarrayobject.h:17,
+                 from /usr/local/lib/python2.7/site-packages/numpy/core/include/numpy/arrayobject.h:15,
+                 from /usr/local/lib/python2.7/site-packages/PyUblas-2011.1-py2.7-macosx-10.8-x86_64.egg/include/pyublas/numpy.hpp:40,
+                 from /Users/jreeder/Code/JRNN/include/JRNN/JRNN.h:40,
+                 from /Users/jreeder/Code/JRNN/src/JRNN/structure/networknode.cpp:10:
+/usr/local/lib/python2.7/site-packages/numpy/core/include/numpy/npy_deprecated_api.h:11:2: warning: #warning "Using deprecated NumPy API, disable it by #defining NPY_NO_DEPRECATED_API NPY_1_7_API_VERSION"
+In file included from /Users/jreeder/Code/JRNN/include/JRNN/JRNN.h:95,
+                 from /Users/jreeder/Code/JRNN/src/JRNN/structure/networknode.cpp:10:
+/Users/jreeder/Code/JRNN/include/JRNN/utility/utility.h: In function 'JRNN::vecDouble JRNN::ConcatVec(JRNN::vecDouble, JRNN::vecDouble)':
+/Users/jreeder/Code/JRNN/include/JRNN/utility/utility.h:89: warning: unused variable 'newSize'
+Finished building: /Users/jreeder/Code/JRNN/src/JRNN/structure/networknode.cpp
+ 
+Building target: libJRNN_p.a
+Invoking: GCC Archiver
+ar -r  "libJRNN_p.a"  ./src/utility/activationfunctions.o ./src/utility/csmtldataset.o ./src/utility/dataset.o ./src/utility/etamtlhelper.o ./src/utility/mtldataset.o ./src/utility/nodebuffer.o ./src/utility/serialization.o  ./src/trainers/BackPropTrainer.o ./src/trainers/CCTrainer.o ./src/trainers/EtaMTLRPropTrainer.o ./src/trainers/MTLCCTrainer.o ./src/trainers/RPropTrainer.o ./src/trainers/RevCCTrainer.o  ./src/structure/connection.o ./src/structure/layer.o ./src/structure/network.o ./src/structure/networknode.o ./src/structure/node.o  ./src/networks/CCNetwork.o ./src/networks/CSLLLFFMLPNetwork.o ./src/networks/FFMLPNetwork.o ./src/networks/RevCCNetwork.o  ./src/JRNN.o   
+Finished building target: libJRNN_p.a
+ 
 
-03:51:18 Build Finished (took 64ms)
+01:43:38 Build Finished (took 4s.688ms)
 

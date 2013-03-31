@@ -13,12 +13,16 @@
 namespace JRNN {
 	double NetworkNode::GetOut()
 	{
-		throw std::exception("The method or operation is not implemented.");
+		//throw std::exception("The method or operation is not implemented.");
+		assert(0);
+		return 0;
 	}
 
 	double NetworkNode::GetPrime()
 	{
-		throw std::exception("The method or operation is not implemented.");
+		//throw std::exception("The method or operation is not implemented.");
+		assert(0);
+		return 0;
 	}
 
 	ConList& NetworkNode::GetConnections( conType type )
@@ -33,7 +37,9 @@ namespace JRNN {
 
 	bool NetworkNode::AddConnection( conType type, ConPtr newCon )
 	{
-		throw std::exception("The method or operation is not implemented.");
+		//throw std::exception("The method or operation is not implemented.");
+		assert(0);
+		return false;
 	}
 
 	void NetworkNode::Activate()
@@ -50,22 +56,23 @@ namespace JRNN {
 		return this->intNet->GetOutputs();
 	}
 
-	JRNN::matDouble NetworkNode::GetPrimes()
-	{
-		matDouble retPrimes;
+	hashedDoubleMap NetworkNode::GetPrimes(hashedDoubleMap outGradients) {
+		localGradients = outGradients;
+		calcGradients();
 		//calculate the partial derivatives.
 		//first index is input nodes
-		//second index in output nodes. 
-
+		//second index in output nodes.
 		//I might be able to skip doing it this way if I setup the change value as the local
-		//gradient at the output then propagate that back to the inputs. At which point I should be able 
-		//to use the primes there to calculate the change in input weights into the subnetwork. 
-
+		//gradient at the output then propagate that back to the inputs. At which point I should be able
+		//to use the primes there to calculate the change in input weights into the subnetwork.
 		//If that doesn't work then I have to do something like the autodiff to get the partial derivatives.
-		//for each output in regards to each output. 
-		return retPrimes;
+		//for each output in regards to each output.
+		return inputGradients;
 	}
 
+	void calcGradients() {
+		//Backprop the gradients through the network.
+	}
 }
 
 
