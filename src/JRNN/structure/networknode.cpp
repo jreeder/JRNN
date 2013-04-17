@@ -56,17 +56,13 @@ namespace JRNN {
 		return this->intNet->GetOutputs();
 	}
 
-	hashedDoubleMap NetworkNode::GetPrimes(hashedDoubleMap outGradients) {
-		localGradients = outGradients;
+	JRNN::hashedDoubleMap NetworkNode::GetPrimes()
+	{
+		//This is done by propagating down the network while setting the gradients of each node 
+		//from each input. Start with the bias node and inputs being set, then propagate down the
+		//network to the outputs. 
 		calcGradients();
-		//calculate the partial derivatives.
-		//first index is input nodes
-		//second index in output nodes.
-		//I might be able to skip doing it this way if I setup the change value as the local
-		//gradient at the output then propagate that back to the inputs. At which point I should be able
-		//to use the primes there to calculate the change in input weights into the subnetwork.
-		//If that doesn't work then I have to do something like the autodiff to get the partial derivatives.
-		//for each output in regards to each output.
+		
 		return inputGradients;
 	}
 
