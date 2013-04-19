@@ -32,13 +32,13 @@ namespace JRNN {
         };
 
         Layer();
-        Layer(layerType type, int inLayerSize, int height, string name, bool shallow = false);
+        Layer(layerType type, int inLayerSize, int height, string name, bool shallow = false, string netPrefix = "NONE");
         Layer(const Layer& orig);
         virtual ~Layer();
         void Activate();
         void Activate(vecDouble inputs);
         //void BuildLayer(Node::nodeType nType);
-		static LayerPtr CreateLayer(layerType type, int inLayerSize, int height, string name, bool shallow = false);
+		static LayerPtr CreateLayer(layerType type, int inLayerSize, int height, string name, bool shallow = false, string netPrefix = "NONE");
 		static LayerPtr Clone( LayerPtr layer );
 		void ShallowCopy (LayerPtr layer);
 		template<class T>
@@ -70,7 +70,10 @@ namespace JRNN {
         void SetName(string newName);
         const string& GetName();
 		NodeList ResetNodeNames();
-
+		
+		string GetNetPrefix() const;
+		void SetNetPrefix(string val);
+		
 		void AddNode(NodePtr node, bool shallow = false);
 		//void AddNode( NodePtr node, bool createName);
 		void InsertNode(NodePtr node, int pos, bool shallow = false);
@@ -95,7 +98,9 @@ namespace JRNN {
         int layerSize;
         int height;
         string name;
-        LayerPtr prevLayer;
+		string netPrefix;
+		
+		LayerPtr prevLayer;
         LayerPtr nextLayer;
         NodeList nodes;
 		bool shallowLayer;
@@ -105,6 +110,7 @@ namespace JRNN {
 	void Layer::BuildLayer(){
 		//NodePtr np;
 		string baseName = name + "_";
+		baseName = netPrefix == "NONE" ? baseName : netPrefix + "_" + baseName; 
 		for (int i = 0; i < layerSize; i++){
 			string num = lexical_cast<string>(i);
 			string name = baseName + num;

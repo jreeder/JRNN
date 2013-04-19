@@ -74,7 +74,7 @@ namespace JRNN{
 		void ResetHeights();
 		virtual void ResetNames();
 
-		void ResetConnectionNames( ConList inCons );
+		void ResetConnectionNames();
 
 		void PrintConnections();
 		//bool AddHiddenLayer(LayerPtr newLayer);

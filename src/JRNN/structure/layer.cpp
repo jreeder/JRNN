@@ -14,19 +14,21 @@ Layer::Layer(){
     layerSize = 0;
     height = 0;
     name = "NONE";
+	netPrefix = "NONE";
 	shallowLayer = false;
 }
 
-Layer::Layer(layerType type, int inLayerSize, int height, string name, bool shallow /*= false*/) {
+Layer::Layer(layerType type, int inLayerSize, int height, string name, bool shallow /*= false*/, string netPrefix /*= 'NONE'*/) {
     this->type = type;
     this->layerSize = inLayerSize;
     this->height = height;
     this->name = name;
+	this->netPrefix = netPrefix;
 	this->shallowLayer = shallow;
 }
 
-LayerPtr Layer::CreateLayer(layerType type, int inLayerSize, int height, string name, bool shallow /*= false*/){
-	LayerPtr lp(new Layer(type,inLayerSize,height, name, shallow));
+LayerPtr Layer::CreateLayer(layerType type, int inLayerSize, int height, string name, bool shallow /*= false*/, string netPrefix /*= 'NONE'*/){
+	LayerPtr lp(new Layer(type,inLayerSize,height, name, shallow, netPrefix));
 	return lp;
 }
 
@@ -35,6 +37,7 @@ Layer::Layer(const Layer& orig) {
 	layerSize = orig.layerSize;
 	height = orig.height;
 	name = orig.name;
+	netPrefix = orig.netPrefix;
 	NodePtr np;
 	BOOST_FOREACH(NodePtr node, orig.nodes){
 		np.reset(new Node((*node)));
@@ -188,6 +191,7 @@ void Layer::InsertNode( NodePtr node, int pos, bool shallow /*= false*/ )
 {
 	if (!shallow & !this->shallowLayer){
 		string tmpName = name + "_" + lexical_cast<string>(pos);
+		tmpName = netPrefix == "NONE" ? tmpName : netPrefix + "_" + tmpName;
 		node->SetName(tmpName);
 		node->SetHeight(this->height);
 	}
@@ -204,6 +208,7 @@ NodeList Layer::ResetNodeNames()
 		for (uint i = 0; i < this->nodes.size(); i++){
 			NodePtr node = this->nodes[i];
 			string nodeName = this->name + "_" + lexical_cast<string>(i);
+			nodeName = netPrefix == "NONE" ? nodeName : netPrefix + "_" + nodeName;
 			if (nodeName != node->GetName()){
 				node->SetName(nodeName);
 				nodesChanged.push_back(node);
@@ -374,4 +379,14 @@ bool Layer::operator==( const Layer& rhs ) const
 bool Layer::operator != (const Layer& rhs) const 
 {
 	return !(*this == rhs);
+}
+
+string Layer::GetNetPrefix() const
+{
+	return netPrefix;
+}
+
+void Layer::SetNetPrefix( string val )
+{
+	netPrefix = val;
 }

@@ -431,24 +431,36 @@ namespace JRNN{
 		LayerPtr next = current->GetNextLayer();
 		while(next){
 			NodeList changedNodes = current->ResetNodeNames();
-			for (int i = 0; i < changedNodes.size(); i++){
-				ConList inCons = changedNodes[i]->GetConnections(IN);
-				ResetConnectionNames(inCons);
-				ConList outCons = changedNodes[i]->GetConnections(OUT);
-				ResetConnectionNames(outCons);
-			}
+			//for (int i = 0; i < changedNodes.size(); i++){ //don't need to do this as the connections get renamed when the node is renamed. 
+			//	ConList inCons = changedNodes[i]->GetConnections(IN);
+			//	ResetConnectionNames(inCons);
+			//	ConList outCons = changedNodes[i]->GetConnections(OUT);
+			//	ResetConnectionNames(outCons);
+			//}
 			current = next;
 			next = next->GetNextLayer();
 		}
+		ResetConnectionNames();
 	}
 
-	void Network::ResetConnectionNames( ConList Cons )
+	void Network::ResetConnectionNames()
 	{
-		BOOST_FOREACH(ConPtr con, Cons){
-			RemoveConnection(con, false); //remove the connection but don't disconnect it
-			con->SetName();
-			AddConnection(con);
+		std::vector<ConPair> renamed;
+		BOOST_FOREACH(ConPair conP, connections){
+			if (conP.first != conP.second->GetName()){
+				renamed.push_back(conP); //Names don't match because connection was renamed
+			}
 		}
+		
+		BOOST_FOREACH(ConPair conP, renamed){
+			connections.erase(conP.first); //remove the connection from the map. 
+			AddConnection(conP.second); //Add it back with the right name. 
+		}
+		//BOOST_FOREACH(ConPtr con, Cons){//Don't thing this works correctly as is. I think I just end up with unused connections in here. 
+		//	RemoveConnection(con, false); //remove the connection but don't disconnect it
+		//	con->SetName();
+		//	AddConnection(con);
+		//}
 	}
 
 	//True will lock all the connections
