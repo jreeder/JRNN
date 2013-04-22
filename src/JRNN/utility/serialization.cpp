@@ -212,6 +212,7 @@ namespace JRNN {
 		serialize::Layer sLayer;
 		sLayer.height = layer->GetHeight();
 		sLayer.name = layer->GetName();
+		sLayer.netPrefix = layer->GetNetPrefix();
 		sLayer.shallow = layer->GetShallowLayer();
 		sLayer.nextLayerName = layer->HasNextL() ? layer->GetNextLayer()->GetName() : "";
 		sLayer.prevLayerName = layer->HasPrevL() ? layer->GetPrevLayer()->GetName() : "";
@@ -225,7 +226,7 @@ namespace JRNN {
 	}
 
 	LayerPtr Serializer::ConvLayer (serialize::Layer& layer){
-		LayerPtr sLayer = Layer::CreateLayer(Layer::hidden,0,layer.height,layer.name,layer.shallow); //The size will be incremented by adding nodes
+		LayerPtr sLayer = Layer::CreateLayer(Layer::hidden,0,layer.height,layer.name,layer.shallow, layer.netPrefix); //The size will be incremented by adding nodes
 		sLayer->SetTypeByName(layer.type);
 		if (!layer.shallow){
 			BOOST_FOREACH(serialize::Node node, layer.nodes){
@@ -360,6 +361,7 @@ namespace JRNN {
 		newLayer["size"] = layer.size;
 		newLayer["height"] = layer.height;
 		newLayer["name"] = layer.name;
+		newLayer["netPrefix"] = layer.netPrefix;
 		newLayer["shallow"] = layer.shallow;
 		newLayer["prevLayerName"] = layer.prevLayerName;
 		newLayer["nextLayerName"] = layer.nextLayerName;
@@ -374,6 +376,7 @@ namespace JRNN {
 		newLayer.size = findValue(layer, "size").get_int();
 		newLayer.height = findValue(layer, "height").get_int();
 		newLayer.name = findValue(layer, "name").get_str();
+		newLayer.netPrefix = findValue(layer, "netPrefix").get_str();
 		newLayer.shallow = findValue(layer, "shallow").get_bool();
 		newLayer.prevLayerName = findValue(layer, "prevLayerName").get_str();
 		newLayer.nextLayerName = findValue(layer, "nextLayerName").get_str();

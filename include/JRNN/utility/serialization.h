@@ -53,6 +53,7 @@ namespace JRNN {
 			int size;
 			int height;
 			string name;
+			string netPrefix;
 			bool shallow;
 			string prevLayerName;
 			string nextLayerName;

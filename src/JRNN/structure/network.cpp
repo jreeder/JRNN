@@ -563,4 +563,12 @@ namespace JRNN{
 		return !(*this == rhs);
 	}
 
+	void Network::SetNetPrefix( string netPrefix )
+	{
+		BOOST_FOREACH(LayerPair layerP, layers){
+			layerP.second->SetNetPrefix(netPrefix);
+		}
+		ResetNames();
+	}
+
 }

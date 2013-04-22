@@ -27,13 +27,13 @@ namespace JRNN {
 	public:
 		NetworkNode();
 		
-		NetworkNode(NetworkPtr net);
+		NetworkNode(int inHeight, string nodeName, NetworkPtr net);
 		
 		virtual void Activate();
 		
 		vecDouble GetOuts();
 		
-		hashedDoubleMap GetPrimes();
+		hashedVecDoubleMap GetPrimes();
 		
 		virtual int GetNumConnections();
 
@@ -44,17 +44,24 @@ namespace JRNN {
 		virtual ConList& GetConnections( conType type );
 
 		virtual string GetActFuncType();
-
+		
+		NetworkPtr GetIntNet() const;
+		
+		void SetIntNet(NetworkPtr val);
+		
 		virtual bool AddConnection( conType type, ConPtr newCon );
 
 	private:
 		NetworkPtr intNet;
-		hashedDoubleMap inputGradients;
-		hashedDoubleMap localGradients;
+		
+		int numInputs;
+		int numOutputs;
+		//hashedDoubleMap inputGradients;
+		hashedVecDoubleMap localGradients;
 
 
 		void calcGradients();
-
+		void cascadeGradients( LayerPtr layer );
 	};
 
 }

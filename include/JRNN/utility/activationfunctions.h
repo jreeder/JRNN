@@ -157,7 +157,7 @@ namespace JRNN {
 			return 1;
 		}
 		static double _prime(double value, double sum){
-			return 1;
+			return 0;
 		}
 	};
 	

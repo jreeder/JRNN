@@ -74,6 +74,8 @@ namespace JRNN{
 		void ResetHeights();
 		virtual void ResetNames();
 
+		void SetNetPrefix(string netPrefix);
+
 		void ResetConnectionNames();
 
 		void PrintConnections();
