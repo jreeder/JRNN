@@ -62,12 +62,13 @@ namespace JRNN {
 		//from each input. Start with the bias node and inputs being set, then propagate down the
 		//network to the outputs. 
 		calcGradients();
-		
-		return localGradients;
+		return outGradients;
 	}
 
 	void NetworkNode::calcGradients() {
-		//Backprop the gradients through the network.
+		//Backprop the gradients through the network. This is all a little hacky. 
+		//at some point I should probably go back and handle this as a functional unit like kbcc does. 
+		//It would make some things a lot easier. 
 		LayerMap netLayers = this->intNet->GetLayers();
 		NodeList biasNodes = netLayers["bias"]->GetNodes();
 		NodeList inputNodes = netLayers["input"]->GetNodes();
@@ -76,11 +77,14 @@ namespace JRNN {
 		BOOST_FOREACH(NodePtr node, biasNodes){
 			localGradients[node->GetName()];
 		}
-		for (int i = 0; i < inputNodes.size(); i++){
+		for (uint i = 0; i < inputNodes.size(); i++){
 			localGradients[inputNodes[i]->GetName()][i] = inputNodes[i]->GetPrime();
 		}
 
 		cascadeGradients(netLayers["input"]->GetNextLayer());
+		BOOST_FOREACH(NodePtr outNode, netLayers["out"]->GetNodes()){
+			outGradients[outNode->GetName()] = localGradients[outNode->GetName()];
+		}
 	}
 
 	void NetworkNode::cascadeGradients( LayerPtr layer )
@@ -88,11 +92,41 @@ namespace JRNN {
 		LayerPtr curLayer = layer;
 		while(curLayer.get() != 0){
 			BOOST_FOREACH(NodePtr node, curLayer->GetNodes()){
-				vecDouble inputSums = vecDouble(numInputs);
-				BOOST_FOREACH(ConPtr con, node->GetConnections(IN)){
-					inputSums += localGradients[con->GetInNodeName()] * con->GetWeight();
+				if (node->GetActFuncType() == "IntNet")
+				{
+					NetworkNodePtr netNode = static_pointer_cast<NetworkNode>(node);
+					hashedVecDoubleMap nodePrimes = netNode->GetPrimes();
+					NodeList netInNodes = netNode->GetInputNodes();
+					NodeList netOutNodes = netNode->GetOutputNodes();
+					matDouble inputGradients;
+					BOOST_FOREACH(NodePtr node, netInNodes){
+						vecDouble inputSums = vecDouble(numInputs);
+						FillVec(inputSums, 0.0);
+						BOOST_FOREACH(ConPtr con, node->GetConnections(IN)){
+							inputSums += localGradients[con->GetInNodeName()] * con->GetWeight();
+						}
+						inputGradients.push_back(inputSums);
+					}
+					BOOST_FOREACH(NodePtr node, netOutNodes){
+						vecDouble colSums = vecDouble(numInputs);
+						FillVec(colSums, 0.0);
+						vecDouble outPrimes = nodePrimes[node->GetName()];
+						assert(outPrimes.size() != inputGradients.size());
+						for (uint i = 0; i < outPrimes.size(); i++){
+							colSums += inputGradients[i] * outPrimes[i];
+						}
+						localGradients[node->GetName()] = colSums;
+					}
+				} 
+				else
+				{
+					vecDouble inputSums = vecDouble(numInputs);
+					FillVec(inputSums, 0.0);
+					BOOST_FOREACH(ConPtr con, node->GetConnections(IN)){
+						inputSums += localGradients[con->GetInNodeName()] * con->GetWeight();
+					}
+					localGradients[node->GetName()] = inputSums * node->GetPrime();
 				}
-				localGradients[node->GetName()] = inputSums * node->GetPrime();
 			}
 			if (curLayer->HasNextL()){
 				curLayer = curLayer->GetNextLayer();
@@ -109,7 +143,17 @@ namespace JRNN {
 		numInputs = net->GetNumIn();
 		numOutputs = net->GetNumOut();
 		localGradients.clear();
+		outGradients.clear();
 		intNet->SetNetPrefix(nodeName);
+	}
+
+	NetworkNode::NetworkNode( int inHeight, string nodeName ) : Node(inHeight, nodeName)
+	{
+		numInputs = 0;
+		numOutputs = 0;
+		intNet.reset();
+		localGradients.clear();
+		outGradients.clear();
 	}
 
 	NetworkPtr NetworkNode::GetIntNet() const
@@ -123,7 +167,18 @@ namespace JRNN {
 		numInputs = val->GetNumIn();
 		numOutputs = val->GetNumOut();
 		localGradients.clear();
+		outGradients.clear();
 		intNet->SetNetPrefix(this->GetName());
+	}
+
+	JRNN::NodeList NetworkNode::GetInputNodes()
+	{
+		return intNet->GetLayer("input")->GetNodes();
+	}
+
+	JRNN::NodeList NetworkNode::GetOutputNodes()
+	{
+		return intNet->GetLayer("out")->GetNodes();
 	}
 
 }

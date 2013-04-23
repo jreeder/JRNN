@@ -14,6 +14,7 @@
 #include "networks/CCNetwork.h"
 #include "networks/RevCCNetwork.h"
 #include "networks/FFMLPNetwork.h"
+#include "networks/KBCCNetwork.h"
 #include "utility/dataset.h"
 #include "utility/csmtldataset.h"
 #include <iostream>

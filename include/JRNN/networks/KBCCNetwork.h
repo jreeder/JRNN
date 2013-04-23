@@ -13,6 +13,7 @@
 
 #include "JRNN.h"
 #include "networks/CCNetwork.h"
+#include "structure/networknode.h"
 
 namespace JRNN {
 
