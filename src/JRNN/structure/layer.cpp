@@ -170,6 +170,7 @@ void Layer::AddNode( NodePtr node, bool shallow /*= false*/ ){
 	if (!shallow & !this->shallowLayer){
 		string tmpName = name + "_";
 		tmpName += lexical_cast<string>(layerSize); //Numbers should start with zero so size is the next number
+		tmpName = netPrefix == "NONE" ? tmpName : netPrefix + "-" + tmpName;
 		node->SetName(tmpName);
 		node->SetHeight(height);
 	}
@@ -191,7 +192,7 @@ void Layer::InsertNode( NodePtr node, int pos, bool shallow /*= false*/ )
 {
 	if (!shallow & !this->shallowLayer){
 		string tmpName = name + "_" + lexical_cast<string>(pos);
-		tmpName = netPrefix == "NONE" ? tmpName : netPrefix + "_" + tmpName;
+		tmpName = netPrefix == "NONE" ? tmpName : netPrefix + "-" + tmpName;
 		node->SetName(tmpName);
 		node->SetHeight(this->height);
 	}
@@ -208,7 +209,7 @@ NodeList Layer::ResetNodeNames()
 		for (uint i = 0; i < this->nodes.size(); i++){
 			NodePtr node = this->nodes[i];
 			string nodeName = this->name + "_" + lexical_cast<string>(i);
-			nodeName = netPrefix == "NONE" ? nodeName : netPrefix + "_" + nodeName;
+			nodeName = netPrefix == "NONE" ? nodeName : netPrefix + "-" + nodeName;
 			if (nodeName != node->GetName()){
 				node->SetName(nodeName);
 				nodesChanged.push_back(node);

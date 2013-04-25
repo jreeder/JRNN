@@ -16,7 +16,14 @@
 #include "structure/networknode.h"
 
 namespace JRNN {
-
 	class KBCCNetwork;
+
+	typedef boost::shared_ptr<KBCCNetwork> KBCCNetworkPtr;
+	typedef vector<NetworkNodePtr> NetworkNodeList;
+
+	class KBCCNetwork {
+	protected:
+		NetworkNodeList SubNetworkNodes;
+	};
 }
 #endif

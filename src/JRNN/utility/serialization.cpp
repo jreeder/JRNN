@@ -61,6 +61,7 @@ namespace JRNN {
 		numHidLayers = net->GetNumHidLayers();
 		numIn = net->GetNumIn();
 		numOut = net->GetNumOut();
+		netPrefix = net->GetNetPrefix();
 		ConMap::iterator conIT = net->GetConnections().begin();
 		ConMap::iterator conITend = net->GetConnections().end();
 		for(;conIT != conITend; conIT++){
@@ -73,13 +74,15 @@ namespace JRNN {
 		}
 	}
 
-	void serialize::Network::WriteOut(NetworkPtr net){
+	void serialize::Network::WriteOut( NetworkPtr net, bool connect /*= true*/ )
+	{
 		if (!net){
 			assert(0);
 		}
 		net->SetNumIn(numIn);
 		net->SetNumOut(numOut);
 		net->SetNumHidLayers(numHidLayers);
+		net->SetNetPrefix(netPrefix, false);
 		vector<serialize::Layer> shallowLayers;
 		BOOST_FOREACH(serialize::Layer layer, layers){
 			net->GetLayers().insert(LayerPair(layer.name,Serializer::ConvLayer(layer)));
@@ -104,8 +107,11 @@ namespace JRNN {
 				sLayer->SetNextLayer(net->GetLayer(layer.nextLayerName));
 			}
 		}
-		BOOST_FOREACH(serialize::Connection con, connections){
-			net->AddConnection(JRNN::Connection::Connect(net->GetNode(con.inNodeName), net->GetNode(con.outNodeName),con.weight));
+		if (connect)
+		{
+			BOOST_FOREACH(serialize::Connection con, connections){
+				net->AddConnection(JRNN::Connection::Connect(net->GetNode(con.inNodeName), net->GetNode(con.outNodeName),con.weight));
+			}
 		}
 	}
 

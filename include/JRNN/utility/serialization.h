@@ -34,7 +34,8 @@ namespace JRNN {
 			Normal,
 			FFMLP,
 			CC, 
-			RevCC
+			RevCC,
+			KBCC
 		};
 
 		struct Node {
@@ -66,11 +67,14 @@ namespace JRNN {
 			int numIn;
 			int numOut;
 			int numHidLayers;
+			string netPrefix;
 			std::vector<Layer> layers;
 			std::vector<Connection> connections;
 			virtual void ReadIn(NetworkPtr net);
-			virtual void WriteOut(NetworkPtr net);
+			virtual void WriteOut(NetworkPtr net, bool connect = true);
 		};
+
+		typedef boost::shared_ptr<Network> NetworkStPtr;
 
 		struct FFMLPNetwork : Network {
 			virtual void ReadIn(FFMLPNetPtr net);
@@ -94,6 +98,12 @@ namespace JRNN {
 			string normOutLayerName;
 			virtual void ReadIn(RevCCNetworkPtr net);
 			virtual void WriteOut(RevCCNetworkPtr net);
+		};
+
+		struct KBCCNetwork : CCNetwork {
+			std::map<string, NetworkStPtr> subnetworks;
+			virtual void ReadIn(KBCCNetworkPtr net);
+			virtual void WriteOut(KBCCNetworkPtr net);
 		};
 	}
 

@@ -74,7 +74,8 @@ namespace JRNN{
 		void ResetHeights();
 		virtual void ResetNames();
 
-		void SetNetPrefix(string netPrefix);
+		void SetNetPrefix(string netPrefix, bool rename = true);
+		string GetNetPrefix();
 
 		void ResetConnectionNames();
 
@@ -93,6 +94,7 @@ namespace JRNN{
 
         int numIn;
         int numOut;
+		string netPrefix;
 		LayerMap layers;
 		ConMap connections;
         //int numHid; //TODO: need to abstract this out. 

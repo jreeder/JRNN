@@ -24,6 +24,7 @@ namespace JRNN{
 	//    fullyConnect();
 		conScale = 2.0;
 		conOffset = 1.0;
+		netPrefix = "NONE";
 	}
 
 	//NetworkPtr Network::CreateFFMLPNetwork(int numIn, int numHid, int numOut){
@@ -155,6 +156,7 @@ namespace JRNN{
 	Network::Network(const Network& orig) {
 		locked = orig.locked;
 		numHidLayers = orig.numHidLayers;
+		netPrefix = orig.netPrefix;
 		numIn = orig.numIn;
 		numOut = orig.numOut;
 		conScale = orig.conScale;
@@ -351,10 +353,20 @@ namespace JRNN{
 	 NodePtr Network::GetNode( string nodeName )
 	 {
 		 NodePtr retNode;
-		 int pos = nodeName.find("_");
 		 string layerName = "";
-		 if (pos != string::npos){
-			 layerName = nodeName.substr(0,pos);
+		 if (netPrefix == "NONE"){
+			 int pos = nodeName.find("_");
+			 if (pos != string::npos){
+				 layerName = nodeName.substr(0,pos);
+			 }
+		 }
+		 else {
+			 int pos1 = nodeName.find("-");
+			 int pos2 = nodeName.find("_", pos1+1);
+			 if (pos1 != string::npos || pos2 != string::npos){
+				 int stlen = pos2 - (pos1+1);
+				 layerName = nodeName.substr(pos1+1, stlen);
+			 }
 		 }
 		 if (layerName.size() > 0){
 			retNode = layers[layerName]->GetNodeByName(nodeName);
@@ -463,6 +475,20 @@ namespace JRNN{
 		//}
 	}
 
+	void Network::ResetConMap()
+	{
+		ConList changedCons;
+		BOOST_FOREACH(ConPair conP, connections){
+			if (conP.first != conP.second->GetName()){
+				changedCons.push_back(conP.second);
+			}
+		}
+		BOOST_FOREACH(ConPtr con, changedCons){
+			RemoveConnection(con,false);
+			AddConnection(con);
+		}
+	}
+
 	//True will lock all the connections
 	void Network::LockConnections( bool locked, NodeList except /*= NodeList(0)*/ )
 	{
@@ -495,20 +521,6 @@ namespace JRNN{
 			listConnections.insert(listConnections.end(), tmpList.begin(), tmpList.end());
 		}
 		return listConnections;
-	}
-
-	void Network::ResetConMap()
-	{
-		ConList changedCons;
-		BOOST_FOREACH(ConPair conP, connections){
-			if (conP.first != conP.second->GetName()){
-				changedCons.push_back(conP.second);
-			}
-		}
-		BOOST_FOREACH(ConPtr con, changedCons){
-			RemoveConnection(con,false);
-			AddConnection(con);
-		}
 	}
 
 	void Network::ConnectNodeToLayer( NodePtr node, LayerPtr layer, conType cType )
@@ -563,12 +575,24 @@ namespace JRNN{
 		return !(*this == rhs);
 	}
 
-	void Network::SetNetPrefix( string netPrefix )
+	void Network::SetNetPrefix( string netPrefix, bool rename /*= True*/ )
 	{
+		this->netPrefix = netPrefix;
 		BOOST_FOREACH(LayerPair layerP, layers){
 			layerP.second->SetNetPrefix(netPrefix);
+			if (rename){
+				layerP.second->ResetNodeNames();
+			}
 		}
-		ResetNames();
+		if (rename)
+		{
+			ResetConnectionNames();
+		}
+	}
+
+	string Network::GetNetPrefix()
+	{
+		return netPrefix;
 	}
 
 }
