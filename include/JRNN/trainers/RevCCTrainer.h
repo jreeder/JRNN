@@ -63,6 +63,7 @@ namespace JRNN {
 		void TrainTask(DatasetPtr taskData,int maxEpochs, bool validate, bool testWhileTrain = false, DatasetPtr testData = DatasetPtr(), Dataset::datatype testDataType = Dataset::TRAIN);
 		
 		double TestOnData(DatasetPtr testData, Dataset::datatype type);
+		//double TestOnData(Dataset::datatype type, DatasetPtr testData = DatasetPtr(), bool useTrueOuts = true);
 		hashedDoubleMap TestWiClass(DatasetPtr testData, Dataset::datatype type);
 
 		vecDouble Activate(vecDouble inPoint);

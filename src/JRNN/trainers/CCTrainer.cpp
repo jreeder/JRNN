@@ -909,8 +909,9 @@ namespace JRNN {
 		double SSE = 0;
 		while(itIns != ins.end()){
 			vecDouble input = (*itIns);
-			vecDouble desiredOut = (*itOuts);
-			network->Activate(input);
+			/*vecDouble desiredOut = (*itOuts);
+			network->Activate(input);*/
+			vecDouble desiredOut = ActivateNet(input, (*itOuts)); //this makes using this for subclasses easier
 			vecDouble output = network->GetOutputs();
 			vecDouble error = desiredOut - output;
 			vecDouble sqError = SquareVec(error);

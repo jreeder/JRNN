@@ -59,7 +59,7 @@ namespace JRNN {
 		bool operator== (const Node& rhs) const;
 		bool operator!= (const Node& rhs) const;
 
-	private:
+	protected:
 		double sumOfIn;
 		double out;
 		double sigSteepness;

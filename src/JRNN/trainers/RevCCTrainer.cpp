@@ -116,7 +116,13 @@ namespace JRNN {
 		//This just activates the network and passes the correct desired out
 		//back to be used 
 		vecDouble retVal;
-		retVal = ConcatVec(outPoint, inPoint);
+		if (dynamic_pointer_cast<RevCCNetwork>(network)->getTrueOuts == true){
+			retVal = outPoint;
+		}
+		else {
+			retVal = ConcatVec(outPoint, inPoint);
+		}
+
 		if(useNetCache) {
 			network->SetOutputs(GetCachedOuts(inPoint)); 
 		}
@@ -159,10 +165,30 @@ namespace JRNN {
 		DatasetPtr oldData = this->data;
 		SetDataSet(testData);
 		retVal = CCTrainer::TestOnData(type);
-		SetDataSet(oldData);
 		net1->getTrueOuts = false;
+		SetDataSet(oldData);
 		return retVal;
 	}
+
+	//double RevCCTrainer::TestOnData( Dataset::datatype type, DatasetPtr testData /*= DatasetPtr()*/, bool useTrueOuts /*= true*/ )
+	//{
+	//	double retVal;
+	//	network = net1;
+	//	DatasetPtr oldData = this->data;
+	//	if (testData.get() != 0){
+	//		testData = this->data;
+	//	}
+	//	if (useTrueOuts)
+	//		net1->getTrueOuts = true;
+	//	
+	//	SetDataSet(testData);
+	//	retVal = CCTrainer::TestOnData(type);
+	//	if (useTrueOuts)
+	//		net1->getTrueOuts = false;
+	//	
+	//	SetDataSet(oldData);
+	//	return retVal;
+	//}
 
 	JRNN::hashedDoubleMap RevCCTrainer::TestWiClass(DatasetPtr testData, Dataset::datatype type)
 	{
@@ -172,8 +198,8 @@ namespace JRNN {
 		DatasetPtr oldData = this->data;
 		SetDataSet(testData);
 		retVal = CCTrainer::TestWiClass(type);
-		SetDataSet(oldData);
 		net1->getTrueOuts = false;
+		SetDataSet(oldData);
 		return retVal;
 	}
 

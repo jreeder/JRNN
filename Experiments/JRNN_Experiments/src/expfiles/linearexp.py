@@ -209,6 +209,32 @@ reverbValNumReverbsRecall = [\
     cau(standardvars, {'outfile':'reverb14valrecall.txt', 'numReverbs':14}),\
     ]
 
+standardvars.update({'viewString':'task1,task5', 'subView1':'task1', 'subView2':'task5'})
+reverbValNumReverbsRecallUR = [\
+    cau(standardvars, {'outfile':'noreverbvalrecallur.txt', 'bufferSize':0}),\
+    cau(standardvars, {'outfile':'reverb0valrecallur.txt','numReverbs':0}),\
+    cau(standardvars, {'outfile':'reverb2valrecallur.txt', 'numReverbs':2}),\
+    cau(standardvars, {'outfile':'reverb4valrecallur.txt', 'numReverbs':4}),\
+    cau(standardvars, {'outfile':'reverb6valrecallur.txt', 'numReverbs':6}),\
+    cau(standardvars, {'outfile':'reverb8valrecallur.txt', 'numReverbs':8}),\
+    cau(standardvars, {'outfile':'reverb10valrecallur.txt', 'numReverbs':10}),\
+    cau(standardvars, {'outfile':'reverb12valrecallur.txt', 'numReverbs':12}),\
+    cau(standardvars, {'outfile':'reverb14valrecallur.txt', 'numReverbs':14}),\
+    ]    
+
+standardvars.update({'useValidation':False})
+
+reverbNoValNumReverbsRecallUR = [\
+    cau(standardvars, {'outfile':'noreverbnovalrecallur.txt', 'bufferSize':0}),\
+    cau(standardvars, {'outfile':'reverb0novalrecallur.txt','numReverbs':0}),\
+    cau(standardvars, {'outfile':'reverb2novalrecallur.txt', 'numReverbs':2}),\
+    cau(standardvars, {'outfile':'reverb4novalrecallur.txt', 'numReverbs':4}),\
+    cau(standardvars, {'outfile':'reverb6novalrecallur.txt', 'numReverbs':6}),\
+    cau(standardvars, {'outfile':'reverb8novalrecallur.txt', 'numReverbs':8}),\
+    cau(standardvars, {'outfile':'reverb10novalrecallur.txt', 'numReverbs':10}),\
+    cau(standardvars, {'outfile':'reverb12novalrecallur.txt', 'numReverbs':12}),\
+    cau(standardvars, {'outfile':'reverb14novalrecallur.txt', 'numReverbs':14}),\
+    ]
 
 
 #Old Tests Here

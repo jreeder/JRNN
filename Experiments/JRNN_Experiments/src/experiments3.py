@@ -73,10 +73,14 @@ experiments = []
 
 
 
-#experiments += b.reverbNoValNumReverbsRecall + b.reverbValNumReverbsRecall
+experiments += b.reverbNoValNumReverbsRecall + b.reverbValNumReverbsRecall
 
 experiments += c.reverbNoValNumReverbsRecall + c.reverbValNumReverbsRecall \
     + l.reverbNoValNumReverbsRecall + l.reverbValNumReverbsRecall
+
+experiments += c.reverbNoValNumReverbsRecallUR + c.reverbValNumReverbsRecallUR \
+    + l.reverbNoValNumReverbsRecallUR + l.reverbValNumReverbsRecallUR \
+    + b.reverbNoValNumReverbsRecallUR + b.reverbValNumReverbsRecallUR
 
 #experiments += [b.reverbNoValNumReverbsRecall[1]]
 

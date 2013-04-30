@@ -181,6 +181,11 @@ namespace JRNN {
 		return intNet->GetLayer("out")->GetNodes();
 	}
 
+	int NetworkNode::GetNumConnections()
+	{
+		return numConnections;
+	}
+
 }
 
 
