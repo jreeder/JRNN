@@ -536,3 +536,66 @@ def Create3DBars(datalist, firstKey, secondKey="", adjVal = 1.0):
         tr3z.append(tmpVal['Average']['tr3'])
         
     Plot3dBar(xvals, yvals, xinds, yinds, tr1z)
+
+
+def AnnotatedLegend(ax, lb, ub, epoch=-1):
+    lines = ax.lines
+    box = ax.get_position()
+    ax.set_position([box.x0, box.y0, box.width * 0.9, box.height])
+    annposs = []
+    for line in lines:
+        data = line.get_data()
+        label = line.get_label()
+        endpoint = epoch if len(data[1]) > epoch else len(data[1]) - 1
+        avgy = numpy.mean(data[1][endpoint-10:endpoint])
+        percy = (avgy - lb) / (1.0 * (ub - lb))
+        annposs.append(avgy)
+        ax.annotate(label, xy=(1.00, percy), xycoords='axes fraction', xytext=(1.03, percy), textcoords='axes fraction',
+                    arrowprops=dict(arrowstyle="-", relpos=(0.0, 0.5)), verticalalignment='center')
+    
+    return annposs
+
+
+def adjust_boxes(initpos, widths, lb, ub, max_iter=1000, adjust_factor=0.35, factor_decrement=2.0, fd_p=0.75):
+    niter = 0
+    changed=True
+    npos = len(initpos)
+    
+    adjpos = [[x,y] for x,y in enumerate(initpos)]
+    adjpos.sort(key=lambda x: x[1])
+    while changed:
+        changed = False
+        for i in range(npos):
+            if i > 0:
+                diff1 = adjpos[i][1] - adjpos[i-1][1]
+                separation1 = (widths[i] + widths[i-1]) / 1.8
+            else:
+                diff1 = adjpos[i][1] - lb + widths[i] * 1.01
+                separation1 = widths[i]
+            
+            if i < npos - 2:
+                diff2 = adjpos[i+1][1] - adjpos[i][1]
+                separation2 = (widths[i] + widths[i+1]) / 1.8
+            else:
+                diff2 = ub + widths[i] * 1.01 - adjpos[i][1]
+                separation2 = widths[i]
+            
+            if diff1 < separation1 or diff2 < separation2:
+                if adjpos[i][1] == lb: diff1 = 0
+                if adjpos[i][1] == ub: diff2 = 0
+                if diff2 > diff1:
+                    adjpos[i][1] = adjpos[i][1] + separation2 * adjust_factor
+                    adjpos[i][1] = adjpos[i][1] if adjpos[i][1] < ub else ub
+                else:
+                    adjpos[i][1] = adjpos[i][1] - separation1 * adjust_factor
+                    adjpos[i][1] = adjpos[i][1] if adjpos[i][1] > lb else lb
+                changed = True
+            niter += 1
+        if niter == max_iter * fd_p:
+            adjust_factor /= factor_decrement
+        if niter >= max_iter:
+            break
+    
+    adjpos.sort(key=lambda x: x[0])
+    
+    return [(x[1] - lb) / (1.0 * (ub - lb)) for x in adjpos], changed, niter
