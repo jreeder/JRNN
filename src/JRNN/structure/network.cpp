@@ -161,6 +161,7 @@ namespace JRNN{
 		numOut = orig.numOut;
 		conScale = orig.conScale;
 		conOffset = orig.conOffset;
+		netPrefix = orig.netPrefix;
 	}
 
 	Network::~Network() {
