@@ -25,90 +25,39 @@ namespace JRNN {
 	protected:
 		NetworkNodeList SubNetworkNodes;
 
-		virtual NetworkPtr Clone() 
-		{
-			throw std::exception("The method or operation is not implemented.");
-		}
+		virtual NetworkPtr Clone();
 
-		virtual void CreateCandLayer( int numCand ) 
-		{
-			throw std::exception("The method or operation is not implemented.");
-		}
+		virtual void CreateCandLayer( int numCand );
 
-		virtual NodePtr AppendNewInputNode() 
-		{
-			throw std::exception("The method or operation is not implemented.");
-		}
+		virtual NodePtr AppendNewInputNode();
 
-		virtual void AppendInputNode( NodePtr node ) 
-		{
-			throw std::exception("The method or operation is not implemented.");
-		}
+		virtual void AppendInputNode( NodePtr node );
 
-		virtual void InsertInputNode( NodePtr newNode, int pos ) 
-		{
-			throw std::exception("The method or operation is not implemented.");
-		}
+		virtual void InsertInputNode( NodePtr newNode, int pos );
 
-		virtual NodePtr InsertNewInputNode( int pos ) 
-		{
-			throw std::exception("The method or operation is not implemented.");
-		}
+		virtual NodePtr InsertNewInputNode( int pos );
 
-		virtual void ConnectToHiddenNodes( NodePtr node, conType cType = OUT ) 
-		{
-			throw std::exception("The method or operation is not implemented.");
-		}
+		virtual void ConnectToHiddenNodes( NodePtr node, conType cType = OUT );
 
-		virtual void ConnectToHiddenNodes( NodeList nodes, conType cType = OUT ) 
-		{
-			throw std::exception("The method or operation is not implemented.");
-		}
+		virtual void ConnectToHiddenNodes( NodeList nodes, conType cType = OUT );
 
-		virtual void InstallCandidate( NodePtr node, vecDouble outWeights = vecDouble(0 ) )
-		{
-			throw std::exception("The method or operation is not implemented.");
-		}
+		virtual void InstallCandidate( NodePtr node, vecDouble outWeights = vecDouble(0 ) );
 
-		virtual void Build( int numIn, int numOut, bool cloneouts = false, bool useSDCC = false, bool varyActFunc = false ) 
-		{
-			throw std::exception("The method or operation is not implemented.");
-		}
+		virtual void Build( int numIn, int numOut, bool cloneouts = false, bool useSDCC = false, bool varyActFunc = false );
 
-		virtual void Reset() 
-		{
-			throw std::exception("The method or operation is not implemented.");
-		}
+		virtual void Reset();
 
-		virtual void CandFullyConnectBack( LayerPtr layer ) 
-		{
-			throw std::exception("The method or operation is not implemented.");
-		}
+		virtual void CandFullyConnectBack( LayerPtr layer );
 
-		virtual void FullyConnectOut( LayerPtr layer ) 
-		{
-			throw std::exception("The method or operation is not implemented.");
-		}
+		virtual void FullyConnectOut( LayerPtr layer );
 
-		virtual void FullyConnectOut( LayerPtr layer, vecDouble outWeights ) 
-		{
-			throw std::exception("The method or operation is not implemented.");
-		}
+		virtual void FullyConnectOut( LayerPtr layer, vecDouble outWeights );
 
-		virtual void RemoveUnConnectedNodes() 
-		{
-			throw std::exception("The method or operation is not implemented.");
-		}
+		virtual void RemoveUnConnectedNodes();
 
-		virtual void RemoveHiddenLayer( LayerPtr layer ) 
-		{
-			throw std::exception("The method or operation is not implemented.");
-		}
+		virtual void RemoveHiddenLayer( LayerPtr layer );
 
-		virtual void CandConnectOut( NodePtr node, vecDouble outWeights = vecDouble(0 ) )
-		{
-			throw std::exception("The method or operation is not implemented.");
-		}
+		virtual void CandConnectOut( NodePtr node, vecDouble outWeights = vecDouble(0 ) );
 
 	};
 }

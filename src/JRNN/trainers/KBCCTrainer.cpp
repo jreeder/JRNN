@@ -10,7 +10,7 @@
 #include "JRNN.h"
 #include "trainers/KBCCTrainer.h"
 
-using namespace JRNN {
+namespace JRNN {
 	void KBCCTrainer::AddNewInputs( ints inputIndexes, DatasetPtr newData, bool connectToHidden /*= false */ )
 	{
 		throw std::exception("The method or operation is not implemented.");
