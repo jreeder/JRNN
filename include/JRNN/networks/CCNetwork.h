@@ -31,15 +31,15 @@ namespace JRNN {
 		//void SetNetwork(NetworkPtr net);
 		const LayerPtr GetCandLayer();
 		void SetCandLayerByName(string name);
-		void CreateCandLayer(int numCand);
+		virtual void CreateCandLayer(int numCand);
 		
 		//Functions for adding new inputs
 		virtual NodePtr AppendNewInputNode();
 		virtual void AppendInputNode(NodePtr node);
 		virtual void InsertInputNode( NodePtr newNode, int pos );
 		virtual NodePtr InsertNewInputNode(int pos);
-		void ConnectToHiddenNodes(NodePtr node, conType cType = OUT);
-		void ConnectToHiddenNodes(NodeList nodes, conType cType = OUT);
+		virtual void ConnectToHiddenNodes(NodePtr node, conType cType = OUT);
+		virtual void ConnectToHiddenNodes(NodeList nodes, conType cType = OUT);
 
 		virtual void InstallCandidate(NodePtr node, vecDouble outWeights = vecDouble(0));
 		virtual void Build(int numIn, int numOut, bool cloneouts = false, bool useSDCC = false, bool varyActFunc = false);
@@ -68,15 +68,15 @@ namespace JRNN {
 		bool cloneOuts;
 		bool useSDCC;
 		bool varyActFunc;
-		void CandFullyConnectBack(LayerPtr layer);
+		virtual void CandFullyConnectBack(LayerPtr layer);
 		//LayerPtr AddHiddenLayer(); Moved to parent
-		void FullyConnectOut(LayerPtr layer);
-		void FullyConnectOut(LayerPtr layer, vecDouble outWeights);
+		virtual void FullyConnectOut(LayerPtr layer);
+		virtual void FullyConnectOut(LayerPtr layer, vecDouble outWeights);
 		void FullyConnect();
-		void RemoveUnConnectedNodes();
+		virtual void RemoveUnConnectedNodes();
 		virtual void RemoveHiddenLayer(LayerPtr layer);
 		void BuildVariedLayer( LayerPtr candLayer );
-		void CandConnectOut( NodePtr node, vecDouble outWeights = vecDouble(0));	
+		virtual void CandConnectOut( NodePtr node, vecDouble outWeights = vecDouble(0));	
 	};
 }
 

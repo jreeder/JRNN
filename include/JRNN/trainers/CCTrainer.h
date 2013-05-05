@@ -194,7 +194,7 @@ namespace JRNN {
 		void UpdateOutWeights(); //Adjust output weights.
 
 		//Candidate training methods
-		void CreateCandidates();
+		virtual void CreateCandidates();
 		status TrainCandidates();
 		void resetTrainCandidates();
 		void resetCandValues();
@@ -204,7 +204,7 @@ namespace JRNN {
 		virtual void UpdateCorrelations();
 		void ComputeCorrelations();
 		virtual void ComputeCandSlopes();
-		void InsertCandidate();
+		virtual void InsertCandidate();
 
 		//Validation Methods
 
