@@ -818,8 +818,7 @@ namespace JRNN {
 			cPCorr = &candPCorr[name];
 
 			candSumVals[name] += value;
-			actPrime /= err.sumSqErr; //This is a slight modification to the original. 
-									//It's equivalent, but I'm not sure why I did this maybe optimizing. 
+			actPrime /= err.sumSqErr; //This comes from fahlmans cc code. 
 
 			//compute correlations to each output
 			for (int j = 0; j < nOuts; j++){

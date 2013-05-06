@@ -18,37 +18,183 @@ namespace JRNN {
 
 	double KBCCTrainer::TestOnData( Dataset::datatype type )
 	{
-		throw std::exception("The method or operation is not implemented.");
+		return CCTrainer::TestOnData(type);
 	}
 
 	hashedDoubleMap KBCCTrainer::TestWiClass( Dataset::datatype type )
 	{
-		throw std::exception("The method or operation is not implemented.");
+		return CCTrainer::TestWiClass(type);
 	}
 
-	status KBCCTrainer::TrainOuts()
+	CCTrainer::status KBCCTrainer::TrainOuts()
 	{
-		throw std::exception("The method or operation is not implemented.");
+		return CCTrainer::TrainOuts();
 	}
 
 	void KBCCTrainer::CreateCandidates()
 	{
-		throw std::exception("The method or operation is not implemented.");
-	}
-
-	void KBCCTrainer::CorrelationEpoch()
-	{
-		throw std::exception("The method or operation is not implemented.");
+		network->CreateCandLayer(parms.nCand);
+		resetCandValues();
 	}
 
 	void KBCCTrainer::UpdateCorrelations()
 	{
-		throw std::exception("The method or operation is not implemented.");
+		double avgValue;
+		double score;
+		double cor;
+		vecDouble *curCorr;
+		vecDouble *prevCorr;
+
+		candBestScore = 0.0;
+		bestCand.reset();
+		int nTrainPts = data->GetSize(Dataset::TRAIN);
+		int nOuts = network->GetNumOut();
+		NodeList candNodes = network->GetCandLayer()->GetNodes();
+		BOOST_FOREACH(NodePtr node, candNodes){
+			score = 0.0;
+			if (node->GetActFuncType() != "IntNet"){
+				string name = node->GetName();
+				avgValue = candSumVals[name] / nTrainPts;
+				curCorr = &candCorr[name];
+				prevCorr = &candPCorr[name];
+
+				assert((*curCorr).size() == nOuts);
+				for (int j = 0; j < nOuts; j++){
+					/*double tmp1 = (*curCorr)[j]; //Used for Debugging. 
+					double tmp2 = err.sumErrs[j];*/
+					cor = ((*curCorr)[j] - avgValue * err.sumErrs[j]) / err.sumSqErr;
+					(*prevCorr)[j] = cor;
+					(*curCorr)[j] = 0.0;
+					score += fabs (cor);
+				}
+
+				candSumVals[name] = 0.0;
+			}
+			else {
+				NodeList candOutNodes = dynamic_pointer_cast<NetworkNode>(node)->GetOutputNodes();
+				BOOST_FOREACH(NodePtr coNode, candOutNodes){
+					string name = coNode->GetName();
+					avgValue = candSumVals[name] / nTrainPts;
+					curCorr = &candCorr[name];
+					prevCorr = &candPCorr[name];
+
+					assert((*curCorr).size() == nOuts);
+					for (int j = 0; j < nOuts; j++){
+						/*double tmp1 = (*curCorr)[j]; //Used for Debugging. 
+						double tmp2 = err.sumErrs[j];*/
+						cor = ((*curCorr)[j] - avgValue * err.sumErrs[j]) / err.sumSqErr;
+						(*prevCorr)[j] = cor;
+						(*curCorr)[j] = 0.0;
+						score += fabs (cor);
+					}
+
+					candSumVals[name] = 0.0;
+				}
+			}
+			if (parms.useSDCC)
+			{
+				int tmpHeight = network->GetCandLayer()->GetHeight();
+				if (node->GetHeight() == tmpHeight){
+					score *= parms.SDCCRatio;
+				}
+			}
+			
+			//check for best candidate
+			if ( score > candBestScore ){
+				candBestScore = score;
+				bestCand = node;
+			}
+		}
+		if (bestCand.get() == 0){
+			bestCand = candNodes[0];
+		}
 	}
 
 	void KBCCTrainer::ComputeCandSlopes()
 	{
-		throw std::exception("The method or operation is not implemented.");
+		double	change,
+				actPrime,
+				error,
+				value,
+				direction;
+
+		vecDouble	*cCorr,
+					*cPCorr;
+
+		NodeList candNodes = network->GetCandLayer()->GetNodes();
+		if (useNetCache)
+		{
+			CacheActivateCands(network->GetCandLayer());
+		} 
+		else
+		{
+			network->GetCandLayer()->Activate(); 
+		}
+		int nOuts = network->GetNumOut();
+		BOOST_FOREACH(NodePtr candidate, candNodes){
+			if (candidate->GetActFuncType() != "IntNet")
+			{
+				string name = candidate->GetName();
+				value = candidate->GetOut();
+				actPrime = candidate->GetPrime();
+				change = 0.0;
+				cCorr = &candCorr[name];
+				cPCorr = &candPCorr[name];
+	
+				candSumVals[name] += value;
+				actPrime /= err.sumSqErr;  
+	
+				//compute correlations to each output
+				for (int j = 0; j < nOuts; j++){
+					error = err.errors[j];
+					direction = ((*cPCorr)[j] < 0.0) ? -1.0 : 1.0;
+					change -= direction * actPrime * (error - err.sumErrs[j]); 
+					(*cCorr)[j] += error * value;
+				}
+	
+				//use change to compute new slopes
+	
+				ConList cons = candidate->GetConnections(IN);
+				BOOST_FOREACH(ConPtr con, cons){
+					cand.conSlopes[con->GetName()] += change * con->GetValue();
+				}
+			}
+			else
+			{
+				NodeList candInNodes = dynamic_pointer_cast<NetworkNode>(candidate)->GetInputNodes();
+				NodeList candOutNodes = dynamic_pointer_cast<NetworkNode>(candidate)->GetOutputNodes();
+				hashedVecDoubleMap candActPrimes = dynamic_pointer_cast<NetworkNode>(candidate)->GetPrimes();
+				for (int i = 0; i < candInNodes.size(); i++)
+				{
+					change = 0.0;
+					BOOST_FOREACH(NodePtr coNodes, candOutNodes){
+						string name = coNodes->GetName();
+						value = coNodes->GetOut();
+						cCorr = &candCorr[name];
+						cPCorr = &candPCorr[name];
+
+						actPrime = candActPrimes[name][i];
+
+						candSumVals[name] += value;
+						actPrime /= err.sumSqErr;
+
+						//compute correlations to each output
+						for (int j = 0; j < nOuts; j++){
+							error = err.errors[j];
+							direction = ((*cPCorr)[j] < 0.0) ? -1.0 : 1.0;
+							change -= direction * actPrime * (error - err.sumErrs[j]); 
+							(*cCorr)[j] += error * value;
+						}
+
+					}
+
+					ConList cons = candInNodes[i]->GetConnections(IN);
+					BOOST_FOREACH(ConPtr con, cons){
+						cand.conSlopes[con->GetName()] += change * con->GetValue();
+					}
+				}
+			}
+		}
 	}
 
 	void KBCCTrainer::InsertCandidate()
@@ -58,8 +204,47 @@ namespace JRNN {
 
 	vecDouble KBCCTrainer::ActivateNet( vecDouble inPoint, vecDouble outPoint )
 	{
-		throw std::exception("The method or operation is not implemented.");
+		return CCTrainer::ActivateNet(inPoint, outPoint);
 	}
+
+	void KBCCTrainer::ComputeCorrelations()
+	{
+		double sum,val;
+		vecDouble* cCorr;
+		NodeList candNodes = network->GetCandLayer()->GetNodes();
+		network->GetCandLayer()->Activate();
+		BOOST_FOREACH(NodePtr node, candNodes){
+			sum = 0.0;
+			if (node->GetActFuncType() != "IntNet")
+			{
+				string name = node->GetName();
+				cCorr = &candCorr[name];
+				val = node->GetOut();
+				candSumVals[name] += val;
+
+				//compute correlation for this unit
+				for (unsigned int j = 0; j < err.errors.size(); j++ ){
+					(*cCorr)[j] += val * err.errors[j];
+				}
+			} 
+			else
+			{
+				NodeList candOutNodes = dynamic_pointer_cast<NetworkNode>(node)->GetOutputNodes();
+				BOOST_FOREACH(NodePtr coNode, candOutNodes){
+					string name = coNode->GetName();
+					val = coNode->GetOut();
+					cCorr = &candCorr[name];
+					candSumVals[name] += val;
+
+					//compute correlation for this unit
+					for (unsigned int j = 0; j < err.errors.size(); j++ ){
+						(*cCorr)[j] += val * err.errors[j];
+					}
+				}
+			}
+		}
+	}
+
 }
 
 

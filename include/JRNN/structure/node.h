@@ -46,7 +46,7 @@ namespace JRNN {
 		virtual ConList& GetConnections(conType type);
 		virtual string GetActFuncType();
         
-		void SetName(string newName);
+		virtual void SetName(string newName);
 //        void setNumIn(int newNumIn);
 //        void setNumOut(int newNumOut);
 		virtual bool AddConnection(conType type, ConPtr newCon);

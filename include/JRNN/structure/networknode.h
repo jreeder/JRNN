@@ -32,6 +32,8 @@ namespace JRNN {
 		NetworkNode(int inHeight, string nodeName);
 		
 		virtual void Activate();
+
+		static NetworkNodePtr CreateNetworkNode(int inHeight, string nodeName);
 		
 		vecDouble GetOuts();
 		
@@ -50,8 +52,10 @@ namespace JRNN {
 		NetworkPtr GetIntNet() const;
 		
 		void SetIntNet(NetworkPtr val);
-		
-		virtual bool AddConnection( conType type, ConPtr newCon );
+
+		NodeList GetInputNodes();
+		NodeList GetOutputNodes();
+		virtual void SetName( string newName );
 
 	private:
 		NetworkPtr intNet;
@@ -65,8 +69,10 @@ namespace JRNN {
 
 		void calcGradients();
 		void cascadeGradients( LayerPtr layer );
-		NodeList GetInputNodes();
-		NodeList GetOutputNodes();
+
+
+
+		
 	};
 
 }

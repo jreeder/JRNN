@@ -11,6 +11,7 @@
 #include "JRNN.h"
 #include "trainers/CCTrainer.h"
 #include "networks/KBCCNetwork.h"
+#include "structure/networknode.h"
 
 namespace JRNN {
 
@@ -32,8 +33,6 @@ namespace JRNN {
 
 		virtual void CreateCandidates();
 
-		virtual void CorrelationEpoch();
-
 		virtual void UpdateCorrelations();
 
 		virtual void ComputeCandSlopes();
@@ -42,8 +41,10 @@ namespace JRNN {
 
 		virtual vecDouble ActivateNet( vecDouble inPoint, vecDouble outPoint );
 
-	protected:
+		virtual void ComputeCorrelations();
 
+	protected:
+		
 	};
 }
 

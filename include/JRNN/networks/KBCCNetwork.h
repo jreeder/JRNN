@@ -20,14 +20,16 @@ namespace JRNN {
 
 	typedef boost::shared_ptr<KBCCNetwork> KBCCNetworkPtr;
 	typedef vector<NetworkNodePtr> NetworkNodeList;
+	typedef vector<NetworkPtr> NetPtrList;
 
 	class KBCCNetwork : CCNetwork{
 	protected:
 		NetworkNodeList SubNetworkNodes;
+		NetworkNodeList CandSubNetNodes;
 
 		virtual NetworkPtr Clone();
 
-		virtual void CreateCandLayer( int numCand );
+		virtual void CreateCandLayer( int numCand, NetPtrList candNets = NetPtrList(), int numCopies = 0);
 
 		virtual NodePtr AppendNewInputNode();
 
@@ -42,7 +44,9 @@ namespace JRNN {
 		virtual void ConnectToHiddenNodes( NodeList nodes, conType cType = OUT );
 
 		virtual void InstallCandidate( NodePtr node, vecDouble outWeights = vecDouble(0 ) );
-
+		
+		void InstallCandidate( NodePtr node, hashedVecDoubleMap outWeights = hashedVecDoubleMap());
+		
 		virtual void Build( int numIn, int numOut, bool cloneouts = false, bool useSDCC = false, bool varyActFunc = false );
 
 		virtual void Reset();
@@ -59,6 +63,10 @@ namespace JRNN {
 
 		virtual void CandConnectOut( NodePtr node, vecDouble outWeights = vecDouble(0 ) );
 
+		virtual ConPtr Connect( NodePtr n1, NodePtr n2 );
+
+		virtual ConPtr Connect( NodePtr n1, NodePtr n2, double conweight );
+		void CandNetFullyConnectBack( NetworkNodePtr newNetNode, bool onlyDirect, bool reduceHeight );
 	};
 }
 #endif

@@ -200,9 +200,9 @@ namespace JRNN {
 		void resetCandValues();
 		virtual void CorrelationEpoch();
 		void CandEpoch();
-		void UpdateCandWeights();
+		virtual void UpdateCandWeights();
 		virtual void UpdateCorrelations();
-		void ComputeCorrelations();
+		virtual void ComputeCorrelations();
 		virtual void ComputeCandSlopes();
 		virtual void InsertCandidate();
 

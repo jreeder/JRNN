@@ -27,19 +27,39 @@ namespace JRNN {
 
 	ConList& NetworkNode::GetConnections( conType type )
 	{
-		return Node::GetConnections(type);
+		if (type == IN)
+		{
+			inConnections.clear();
+			NodeList inNodes = intNet->GetLayer("input")->GetNodes();
+			BOOST_FOREACH(NodePtr node, inNodes){
+				ConList inCons = node->GetConnections(IN);
+				inConnections.insert(inConnections.end(), inCons.begin(), inCons.end());
+			}
+			return inConnections;
+		}
+		else 
+		{
+			outConnections.clear();
+			NodeList outNodes = intNet->GetLayer("out")->GetNodes();
+			BOOST_FOREACH(NodePtr node, outNodes){
+				ConList outCons = node->GetConnections(OUT);
+				outConnections.insert(outConnections.end(), outCons.begin(), outCons.end());
+			}
+			return outConnections;
+		}
+	}
+
+	int NetworkNode::GetNumConnections()
+	{
+		numConnections = 0;
+		numConnections += GetConnections(IN).size();
+		numConnections += GetConnections(OUT).size();
+		return numConnections;
 	}
 
 	string NetworkNode::GetActFuncType()
 	{
 		return "IntNet";
-	}
-
-	bool NetworkNode::AddConnection( conType type, ConPtr newCon )
-	{
-		//throw std::exception("The method or operation is not implemented.");
-		assert(0);
-		return false;
 	}
 
 	void NetworkNode::Activate()
@@ -181,9 +201,16 @@ namespace JRNN {
 		return intNet->GetLayer("out")->GetNodes();
 	}
 
-	int NetworkNode::GetNumConnections()
+	JRNN::NetworkNodePtr NetworkNode::CreateNetworkNode( int inHeight, string nodeName )
 	{
-		return numConnections;
+		NetworkNodePtr np(new NetworkNode(inHeight, nodeName));
+		return np;
+	}
+
+	void NetworkNode::SetName( string newName )
+	{
+		name = newName;
+		intNet->SetNetPrefix(newName);
 	}
 
 }
