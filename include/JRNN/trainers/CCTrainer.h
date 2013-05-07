@@ -28,7 +28,7 @@ namespace JRNN {
 		};
 
 		void ResetVars();
-		void Reset();
+		virtual void Reset();
 		void RedistData();
 
 		void SetDataSet(DatasetPtr dataset);

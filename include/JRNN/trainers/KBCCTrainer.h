@@ -20,7 +20,7 @@ namespace JRNN {
 
 	class KBCCTrainer : public CCTrainer {
 	public:
-		KBCCTrainer(int numIn, int numOut, int numCandidates);
+		KBCCTrainer(CCNetworkPtr network, DatasetPtr data, int numCandidates, NetPtrList SubNetList = NetPtrList(), int numCopies = 0, ints primaryIndexes = ints(0));
 		~KBCCTrainer();
 
 		virtual void AddNewInputs( ints inputIndexes, DatasetPtr newData, bool connectToHidden = false );
@@ -29,6 +29,16 @@ namespace JRNN {
 
 		virtual hashedDoubleMap TestWiClass( Dataset::datatype type );
 
+		void AddSubNet(NetworkPtr newNet);
+		void ClearSubNetList();
+		int GetNumCopies() const;
+		void SetNumCopies(int val);
+		virtual void Reset();
+		
+	protected:
+		NetPtrList SubNetlist;
+		int numCopies;
+		
 		virtual status TrainOuts();
 
 		virtual void CreateCandidates();
@@ -43,8 +53,6 @@ namespace JRNN {
 
 		virtual void ComputeCorrelations();
 
-	protected:
-		
 	};
 }
 

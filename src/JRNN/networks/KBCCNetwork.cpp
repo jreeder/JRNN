@@ -15,7 +15,27 @@ namespace JRNN {
 
 	JRNN::NetworkPtr KBCCNetwork::Clone()
 	{
-		throw std::exception("The method or operation is not implemented.");
+		KBCCNetworkPtr oldP = KBCCSharedFromThis::shared_from_this();
+		return KBCCNetwork::Clone(oldP);
+	}
+
+	JRNN::KBCCNetworkPtr KBCCNetwork::Create()
+	{
+		KBCCNetworkPtr np(new KBCCNetwork());
+		return np;
+	}
+
+	JRNN::KBCCNetworkPtr KBCCNetwork::Clone( KBCCNetworkPtr net )
+	{
+		KBCCNetworkPtr kbccnet(new KBCCNetwork());
+		CCNetwork::Clone(kbccnet, net);
+		BOOST_FOREACH(NodePtr node, net->CandSubNetNodes){
+			kbccnet->CandSubNetNodes.push_back(dynamic_pointer_cast<NetworkNode>(kbccnet->GetNode(node->GetName())));
+		}
+		BOOST_FOREACH(NodePtr node, net->SubNetworkNodes){
+			kbccnet->SubNetworkNodes.push_back(dynamic_pointer_cast<NetworkNode>(kbccnet->GetNode(node->GetName())));
+		}
+		return kbccnet;
 	}
 
 	void KBCCNetwork::CreateCandLayer( int numCand, NetPtrList candNets /*= NetPtrList()*/, int numCopies /*= 0*/ )
@@ -35,6 +55,7 @@ namespace JRNN {
 
 		candLayer->SetPrevLayer(out->GetPrevLayer());
 		CandFullyConnectBack(candLayer);
+		CandSubNetNodes.clear();
 		BOOST_FOREACH(NetworkPtr net, candNets){
 			NetworkNodePtr newNetNode = NetworkNode::CreateNetworkNode(tmpHeight, "tmpName");
 			candLayer->AddNode(newNetNode);
@@ -48,6 +69,7 @@ namespace JRNN {
 				bool reduceHeight = i % 2 == 0 ? false : true;
 				newNetNode->SetIntNet(net->Clone());
 				CandNetFullyConnectBack(newNetNode, false, reduceHeight);
+				CandSubNetNodes.push_back(newNetNode);
 			}
 		}
 	}
@@ -102,7 +124,7 @@ namespace JRNN {
 		CCNetwork::InstallCandidate(node, outWeights);
 	}
 
-	void KBCCNetwork::InstallCandidate( NodePtr node, hashedVecDoubleMap outWeights = /*hashedVecDoubleMap()*/)
+	void KBCCNetwork::InstallCandidate( NodePtr node, hashedVecDoubleMap outWeights /*= hashedVecDoubleMap()*/)
 	{
 		bool newLayer = node->GetHeight() == currentLayer->GetHeight() ? false : true;
 
@@ -141,56 +163,59 @@ namespace JRNN {
 			hiddenLayers.push_back(lp);
 		}
 		numUnits++;
+		SubNetworkNodes.push_back(dynamic_pointer_cast<NetworkNode>(node));
 	}
 
 	void KBCCNetwork::Build( int numIn, int numOut, bool cloneouts /*= false*/, bool useSDCC /*= false*/, bool varyActFunc /*= false */ )
 	{
-		throw std::exception("The method or operation is not implemented.");
+		CCNetwork::Build(numIn, numOut, cloneouts, useSDCC, varyActFunc);
 	}
 
 	void KBCCNetwork::Reset()
 	{
-		throw std::exception("The method or operation is not implemented.");
+		SubNetworkNodes.clear();
+		CandSubNetNodes.clear();
+		CCNetwork::Reset();
 	}
 
 	void KBCCNetwork::CandFullyConnectBack( LayerPtr layer )
 	{
-		throw std::exception("The method or operation is not implemented.");
+		CCNetwork::CandFullyConnectBack(layer);
 	}
 
 	void KBCCNetwork::FullyConnectOut( LayerPtr layer )
 	{
-		throw std::exception("The method or operation is not implemented.");
+		CCNetwork::FullyConnectOut(layer);
 	}
 
 	void KBCCNetwork::FullyConnectOut( LayerPtr layer, vecDouble outWeights )
 	{
-		throw std::exception("The method or operation is not implemented.");
+		CCNetwork::FullyConnectOut(layer);
 	}
 
 	void KBCCNetwork::RemoveUnConnectedNodes()
 	{
-		throw std::exception("The method or operation is not implemented.");
+		CCNetwork::RemoveUnConnectedNodes();
 	}
 
 	void KBCCNetwork::RemoveHiddenLayer( LayerPtr layer )
 	{
-		throw std::exception("The method or operation is not implemented.");
+		CCNetwork::RemoveHiddenLayer(layer);
 	}
 
 	void KBCCNetwork::CandConnectOut( NodePtr node, vecDouble outWeights /*= vecDouble(0 ) */ )
 	{
-		throw std::exception("The method or operation is not implemented.");
+		CCNetwork::CandConnectOut(node, outWeights);
 	}
 
 	JRNN::ConPtr KBCCNetwork::Connect( NodePtr n1, NodePtr n2 )
 	{
-		throw std::exception("The method or operation is not implemented.");
+		return Network::Connect(n1,n2);
 	}
 
 	JRNN::ConPtr KBCCNetwork::Connect( NodePtr n1, NodePtr n2, double conweight )
 	{
-		throw std::exception("The method or operation is not implemented.");
+		return Network::Connect(n1,n2,conweight);
 	}
 
 	JRNN::NodePtr KBCCNetwork::AppendNewInputNode()
@@ -222,5 +247,10 @@ namespace JRNN {
 	{
 		throw std::exception("The method or operation is not implemented.");
 	}
+
+	KBCCNetwork::KBCCNetwork(){}
+
+	KBCCNetwork::KBCCNetwork( int numIn, int numOut ) : CCNetwork(numIn, numOut) 
+	{}
 
 }

@@ -89,11 +89,13 @@
   <ItemGroup>
     <ClCompile Include="..\..\..\..\src\PyJRNN\networks\pyccnetwork.cpp" />
     <ClCompile Include="..\..\..\..\src\PyJRNN\networks\pyffmlpnetwork.cpp" />
+    <ClCompile Include="..\..\..\..\src\PyJRNN\networks\pykbccnetwork.cpp" />
     <ClCompile Include="..\..\..\..\src\PyJRNN\networks\pynetwork.cpp" />
     <ClCompile Include="..\..\..\..\src\PyJRNN\networks\pyrevccnetwork.cpp" />
     <ClCompile Include="..\..\..\..\src\PyJRNN\PyJRNN.cpp" />
     <ClCompile Include="..\..\..\..\src\PyJRNN\trainers\pybackproptrainer.cpp" />
     <ClCompile Include="..\..\..\..\src\PyJRNN\trainers\pycctrainer.cpp" />
+    <ClCompile Include="..\..\..\..\src\PyJRNN\trainers\pykbcctrainer.cpp" />
     <ClCompile Include="..\..\..\..\src\PyJRNN\trainers\pyrevcctrainer.cpp" />
     <ClCompile Include="..\..\..\..\src\PyJRNN\trainers\pyrproptrainer.cpp" />
     <ClCompile Include="..\..\..\..\src\PyJRNN\utility\pycsmtldataset.cpp" />

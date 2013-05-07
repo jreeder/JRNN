@@ -200,7 +200,7 @@ namespace JRNN {
 		else if(node.activationFunc == "BIAS"){
 			sNode = Node::CreateNode<Bias>(node.height,node.name);
 		}
-		else if(node.activationFunc == "IntNet"){
+		else if(node.activationFunc == NetworkNode::ActType){
 			NetworkNodePtr np(new NetworkNode(node.height, node.name));
 			sNode = np;
 		}

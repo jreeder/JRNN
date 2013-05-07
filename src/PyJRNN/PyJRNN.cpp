@@ -38,6 +38,7 @@ void exportCCTrainer();
 void exportRevCCTrainer();
 void exportBackPropTrainer();
 void exportRPropTrainer();
+void exportKBCCTrainer();
 
 #ifdef _DEBUG
 	#define MODNAME "PyJRNN_d"
@@ -77,4 +78,5 @@ BOOST_PYTHON_MODULE(PyJRNN)
 	exportRevCCTrainer();
 	exportBackPropTrainer();
 	exportRPropTrainer();
+	exportKBCCTrainer();
 }

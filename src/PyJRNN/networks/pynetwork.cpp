@@ -16,6 +16,8 @@ using namespace JRNN;
 void exportCCNetwork();
 void exportFFMLPNetwork();
 void exportRevCCNetwork();
+void exportKBCCNetwork();
+
 void exportNetworks(){
 	
 
@@ -41,4 +43,6 @@ void exportNetworks(){
 	exportFFMLPNetwork();
 
 	exportRevCCNetwork();
+
+	exportKBCCNetwork();
 }

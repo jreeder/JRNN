@@ -11,10 +11,14 @@
 #include "trainers/KBCCTrainer.h"
 
 namespace JRNN {
-	void KBCCTrainer::AddNewInputs( ints inputIndexes, DatasetPtr newData, bool connectToHidden /*= false */ )
+
+	KBCCTrainer::KBCCTrainer( CCNetworkPtr network, DatasetPtr data, int numCandidates, NetPtrList SubNetList, int numCopies, ints primaryIndexes /*= ints(0)*/ ) : CCTrainer(network, data, numCandidates, primaryIndexes)
 	{
-		throw std::exception("The method or operation is not implemented.");
+		this->SubNetlist = SubNetList;
+		this->numCopies = numCopies;
 	}
+	
+	KBCCTrainer::~KBCCTrainer(){}
 
 	double KBCCTrainer::TestOnData( Dataset::datatype type )
 	{
@@ -33,7 +37,13 @@ namespace JRNN {
 
 	void KBCCTrainer::CreateCandidates()
 	{
-		network->CreateCandLayer(parms.nCand);
+		if (SubNetlist.size() == 0){
+			network->CreateCandLayer(parms.nCand);
+		}
+		else {
+			dynamic_pointer_cast<KBCCNetwork>(network)->CreateCandLayer(parms.nCand, SubNetlist, numCopies);
+		}
+		
 		resetCandValues();
 	}
 
@@ -52,7 +62,7 @@ namespace JRNN {
 		NodeList candNodes = network->GetCandLayer()->GetNodes();
 		BOOST_FOREACH(NodePtr node, candNodes){
 			score = 0.0;
-			if (node->GetActFuncType() != "IntNet"){
+			if (node->GetActFuncType() != NetworkNode::ActType){
 				string name = node->GetName();
 				avgValue = candSumVals[name] / nTrainPts;
 				curCorr = &candCorr[name];
@@ -132,7 +142,7 @@ namespace JRNN {
 		}
 		int nOuts = network->GetNumOut();
 		BOOST_FOREACH(NodePtr candidate, candNodes){
-			if (candidate->GetActFuncType() != "IntNet")
+			if (candidate->GetActFuncType() != NetworkNode::ActType)
 			{
 				string name = candidate->GetName();
 				value = candidate->GetOut();
@@ -164,7 +174,7 @@ namespace JRNN {
 				NodeList candInNodes = dynamic_pointer_cast<NetworkNode>(candidate)->GetInputNodes();
 				NodeList candOutNodes = dynamic_pointer_cast<NetworkNode>(candidate)->GetOutputNodes();
 				hashedVecDoubleMap candActPrimes = dynamic_pointer_cast<NetworkNode>(candidate)->GetPrimes();
-				for (int i = 0; i < candInNodes.size(); i++)
+				for (uint i = 0; i < candInNodes.size(); i++)
 				{
 					change = 0.0;
 					BOOST_FOREACH(NodePtr coNodes, candOutNodes){
@@ -199,7 +209,30 @@ namespace JRNN {
 
 	void KBCCTrainer::InsertCandidate()
 	{
-		throw std::exception("The method or operation is not implemented.");
+		int numOuts = network->GetNumOut();
+		vecDouble outWeights(numOuts);
+		double weightMod;
+		weightMod = parms.weightMult / network->GetNumUnits();
+		assert(bestCand.get() != 0);
+		if (bestCand->GetActFuncType() != NetworkNode::ActType)
+		{
+			for (int i = 0; i < numOuts; i++){
+				outWeights[i] = -candPCorr[bestCand->GetName()][i] * weightMod;
+			}
+			network->InstallCandidate(bestCand,outWeights);
+		} 
+		else
+		{
+			NodeList candOutNodes = dynamic_pointer_cast<NetworkNode>(bestCand)->GetOutputNodes();
+			hashedVecDoubleMap hashedOutWeights;
+			BOOST_FOREACH(NodePtr node, candOutNodes){
+				string name = node->GetName();
+				for (int i = 0; i < numOuts; i++){
+					hashedOutWeights[name][i] = -candPCorr[name][i] * weightMod;
+				}
+			}
+			dynamic_pointer_cast<KBCCNetwork>(network)->InstallCandidate(bestCand, hashedOutWeights);
+		}
 	}
 
 	vecDouble KBCCTrainer::ActivateNet( vecDouble inPoint, vecDouble outPoint )
@@ -215,7 +248,7 @@ namespace JRNN {
 		network->GetCandLayer()->Activate();
 		BOOST_FOREACH(NodePtr node, candNodes){
 			sum = 0.0;
-			if (node->GetActFuncType() != "IntNet")
+			if (node->GetActFuncType() != NetworkNode::ActType)
 			{
 				string name = node->GetName();
 				cCorr = &candCorr[name];
@@ -243,6 +276,36 @@ namespace JRNN {
 				}
 			}
 		}
+	}
+
+	void KBCCTrainer::AddNewInputs( ints inputIndexes, DatasetPtr newData, bool connectToHidden /*= false */ )
+	{
+		throw std::exception("The method or operation is not implemented.");
+	}
+
+	int KBCCTrainer::GetNumCopies() const
+	{
+		return numCopies;
+	}
+
+	void KBCCTrainer::SetNumCopies( int val )
+	{
+		numCopies = val;
+	}
+
+	void KBCCTrainer::AddSubNet( NetworkPtr newNet )
+	{
+		SubNetlist.push_back(newNet);
+	}
+
+	void KBCCTrainer::ClearSubNetList()
+	{
+		SubNetlist.clear();
+	}
+
+	void KBCCTrainer::Reset()
+	{
+		CCTrainer::Reset();
 	}
 
 }

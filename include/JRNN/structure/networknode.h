@@ -25,6 +25,8 @@ namespace JRNN {
 	class NetworkNode: public Node {
 
 	public:
+		static const string ActType;
+
 		NetworkNode();
 		
 		NetworkNode(int inHeight, string nodeName, NetworkPtr net);

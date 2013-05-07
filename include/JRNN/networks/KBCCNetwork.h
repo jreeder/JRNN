@@ -21,11 +21,15 @@ namespace JRNN {
 	typedef boost::shared_ptr<KBCCNetwork> KBCCNetworkPtr;
 	typedef vector<NetworkNodePtr> NetworkNodeList;
 	typedef vector<NetworkPtr> NetPtrList;
+	typedef boost::enable_shared_from_this<KBCCNetwork> KBCCSharedFromThis;
 
-	class KBCCNetwork : CCNetwork{
-	protected:
-		NetworkNodeList SubNetworkNodes;
-		NetworkNodeList CandSubNetNodes;
+	class KBCCNetwork : public CCNetwork, public KBCCSharedFromThis{
+	public:
+		KBCCNetwork();
+		KBCCNetwork(int numIn, int numOut);
+	
+		static KBCCNetworkPtr Create();
+		static KBCCNetworkPtr Clone(KBCCNetworkPtr net);
 
 		virtual NetworkPtr Clone();
 
@@ -51,6 +55,11 @@ namespace JRNN {
 
 		virtual void Reset();
 
+	protected:
+
+		NetworkNodeList SubNetworkNodes;
+		NetworkNodeList CandSubNetNodes;
+		
 		virtual void CandFullyConnectBack( LayerPtr layer );
 
 		virtual void FullyConnectOut( LayerPtr layer );

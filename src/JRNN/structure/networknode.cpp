@@ -59,7 +59,7 @@ namespace JRNN {
 
 	string NetworkNode::GetActFuncType()
 	{
-		return "IntNet";
+		return NetworkNode::ActType;
 	}
 
 	void NetworkNode::Activate()
@@ -112,7 +112,7 @@ namespace JRNN {
 		LayerPtr curLayer = layer;
 		while(curLayer.get() != 0){
 			BOOST_FOREACH(NodePtr node, curLayer->GetNodes()){
-				if (node->GetActFuncType() == "IntNet")
+				if (node->GetActFuncType() == NetworkNode::ActType)
 				{
 					NetworkNodePtr netNode = static_pointer_cast<NetworkNode>(node);
 					hashedVecDoubleMap nodePrimes = netNode->GetPrimes();
@@ -212,6 +212,8 @@ namespace JRNN {
 		name = newName;
 		intNet->SetNetPrefix(newName);
 	}
+
+	const string NetworkNode::ActType = "IntNet";
 
 }
 
