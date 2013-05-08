@@ -44,6 +44,7 @@ namespace JRNN {
 		vecDouble GetRandContext();
 		int GetViewSize();
 		strings GetView();
+		strings GetTaskNames();
 
 		class Task {
 		public:

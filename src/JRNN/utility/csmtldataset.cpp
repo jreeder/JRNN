@@ -406,6 +406,7 @@ namespace JRNN {
 
 	void CSMTLDataset::Distribute()
 	{
+		ClearSubsets();
 		int viewSize = subView.size();
 		int numToDist = viewSize * numTrain + viewSize * numVal + viewSize * numTest;
 		assert(size > numToDist && numImpTrain < numTrain && viewSize > 0 && primaryTask < viewSize);
@@ -506,6 +507,15 @@ namespace JRNN {
 	bool CSMTLDataset::GetConceptData()
 	{
 		return conceptData;
+	}
+
+	JRNN::strings CSMTLDataset::GetTaskNames()
+	{
+		strings tmpView; //Loads all tasks into a view and generates the ds if no view has been set.
+		BOOST_FOREACH(TaskPair tp, taskList){
+			tmpView.push_back(tp.first);
+		}
+		return tmpView;
 	}
 
 	vecDouble CSMTLDataset::Task::getNetOuts( vecDouble inputs )

@@ -10,5 +10,4 @@ proj.directory-list = [{'dirloc': loc('src'),
                         'include_hidden': False,
                         'recursive': True,
                         'watch_for_changes': True}]
-proj.file-list = [loc('../../../../../Downloads/NewInputTests.py')]
 proj.file-type = 'shared'

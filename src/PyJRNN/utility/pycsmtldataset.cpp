@@ -32,6 +32,7 @@ void exportCSMTLDataset(){
 		add_property("isConceptData", &CSMTLDataset::GetConceptData, &CSMTLDataset::SetConceptData).
 		def("DistData", &CSMTLDataset::DistData, CSMTLDataset_DDOverloads()).
 		def("ResetView", &CSMTLDataset::ResetView).
-		def("GetRandContext", &CSMTLDataset::GetRandContext)
+		def("GetRandContext", &CSMTLDataset::GetRandContext).
+		def("GetTaskNames", &CSMTLDataset::GetTaskNames)
 		;
 }
