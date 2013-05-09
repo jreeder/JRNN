@@ -65,6 +65,16 @@ namespace JRNN {
 				numOuts = 0;
 				hasNet = false;
 			}
+			Task(const Task& orig){
+				name = orig.name;
+				indexes = orig.indexes;
+				numOuts = orig.numOuts;
+				net = orig.net;
+				hasNet = orig.hasNet;
+				outClassIndexes = orig.outClassIndexes;
+				outClassPercentages = orig.outClassPercentages;
+				outClassNames = orig.outClassNames;
+			}
 			vecDouble getNetOuts(vecDouble inputs);
 		};
 		typedef boost::unordered_map<string, doubles> TaskOuts;
@@ -97,7 +107,8 @@ namespace JRNN {
 		vecDouble VecDoubleFromDoubles( const doubles& inDoubles );
 		template<class outType, class inType> 
 		outType ConvertVector(const inType& inVector);
-
+		void ClearTaskValues();
+		Tasks CloneTaskList( Tasks taskList );
 	};
 }
 

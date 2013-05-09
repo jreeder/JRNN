@@ -161,8 +161,41 @@ namespace JRNN{
 		numOut = orig.numOut;
 		conScale = orig.conScale;
 		conOffset = orig.conOffset;
-		netPrefix = orig.netPrefix;
 	}
+
+	NetworkPtr Network::Clone()
+	 {
+		 NetworkPtr np(new Network());
+		 NetworkPtr oldP = shared_from_this();
+		 Network::Clone(np, oldP);
+		 return np;
+	 }
+
+	 void Network::Clone(NetworkPtr newP, NetworkPtr oldP){
+		 newP->numHidLayers = oldP->numHidLayers;
+		 newP->numIn = oldP->numIn;
+		 newP->numOut = oldP->numOut;
+		 newP->locked = oldP->locked;
+		 newP->netPrefix = oldP->netPrefix;
+		 newP->conScale = oldP->conScale;
+		 newP->conOffset = oldP->conOffset;
+		 BOOST_FOREACH(LayerPair newLP, oldP->layers){
+			 newP->layers.insert(LayerPair(newLP.first, Layer::Clone(newLP.second)));
+		 }
+		 BOOST_FOREACH(LayerPair lp, oldP->layers){
+			 LayerPtr layer = newP->layers[lp.first];
+			 if (lp.second->GetPrevLayer() != 0){
+				 layer->SetPrevLayer(newP->layers[lp.second->GetPrevLayer()->GetName()]);
+			 }
+			 if (lp.second->GetNextLayer() != 0){
+				 layer->SetNextLayer(newP->layers[lp.second->GetNextLayer()->GetName()]);
+			 }
+		 }
+		 BOOST_FOREACH(ConPair conP, oldP->connections){
+			 ConPtr con = conP.second;
+			 newP->AddConnection(Connection::Clone(con, newP->GetNode(con->GetInNodeName()), newP->GetNode(con->GetOutNodeName())));
+		 }
+	 }
 
 	Network::~Network() {
 		connections.clear();
@@ -362,7 +395,7 @@ namespace JRNN{
 			 }
 		 }
 		 else {
-			 int pos1 = nodeName.find("-");
+			 int pos1 = netPrefix.size() + 1;
 			 int pos2 = nodeName.find("_", pos1+1);
 			 if (pos1 != string::npos || pos2 != string::npos){
 				 int stlen = pos2 - (pos1+1);
@@ -373,36 +406,6 @@ namespace JRNN{
 			retNode = layers[layerName]->GetNodeByName(nodeName);
 		 }
 		 return retNode;
-	 }
-
-	 void Network::Clone(NetworkPtr newP, NetworkPtr oldP){
-		 newP->numHidLayers = oldP->numHidLayers;
-		 newP->numIn = oldP->numIn;
-		 newP->numOut = oldP->numOut;
-		 BOOST_FOREACH(LayerPair newLP, oldP->layers){
-			 newP->layers.insert(LayerPair(newLP.first, Layer::Clone(newLP.second)));
-		 }
-		 BOOST_FOREACH(LayerPair lp, oldP->layers){
-			 LayerPtr layer = newP->layers[lp.first];
-			 if (lp.second->GetPrevLayer() != 0){
-				 layer->SetPrevLayer(newP->layers[lp.second->GetPrevLayer()->GetName()]);
-			 }
-			 if (lp.second->GetNextLayer() != 0){
-				 layer->SetNextLayer(newP->layers[lp.second->GetNextLayer()->GetName()]);
-			 }
-		 }
-		 BOOST_FOREACH(ConPair conP, oldP->connections){
-			 ConPtr con = conP.second;
-			 newP->AddConnection(Connection::Clone(con, newP->GetNode(con->GetInNodeName()), newP->GetNode(con->GetOutNodeName())));
-		 }
-	 }
-
-	NetworkPtr Network::Clone()
-	 {
-		 NetworkPtr np(new Network());
-		 NetworkPtr oldP = shared_from_this();
-		 Network::Clone(np, oldP);
-		 return np;
 	 }
 
 	void Network::SetScaleAndOffset( double scale, double offset )

@@ -546,7 +546,7 @@ namespace JRNN {
 				lastScore = candBestScore;
 				quitEpoch = epoch + parms.cand.patience;
 			}
-			else if (fabs(candBestScore - lastScore) > (lastScore * parms.cand.changeThreshold)){
+			else if (candBestScore > lastScore && fabs(candBestScore - lastScore) > (lastScore * parms.cand.changeThreshold)){
 				quitEpoch = epoch + parms.cand.patience;
 				lastScore = candBestScore;
 			}

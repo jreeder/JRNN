@@ -18,7 +18,7 @@
 namespace JRNN {
 	class RevCCNetwork;
 	typedef boost::shared_ptr<RevCCNetwork> RevCCNetworkPtr;
-	typedef boost::enable_shared_from_this<RevCCNetwork> RevCCSharedFromThis;
+	typedef derived_shared_from_this<RevCCNetwork> RevCCSharedFromThis;
 
 	class RevCCNetwork : public CCNetwork, public RevCCSharedFromThis {
 	public:

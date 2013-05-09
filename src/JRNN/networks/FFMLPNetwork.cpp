@@ -74,7 +74,7 @@ namespace JRNN {
 
 	JRNN::NetworkPtr FFMLPNetwork::Clone()
 	{
-		FFMLPNetPtr oldP = FFMLPSharedFromThis::shared_from_this();
+		FFMLPNetPtr oldP = FFMLPSharedFromThis::shared_from_This();
 		return FFMLPNetwork::Clone(oldP);
 	}
 

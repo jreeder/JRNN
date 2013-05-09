@@ -72,8 +72,8 @@ ConPtr Connection::Connect(NodePtr newInNode, NodePtr newOutNode, double weight)
 ConPtr Connection::Clone( ConPtr con, NodePtr inNode, NodePtr outNode )
 {
 	ConPtr cp(new Connection((*con)));
-	cp->SetInNode(inNode);
-	cp->SetOutNode(outNode);
+	cp->inNode = inNode;
+	cp->outNode = outNode;
 	cp->inNode->AddConnection(OUT,cp);
 	cp->outNode->AddConnection(IN,cp);
 	return cp;
@@ -124,12 +124,12 @@ double Connection::GetValue(){
 
 void Connection::SetInNode(NodePtr newInNode){
     inNode = newInNode;
-    inNode->AddConnection(OUT,ConPtr(this));
+    //inNode->AddConnection(OUT,ConPtr(this)); Shouldn't do this it messes things up. 
 }
 
 void Connection::SetOutNode(NodePtr newOutNode){
     outNode = newOutNode;
-    outNode->AddConnection(IN, ConPtr(this));
+    //outNode->AddConnection(IN, ConPtr(this)); Shouldn't do this it messes things up.
 }
 
 void Connection::SetLocked(bool lock){

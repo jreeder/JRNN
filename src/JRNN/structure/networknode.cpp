@@ -94,11 +94,12 @@ namespace JRNN {
 		NodeList inputNodes = netLayers["input"]->GetNodes();
 		//int numInputs = inputNodes.size();
 		localGradients = hashedVecDoubleMap(numInputs);
+		outGradients = hashedVecDoubleMap(numInputs);
 		BOOST_FOREACH(NodePtr node, biasNodes){
 			localGradients[node->GetName()];
 		}
 		for (uint i = 0; i < inputNodes.size(); i++){
-			localGradients[inputNodes[i]->GetName()][i] = inputNodes[i]->GetPrime();
+			localGradients[inputNodes[i]->GetName()][i] = AddOffset(inputNodes[i]->GetPrime());
 		}
 
 		cascadeGradients(netLayers["input"]->GetNextLayer());
@@ -133,7 +134,7 @@ namespace JRNN {
 						vecDouble outPrimes = nodePrimes[node->GetName()];
 						assert(outPrimes.size() != inputGradients.size());
 						for (uint i = 0; i < outPrimes.size(); i++){
-							colSums += inputGradients[i] * outPrimes[i];
+							colSums += inputGradients[i] * AddOffset(outPrimes[i]);
 						}
 						localGradients[node->GetName()] = colSums;
 					}
@@ -145,7 +146,7 @@ namespace JRNN {
 					BOOST_FOREACH(ConPtr con, node->GetConnections(IN)){
 						inputSums += localGradients[con->GetInNodeName()] * con->GetWeight();
 					}
-					localGradients[node->GetName()] = inputSums * node->GetPrime();
+					localGradients[node->GetName()] = inputSums * AddOffset(node->GetPrime());
 				}
 			}
 			if (curLayer->HasNextL()){
@@ -165,6 +166,7 @@ namespace JRNN {
 		localGradients.clear();
 		outGradients.clear();
 		intNet->SetNetPrefix(nodeName);
+		pOffset = 0.00000001;
 	}
 
 	NetworkNode::NetworkNode( int inHeight, string nodeName ) : Node(inHeight, nodeName)
@@ -174,6 +176,18 @@ namespace JRNN {
 		intNet.reset();
 		localGradients.clear();
 		outGradients.clear();
+		pOffset = 0.00000001;
+	}
+
+	NetworkNode::NetworkNode(const NetworkNode& orig) : Node(orig)
+	{
+		numInputs = orig.numInputs;
+		numOutputs = orig.numOutputs;
+		localGradients = orig.localGradients;
+		outGradients = orig.outGradients;
+		pOffset = orig.pOffset;
+		if (intNet)
+			intNet = orig.intNet->Clone();
 	}
 
 	NetworkPtr NetworkNode::GetIntNet() const
@@ -201,7 +215,7 @@ namespace JRNN {
 		return intNet->GetLayer("out")->GetNodes();
 	}
 
-	JRNN::NetworkNodePtr NetworkNode::CreateNetworkNode( int inHeight, string nodeName )
+	JRNN::NetworkNodePtr NetworkNode::Create( int inHeight, string nodeName )
 	{
 		NetworkNodePtr np(new NetworkNode(inHeight, nodeName));
 		return np;
@@ -210,7 +224,19 @@ namespace JRNN {
 	void NetworkNode::SetName( string newName )
 	{
 		name = newName;
-		intNet->SetNetPrefix(newName);
+		if(intNet)
+			intNet->SetNetPrefix(newName);
+	}
+
+	NodePtr NetworkNode::Clone()
+	{
+		NetworkNodePtr np(new NetworkNode((*this)));
+		return np;
+	}
+
+	double NetworkNode::AddOffset( double Prime )
+	{
+		return Prime + pOffset;
 	}
 
 	const string NetworkNode::ActType = "IntNet";

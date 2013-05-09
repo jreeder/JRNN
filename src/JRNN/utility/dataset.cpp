@@ -253,6 +253,9 @@ void Dataset::RedistData(){
     //GenRandRange();
 	Reshuffle();
 	ClearSubsets();
+	if (!dsAnalyzed){
+		AnalyzeDS();
+	}
     Distribute();
 }
 

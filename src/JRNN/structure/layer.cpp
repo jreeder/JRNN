@@ -27,23 +27,31 @@ Layer::Layer(layerType type, int inLayerSize, int height, string name, bool shal
 	this->shallowLayer = shallow;
 }
 
-LayerPtr Layer::CreateLayer(layerType type, int inLayerSize, int height, string name, bool shallow /*= false*/, string netPrefix /*= 'NONE'*/){
-	LayerPtr lp(new Layer(type,inLayerSize,height, name, shallow, netPrefix));
-	return lp;
-}
-
 Layer::Layer(const Layer& orig) {
 	type = orig.type;
 	layerSize = orig.layerSize;
 	height = orig.height;
 	name = orig.name;
 	netPrefix = orig.netPrefix;
-	NodePtr np;
+	shallowLayer = orig.shallowLayer;
+	//NodePtr np;
 	BOOST_FOREACH(NodePtr node, orig.nodes){
-		np.reset(new Node((*node)));
+		//np.reset(new Node((*node)));
+		NodePtr np = node->Clone();
 		nodes.push_back(np);
 	}
-	np.reset();
+	//np.reset();
+}
+
+LayerPtr Layer::Clone( LayerPtr layer )
+{
+	LayerPtr lp(new Layer((*layer)));
+	return lp;
+}
+
+LayerPtr Layer::CreateLayer(layerType type, int inLayerSize, int height, string name, bool shallow /*= false*/, string netPrefix /*= 'NONE'*/){
+	LayerPtr lp(new Layer(type,inLayerSize,height, name, shallow, netPrefix));
+	return lp;
 }
 
 void Layer::SetNextLayer(LayerPtr nextLayer) {
@@ -269,12 +277,6 @@ int Layer::RemoveUnconnectedNodes()
 	}
 	nodesToRemove.clear();
 	return nodesRemoved;
-}
-
-LayerPtr Layer::Clone( LayerPtr layer )
-{
-	LayerPtr lp(new Layer((*layer)));
-	return lp;
 }
 
 void Layer::ShallowCopy(LayerPtr layer){

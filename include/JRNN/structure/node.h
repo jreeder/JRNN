@@ -16,6 +16,8 @@
 //using namespace boost::numeric::ublas;
 
 namespace JRNN {
+	class Node;
+	//typedef boost::enable_shared_from_this<Node> NodeSharedFromThis;
 
 	class Node {
 	public:
@@ -31,6 +33,7 @@ namespace JRNN {
 		//Node(int height, nodeType nType, string name);
 		Node(int height, string name);
 		Node(const Node& orig);
+		virtual NodePtr Clone();
 		template<typename T>
 		static NodePtr CreateNode(int height, string name);
 		virtual ~Node();

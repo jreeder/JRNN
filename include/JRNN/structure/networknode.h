@@ -28,6 +28,10 @@ namespace JRNN {
 		static const string ActType;
 
 		NetworkNode();
+
+		NetworkNode(const NetworkNode& orig);
+
+		virtual NodePtr Clone();
 		
 		NetworkNode(int inHeight, string nodeName, NetworkPtr net);
 
@@ -35,7 +39,7 @@ namespace JRNN {
 		
 		virtual void Activate();
 
-		static NetworkNodePtr CreateNetworkNode(int inHeight, string nodeName);
+		static NetworkNodePtr Create(int inHeight, string nodeName);
 		
 		vecDouble GetOuts();
 		
@@ -67,14 +71,11 @@ namespace JRNN {
 		//hashedDoubleMap inputGradients;
 		hashedVecDoubleMap localGradients;
 		hashedVecDoubleMap outGradients;
-
+		double pOffset;
 
 		void calcGradients();
 		void cascadeGradients( LayerPtr layer );
-
-
-
-		
+		double AddOffset( double Prime);
 	};
 
 }

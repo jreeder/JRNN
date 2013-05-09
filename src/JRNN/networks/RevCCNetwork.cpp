@@ -50,7 +50,7 @@ namespace JRNN {
 	}
 
 	NetworkPtr RevCCNetwork::Clone() {
-		RevCCNetworkPtr oldP = RevCCSharedFromThis::shared_from_this();
+		RevCCNetworkPtr oldP = RevCCSharedFromThis::shared_from_This();
 		return RevCCNetwork::Clone(oldP);
 	}
 

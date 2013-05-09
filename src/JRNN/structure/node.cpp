@@ -66,6 +66,7 @@ Node::Node(const Node& orig) {
     sigSteepness = orig.sigSteepness;
 	//numConnections = orig.numConnections;
     name = orig.name;
+	actFunction.reset(ActivationFunction::Create(orig.actFunction->getType()));
 //    nextIn = orig.nextIn;
 //    nextOut = orig.nextOut;
 //    inputs = orig.inputs;
@@ -75,6 +76,12 @@ Node::Node(const Node& orig) {
     //outConnections = orig.outConnections;
 }
 
+
+NodePtr Node::Clone()
+{
+	NodePtr np(new Node((*this)));
+	return np;
+}
 
 Node::~Node() {
 //    inConnections.clear();

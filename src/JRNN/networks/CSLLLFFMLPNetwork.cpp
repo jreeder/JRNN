@@ -45,7 +45,7 @@ namespace JRNN {
 
 	JRNN::NetworkPtr CSLLFFMLPNetwork::Clone()
 	{
-		CSLLFFMLPNetPtr oldP = CSLLFFMLPSharedFromThis::shared_from_this();
+		CSLLFFMLPNetPtr oldP = CSLLFFMLPSharedFromThis::shared_from_This();
 		return CSLLFFMLPNetwork::Clone(oldP);
 	}
 

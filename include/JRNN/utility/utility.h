@@ -278,6 +278,26 @@ namespace JRNN {
 		return retStrings;
 	}
 
+	template<class Derived>
+	class derived_shared_from_this {
+	public:
+		typedef boost::shared_ptr<Derived> Ptr;
+
+		Ptr shared_from_This()
+		{
+			return boost::static_pointer_cast<Derived>(static_cast<Derived *>(this)->shared_from_this());
+		}
+		Ptr shared_from_This() const
+		{
+			return boost::static_pointer_cast<Derived>(static_cast<Derived *>(this)->shared_from_this());
+		}
+	};
+
+	inline double setPrecision(double inValue, int prec){
+		double mult = pow(10.0, prec);
+		int tmpValue = (int)(inValue * mult);
+		return (double)tmpValue / mult;
+	}
 }
 
 #endif

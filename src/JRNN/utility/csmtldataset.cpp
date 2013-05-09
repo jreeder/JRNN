@@ -32,7 +32,7 @@ namespace JRNN {
 		this->conceptData = orig.conceptData;
 		this->primaryTask = orig.primaryTask;
 		this->realInputs = orig.realInputs;
-		this->taskList = orig.taskList;
+		this->taskList = CloneTaskList(orig.taskList);
 		this->view = orig.view;
 		this->subView = orig.subView;
 		this->numRealInputs = orig.numRealInputs;
@@ -203,6 +203,7 @@ namespace JRNN {
 		inputs.clear();
 		outputs.clear();
 		int indexCounter = 0;
+		ClearTaskValues();
 		BOOST_FOREACH(vecDouble realIn, realInputs){
 			int viewCount = 0;
 			BOOST_FOREACH(string task, view){
@@ -356,16 +357,26 @@ namespace JRNN {
 		int i = 0, total = 0;
 		int numClasses = inTask->outClassNames.size();
 		ints usedIndexes;
-		//TODO need to fix what happens if there is not enough data to fill a set.
  		
-		if (conceptData && indexQueues.size() == 2)
+		//code below handles this now. 
+		/*if (conceptData && indexQueues.size() == 2)
  		{
 			int numAvailable = 0;
 			numAvailable = indexQueues["0"].size() + indexQueues["1"].size();
 			if (numAvailable < numExamples) {
 				numExamples = numAvailable;
 			}
- 		}
+ 		}*/
+
+		//This checks to make sure that there are enough datapoints left.
+		int numAvailable = 0;
+		BOOST_FOREACH(string ocName, inTask->outClassNames){
+			numAvailable += indexQueues[ocName].size();
+		}
+		if (numAvailable < numExamples) {
+			numExamples = numAvailable;
+		}
+
 		while (total < numExamples){
 			int classIndex = i++ %numClasses;
 			string className = inTask->outClassNames[classIndex];
@@ -516,6 +527,27 @@ namespace JRNN {
 			tmpView.push_back(tp.first);
 		}
 		return tmpView;
+	}
+
+	void CSMTLDataset::ClearTaskValues()
+	{
+		BOOST_FOREACH(TaskPair taskP, taskList){
+			TaskPtr task = taskP.second;
+			task->outClassIndexes.clear();
+			task->outClassPercentages.clear();
+			task->outClassNames.clear();
+			task->indexes.clear();
+		}
+	}
+
+	CSMTLDataset::Tasks CSMTLDataset::CloneTaskList( Tasks taskList )
+	{
+		Tasks newList;
+		BOOST_FOREACH(TaskPair taskP, taskList){
+			TaskPtr newTask(new Task((*taskP.second)));
+			newList[taskP.first] = newTask;
+		}
+		return newList;
 	}
 
 	vecDouble CSMTLDataset::Task::getNetOuts( vecDouble inputs )

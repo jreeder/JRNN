@@ -15,7 +15,7 @@ namespace JRNN {
 
 	JRNN::NetworkPtr KBCCNetwork::Clone()
 	{
-		KBCCNetworkPtr oldP = KBCCSharedFromThis::shared_from_this();
+		KBCCNetworkPtr oldP = KBCCSharedFromThis::shared_from_This();
 		return KBCCNetwork::Clone(oldP);
 	}
 
@@ -57,14 +57,14 @@ namespace JRNN {
 		CandFullyConnectBack(candLayer);
 		CandSubNetNodes.clear();
 		BOOST_FOREACH(NetworkPtr net, candNets){
-			NetworkNodePtr newNetNode = NetworkNode::CreateNetworkNode(tmpHeight, "tmpName");
+			NetworkNodePtr newNetNode = NetworkNode::Create(tmpHeight, "tmpName");
 			candLayer->AddNode(newNetNode);
 			newNetNode->SetIntNet(net->Clone());
 			CandNetFullyConnectBack(newNetNode, true, false);
 			CandSubNetNodes.push_back(newNetNode);
 			for (int i = 0; i < numCopies; i++)
 			{
-				NetworkNodePtr newNetNode = NetworkNode::CreateNetworkNode(tmpHeight, "tmpName");
+				NetworkNodePtr newNetNode = NetworkNode::Create(tmpHeight, "tmpName");
 				candLayer->AddNode(newNetNode);
 				bool reduceHeight = i % 2 == 0 ? false : true;
 				newNetNode->SetIntNet(net->Clone());
@@ -89,15 +89,34 @@ namespace JRNN {
 			NodeList prevNodes = prevLayer->GetNodes();
 			bool conMade = false;
 			BOOST_FOREACH(NodePtr n, prevNodes){
-				BOOST_FOREACH(NodePtr n2, layerNodes){
-					if(!onlyDirect){
-						candConnections.push_back(Connect(n,n2));
-						conMade = true;
-					}
-					else {
-						if (n2->GetName().find(n->GetName()) != string::npos){
-							candConnections.push_back(Connect(n,n2,1.0));
+				if (n->GetActFuncType() != NetworkNode::ActType){
+					BOOST_FOREACH(NodePtr n2, layerNodes){
+						if(!onlyDirect){
+							candConnections.push_back(Connect(n,n2));
 							conMade = true;
+						}
+						else {
+							if (n2->GetName().find(n->GetName()) != string::npos){
+								candConnections.push_back(Connect(n,n2,1.0));
+								conMade = true;
+							}
+						}
+					}
+				}
+				else {
+					NodeList prevOutNodes = dynamic_pointer_cast<NetworkNode>(n)->GetOutputNodes();
+					BOOST_FOREACH(NodePtr n1, prevOutNodes){
+						BOOST_FOREACH(NodePtr n2, layerNodes){
+							if(!onlyDirect){
+								candConnections.push_back(Connect(n1,n2));
+								conMade = true;
+							}
+							else {
+								if (n2->GetName().find(n->GetName()) != string::npos){
+									candConnections.push_back(Connect(n1,n2,1.0));
+									conMade = true;
+								}
+							}
 						}
 					}
 				}
@@ -119,6 +138,79 @@ namespace JRNN {
 		}
 	}
 
+	void KBCCNetwork::CandFullyConnectBack( LayerPtr layer )
+	{
+		NodeList layerNodes = layer->GetNodes();
+		LayerPtr prevLayer = layer->GetPrevLayer();
+
+		Connection::SetRandomSeed();
+
+		if (useSDCC && prevLayer->GetType() != Layer::input){ //Use the sibling/descendant mechanism to reduce network depth
+			NodeList prevNodes = prevLayer->GetNodes();
+			int count = 0;
+			int tmpHeight = layer->GetHeight();
+			BOOST_FOREACH(NodePtr n, prevNodes){
+				if (n->GetActFuncType() != NetworkNode::ActType)
+				{
+					BOOST_FOREACH(NodePtr n2, layerNodes){
+						if (count++ % 2 == 0)
+						{
+							//Only connect half of the candidates to the last layer as descendants.
+							candConnections.push_back(Connect(n,n2));
+						}
+						else {
+							n2->SetHeight(tmpHeight - 1); //Don't connect and reduce the height This will be a sibling node;
+						}
+					}
+				} 
+				else
+				{
+					NodeList prevOutNodes = dynamic_pointer_cast<NetworkNode>(n)->GetOutputNodes();
+					BOOST_FOREACH(NodePtr n2, layerNodes){
+						if (count++ % 2 == 0){
+							BOOST_FOREACH(NodePtr n1, prevOutNodes){
+								candConnections.push_back(Connect(n1,n2));
+							}
+						}
+						else {
+							n2->SetHeight(tmpHeight - 1);
+						}
+					}
+					
+				}
+			}
+			prevLayer = prevLayer->GetPrevLayer();
+		}
+
+		while(prevLayer){
+			NodeList prevNodes = prevLayer->GetNodes();
+			BOOST_FOREACH(NodePtr n, prevNodes){
+				if (n->GetActFuncType() != NetworkNode::ActType){
+					BOOST_FOREACH(NodePtr n2, layerNodes){
+						candConnections.push_back(Connect(n,n2));
+					}
+				}
+				else {
+					NodeList prevOutNodes = dynamic_pointer_cast<NetworkNode>(n)->GetOutputNodes();
+					BOOST_FOREACH(NodePtr n1, prevOutNodes){
+						BOOST_FOREACH(NodePtr n2, layerNodes){
+							candConnections.push_back(Connect(n1,n2));
+						}
+					}
+				}
+			}
+			prevLayer = prevLayer->GetPrevLayer();
+		}
+
+		NodeList biasNodes = layers["bias"]->GetNodes();
+		BOOST_FOREACH(NodePtr n, biasNodes){
+			BOOST_FOREACH(NodePtr n2, layerNodes){
+				candConnections.push_back(Connect(n,n2));
+			}
+		}
+
+	}
+
 	void KBCCNetwork::InstallCandidate( NodePtr node, vecDouble outWeights /*= vecDouble(0 ) */ )
 	{
 		CCNetwork::InstallCandidate(node, outWeights);
@@ -126,6 +218,22 @@ namespace JRNN {
 
 	void KBCCNetwork::InstallCandidate( NodePtr node, hashedVecDoubleMap outWeights /*= hashedVecDoubleMap()*/)
 	{
+		//Have to do this backwards from normal because the name changes when it's added. to the new layer. 
+		NodeList candOutNodes = dynamic_pointer_cast<NetworkNode>(node)->GetOutputNodes();
+		BOOST_FOREACH(NodePtr oNode, candOutNodes){
+			vecDouble tmpOutWeights = outWeights[oNode->GetName()];
+			if (tmpOutWeights.size() == 0){
+
+				CandConnectOut(oNode);
+				//FullyConnectOut(lp);
+			}
+			else {
+
+				CandConnectOut(oNode, tmpOutWeights);
+				//FullyConnectOut(lp, outWeights);
+			}
+		}
+
 		bool newLayer = node->GetHeight() == currentLayer->GetHeight() ? false : true;
 
 		LayerPtr lp;
@@ -142,20 +250,7 @@ namespace JRNN {
 		BOOST_FOREACH(ConPtr con, node->GetConnections(IN)){
 			AddConnection(con);
 		}
-		NodeList candOutNodes = dynamic_pointer_cast<NetworkNode>(node)->GetOutputNodes();
-		BOOST_FOREACH(NodePtr oNode, candOutNodes){
-			vecDouble tmpOutWeights = outWeights[oNode->GetName()];
-			if (tmpOutWeights.size() == 0){
-
-				CandConnectOut(node);
-				//FullyConnectOut(lp);
-			}
-			else {
-
-				CandConnectOut(node, tmpOutWeights);
-				//FullyConnectOut(lp, outWeights);
-			}
-		}
+		
 
 		if (newLayer)
 		{
@@ -176,11 +271,6 @@ namespace JRNN {
 		SubNetworkNodes.clear();
 		CandSubNetNodes.clear();
 		CCNetwork::Reset();
-	}
-
-	void KBCCNetwork::CandFullyConnectBack( LayerPtr layer )
-	{
-		CCNetwork::CandFullyConnectBack(layer);
 	}
 
 	void KBCCNetwork::FullyConnectOut( LayerPtr layer )

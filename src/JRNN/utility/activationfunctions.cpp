@@ -15,3 +15,30 @@ const string ASigmoid::_type = "ASIGMOID";
 const string Gaussian::_type = "GAUSSIAN";
 const string Bias::_type = "BIAS";
 const string Linear::_type = "LINEAR";
+
+ActivationFunction* ActivationFunction::Create( string ActType )
+{
+	ActivationFunction* tmpAct;
+
+	string oldActName = ActType;
+	if(oldActName == "SIGMOID"){
+		tmpAct = new Sigmoid();
+	}
+	else if(oldActName == "ASIGMOID"){
+		tmpAct = new ASigmoid();
+	}
+	else if(oldActName == "GAUSSIAN"){
+		tmpAct = new Gaussian();
+	}
+	else if(oldActName == "BIAS"){
+		tmpAct = new Bias();
+	}
+	else if(oldActName == "LINEAR"){
+		tmpAct = new Linear();
+	}
+	else {
+		tmpAct = NULL;
+	}
+
+	return tmpAct;
+}

@@ -71,7 +71,7 @@ namespace JRNN {
 
 	NetworkPtr CCNetwork::Clone()
 	{
-		CCNetworkPtr oldP = CCSharedFromThis::shared_from_this();
+		CCNetworkPtr oldP = CCSharedFromThis::shared_from_This();
 		return CCNetwork::Clone(oldP);
 	}
 

@@ -1,15 +1,21 @@
 # -*- coding: utf-8 -*-
 # <nbformat>3.0</nbformat>
 
-import PyJRNN #_d as PyJRNN # for debugging
+debug = True
+
+if debug:
+    import PyJRNN_d as PyJRNN # for debugging
+    from PyJRNN_d.utility import DSDatatype, CSMTLDataset
+    from PyJRNN_d.types import strings
+    from PyJRNN_d.trainers import TestResults, TestResult    
+else:
+    import PyJRNN
+    from PyJRNN.utility import DSDatatype, CSMTLDataset
+    from PyJRNN.types import strings
+    from PyJRNN.trainers import TestResults, TestResult    
+
 import pyublas
 import numpy
-#from PyJRNN_d.utility import DSDatatype, CSMTLDataset
-#from PyJRNN_d.types import strings
-#from PyJRNN_d.trainers import TestResults, TestResult
-from PyJRNN.utility import DSDatatype, CSMTLDataset
-from PyJRNN.types import strings
-from PyJRNN.trainers import TestResults, TestResult
 import os
 import re
 import json

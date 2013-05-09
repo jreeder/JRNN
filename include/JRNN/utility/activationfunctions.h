@@ -11,6 +11,8 @@
 #include "JRNN.h"
 
 namespace JRNN {
+	class ActivationFunction;
+	typedef boost::scoped_ptr<ActivationFunction> ActFuncPtr;
 
 	class ActivationFunction {
 	public:
@@ -21,6 +23,9 @@ namespace JRNN {
 		virtual string getType() {
 			return _type; 
 		}
+
+		static ActivationFunction* Create(string ActType);
+
 	private:
 		static const string _type;
 	};
@@ -183,8 +188,7 @@ namespace JRNN {
 			return 1.0;
 		}
 	};
-	
-	typedef boost::scoped_ptr<ActivationFunction> ActFuncPtr;
+
 }
 
 #endif

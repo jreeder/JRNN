@@ -266,6 +266,7 @@ namespace JRNN {
 		outNet["numHidLayers"] = net.numHidLayers;
 		outNet["layers"] = writeLayers(net.layers);
 		outNet["connections"] = writeCons(net.connections);
+		outNet["netPrefix"] = net.netPrefix;
 	}
 
 	void JSONArchiver::readNetwork( serialize::Network& sNet, mObject& net )
@@ -278,6 +279,7 @@ namespace JRNN {
 		mArray layers = findValue(net, "layers").get_array();
 		sNet.layers = readLayers(layers);
 		sNet.connections = readCons(cons);
+		sNet.netPrefix = findValue(net, "netPrefix").get_str();
 	}
 
 	void JSONArchiver::writeFFNetwork( mObject& outNet, serialize::FFMLPNetwork& net )

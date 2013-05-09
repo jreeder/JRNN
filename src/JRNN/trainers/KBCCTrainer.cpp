@@ -68,6 +68,8 @@ namespace JRNN {
 				curCorr = &candCorr[name];
 				prevCorr = &candPCorr[name];
 
+				//cout << name << " " << candSumVals[name] << " " << avgValue << endl;
+
 				assert((*curCorr).size() == nOuts);
 				for (int j = 0; j < nOuts; j++){
 					/*double tmp1 = (*curCorr)[j]; //Used for Debugging. 
@@ -88,10 +90,12 @@ namespace JRNN {
 					curCorr = &candCorr[name];
 					prevCorr = &candPCorr[name];
 
+					//cout << name << " " << candSumVals[name] << " " << avgValue << endl;
+					//Find out why some of the networks have bad correlations
 					assert((*curCorr).size() == nOuts);
 					for (int j = 0; j < nOuts; j++){
-						/*double tmp1 = (*curCorr)[j]; //Used for Debugging. 
-						double tmp2 = err.sumErrs[j];*/
+						double tmp1 = (*curCorr)[j]; //Used for Debugging. 
+						double tmp2 = err.sumErrs[j];
 						cor = ((*curCorr)[j] - avgValue * err.sumErrs[j]) / err.sumSqErr;
 						(*prevCorr)[j] = cor;
 						(*curCorr)[j] = 0.0;
@@ -99,6 +103,7 @@ namespace JRNN {
 					}
 
 					candSumVals[name] = 0.0;
+					//cout << candSumVals[name] << endl;
 				}
 			}
 			if (parms.useSDCC)
@@ -117,6 +122,62 @@ namespace JRNN {
 		}
 		if (bestCand.get() == 0){
 			bestCand = candNodes[0];
+		}
+	}
+
+	void KBCCTrainer::ComputeCorrelations()
+	{
+		double sum,val;
+		vecDouble* cCorr;
+		NodeList candNodes = network->GetCandLayer()->GetNodes();
+		network->GetCandLayer()->Activate();
+		BOOST_FOREACH(NodePtr node, candNodes){
+			sum = 0.0;
+			if (node->GetActFuncType() != NetworkNode::ActType)
+			{
+				string name = node->GetName();
+				cCorr = &candCorr[name];
+				val = node->GetOut();
+				val = setPrecision(val, 3);
+				candSumVals[name] += val;
+//#ifdef _DEBUG
+//				cout << name << " ValSums: " << candSumVals[name] << " Vals: " << val << endl;
+//#endif // _DEBUG
+				//compute correlation for this unit
+				for (unsigned int j = 0; j < err.errors.size(); j++ ){
+					(*cCorr)[j] += val * err.errors[j];
+//#ifdef _DEBUG
+//					cout << " val*err: " << val * err.errors[j] << " cor[j]: " << (*cCorr)[j];
+//#endif // _DEBUG
+				}
+//#ifdef _DEBUG	
+//				cout << endl;
+//#endif // _DEBUG
+			} 
+			else
+			{//Find out why score is so high. 
+				NodeList candOutNodes = dynamic_pointer_cast<NetworkNode>(node)->GetOutputNodes();
+				BOOST_FOREACH(NodePtr coNode, candOutNodes){
+					string name = coNode->GetName();
+					val = coNode->GetOut();
+					cCorr = &candCorr[name];
+					val = setPrecision(val, 3);
+					candSumVals[name] += val;
+//#ifdef _DEBUG
+//					cout << name << " ValSums: " << candSumVals[name] << " Vals: " << val << endl;
+//#endif // _DEBUG
+					//compute correlation for this unit
+					for (unsigned int j = 0; j < err.errors.size(); j++ ){
+						(*cCorr)[j] += val * err.errors[j];
+//#ifdef _DEBUG
+//						cout << " val*err: " << val * err.errors[j] << " cor[j]: " << (*cCorr)[j];
+//#endif // _DEBUG
+					}
+//#ifdef _DEBUG	
+//					cout << endl;
+//#endif // _DEBUG
+				}
+			}
 		}
 	}
 
@@ -145,8 +206,8 @@ namespace JRNN {
 			if (candidate->GetActFuncType() != NetworkNode::ActType)
 			{
 				string name = candidate->GetName();
-				value = candidate->GetOut();
-				actPrime = candidate->GetPrime();
+				value = setPrecision(candidate->GetOut(), 3);
+				actPrime = setPrecision(candidate->GetPrime(), 3);
 				change = 0.0;
 				cCorr = &candCorr[name];
 				cPCorr = &candPCorr[name];
@@ -179,13 +240,13 @@ namespace JRNN {
 					change = 0.0;
 					BOOST_FOREACH(NodePtr coNodes, candOutNodes){
 						string name = coNodes->GetName();
-						value = coNodes->GetOut();
+						value = setPrecision(coNodes->GetOut(), 3);
 						cCorr = &candCorr[name];
 						cPCorr = &candPCorr[name];
 
-						actPrime = candActPrimes[name][i];
-
-						candSumVals[name] += value;
+						actPrime = setPrecision(candActPrimes[name][i], 7);
+						if (i == 0) //This should only happen once per output node. 
+							candSumVals[name] += value;
 						actPrime /= err.sumSqErr;
 
 						//compute correlations to each output
@@ -193,11 +254,13 @@ namespace JRNN {
 							error = err.errors[j];
 							direction = ((*cPCorr)[j] < 0.0) ? -1.0 : 1.0;
 							change -= direction * actPrime * (error - err.sumErrs[j]); 
-							(*cCorr)[j] += error * value;
+							if (i == 0) //This should only happen once per output node. 
+								(*cCorr)[j] += error * value;
 						}
 
 					}
 
+					//cout << candidate->GetName() << "input " << i << " Change: " << change << endl;
 					ConList cons = candInNodes[i]->GetConnections(IN);
 					BOOST_FOREACH(ConPtr con, cons){
 						cand.conSlopes[con->GetName()] += change * con->GetValue();
@@ -224,7 +287,7 @@ namespace JRNN {
 		else
 		{
 			NodeList candOutNodes = dynamic_pointer_cast<NetworkNode>(bestCand)->GetOutputNodes();
-			hashedVecDoubleMap hashedOutWeights;
+			hashedVecDoubleMap hashedOutWeights(numOuts);
 			BOOST_FOREACH(NodePtr node, candOutNodes){
 				string name = node->GetName();
 				for (int i = 0; i < numOuts; i++){
@@ -238,44 +301,6 @@ namespace JRNN {
 	vecDouble KBCCTrainer::ActivateNet( vecDouble inPoint, vecDouble outPoint )
 	{
 		return CCTrainer::ActivateNet(inPoint, outPoint);
-	}
-
-	void KBCCTrainer::ComputeCorrelations()
-	{
-		double sum,val;
-		vecDouble* cCorr;
-		NodeList candNodes = network->GetCandLayer()->GetNodes();
-		network->GetCandLayer()->Activate();
-		BOOST_FOREACH(NodePtr node, candNodes){
-			sum = 0.0;
-			if (node->GetActFuncType() != NetworkNode::ActType)
-			{
-				string name = node->GetName();
-				cCorr = &candCorr[name];
-				val = node->GetOut();
-				candSumVals[name] += val;
-
-				//compute correlation for this unit
-				for (unsigned int j = 0; j < err.errors.size(); j++ ){
-					(*cCorr)[j] += val * err.errors[j];
-				}
-			} 
-			else
-			{
-				NodeList candOutNodes = dynamic_pointer_cast<NetworkNode>(node)->GetOutputNodes();
-				BOOST_FOREACH(NodePtr coNode, candOutNodes){
-					string name = coNode->GetName();
-					val = coNode->GetOut();
-					cCorr = &candCorr[name];
-					candSumVals[name] += val;
-
-					//compute correlation for this unit
-					for (unsigned int j = 0; j < err.errors.size(); j++ ){
-						(*cCorr)[j] += val * err.errors[j];
-					}
-				}
-			}
-		}
 	}
 
 	void KBCCTrainer::AddNewInputs( ints inputIndexes, DatasetPtr newData, bool connectToHidden /*= false */ )

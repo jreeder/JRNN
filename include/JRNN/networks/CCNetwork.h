@@ -15,7 +15,7 @@
 namespace JRNN {
 	class CCNetwork;
 	typedef boost::shared_ptr<CCNetwork> CCNetworkPtr;
-	typedef boost::enable_shared_from_this<CCNetwork> CCSharedFromThis;
+	typedef derived_shared_from_this<CCNetwork> CCSharedFromThis;
 
 	class CCNetwork : public Network, public CCSharedFromThis {
 	//This might be slightly inconsistent with my other use of builder
