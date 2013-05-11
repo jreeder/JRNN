@@ -98,9 +98,9 @@ namespace JRNN {
 		static const string _type;
 		static double _activate(double sum){ 
 			if  ( sum < -15.0 )
-				return 0.0;
+				return 0.001;
 			if  ( sum > 15.0 )
-				return 1.0;
+				return 0.999;
 			double retVal = ( 1.0 / (1.0 + exp( -sum  )) );
 			//if (retVal == 0) { //Confuses correlation stuff add prime in trainers that need it. 
 			//	retVal = 0.01;

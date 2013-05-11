@@ -72,8 +72,8 @@ namespace JRNN {
 
 				assert((*curCorr).size() == nOuts);
 				for (int j = 0; j < nOuts; j++){
-					/*double tmp1 = (*curCorr)[j]; //Used for Debugging. 
-					double tmp2 = err.sumErrs[j];*/
+					double tmp1 = (*curCorr)[j]; //Used for Debugging. 
+					double tmp2 = err.sumErrs[j];
 					cor = ((*curCorr)[j] - avgValue * err.sumErrs[j]) / err.sumSqErr;
 					(*prevCorr)[j] = cor;
 					(*curCorr)[j] = 0.0;
@@ -140,15 +140,16 @@ namespace JRNN {
 				val = node->GetOut();
 				val = setPrecision(val, 3);
 				candSumVals[name] += val;
-//#ifdef _DEBUG
-//				cout << name << " ValSums: " << candSumVals[name] << " Vals: " << val << endl;
-//#endif // _DEBUG
+#ifdef _DEBUG
+				ostringstream tmp;
+				tmp << name << " ValSums: " << candSumVals[name] << " Vals: " << val;
+#endif // _DEBUG
 				//compute correlation for this unit
 				for (unsigned int j = 0; j < err.errors.size(); j++ ){
 					(*cCorr)[j] += val * err.errors[j];
-//#ifdef _DEBUG
-//					cout << " val*err: " << val * err.errors[j] << " cor[j]: " << (*cCorr)[j];
-//#endif // _DEBUG
+#ifdef _DEBUG
+					tmp << " val*err: " << val * err.errors[j] << " cor[j]: " << (*cCorr)[j];
+#endif // _DEBUG
 				}
 //#ifdef _DEBUG	
 //				cout << endl;
@@ -163,15 +164,16 @@ namespace JRNN {
 					cCorr = &candCorr[name];
 					val = setPrecision(val, 3);
 					candSumVals[name] += val;
-//#ifdef _DEBUG
-//					cout << name << " ValSums: " << candSumVals[name] << " Vals: " << val << endl;
-//#endif // _DEBUG
+#ifdef _DEBUG
+					ostringstream tmp;
+					tmp << name << " ValSums: " << candSumVals[name] << " Vals: " << val;
+#endif // _DEBUG
 					//compute correlation for this unit
 					for (unsigned int j = 0; j < err.errors.size(); j++ ){
 						(*cCorr)[j] += val * err.errors[j];
-//#ifdef _DEBUG
-//						cout << " val*err: " << val * err.errors[j] << " cor[j]: " << (*cCorr)[j];
-//#endif // _DEBUG
+#ifdef _DEBUG
+						tmp << " val*err: " << val * err.errors[j] << " cor[j]: " << (*cCorr)[j];
+#endif // _DEBUG
 					}
 //#ifdef _DEBUG	
 //					cout << endl;

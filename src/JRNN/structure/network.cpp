@@ -22,8 +22,8 @@ namespace JRNN{
 	//    layers["out"]->BuildLayer(node::sigmoid);
 	//    layers["bias"]->BuildLayer(node::bias);
 	//    fullyConnect();
-		conScale = 2.0;
-		conOffset = 1.0;
+		conScale = 0.5;
+		conOffset = 0.25;
 		netPrefix = "NONE";
 	}
 
