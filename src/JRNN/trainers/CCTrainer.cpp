@@ -559,7 +559,7 @@ namespace JRNN {
 					SetBCorr(bestCand);
 				}
 			}
-			else if (candBestScore > lastScore && fabs(candBestScore - lastScore) > (lastScore * parms.cand.changeThreshold)){
+			else if (/*candBestScore > lastScore && */fabs(candBestScore - lastScore) > (lastScore * parms.cand.changeThreshold)){
 				quitEpoch = epoch + parms.cand.patience;
 				lastScore = candBestScore;
 				if (useHoldBestCand)
