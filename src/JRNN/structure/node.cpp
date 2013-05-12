@@ -315,3 +315,21 @@ bool Node::operator != ( const Node& rhs) const
 {
 	return !(*this == rhs);
 }
+
+hashedDoubleMap Node::GetInConWeights()
+{
+	hashedDoubleMap retMap;
+	ConList inCons = this->GetConnections(IN);
+	BOOST_FOREACH(ConPtr con, inCons){
+		retMap[con->GetName()] = con->GetWeight();
+	}
+	return retMap;
+}
+
+void Node::SetInConWeights( hashedDoubleMap inWeights )
+{
+	ConList inCons = this->GetConnections(IN);
+	BOOST_FOREACH(ConPtr con, inCons){
+		con->SetWeight(inWeights[con->GetName()]);
+	}
+}

@@ -55,6 +55,8 @@ namespace JRNN {
 		virtual bool AddConnection(conType type, ConPtr newCon);
 		void RemoveConnection(string name);
 		void Disconnect();
+		hashedDoubleMap GetInConWeights();
+		void SetInConWeights(hashedDoubleMap inWeights);
 //        bool addConnection(node* newNodeCon, double conWeight);
 //        bool addConnections(nodeList inNodes, vector<double> conWeights);
 		//void SetType(nodeType inType);

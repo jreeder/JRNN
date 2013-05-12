@@ -52,7 +52,9 @@ namespace JRNN {
 
 		bool GetUseTrainOutVal() const;
 		void SetUseTrainOutVal(bool val);
-		
+		bool GetUseHoldBestCand() const;
+		void SetUseHoldBestCand(bool val);
+
 		struct parameters
 		{
 			int nTrials;
@@ -111,6 +113,7 @@ namespace JRNN {
 		int numResets;
 		bool useTrainOutVal;
 		bool useValidation;
+		bool useHoldBestCand;
 		
 		//LayerPtr candidateLayer;
 		//ConList candidateCons;
@@ -155,6 +158,7 @@ namespace JRNN {
 		hashedDoubleMap candSumVals; //Sum of candidate activations over training. 
 		hashedVecDoubleMap candCorr; //Correlation of each candidate node
 		hashedVecDoubleMap candPCorr; //Previous correlation of each candidate node
+		hashedVecDoubleMap candBCorr; //Best candidate correlation
 		
 		enum status {
 			TRAINING,
@@ -218,6 +222,8 @@ namespace JRNN {
 		void ClearCache();
 		void StoreNodeCache( string inString );
 		void CacheActivateCands( const LayerPtr candL );
+		virtual void SetBCorr( NodePtr inBestCand );
+		virtual void SwapBPCorr( NodePtr inBestCand );
 		//Used for adding new inputs. Done in the ccnetwork class
 		//void ConnectToHiddenNodes( NodeList addedNodes );
 	};

@@ -17,6 +17,7 @@ namespace JRNN {
 		numResets = 0;
 		this->useTrainOutVal = true;
 		this->useValidation = false;
+		this->useHoldBestCand = false;
 		if(primaryIndexes.size() > 0){
 			nTrainOutVals = data->GetSize(Dataset::TRAIN) * primaryIndexes.size();
 		}
@@ -70,6 +71,7 @@ namespace JRNN {
 		valErr.measure = (ErrorType) parms.errorMeasure;
 		candCorr = hashedVecDoubleMap(numOut);
 		candPCorr = hashedVecDoubleMap(numOut);
+		candBCorr = hashedVecDoubleMap(numOut);
 
 		networkCache = hashedVecDoubleMap(numOut);
 		useNetCache = false;
@@ -83,6 +85,7 @@ namespace JRNN {
 		numResets = 0;
 		this->useTrainOutVal = true;
 		this->useValidation = false;
+		this->useHoldBestCand = false;
 		//Need to set this value in the subclass also. 
 		//if(primaryIndexes.size() > 0){
 		//	nTrainOutVals = data->GetSize(Dataset::TRAIN) * primaryIndexes.size();
@@ -222,6 +225,7 @@ namespace JRNN {
 		candSumVals.clear();
 		candCorr.clear();
 		candPCorr.clear();
+		candBCorr.clear();
 		candBestScore = 0.0;
 	}
 
@@ -516,6 +520,9 @@ namespace JRNN {
 		double lastScore = 0.0;
 		int quitEpoch = 0;
 		int startEpoch = epoch;
+		hashedDoubleMap bestInWeights;
+		NodePtr bestBestCand;
+		candBCorr.clear();
 		err.sumErrs /= (double)data->GetSize(Dataset::TRAIN); 
 		CorrelationEpoch();
 		for (int i = 0; i < parms.cand.epochs; i ++){
@@ -545,15 +552,36 @@ namespace JRNN {
 			if ( i == 0 ){
 				lastScore = candBestScore;
 				quitEpoch = epoch + parms.cand.patience;
+				if (useHoldBestCand)
+				{
+					bestBestCand = bestCand;
+					bestInWeights = bestCand->GetInConWeights();
+					SetBCorr(bestCand);
+				}
 			}
 			else if (candBestScore > lastScore && fabs(candBestScore - lastScore) > (lastScore * parms.cand.changeThreshold)){
 				quitEpoch = epoch + parms.cand.patience;
 				lastScore = candBestScore;
+				if (useHoldBestCand)
+				{
+					bestBestCand = bestCand;
+					bestInWeights = bestCand->GetInConWeights();
+					SetBCorr(bestCand);
+				}
 			}
 			else if (epoch == quitEpoch){
 #ifdef _CC_USE_CACHE_
 				useNetCache = false;
 #endif
+#ifdef _DEBUG
+				cout << "Best Candidate: " << bestCand->GetName() << endl;
+#endif // _DEBUG
+				if (useHoldBestCand)
+				{
+					bestCand = bestBestCand;
+					bestCand->SetInConWeights(bestInWeights);
+					SwapBPCorr(bestCand);
+				}
 				return STAGNANT;
 			}
 		}
@@ -1227,6 +1255,26 @@ namespace JRNN {
 	void CCTrainer::SetUseTrainOutVal( bool val )
 	{
 		useTrainOutVal = val;
+	}
+
+	void CCTrainer::SetBCorr( NodePtr inBestCand )
+	{
+		candBCorr[inBestCand->GetName()] = candPCorr[inBestCand->GetName()];
+	}
+
+	void CCTrainer::SwapBPCorr(NodePtr inBestCand)
+	{
+		candPCorr[inBestCand->GetName()] = candBCorr[inBestCand->GetName()];
+	}
+
+	bool CCTrainer::GetUseHoldBestCand() const
+	{
+		return useHoldBestCand;
+	}
+
+	void CCTrainer::SetUseHoldBestCand( bool val )
+	{
+		useHoldBestCand = val;
 	}
 
 }

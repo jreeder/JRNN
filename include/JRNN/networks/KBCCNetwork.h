@@ -20,7 +20,8 @@ namespace JRNN {
 
 	typedef boost::shared_ptr<KBCCNetwork> KBCCNetworkPtr;
 	typedef vector<NetworkNodePtr> NetworkNodeList;
-	typedef vector<NetworkPtr> NetPtrList;
+	typedef std::pair<string, NetworkPtr> NetPtrPair;
+	typedef map<string, NetworkPtr> NetPtrList;
 	typedef derived_shared_from_this<KBCCNetwork> KBCCSharedFromThis;
 
 	class KBCCNetwork : public CCNetwork, public KBCCSharedFromThis{

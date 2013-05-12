@@ -56,10 +56,10 @@ namespace JRNN {
 		candLayer->SetPrevLayer(out->GetPrevLayer());
 		CandFullyConnectBack(candLayer);
 		CandSubNetNodes.clear();
-		BOOST_FOREACH(NetworkPtr net, candNets){
+		BOOST_FOREACH(NetPtrPair net, candNets){
 			NetworkNodePtr newNetNode = NetworkNode::Create(tmpHeight, "tmpName");
 			candLayer->AddNode(newNetNode);
-			newNetNode->SetIntNet(net->Clone());
+			newNetNode->SetIntNet(net.second->Clone(), net.first);
 			CandNetFullyConnectBack(newNetNode, true, false);
 			CandSubNetNodes.push_back(newNetNode);
 			for (int i = 0; i < numCopies; i++)
@@ -67,7 +67,7 @@ namespace JRNN {
 				NetworkNodePtr newNetNode = NetworkNode::Create(tmpHeight, "tmpName");
 				candLayer->AddNode(newNetNode);
 				bool reduceHeight = i % 2 == 0 ? false : true;
-				newNetNode->SetIntNet(net->Clone());
+				newNetNode->SetIntNet(net.second->Clone(), net.first);
 				CandNetFullyConnectBack(newNetNode, false, reduceHeight);
 				CandSubNetNodes.push_back(newNetNode);
 			}

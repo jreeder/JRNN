@@ -7,9 +7,9 @@ Created on Fri May 10 21:24:28 2013
 import re
 from collections import defaultdict
 
-variables = re.compile('(\S+?: \S+)[ "]')
+variables = re.compile('(\S+?: \S+)\b')
 
-name = re.compile("^\"(.+) ValSums")
+name = re.compile("^(.+) ValSums")
 
 def readIn(fileh):
     data = defaultdict(list)

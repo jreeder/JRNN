@@ -86,6 +86,8 @@ def TestKBCC(cds, firsttask, secondtask, thirdtask):
     
     kbcct1.TrainToValConv(2000)
 
+    res = kbcct1.TestWiClass(PyJRNN.utility.TEST)
+    print ObsUtility.ConvHashedDM(res)
     print "Done"
 # <codecell>
 

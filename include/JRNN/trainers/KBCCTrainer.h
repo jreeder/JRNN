@@ -29,7 +29,7 @@ namespace JRNN {
 
 		virtual hashedDoubleMap TestWiClass( Dataset::datatype type );
 
-		void AddSubNet(NetworkPtr newNet);
+		void AddSubNet(NetworkPtr newNet, string netName = "");
 		void ClearSubNetList();
 		int GetNumCopies() const;
 		void SetNumCopies(int val);
@@ -52,6 +52,12 @@ namespace JRNN {
 		virtual vecDouble ActivateNet( vecDouble inPoint, vecDouble outPoint );
 
 		virtual void ComputeCorrelations();
+
+		void RemoveSubNet( string netName );
+
+		virtual void SetBCorr( NodePtr inBestCand );
+
+		virtual void SwapBPCorr( NodePtr inBestCand );
 
 	};
 }

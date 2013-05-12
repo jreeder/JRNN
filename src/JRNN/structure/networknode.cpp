@@ -158,9 +158,10 @@ namespace JRNN {
 		}
 	}
 
-	NetworkNode::NetworkNode(int inHeight, string nodeName, NetworkPtr net ) : Node(inHeight, nodeName)
+	NetworkNode::NetworkNode(int inHeight, string nodeName, NetworkPtr net, string inNetName /*= ""*/ ) : Node(inHeight, nodeName)
 	{
 		intNet = net;
+		netName = inNetName;
 		numInputs = net->GetNumIn();
 		numOutputs = net->GetNumOut();
 		localGradients.clear();
@@ -188,6 +189,7 @@ namespace JRNN {
 		pOffset = orig.pOffset;
 		if (intNet)
 			intNet = orig.intNet->Clone();
+		netName = orig.netName;
 	}
 
 	NetworkPtr NetworkNode::GetIntNet() const
@@ -195,9 +197,10 @@ namespace JRNN {
 		return intNet;
 	}
 
-	void NetworkNode::SetIntNet( NetworkPtr val )
+	void NetworkNode::SetIntNet( NetworkPtr val, string inNetName /*= ""*/ )
 	{
 		intNet = val;
+		netName = inNetName;
 		numInputs = val->GetNumIn();
 		numOutputs = val->GetNumOut();
 		localGradients.clear();
@@ -215,9 +218,10 @@ namespace JRNN {
 		return intNet->GetLayer("out")->GetNodes();
 	}
 
-	JRNN::NetworkNodePtr NetworkNode::Create( int inHeight, string nodeName )
+	JRNN::NetworkNodePtr NetworkNode::Create( int inHeight, string nodeName, string inNetName /*= ""*/ )
 	{
 		NetworkNodePtr np(new NetworkNode(inHeight, nodeName));
+		np->SetNetName(inNetName);
 		return np;
 	}
 
@@ -237,6 +241,16 @@ namespace JRNN {
 	double NetworkNode::AddOffset( double Prime )
 	{
 		return Prime + pOffset;
+	}
+
+	string NetworkNode::GetNetName() const
+	{
+		return netName;
+	}
+
+	void NetworkNode::SetNetName( string val )
+	{
+		netName = val;
 	}
 
 	const string NetworkNode::ActType = "IntNet";

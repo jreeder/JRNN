@@ -65,6 +65,7 @@ namespace JRNN {
 		valErr.measure = (ErrorType) parms.errorMeasure;
 		candCorr = hashedVecDoubleMap(numOut);
 		candPCorr = hashedVecDoubleMap(numOut);
+		candBCorr = hashedVecDoubleMap(numOut);
 		networkCache = hashedVecDoubleMap(numOut);
 		//ResetVars(); Not needed This is the first thing that traintoconvergence does.
 	}

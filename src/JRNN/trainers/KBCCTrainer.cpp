@@ -64,7 +64,7 @@ namespace JRNN {
 			score = 0.0;
 			if (node->GetActFuncType() != NetworkNode::ActType){
 				string name = node->GetName();
-				avgValue = candSumVals[name] / nTrainPts;
+				avgValue = candSumVals[name]; /// nTrainPts;
 				curCorr = &candCorr[name];
 				prevCorr = &candPCorr[name];
 
@@ -86,7 +86,7 @@ namespace JRNN {
 				NodeList candOutNodes = dynamic_pointer_cast<NetworkNode>(node)->GetOutputNodes();
 				BOOST_FOREACH(NodePtr coNode, candOutNodes){
 					string name = coNode->GetName();
-					avgValue = candSumVals[name] / nTrainPts;
+					avgValue = candSumVals[name]; /// nTrainPts;
 					curCorr = &candCorr[name];
 					prevCorr = &candPCorr[name];
 
@@ -141,19 +141,20 @@ namespace JRNN {
 				val = setPrecision(val, 3);
 				candSumVals[name] += val;
 #ifdef _DEBUG
-				ostringstream tmp;
+				ofstream tmp("debugfile.txt", ios::app);
 				tmp << name << " ValSums: " << candSumVals[name] << " Vals: " << val;
 #endif // _DEBUG
 				//compute correlation for this unit
 				for (unsigned int j = 0; j < err.errors.size(); j++ ){
 					(*cCorr)[j] += val * err.errors[j];
 #ifdef _DEBUG
-					tmp << " val*err: " << val * err.errors[j] << " cor[j]: " << (*cCorr)[j];
+					tmp << " val*err: " << val * err.errors[j] << " error: " << err.errors[j] << " cor[j]: " << (*cCorr)[j];
 #endif // _DEBUG
 				}
-//#ifdef _DEBUG	
-//				cout << endl;
-//#endif // _DEBUG
+#ifdef _DEBUG	
+				tmp << endl;
+				tmp.close();
+#endif // _DEBUG
 			} 
 			else
 			{//Find out why score is so high. 
@@ -165,19 +166,20 @@ namespace JRNN {
 					val = setPrecision(val, 3);
 					candSumVals[name] += val;
 #ifdef _DEBUG
-					ostringstream tmp;
+					ofstream tmp("debugfile.txt", ios::app);
 					tmp << name << " ValSums: " << candSumVals[name] << " Vals: " << val;
 #endif // _DEBUG
 					//compute correlation for this unit
 					for (unsigned int j = 0; j < err.errors.size(); j++ ){
 						(*cCorr)[j] += val * err.errors[j];
 #ifdef _DEBUG
-						tmp << " val*err: " << val * err.errors[j] << " cor[j]: " << (*cCorr)[j];
+						tmp << " val*err: " << val * err.errors[j] << " error: " << err.errors[j] << " cor[j]: " << (*cCorr)[j];
 #endif // _DEBUG
 					}
-//#ifdef _DEBUG	
-//					cout << endl;
-//#endif // _DEBUG
+#ifdef _DEBUG	
+					tmp << endl;
+					tmp.close();
+#endif // _DEBUG
 				}
 			}
 		}
@@ -216,15 +218,26 @@ namespace JRNN {
 	
 				candSumVals[name] += value;
 				actPrime /= err.sumSqErr;  
-	
+#ifdef _DEBUG
+				ofstream tmp("debugfile.txt", ios::app);
+				tmp << name << " ValSums: " << candSumVals[name] << " Vals: " << value;
+#endif // _DEBUG
+
 				//compute correlations to each output
 				for (int j = 0; j < nOuts; j++){
 					error = err.errors[j];
 					direction = ((*cPCorr)[j] < 0.0) ? -1.0 : 1.0;
 					change -= direction * actPrime * (error - err.sumErrs[j]); 
 					(*cCorr)[j] += error * value;
+#ifdef _DEBUG
+					tmp << " val*err: " << value * err.errors[j] << " error: " << err.errors[j] << " cor[j]: " << (*cCorr)[j];
+#endif // _DEBUG
 				}
 	
+#ifdef _DEBUG	
+				tmp << endl;
+				tmp.close();
+#endif // _DEBUG
 				//use change to compute new slopes
 	
 				ConList cons = candidate->GetConnections(IN);
@@ -246,9 +259,18 @@ namespace JRNN {
 						cCorr = &candCorr[name];
 						cPCorr = &candPCorr[name];
 
+#ifdef _DEBUG
+						ofstream tmp("debugfile.txt", ios::app);
+#endif // _DEBUG
+
 						actPrime = setPrecision(candActPrimes[name][i], 7);
-						if (i == 0) //This should only happen once per output node. 
+						if (i == 0) {//This should only happen once per output node. 
 							candSumVals[name] += value;
+#ifdef _DEBUG
+							
+							tmp << name << " ValSums: " << candSumVals[name] << " Vals: " << value;
+#endif // _DEBUG
+						}
 						actPrime /= err.sumSqErr;
 
 						//compute correlations to each output
@@ -256,10 +278,17 @@ namespace JRNN {
 							error = err.errors[j];
 							direction = ((*cPCorr)[j] < 0.0) ? -1.0 : 1.0;
 							change -= direction * actPrime * (error - err.sumErrs[j]); 
-							if (i == 0) //This should only happen once per output node. 
+							if (i == 0) {//This should only happen once per output node. 
 								(*cCorr)[j] += error * value;
+#ifdef _DEBUG
+								tmp << " val*err: " << value * err.errors[j] << " error: " << err.errors[j] << " cor[j]: " << (*cCorr)[j];
+#endif // _DEBUG
+							}
 						}
-
+#ifdef _DEBUG	
+						tmp << endl;
+						tmp.close();
+#endif // _DEBUG
 					}
 
 					//cout << candidate->GetName() << "input " << i << " Change: " << change << endl;
@@ -297,6 +326,8 @@ namespace JRNN {
 				}
 			}
 			dynamic_pointer_cast<KBCCNetwork>(network)->InstallCandidate(bestCand, hashedOutWeights);
+			//remove this from the list so it isn't added again. This means each network can only be used once. This is explicit for now. Can be made variable later.
+			RemoveSubNet(dynamic_pointer_cast<NetworkNode>(bestCand)->GetNetName());
 		}
 	}
 
@@ -320,9 +351,10 @@ namespace JRNN {
 		numCopies = val;
 	}
 
-	void KBCCTrainer::AddSubNet( NetworkPtr newNet )
+	void KBCCTrainer::AddSubNet( NetworkPtr newNet, string netName /*= ""*/ )
 	{
-		SubNetlist.push_back(newNet);
+		netName = netName != "" ? netName : "network_" + lexical_cast<string>(SubNetlist.size());
+		SubNetlist.insert(NetPtrPair(netName, newNet));
 	}
 
 	void KBCCTrainer::ClearSubNetList()
@@ -333,6 +365,37 @@ namespace JRNN {
 	void KBCCTrainer::Reset()
 	{
 		CCTrainer::Reset();
+	}
+
+	void KBCCTrainer::RemoveSubNet( string netName )
+	{
+		SubNetlist.erase(netName);
+	}
+
+	void KBCCTrainer::SetBCorr( NodePtr inBestCand )
+	{
+		if (inBestCand->GetActFuncType() != NetworkNode::ActType){
+			CCTrainer::SetBCorr(inBestCand);
+		}
+		else {
+			NodeList candOutNodes = dynamic_pointer_cast<NetworkNode>(inBestCand)->GetOutputNodes();
+			BOOST_FOREACH(NodePtr node, candOutNodes){
+				CCTrainer::SetBCorr(node);
+			}
+		}
+	}
+
+	void KBCCTrainer::SwapBPCorr( NodePtr inBestCand )
+	{
+		if (inBestCand->GetActFuncType() != NetworkNode::ActType){
+			CCTrainer::SwapBPCorr(inBestCand);
+		}
+		else {
+			NodeList candOutNodes = dynamic_pointer_cast<NetworkNode>(inBestCand)->GetOutputNodes();
+			BOOST_FOREACH(NodePtr node, candOutNodes){
+				CCTrainer::SwapBPCorr(node);
+			}
+		}
 	}
 
 }

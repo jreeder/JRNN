@@ -109,6 +109,7 @@ void exportCCTrainer(){
 		add_property("NumResets", &CCTrainer::GetNumResets).
 		add_property("NumHidLayers", &CCTrainer::GetNumHidLayers).
 		add_property("useTrainOutVal", &CCTrainer::GetUseTrainOutVal, &CCTrainer::SetUseTrainOutVal).
+		add_property("useHoldBestCand", &CCTrainer::GetUseHoldBestCand, &CCTrainer::SetUseHoldBestCand).
 		def("GetMSERec", &CCTrainer::GetMSERec,return_value_policy<copy_non_const_reference>()).
 		def("GetVMSERec", &CCTrainer::GetVMSERec, return_value_policy<copy_non_const_reference>()).
 		def_readwrite("parms", &CCTrainer::parms)

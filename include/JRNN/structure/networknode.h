@@ -33,13 +33,13 @@ namespace JRNN {
 
 		virtual NodePtr Clone();
 		
-		NetworkNode(int inHeight, string nodeName, NetworkPtr net);
+		NetworkNode(int inHeight, string nodeName, NetworkPtr net, string inNetName = "");
 
 		NetworkNode(int inHeight, string nodeName);
 		
 		virtual void Activate();
 
-		static NetworkNodePtr Create(int inHeight, string nodeName);
+		static NetworkNodePtr Create(int inHeight, string nodeName, string inNetName = "");
 		
 		vecDouble GetOuts();
 		
@@ -57,14 +57,18 @@ namespace JRNN {
 		
 		NetworkPtr GetIntNet() const;
 		
-		void SetIntNet(NetworkPtr val);
+		void SetIntNet(NetworkPtr val, string inNetName = "");
 
 		NodeList GetInputNodes();
 		NodeList GetOutputNodes();
 		virtual void SetName( string newName );
+		string GetNetName() const;
+		void SetNetName(string val);
 
 	private:
 		NetworkPtr intNet;
+		string netName;
+	
 		
 		int numInputs;
 		int numOutputs;
