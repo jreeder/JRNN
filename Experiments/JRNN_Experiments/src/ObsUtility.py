@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # <nbformat>3.0</nbformat>
 
-debug = True
+debug = False
 
 if debug:
     import PyJRNN_d as PyJRNN # for debugging
