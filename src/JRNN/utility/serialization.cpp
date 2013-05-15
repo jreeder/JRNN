@@ -92,8 +92,8 @@ namespace JRNN {
 		}
 		BOOST_FOREACH(serialize::Layer sLayer, shallowLayers){
 			LayerPtr tmpLayer = net->GetLayer(sLayer.name);
-			BOOST_FOREACH(serialize::Node node, sLayer.nodes){
-				NodePtr tmpNode = net->GetNode(node.name);
+			BOOST_FOREACH(serialize::sNodePtr node, sLayer.nodes){
+				NodePtr tmpNode = net->GetNode(node->name);
 				assert(tmpNode.get() != 0);
 				tmpLayer->AddNode(tmpNode, true);
 			}
@@ -131,11 +131,12 @@ namespace JRNN {
 		}
 	}
 
-	void serialize::CCNetwork::WriteOut(CCNetworkPtr net){
+	void serialize::CCNetwork::WriteOut( CCNetworkPtr net, bool connect /*= true*/ )
+	{
 		if (!net){
 			assert(0);
 		}
-		Network::WriteOut(net);
+		Network::WriteOut(net, connect);
 		net->SetNumUnits(numUnits);
 		net->SetCandLayerByName(candLayerName);
 		net->SetCurrentLayerByName(currentLayerName);
@@ -146,6 +147,87 @@ namespace JRNN {
 		LayerList layerl = net->GetHiddenLayers();
 		for (;it != hiddenLayerNames.end(); it++){
 			layerl.push_back(net->GetLayer((*it)));
+		}
+	}
+
+	void serialize::KBCCNetwork::ReadIn( KBCCNetworkPtr net )
+	{
+		CCNetwork::ReadIn(net);
+		netType = KBCC;
+		NetworkNodeList netNodes = net->GetSubNetworkNodes();
+		BOOST_FOREACH(NetworkNodePtr node, netNodes){
+			NetworkPtr intNet = node->GetIntNet();
+			if (JRNN::CCNetwork::Type == intNet->GetType()){
+				serialize::sCCNetworkPtr sNet(new serialize::CCNetwork);
+				sNet->ReadIn(dynamic_pointer_cast<JRNN::CCNetwork>(intNet));
+				subnetworks[node->GetName()] = sNet;
+			} 
+			else if (JRNN::FFMLPNetwork::Type == intNet->GetType()){
+				serialize::sFFMLPNetworkPtr sNet(new serialize::FFMLPNetwork);
+				sNet->ReadIn(dynamic_pointer_cast<JRNN::FFMLPNetwork>(intNet));
+				subnetworks[node->GetName()] = sNet;
+			}
+			else if (JRNN::RevCCNetwork::Type == intNet->GetType()){
+				serialize::sRevCCNetworkPtr sNet(new serialize::RevCCNetwork);
+				sNet->ReadIn(dynamic_pointer_cast<JRNN::RevCCNetwork>(intNet));
+				subnetworks[node->GetName()] = sNet;
+			}
+			else if (JRNN::KBCCNetwork::Type == intNet->GetType()){
+				serialize::sKBCCNetworkPtr sNet(new serialize::KBCCNetwork);
+				sNet->ReadIn(dynamic_pointer_cast<JRNN::KBCCNetwork>(intNet));
+				subnetworks[node->GetName()] = sNet;
+			}
+			else {
+				serialize::sNetworkPtr sNet(new serialize::Network);
+				sNet->ReadIn(intNet);
+				subnetworks[node->GetName()] = sNet;
+			}
+		}
+	}
+
+	void serialize::KBCCNetwork::WriteOut( KBCCNetworkPtr net )
+	{
+		if (!net){
+			assert(0);
+		}
+		CCNetwork::WriteOut(net, false);
+		std::map<string, sNetworkPtr>::iterator it = subnetworks.begin();
+		for (;it != subnetworks.end(); it++){
+			NetworkNodePtr netNode = dynamic_pointer_cast<JRNN::NetworkNode>(net->GetNode(it->first));
+			serialize::sNetworkPtr intNet = it->second;
+			JRNN::NetworkPtr retNet;
+			if (intNet->netType == serialize::Normal){
+				retNet = JRNN::Network::Create();
+				dynamic_pointer_cast<serialize::Network>(intNet)->WriteOut(retNet);
+			}
+			else if (intNet->netType == serialize::FFMLP){
+				FFMLPNetPtr tmpNet = JRNN::FFMLPNetwork::Create();
+				dynamic_pointer_cast<serialize::FFMLPNetwork>(intNet)->WriteOut(tmpNet);
+				retNet = tmpNet;
+			}
+			else if (intNet->netType == serialize::CC){
+				CCNetworkPtr tmpNetCC = JRNN::CCNetwork::Create();
+				dynamic_pointer_cast<serialize::CCNetwork>(intNet)->WriteOut(tmpNetCC);
+				retNet = tmpNetCC;
+			}
+			else if (intNet->netType == serialize::RevCC){
+				RevCCNetworkPtr tmpNetRev = JRNN::RevCCNetwork::Create();
+				dynamic_pointer_cast<serialize::RevCCNetwork>(intNet)->WriteOut(tmpNetRev);
+				retNet = tmpNetRev;
+			}
+			else if (intNet->netType == serialize::KBCC){
+				KBCCNetworkPtr tmpNetKBCC = JRNN::KBCCNetwork::Create();
+				dynamic_pointer_cast<serialize::KBCCNetwork>(intNet)->WriteOut(tmpNetKBCC);
+				retNet = tmpNetKBCC;
+			}
+			else {
+				assert(0);
+			}
+			netNode->SetIntNet(retNet, netNode->GetNetName());
+			net->GetSubNetworkNodes().push_back(netNode);
+		}
+		BOOST_FOREACH(serialize::Connection con, connections){
+			net->AddConnection(JRNN::Connection::Connect(net->GetNode(con.inNodeName), net->GetNode(con.outNodeName),con.weight));
 		}
 	}
 
@@ -178,34 +260,44 @@ namespace JRNN {
 		}
 		Network::WriteOut(net);
 	}
-	serialize::Node Serializer::ConvNode(NodePtr node){
-		serialize::Node sNode;
-		sNode.activationFunc = node->GetActFuncType();
-		sNode.height = node->GetHeight();
-		sNode.name = node->GetName();
-		return sNode;
-	}
-
-	NodePtr Serializer::ConvNode(serialize::Node& node){
-		NodePtr sNode;
-		if (node.activationFunc == "SIGMOID"){
-			sNode = Node::CreateNode<Sigmoid>(node.height,node.name);
-		}
-		else if(node.activationFunc == "ASIGMOID"){
-			sNode = Node::CreateNode<ASigmoid>(node.height,node.name);
-		}
-		else if(node.activationFunc == "GAUSSIAN"){
-			sNode = Node::CreateNode<Gaussian>(node.height,node.name);
-		}
-		else if(node.activationFunc == "BIAS"){
-			sNode = Node::CreateNode<Bias>(node.height,node.name);
-		}
-		else if(node.activationFunc == NetworkNode::ActType){
-			NetworkNodePtr np(new NetworkNode(node.height, node.name));
-			sNode = np;
+	serialize::sNodePtr Serializer::ConvNode(NodePtr node){
+		if (node->GetActFuncType() == NetworkNode::ActType){
+			serialize::sNetNodePtr sNode(new serialize::NetworkNode);
+			sNode->activationFunc = node->GetActFuncType();
+			sNode->height = node->GetHeight();
+			sNode->name = node->GetName();
+			sNode->netName = dynamic_pointer_cast<NetworkNode>(node)->GetNetName();
+			return sNode;
 		}
 		else {
-			sNode = Node::CreateNode<Linear>(node.height,node.name);
+			serialize::sNodePtr sNode(new serialize::Node);
+			sNode->activationFunc = node->GetActFuncType();
+			sNode->height = node->GetHeight();
+			sNode->name = node->GetName();
+			return sNode;
+		}
+	}
+
+	NodePtr Serializer::ConvNode(serialize::sNodePtr node){
+		NodePtr sNode;
+		if (node->activationFunc == "SIGMOID"){
+			sNode = Node::CreateNode<Sigmoid>(node->height,node->name);
+		}
+		else if(node->activationFunc == "ASIGMOID"){
+			sNode = Node::CreateNode<ASigmoid>(node->height,node->name);
+		}
+		else if(node->activationFunc == "GAUSSIAN"){
+			sNode = Node::CreateNode<Gaussian>(node->height,node->name);
+		}
+		else if(node->activationFunc == "BIAS"){
+			sNode = Node::CreateNode<Bias>(node->height,node->name);
+		}
+		else if(node->activationFunc == NetworkNode::ActType){
+			serialize::sNetNodePtr tmp = dynamic_pointer_cast<serialize::NetworkNode>(node);
+			sNode = NetworkNode::Create(tmp->height, tmp->name, tmp->netName);
+		}
+		else {
+			sNode = Node::CreateNode<Linear>(node->height,node->name);
 		}
 		return sNode;
 	}
@@ -239,7 +331,7 @@ namespace JRNN {
 		LayerPtr sLayer = Layer::CreateLayer(Layer::hidden,0,layer.height,layer.name,layer.shallow, layer.netPrefix); //The size will be incremented by adding nodes
 		sLayer->SetTypeByName(layer.type);
 		if (!layer.shallow){
-			BOOST_FOREACH(serialize::Node node, layer.nodes){
+			BOOST_FOREACH(serialize::sNodePtr node, layer.nodes){
 				sLayer->AddNode(ConvNode(node),false);
 			}
 		}
@@ -324,6 +416,89 @@ namespace JRNN {
 	}
 
 
+
+	void JSONArchiver::writeKBCCNetwork( mObject& outNet, serialize::KBCCNetwork& sNet )
+	{
+		writeCCNetwork(outNet, sNet);
+		mArray subNets;
+		std::map<string, serialize::sNetworkPtr>::iterator mapit = sNet.subnetworks.begin();
+		for (; mapit != sNet.subnetworks.end(); mapit++){
+			mObject newOb;
+			mObject netObj;
+			serialize::NetType netType = mapit->second->netType;
+			if (netType == serialize::Normal){
+				serialize::sNetworkPtr tmpNet = mapit->second;
+				writeNetwork(netObj, (*tmpNet));
+			}
+			else if (netType == serialize::FFMLP){
+				serialize::sFFMLPNetworkPtr sNetFF = dynamic_pointer_cast<serialize::FFMLPNetwork>(mapit->second);
+				writeFFNetwork(netObj, (*sNetFF));
+			}
+			else if (netType == serialize::CC){
+				serialize::sCCNetworkPtr sNetCC = dynamic_pointer_cast<serialize::CCNetwork>(mapit->second);
+				writeCCNetwork(netObj, (*sNetCC));
+			}
+			else if (netType == serialize::RevCC){
+				serialize::sRevCCNetworkPtr sNetRev = dynamic_pointer_cast<serialize::RevCCNetwork>(mapit->second);
+				writeRevCCNetwork(netObj, (*sNetRev));
+			}
+			else if (netType == serialize::KBCC){
+				serialize::sKBCCNetworkPtr sNetKBCC = dynamic_pointer_cast<serialize::KBCCNetwork>(mapit->second);
+				writeKBCCNetwork(netObj, (*sNetKBCC));
+			}
+			else {
+				assert(0);
+			}
+			newOb[mapit->first] = netObj;
+			subNets.push_back(newOb);
+		}
+		outNet["subnetworks"] = subNets;
+	}
+
+	void JSONArchiver::readKBCCNetwork( serialize::KBCCNetwork& sNetKBCC, mObject& inNet )
+	{
+		readCCNetwork(sNetKBCC, inNet);
+
+		mArray subNets = findValue(inNet, "subnetworks").get_array();
+		mArray::iterator it = subNets.begin();
+		for(; it != subNets.end(); it++){
+			mObject mObj = (*it).get_obj();
+			mObject::iterator intIt = mObj.begin();
+			string name = (*intIt).first;
+			mObject netObj = (*intIt).second.get_obj();
+			serialize::sNetworkPtr tmpNet;
+			serialize::NetType netType = static_cast<serialize::NetType>(findValue(netObj, "netType").get_int());
+			if (netType == serialize::Normal){
+				serialize::sNetworkPtr sNet(new serialize::Network);
+				readNetwork((*sNet),netObj);
+				tmpNet = sNet;
+			}
+			else if (netType == serialize::FFMLP){
+				serialize::sFFMLPNetworkPtr sNetFF(new serialize::FFMLPNetwork);
+				readFFNetwork((*sNetFF),netObj);
+				tmpNet = sNetFF;
+			}
+			else if (netType == serialize::CC){
+				serialize::sCCNetworkPtr sNetCC(new serialize::CCNetwork);
+				readCCNetwork((*sNetCC),netObj);
+				tmpNet = sNetCC;
+			}
+			else if (netType == serialize::RevCC){
+				serialize::sRevCCNetworkPtr sNetRev(new serialize::RevCCNetwork);
+				readRevCCNetwork((*sNetRev),netObj);
+				tmpNet = sNetRev;
+			}
+			else if (netType == serialize::KBCC){
+				serialize::sKBCCNetworkPtr sNetKBCCc(new serialize::KBCCNetwork);
+				readKBCCNetwork((*sNetKBCCc), netObj);
+				tmpNet = sNetKBCCc;
+			}
+			else {
+				assert(0);
+			}
+			sNetKBCC.subnetworks[name] = tmpNet;
+		}
+	}
 
 	void JSONArchiver::writeRevCCNetwork( mObject& outNet, serialize::RevCCNetwork& net )
 	{
@@ -455,28 +630,44 @@ namespace JRNN {
 		return newCon;
 	}
 
-	mObject JSONArchiver::writeNode( serialize::Node& node )
+	mObject JSONArchiver::writeNode( serialize::sNodePtr node )
 	{
 		mObject newNode;
-		newNode["name"] = node.name;
-		newNode["height"] = node.height;
-		newNode["activationFunc"] = node.activationFunc;
+		newNode["name"] = node->name;
+		newNode["height"] = node->height;
+		newNode["activationFunc"] = node->activationFunc;
+		if (node->activationFunc == NetworkNode::ActType){
+			newNode["netName"] = dynamic_pointer_cast<serialize::NetworkNode>(node)->netName;
+		}
 		return newNode;
 
 	}
 
-	serialize::Node JSONArchiver::readNode( mObject& node )
+	serialize::sNodePtr JSONArchiver::readNode( mObject& node )
 	{
-		serialize::Node newNode;
-		newNode.name = findValue(node, "name").get_str();
-		newNode.height = findValue(node, "height").get_int();
-		newNode.activationFunc = findValue(node, "activationFunc").get_str();
-		return newNode;
+		
+		string tmpActFunc = findValue(node, "activationFunc").get_str();
+		if (tmpActFunc == NetworkNode::ActType){
+			serialize::sNetNodePtr newNode(new serialize::NetworkNode);
+			newNode->activationFunc = tmpActFunc;
+			newNode->height = findValue(node, "height").get_int();
+			newNode->name = findValue(node, "name").get_str();
+			newNode->netName = findValue(node, "netName").get_str();
+			return newNode;
+		}
+		else {
+			serialize::sNodePtr newNode(new serialize::Node);
+			newNode->name = findValue(node, "name").get_str();
+			newNode->height = findValue(node, "height").get_int();
+			newNode->activationFunc = tmpActFunc;
+			return newNode;
+		}
+		
 	}
 
-	std::vector<serialize::Node> JSONArchiver::readNodes( mArray& nodes )
+	std::vector<serialize::sNodePtr> JSONArchiver::readNodes( mArray& nodes )
 	{
-		std::vector<serialize::Node> newNodes;
+		std::vector<serialize::sNodePtr> newNodes;
 		mArray::iterator it = nodes.begin();
 		for(;it != nodes.end(); it++){
 			newNodes.push_back(readNode((*it).get_obj()));
@@ -484,10 +675,10 @@ namespace JRNN {
 		return newNodes;
 	}
 
-	mArray JSONArchiver::writeNodes( std::vector<serialize::Node>& nodes )
+	mArray JSONArchiver::writeNodes( std::vector<serialize::sNodePtr>& nodes )
 	{
 		mArray newNodes;
-		std::vector<serialize::Node>::iterator it = nodes.begin();
+		std::vector<serialize::sNodePtr>::iterator it = nodes.begin();
 		for(;it != nodes.end();it++){
 			newNodes.push_back(writeNode((*it)));
 		}
@@ -528,6 +719,13 @@ namespace JRNN {
 			sNetRev.WriteOut(tmpNetRev);
 			retNet = tmpNetRev;
 		}
+		else if (netType == serialize::KBCC){
+			serialize::KBCCNetwork sNetKBCC;
+			readKBCCNetwork(sNetKBCC, inNet);
+			KBCCNetworkPtr tmpNetKBCC = KBCCNetwork::Create();
+			sNetKBCC.WriteOut(tmpNetKBCC);
+			retNet = tmpNetKBCC;
+		}
 		else {
 			assert(0);
 		}
@@ -554,6 +752,11 @@ namespace JRNN {
 			serialize::RevCCNetwork sNet;
 			sNet.ReadIn(dynamic_pointer_cast<RevCCNetwork>(inNet));
 			writeRevCCNetwork(outNet, sNet);
+		}
+		else if (typeid(KBCCNetwork) == typeid((*inNet))){
+			serialize::KBCCNetwork sNet;
+			sNet.ReadIn(dynamic_pointer_cast<KBCCNetwork>(inNet));
+			writeKBCCNetwork(outNet, sNet);
 		}
 		else {
 			serialize::Network sNet;
@@ -788,6 +991,7 @@ namespace JRNN {
 		}
 		return tmpArray;
 	}
+
 
 
 

@@ -57,6 +57,9 @@ namespace JRNN {
 	typedef std::map<std::string, ConPtr> ConMap;
 	typedef std::pair<std::string, ConPtr> ConPair;
 
+	class NetworkNode;
+	typedef boost::shared_ptr<NetworkNode> NetworkNodePtr;
+
 	typedef boost::unordered_map<std::string, double> hashedDoubleMap;
     typedef boost::unordered_map<std::string, int> hashedIntMap;
 

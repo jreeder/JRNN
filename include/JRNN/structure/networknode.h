@@ -18,9 +18,6 @@
 #include "structure/node.h"
 
 namespace JRNN {
-	
-	class NetworkNode;
-	typedef boost::shared_ptr<NetworkNode> NetworkNodePtr;
 
 	class NetworkNode: public Node {
 

@@ -42,7 +42,15 @@ namespace JRNN {
 			string name;
 			int height;
 			string activationFunc;
+			virtual ~Node(){}
 		};
+
+		struct NetworkNode : Node {
+			string netName;
+		};
+
+		typedef boost::shared_ptr<Node> sNodePtr;
+		typedef boost::shared_ptr<NetworkNode> sNetNodePtr;
 
 		struct Connection {
 			string inNodeName;
@@ -59,7 +67,7 @@ namespace JRNN {
 			bool shallow;
 			string prevLayerName;
 			string nextLayerName;
-			std::vector<Node> nodes;
+			std::vector<sNodePtr> nodes;
 		};
 
 		struct Network {
@@ -74,12 +82,14 @@ namespace JRNN {
 			virtual void WriteOut(NetworkPtr net, bool connect = true);
 		};
 
-		typedef boost::shared_ptr<Network> NetworkStPtr;
+		typedef boost::shared_ptr<Network> sNetworkPtr;
 
 		struct FFMLPNetwork : Network {
 			virtual void ReadIn(FFMLPNetPtr net);
 			virtual void WriteOut(FFMLPNetPtr net);
 		};
+
+		typedef boost::shared_ptr<FFMLPNetwork> sFFMLPNetworkPtr;
 
 		struct CCNetwork : Network {
 			int numUnits;
@@ -90,8 +100,10 @@ namespace JRNN {
 			bool useSDCC;
 			bool varyActFunc;
 			virtual void ReadIn(CCNetworkPtr net);
-			virtual void WriteOut(CCNetworkPtr net);
+			virtual void WriteOut(CCNetworkPtr net, bool connect = true);
 		};
+
+		typedef boost::shared_ptr<CCNetwork> sCCNetworkPtr;
 
 		struct RevCCNetwork : CCNetwork {
 			string autoAssocLayerName;
@@ -100,11 +112,15 @@ namespace JRNN {
 			virtual void WriteOut(RevCCNetworkPtr net);
 		};
 
+		typedef boost::shared_ptr<RevCCNetwork> sRevCCNetworkPtr;
+
 		struct KBCCNetwork : CCNetwork {
-			std::map<string, NetworkStPtr> subnetworks;
+			std::map<string, sNetworkPtr> subnetworks;
 			virtual void ReadIn(KBCCNetworkPtr net);
 			virtual void WriteOut(KBCCNetworkPtr net);
 		};
+
+		typedef boost::shared_ptr<KBCCNetwork> sKBCCNetworkPtr;
 	}
 
 	class Serializer {
@@ -123,8 +139,8 @@ namespace JRNN {
 		static CCNetworkPtr ConvCCNetwork(serialize::CCNetwork& net);*/
 		static serialize::Network ConvNetwork(NetworkPtr net); //Not used anymore
 		static NetworkPtr ConvNetwork(serialize::Network& net); //Not used anymore
-		static serialize::Node ConvNode(NodePtr node);
-		static NodePtr ConvNode(serialize::Node& node);
+		static serialize::sNodePtr ConvNode(NodePtr node);
+		static NodePtr ConvNode(serialize::sNodePtr node);
 		static serialize::Connection ConvConnection (ConPtr con);
 		static serialize::Layer ConvLayer (LayerPtr layer);
 		static LayerPtr ConvLayer (serialize::Layer& layer);
@@ -148,6 +164,8 @@ namespace JRNN {
 		void readCCNetwork(serialize::CCNetwork& sNet, mObject& net);
 		void writeRevCCNetwork(mObject& outNet, serialize::RevCCNetwork& net);
 		void readRevCCNetwork(serialize::RevCCNetwork& sNet, mObject& net);
+		void writeKBCCNetwork( mObject& outNet, serialize::KBCCNetwork& sNet );
+		void readKBCCNetwork( serialize::KBCCNetwork& sNetKBCC, mObject& inNet );
 
 		mArray writeLayers(std::vector<serialize::Layer>& layers);
 		std::vector<serialize::Layer> readLayers(mArray& layers);
@@ -159,10 +177,11 @@ namespace JRNN {
 		serialize::Connection readCon(mObject& con);
 		mArray writeStrings( vector<string> hiddenLayerNames );
 		std::vector<string> readStrings( mArray hidLayerNames );
-		mObject writeNode(serialize::Node& node);
-		serialize::Node readNode(mObject& node);
-		std::vector<serialize::Node> readNodes(mArray& nodes);
-		mArray writeNodes(std::vector<serialize::Node>& nodes);
+		mObject writeNode(serialize::sNodePtr node);
+		serialize::sNodePtr readNode(mObject& node);
+		std::vector<serialize::sNodePtr> readNodes(mArray& nodes);
+		mArray writeNodes(std::vector<serialize::sNodePtr>& nodes);
+		
 		
 	};
 

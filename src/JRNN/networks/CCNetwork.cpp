@@ -10,12 +10,25 @@
 
 namespace JRNN {
 
-	CCNetwork::CCNetwork(){}
+	const string CCNetwork::Type = "CC";
+
+	CCNetwork::CCNetwork(){
+		this->numHidLayers = 0;
+		this->numUnits = 0;
+		this->cloneOuts = false;
+		this->useSDCC = false;
+		this->varyActFunc = false;
+	}
 
 	CCNetwork::CCNetwork( int numIn, int numOut )
 	{
 		this->numIn = numIn;
 		this->numOut = numOut;
+		this->numHidLayers = 0;
+		this->numUnits = numIn;
+		this->cloneOuts = false;
+		this->useSDCC = false;
+		this->varyActFunc = false;
 	}
 
 	//CCNetwork::CCNetwork( NetworkPtr network )
@@ -85,6 +98,12 @@ namespace JRNN {
 			}
 		}
 		newP->numUnits = oldP->numUnits;
+		newP->numHidLayers = oldP->numHidLayers;
+		newP->numUnits = oldP->numUnits;
+		newP->cloneOuts = oldP->cloneOuts;
+		newP->useSDCC = oldP->useSDCC;
+		newP->varyActFunc = oldP->varyActFunc;
+		newP->currentLayer = newP->layers[oldP->currentLayer->GetName()];
 	}
 
 	void CCNetwork::Build( int numIn, int numOut, bool cloneouts /*= false*/, bool useSDCC /*= false*/, bool varyActFunc /*= false*/ )
@@ -165,7 +184,7 @@ namespace JRNN {
 			candLayer->BuildLayer<ASigmoid>();
 		} 
 		else {
-			BuildVariedLayer(candLayer);
+			BuildVariedLayer(candLayer, numCand);
 		}
 		
 		candLayer->SetPrevLayer(out->GetPrevLayer());
@@ -398,6 +417,7 @@ namespace JRNN {
 			BOOST_FOREACH(LayerPtr layer, layersToRemove){
 				RemoveHiddenLayer(layer);
 			}
+			currentLayer = layers["out"]->GetPrevLayer();
 		}
 		numUnits -= numNodesRemoved;
 	}
@@ -424,9 +444,9 @@ namespace JRNN {
 		this->varyActFunc = inVaryActFunc;
 	}
 
-	void CCNetwork::BuildVariedLayer( LayerPtr candLayer )
+	void CCNetwork::BuildVariedLayer( LayerPtr candLayer, int numCands )
 	{
-		int layerSize = candLayer->GetSize();
+		int layerSize = numCands;
 		int layerHeight = candLayer->GetHeight();
 		string baseName = candLayer->GetName() + "_";
 		NodeList& layerNodes = candLayer->GetNodes();

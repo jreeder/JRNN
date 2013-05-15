@@ -6,6 +6,7 @@
  */
 #include "JRNN.h"
 #include "structure/layer.h"
+#include "structure/networknode.h"
 
 using namespace JRNN;
 
@@ -293,15 +294,32 @@ void Layer::ShallowCopy(LayerPtr layer){
 NodePtr Layer::GetNodeByName( string name )
 {
 	NodePtr retNode;
-	int pos = name.rfind("_");
+	//int pos = name.rfind("_");
+	if (netPrefix != "NONE"){
+		int sPos = netPrefix.size() + 1;
+		name = name.substr(sPos);
+	}
+	int pos1 = name.find(this->name) + this->name.size()+1;
+	int pos2 = name.find("-", pos1);
 	string nodeIndex = "";
-	if (pos != string::npos){
+	nodeIndex = name.substr(pos1, (pos2-pos1));
+	if (nodeIndex.size() > 0){
+		int index = lexical_cast<int>(nodeIndex);
+		if (pos2 == string::npos){
+			retNode = nodes[index];
+		}
+		else{
+			NetworkNodePtr subnetnode = dynamic_pointer_cast<NetworkNode>(nodes[index]);
+			retNode = subnetnode->GetIntNet()->GetNode(name);
+		}
+	}
+	/*if (pos != string::npos){
 		nodeIndex = name.substr(pos+1);
 	}
 	if (nodeIndex.size() > 0){
 		int index = lexical_cast<int>(nodeIndex);
 		retNode = nodes[index];
-	}
+	}*/
 	return retNode;
 }
 

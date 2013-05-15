@@ -12,6 +12,7 @@
 
 namespace JRNN {
 
+	const string KBCCNetwork::Type = "KBCC";
 
 	JRNN::NetworkPtr KBCCNetwork::Clone()
 	{
@@ -50,7 +51,7 @@ namespace JRNN {
 			candLayer->BuildLayer<ASigmoid>();
 		} 
 		else {
-			BuildVariedLayer(candLayer);
+			BuildVariedLayer(candLayer, numCand);
 		}
 
 		candLayer->SetPrevLayer(out->GetPrevLayer());
@@ -342,5 +343,10 @@ namespace JRNN {
 
 	KBCCNetwork::KBCCNetwork( int numIn, int numOut ) : CCNetwork(numIn, numOut) 
 	{}
+
+	NetworkNodeList& KBCCNetwork::GetSubNetworkNodes()
+	{
+		return SubNetworkNodes;
+	}
 
 }

@@ -13,6 +13,8 @@
 
 namespace JRNN {
 	
+	const string RevCCNetwork::Type = "RevCC";
+
 	RevCCNetwork::RevCCNetwork(){
 		getTrueOuts = false;
 	}

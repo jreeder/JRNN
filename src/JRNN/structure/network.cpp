@@ -212,6 +212,8 @@ namespace JRNN{
 	}
 
 	LayerPtr Network::GetLayer(string layerName){
+		if (layers.find(layerName) == layers.end())
+			assert(0);
 		return layers[layerName];
 	}
 
@@ -396,10 +398,10 @@ namespace JRNN{
 		 }
 		 else {
 			 int pos1 = netPrefix.size() + 1;
-			 int pos2 = nodeName.find("_", pos1+1);
+			 int pos2 = nodeName.find("_", pos1);
 			 if (pos1 != string::npos || pos2 != string::npos){
-				 int stlen = pos2 - (pos1+1);
-				 layerName = nodeName.substr(pos1+1, stlen);
+				 int stlen = pos2 - (pos1);
+				 layerName = nodeName.substr(pos1, stlen);
 			 }
 		 }
 		 if (layerName.size() > 0){
@@ -598,5 +600,7 @@ namespace JRNN{
 	{
 		return netPrefix;
 	}
+
+	const string Network::Type = "NORMAL";
 
 }

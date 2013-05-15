@@ -23,6 +23,10 @@ namespace JRNN {
 
 	class CSLLFFMLPNetwork : public FFMLPNetwork, public CSLLFFMLPSharedFromThis {
 	public:
+		static const string Type;
+		virtual string GetType() {
+			return Type;
+		}
 		CSLLFFMLPNetwork();
 		~CSLLFFMLPNetwork();
 		static CSLLFFMLPNetPtr Create();

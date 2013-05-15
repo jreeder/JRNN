@@ -22,6 +22,10 @@ namespace JRNN {
 
 	class RevCCNetwork : public CCNetwork, public RevCCSharedFromThis {
 	public:
+		static const string Type;
+		virtual string GetType() {
+			return Type;
+		}
 		RevCCNetwork();
 		RevCCNetwork(int numIn, int numOut);
 		~RevCCNetwork();

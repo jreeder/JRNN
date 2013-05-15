@@ -32,7 +32,11 @@ namespace JRNN{
 			NetworkPtr np(new Network());
 			return np;
 		}
-		
+
+		static const string Type;		
+		virtual string GetType() {
+			return Type;
+		}
 		static void Clone(NetworkPtr newP, NetworkPtr oldP);
 		virtual NetworkPtr Clone();
         virtual void Activate(vecDouble inputs);

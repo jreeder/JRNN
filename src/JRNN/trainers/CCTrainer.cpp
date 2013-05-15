@@ -560,16 +560,20 @@ namespace JRNN {
 				}
 			}
 			else if (/*candBestScore > lastScore && */fabs(candBestScore - lastScore) > (lastScore * parms.cand.changeThreshold)){
-				quitEpoch = epoch + parms.cand.patience;
-				lastScore = candBestScore;
-				if (useHoldBestCand)
+				if (useHoldBestCand && candBestScore > lastScore)
 				{
+					quitEpoch = epoch + parms.cand.patience;
+					lastScore = candBestScore;
 					bestBestCand = bestCand;
 					bestInWeights = bestCand->GetInConWeights();
 					SetBCorr(bestCand);
 				}
+				else if (!useHoldBestCand){
+					quitEpoch = epoch + parms.cand.patience;
+					lastScore = candBestScore;
+				}
 			}
-			else if (epoch == quitEpoch){
+			if (epoch == quitEpoch){
 #ifdef _CC_USE_CACHE_
 				useNetCache = false;
 #endif

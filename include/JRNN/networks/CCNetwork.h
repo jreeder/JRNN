@@ -27,7 +27,12 @@ namespace JRNN {
 		static CCNetworkPtr Create();
 		static CCNetworkPtr Clone(CCNetworkPtr net);
 		virtual NetworkPtr Clone();
-
+		
+		static const string Type;
+		virtual string GetType() {
+			return Type;
+		}
+		
 		static void Clone( CCNetworkPtr newP, CCNetworkPtr oldP );
 
 		//NetworkPtr GetNetwork();
@@ -78,7 +83,7 @@ namespace JRNN {
 		void FullyConnect();
 		virtual void RemoveUnConnectedNodes();
 		virtual void RemoveHiddenLayer(LayerPtr layer);
-		void BuildVariedLayer( LayerPtr candLayer );
+		void BuildVariedLayer( LayerPtr candLayer, int numCands );
 		virtual void CandConnectOut( NodePtr node, vecDouble outWeights = vecDouble(0));	
 	};
 }

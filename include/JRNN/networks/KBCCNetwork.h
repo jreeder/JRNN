@@ -28,7 +28,12 @@ namespace JRNN {
 	public:
 		KBCCNetwork();
 		KBCCNetwork(int numIn, int numOut);
-	
+		
+		static const string Type;		
+		virtual string GetType() {
+			return Type;
+		}
+
 		static KBCCNetworkPtr Create();
 		static KBCCNetworkPtr Clone(KBCCNetworkPtr net);
 
@@ -55,6 +60,8 @@ namespace JRNN {
 		virtual void Build( int numIn, int numOut, bool cloneouts = false, bool useSDCC = false, bool varyActFunc = false );
 
 		virtual void Reset();
+
+		NetworkNodeList& GetSubNetworkNodes();
 
 	protected:
 

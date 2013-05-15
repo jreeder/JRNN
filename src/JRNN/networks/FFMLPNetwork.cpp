@@ -15,6 +15,8 @@ namespace JRNN {
 	//	this->numOut = numOut;
 	//}
 
+	const string FFMLPNetwork::Type = "FFMLP";
+
 	FFMLPNetwork::FFMLPNetwork(){}
 
 	FFMLPNetPtr FFMLPNetwork::Create()

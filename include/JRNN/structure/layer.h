@@ -10,6 +10,7 @@
 
 #include "JRNN.h"
 #include "structure/node.h"
+//#include "structure/networknode.h"
 
 namespace JRNN {
     

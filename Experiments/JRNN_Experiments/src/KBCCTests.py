@@ -8,7 +8,8 @@ import PyJRNN_d as PyJRNN
 import pyublas
 import scipy.io
 import ObsUtility
-import numpy as np
+import numpy
+import os
 
 # <codecell>
 
@@ -21,7 +22,7 @@ cds.isConceptData = False
 
 # <codecell>
 
-inputs = np.ascontiguousarray(ds["inputs"])
+inputs = numpy.ascontiguousarray(ds["inputs"])
 
 # <codecell>
 
@@ -30,7 +31,7 @@ outNames = ['outBox1', 'outBox2', 'outBox3', 'outBox12', 'outBox13', 'outBox123'
 # <codecell>
 
 for outName in outNames:
-    cds.AddMatDoublesToTask(ObsUtility.matDoubleFromArray(inputs), ObsUtility.matDoubleFromArray(np.ascontiguousarray(ds[outName])), outName)
+    cds.AddMatDoublesToTask(ObsUtility.matDoubleFromArray(inputs), ObsUtility.matDoubleFromArray(numpy.ascontiguousarray(ds[outName])), outName)
 
 # <codecell>
 
@@ -91,7 +92,71 @@ def TestKBCC(cds, firsttask, secondtask, thirdtask):
     print "Done"
 # <codecell>
 
+def LoadBandCross():
+    ds = scipy.io.loadmat("Notebook Data/datasets/bandcross.mat")
+    cds = PyJRNN.utility.CSMTLDataset()
+    cds.isConceptData = False
+    inputs = numpy.ascontiguousarray(ds["inputs"])
+    outNames = ['outBox1', 'outBox2', 'outBox3', 'outBox12', 'outBox13', 'outBox123']
+    for outName in outNames:
+        cds.AddMatDoublesToTask(ObsUtility.matDoubleFromArray(inputs), ObsUtility.matDoubleFromArray(numpy.ascontiguousarray(ds[outName])), outName)
+    
+    cds.DistData(200,200,200)
+    
+    return cds
+
+def SingleDataTest(dsname):
+    cds = LoadBandCross()
+    tmpsview = PyJRNN.types.strings()
+    tmpsview.append(dsname)
+    cds.DistSubview(tmpsview)
+    ds = cds.SpawnDS()
+    cc = PyJRNN.networks.CCNetwork.Create()
+    cc.Build(ds.numInputs, ds.numOutputs, False, True, True)
+    cct = PyJRNN.trainers.CCTrainer(cc, ds, 8)
+    cct.parms.errorMeasure = PyJRNN.trainers.BITS
+    cct.TrainToValConv(3000)
+    result = ObsUtility.ConvHashedDM(cct.TestWiClass(PyJRNN.utility.TEST))
+    epochs = cct.Epochs
+    numHid = cct.NumHidLayers
+    mseRec = cct.GetMSERec()
+    retVal = (result, epochs, numHid, [x for x in mseRec])
+    return retVal
+
+def SameDataTest(dsname):
+    cds = LoadBandCross()
+    tmpsview = PyJRNN.types.strings()
+    tmpsview.append(dsname)
+    cds.DistSubview(tmpsview)
+    ds = cds.SpawnDS()
+    kbcc = PyJRNN.networks.KBCCNetwork.Create()
+    kbcc.Build(ds.numInputs, ds.numOutputs, False, True, True)
+    kbcct = PyJRNN.trainers.KBCCTrainer(kbcc, ds, 8)
+    kbcct.parms.errorMeasure = PyJRNN.trainers.BITS
+    kbcct.useHoldBestCand = True
+    filename = [x for x in os.listdir(networkpath) if dsname in x][0]
+    archiver = PyJRNN.utility.JSONArchiver()
+    ccnet = archiver.LoadFromFile(os.path.join(networkpath, filename))
+    kbcct.AddSubNet(ccnet)
+    kbcct.numCopies = 2
+    kbcct.TrainToValConv(200)
+    result = ObsUtility.ConvHashedDM(kbcct.TestWiClass(PyJRNN.utility.TEST))
+    epochs = kbcct.Epochs
+    numHid = kbcct.NumHidLayers
+    mseRec = kbcct.GetMSERec()
+    archiver.SaveToFile(kbcc, os.path.join(networkpath, "kbcc-{0}.net".format(dsname)))
+    retVal = (result, epochs, numHid, [x for x in mseRec])
+    return retVal
 
 import wingdbstub
 
-TestKBCC(cds, "outBox1", "outBox2", "outBox12")
+#TestKBCC(cds, "outBox1", "outBox2", "outBox12")
+
+networkpath = 'Notebook Data/networks/'
+dsname = 'outBox1'
+
+archiver = PyJRNN.utility.JSONArchiver()
+kbccnet = archiver.LoadFromFile(os.path.join(networkpath, 'kbcc-outBox1.net'))
+
+#SingleDataTest(dsname)
+SameDataTest(dsname)

@@ -14,6 +14,7 @@
 
 namespace JRNN {
 
+	const string CSLLFFMLPNetwork::Type = "CSLLLFFMLP";
 
 	void CSLLFFMLPNetwork::Build( int numIn, int numHid, int numOut, NetworkPtr cdkNetwork )
 	{
