@@ -605,3 +605,28 @@ def adjust_boxes(initpos, widths, lb, ub, max_iter=1000, adjust_factor=0.35, fac
     adjpos.sort(key=lambda x: x[0])
     
     return [(x[1] - lb) / (1.0 * (ub - lb)) for x in adjpos], changed, niter
+
+def PlotMultiBar(xticks, ArrayBarTuples, inTitle, yLabel, inwidth=0.2, colorbounds=[0.3,0.6]):
+    locs = np.arange(1, len(xticks) + 1)
+    width = inwidth
+    
+    colors = [cm.gray(i) for i in np.linspace(colorbounds[0],colorbounds[1], len(ArrayBarTuples))]
+    colorcycler = cycle(colors)
+    
+    fig = plt.figure()
+    ax = plt.subplot(111)
+    
+    locAdj = 0
+    for datatuple in ArrayBarTuples:
+        locAdj += 1
+        plt.bar(locs + locAdj*width, datatuple[0], yerr=datatuple[1], color=next(colorcycler), width=width,\
+                antialiased=True, label=datatuple[3], ecolor='k') # color=datatuple[2]
+        
+    box = ax.get_position()
+    ax.set_position([box.x0, box.y0 + box.height * 0.1, box.width, box.height * 0.9])
+    ax.legend(loc='upper center', bbox_to_anchor = (0.5, -0.05), fancybox=True, shadow=True, ncol=locAdj)
+    plt.title(inTitle)
+    plt.xticks((locs + (locAdj * (width/2)) + width), xticks)
+    plt.ylabel(yLabel)
+    
+    return fig
