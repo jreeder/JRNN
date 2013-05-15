@@ -20,7 +20,10 @@ import os
 import re
 import json
 import pickle
+from matplotlib import cm
+from pylab import *
 from localvars import sourcebase, luserspath
+from itertools import cycle
 
 # <codecell>
 #userspath = "D:\Users\John Reeder\Code\opennero\Build\dist\Debug\jrnnexp1\users" # For Titan
@@ -607,10 +610,10 @@ def adjust_boxes(initpos, widths, lb, ub, max_iter=1000, adjust_factor=0.35, fac
     return [(x[1] - lb) / (1.0 * (ub - lb)) for x in adjpos], changed, niter
 
 def PlotMultiBar(xticks, ArrayBarTuples, inTitle, yLabel, inwidth=0.2, colorbounds=[0.3,0.6]):
-    locs = np.arange(1, len(xticks) + 1)
+    locs = numpy.arange(1, len(xticks) + 1)
     width = inwidth
     
-    colors = [cm.gray(i) for i in np.linspace(colorbounds[0],colorbounds[1], len(ArrayBarTuples))]
+    colors = [cm.gray(i) for i in numpy.linspace(colorbounds[0],colorbounds[1], len(ArrayBarTuples))]
     colorcycler = cycle(colors)
     
     fig = plt.figure()
