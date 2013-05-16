@@ -18,6 +18,7 @@ namespace JRNN {
 		this->cloneOuts = false;
 		this->useSDCC = false;
 		this->varyActFunc = false;
+		this->defaultCandType = ASigmoid::_type;
 	}
 
 	CCNetwork::CCNetwork( int numIn, int numOut )
@@ -29,6 +30,7 @@ namespace JRNN {
 		this->cloneOuts = false;
 		this->useSDCC = false;
 		this->varyActFunc = false;
+		this->defaultCandType = ASigmoid::_type;
 	}
 
 	//CCNetwork::CCNetwork( NetworkPtr network )
@@ -104,9 +106,10 @@ namespace JRNN {
 		newP->useSDCC = oldP->useSDCC;
 		newP->varyActFunc = oldP->varyActFunc;
 		newP->currentLayer = newP->layers[oldP->currentLayer->GetName()];
+		newP->defaultCandType = oldP->defaultCandType;
 	}
 
-	void CCNetwork::Build( int numIn, int numOut, bool cloneouts /*= false*/, bool useSDCC /*= false*/, bool varyActFunc /*= false*/ )
+	void CCNetwork::Build( int numIn, int numOut, bool cloneouts /*= false*/, bool useSDCC /*= false*/, bool varyActFunc /*= false*/, string outNodeType /*="ASigmoid"*/ )
 	{
 		this->numIn	= numIn;
 		this->numOut = numOut;
@@ -125,7 +128,20 @@ namespace JRNN {
 		//layers["hidden"]->BuildLayer(Node::sigmoid);
 		//layers["bias"]->BuildLayer(Node::bias);
 		layers["input"]->BuildLayer<Linear>();
-		layers["out"]->BuildLayer<ASigmoid>();
+		
+		if (outNodeType == Sigmoid::_type){
+			layers["out"]->BuildLayer<Sigmoid>();
+		}
+		else if (outNodeType == Gaussian::_type){
+			layers["out"]->BuildLayer<Gaussian>();
+		}
+		else if (outNodeType == Linear::_type){
+			layers["out"]->BuildLayer<Linear>();
+		}
+		else {
+			layers["out"]->BuildLayer<ASigmoid>();
+		}
+		
 		layers["bias"]->BuildLayer<Bias>();
 		candLayer = layers["cand"];
 		currentLayer = layers["input"];
@@ -181,7 +197,19 @@ namespace JRNN {
 		candLayer->SetLayerSize(numCand);
 		candLayer->SetHeight(tmpHeight);
 		if(!varyActFunc){
-			candLayer->BuildLayer<ASigmoid>();
+			if(defaultCandType == Sigmoid::_type){
+				candLayer->BuildLayer<Sigmoid>();
+			}
+			else if(defaultCandType == Gaussian::_type){
+				candLayer->BuildLayer<Gaussian>();
+			}
+			else if(defaultCandType == Linear::_type){
+				candLayer->BuildLayer<Linear>();
+			}
+			else {
+				candLayer->BuildLayer<ASigmoid>();
+			}
+			
 		} 
 		else {
 			BuildVariedLayer(candLayer, numCand);
@@ -582,6 +610,16 @@ namespace JRNN {
 		BOOST_FOREACH(NodePtr node, nodes){
 			ConnectToHiddenNodes(node, cType);
 		}
+	}
+
+	string CCNetwork::GetDefaultCandType() const
+	{
+		return defaultCandType;
+	}
+
+	void CCNetwork::SetDefaultCandType( string val )
+	{
+		defaultCandType = val;
 	}
 
 }

@@ -64,13 +64,27 @@ namespace JRNN {
 		return normOutLayer;
 	}
 
-	void RevCCNetwork::Build( int numIn, int numOut, bool cloneouts /*= false*/, bool useSDCC /*= false*/, bool varyActFunc /*= false*/ )
+	void RevCCNetwork::Build( int numIn, int numOut, bool cloneouts /*= false*/, bool useSDCC /*= false*/, bool varyActFunc /*= false*/, string outNodeType /*= ASigmoid::_type*/, string autoAssocType /*= ASigmoid::_type*/ )
 	{
-		CCNetwork::Build(numIn, numOut, cloneouts, useSDCC, varyActFunc);
+		CCNetwork::Build(numIn, numOut, cloneouts, useSDCC, varyActFunc, outNodeType);
 		//The way I'm doing things right now will mean that I'll treat them as normal outs
 		//and will have a second special layer pointing to the original outs. 
 		layers.insert(LayerPair("autoassoc", Layer::CreateLayer(Layer::spec, numIn,-1,"autoassoc", true)));
-		layers["autoassoc"]->BuildLayer<ASigmoid>();
+		//layers["autoassoc"]->BuildLayer<ASigmoid>();
+
+		if (autoAssocType == Sigmoid::_type){
+			layers["autoassoc"]->BuildLayer<Sigmoid>();
+		}
+		else if (autoAssocType == Gaussian::_type){
+			layers["autoassoc"]->BuildLayer<Gaussian>();
+		}
+		else if (autoAssocType == Linear::_type){
+			layers["autoassoc"]->BuildLayer<Linear>();
+		}
+		else {
+			layers["autoassoc"]->BuildLayer<ASigmoid>();
+		}
+
 		autoAssocLayer = layers["autoassoc"];
 		FullyConnectAutoAssoc(layers["bias"]);
 		layers.insert(LayerPair("normout", Layer::CreateLayer(Layer::spec, 0, -1, "normout", true))); //size will be set by the shallowcopy. 

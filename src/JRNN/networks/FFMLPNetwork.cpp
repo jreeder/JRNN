@@ -25,7 +25,7 @@ namespace JRNN {
 		return np;
 	}
 
-	void FFMLPNetwork::Build( int numIn, int numHid, int numOut, bool cloneouts /*= false*/ )
+	void FFMLPNetwork::Build( int numIn, int numHid, int numOut, bool cloneouts /*= false*/, string outNodeType /*= ASigmoid::_type*/, string hidNodeType /*=ASigmoid::_type*/ )
 	{
 		this->numIn = numIn;
 		this->numOut = numOut;
@@ -39,8 +39,35 @@ namespace JRNN {
 		//np->layers["out"]->BuildLayer(Node::sigmoid);
 		//np->layers["bias"]->BuildLayer(Node::bias);
 		layers["input"]->BuildLayer<Linear>();
-		layers["hidden"]->BuildLayer<ASigmoid>();
-		layers["out"]->BuildLayer<ASigmoid>();
+		
+		//layers["hidden"]->BuildLayer<ASigmoid>();
+		
+		if (hidNodeType == Sigmoid::_type){
+			layers["hidden"]->BuildLayer<Sigmoid>();
+		}
+		else if (hidNodeType == Gaussian::_type){
+			layers["hidden"]->BuildLayer<Gaussian>();
+		}
+		else if (hidNodeType == Linear::_type){
+			layers["hidden"]->BuildLayer<Linear>();
+		}
+		else {
+			layers["hidden"]->BuildLayer<ASigmoid>();
+		}
+
+		if (outNodeType == Sigmoid::_type){
+			layers["out"]->BuildLayer<Sigmoid>();
+		}
+		else if (outNodeType == Gaussian::_type){
+			layers["out"]->BuildLayer<Gaussian>();
+		}
+		else if (outNodeType == Linear::_type){
+			layers["out"]->BuildLayer<Linear>();
+		}
+		else {
+			layers["out"]->BuildLayer<ASigmoid>();
+		}
+		
 		layers["bias"]->BuildLayer<Bias>();
 		FullyConnect(cloneouts);
 		SetLocked(true);

@@ -14,7 +14,7 @@ using namespace boost::python;
 
 NetworkPtr (FFMLPNetwork::*FFMLPClonePtr)() = &FFMLPNetwork::Clone;
 
-BOOST_PYTHON_MEMBER_FUNCTION_OVERLOADS(FFMLPNetwork_buildoverloads, Build, 3,4);
+BOOST_PYTHON_MEMBER_FUNCTION_OVERLOADS(FFMLPNetwork_buildoverloads, Build, 3,6);
 
 void exportFFMLPNetwork(){
 

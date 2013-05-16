@@ -50,7 +50,7 @@ namespace JRNN {
 		virtual void ConnectToHiddenNodes(NodeList nodes, conType cType = OUT);
 
 		virtual void InstallCandidate(NodePtr node, vecDouble outWeights = vecDouble(0));
-		virtual void Build(int numIn, int numOut, bool cloneouts = false, bool useSDCC = false, bool varyActFunc = false);
+		virtual void Build(int numIn, int numOut, bool cloneouts = false, bool useSDCC = false, bool varyActFunc = false, string outNodeType = ASigmoid::_type);
 		virtual void Reset();
 		void SetWeights(hashedDoubleMap weights);
 		int GetNumUnits();
@@ -64,6 +64,8 @@ namespace JRNN {
 		bool GetCloneOuts();
 		bool GetSDCC();
 		bool GetVaryActFunc();
+		string GetDefaultCandType() const;
+		void SetDefaultCandType(string val);
 
 	protected:
 		//int numIn;
@@ -76,6 +78,8 @@ namespace JRNN {
 		bool cloneOuts;
 		bool useSDCC;
 		bool varyActFunc;
+		string defaultCandType;
+	
 		virtual void CandFullyConnectBack(LayerPtr layer);
 		//LayerPtr AddHiddenLayer(); Moved to parent
 		virtual void FullyConnectOut(LayerPtr layer);

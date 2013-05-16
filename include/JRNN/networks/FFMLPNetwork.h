@@ -26,7 +26,7 @@ namespace JRNN {
 		FFMLPNetwork();
 		~FFMLPNetwork(){};
 		static FFMLPNetPtr Create();
-		void Build(int numIn, int numHid, int numOut, bool cloneouts = false);
+		void Build(int numIn, int numHid, int numOut, bool cloneouts = false, string outNodeType = ASigmoid::_type, string hidNodeType = ASigmoid::_type );
 		static FFMLPNetPtr Clone( FFMLPNetPtr net);
 		virtual NetworkPtr Clone();
 

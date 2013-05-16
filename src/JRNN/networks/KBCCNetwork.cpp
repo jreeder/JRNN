@@ -48,7 +48,18 @@ namespace JRNN {
 		candLayer->SetLayerSize(numCand);
 		candLayer->SetHeight(tmpHeight);
 		if(!varyActFunc){
-			candLayer->BuildLayer<ASigmoid>();
+			if(defaultCandType == Sigmoid::_type){
+				candLayer->BuildLayer<Sigmoid>();
+			}
+			else if(defaultCandType == Gaussian::_type){
+				candLayer->BuildLayer<Gaussian>();
+			}
+			else if(defaultCandType == Linear::_type){
+				candLayer->BuildLayer<Linear>();
+			}
+			else {
+				candLayer->BuildLayer<ASigmoid>();
+			}
 		} 
 		else {
 			BuildVariedLayer(candLayer, numCand);
@@ -262,9 +273,9 @@ namespace JRNN {
 		SubNetworkNodes.push_back(dynamic_pointer_cast<NetworkNode>(node));
 	}
 
-	void KBCCNetwork::Build( int numIn, int numOut, bool cloneouts /*= false*/, bool useSDCC /*= false*/, bool varyActFunc /*= false */ )
+	void KBCCNetwork::Build( int numIn, int numOut, bool cloneouts /*= false*/, bool useSDCC /*= false*/, bool varyActFunc /*= false*/, string outNodeType /*= ASigmoid::_type */ )
 	{
-		CCNetwork::Build(numIn, numOut, cloneouts, useSDCC, varyActFunc);
+		CCNetwork::Build(numIn, numOut, cloneouts, useSDCC, varyActFunc, outNodeType);
 	}
 
 	void KBCCNetwork::Reset()

@@ -57,7 +57,7 @@ namespace JRNN {
 		
 		void InstallCandidate( NodePtr node, hashedVecDoubleMap outWeights = hashedVecDoubleMap());
 		
-		virtual void Build( int numIn, int numOut, bool cloneouts = false, bool useSDCC = false, bool varyActFunc = false );
+		virtual void Build( int numIn, int numOut, bool cloneouts = false, bool useSDCC = false, bool varyActFunc = false, string outNodeType = ASigmoid::_type );
 
 		virtual void Reset();
 

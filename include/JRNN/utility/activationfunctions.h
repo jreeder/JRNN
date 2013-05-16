@@ -26,7 +26,6 @@ namespace JRNN {
 
 		static ActivationFunction* Create(string ActType);
 
-	private:
 		static const string _type;
 	};
 	
@@ -64,20 +63,21 @@ namespace JRNN {
 		virtual string getType() {
 			return _type; 
 		}
+	
+		static const string _type;
+	
 	private:
-		  static const string _type;
+		static double _activate(double sum){
+			if  ( sum < -15.0 )
+				return -0.5;
+			if  ( sum > 15.0 )
+				return 0.5;
+			return  ( 1.0 / (1.0 + exp( -sum )) - 0.5 );
+		}
 
-		  static double _activate(double sum){
-			  if  ( sum < -15.0 )
-				  return -0.5;
-			  if  ( sum > 15.0 )
-				  return 0.5;
-			  return  ( 1.0 / (1.0 + exp( -sum )) - 0.5 );
-		  }
-
-		  static double _prime(double value, double sum){
+		static double _prime(double value, double sum){
 			  return  ( 0.25 - value * value );
-		  }
+		}
 	};
 	
 
@@ -94,8 +94,10 @@ namespace JRNN {
 		virtual string getType() {
 			return _type; 
 		}
-	private:
 		static const string _type;
+
+	private:
+		
 		static double _activate(double sum){ 
 			if  ( sum < -15.0 )
 				return 0.001;
@@ -129,8 +131,10 @@ namespace JRNN {
 		virtual string getType() {
 			return _type; 
 		}
-	private:
 		static const string _type;
+
+	private:
+		
 		static double _activate(double sum){
 			double temp = -0.5 * sum * sum;
 			if  ( temp < -75.0 )
@@ -156,8 +160,10 @@ namespace JRNN {
 		virtual string getType() {
 			return _type; 
 		}
-	private:
 		static const string _type;
+
+	private:
+		
 		static double _activate(double sum){
 			return 1;
 		}
@@ -179,8 +185,10 @@ namespace JRNN {
 		virtual string getType() {
 			return _type; 
 		}
-	private:
 		static const string _type;
+		
+	private:
+		
 		static double _activate(double sum){
 			return( sum );
 		}

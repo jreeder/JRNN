@@ -14,7 +14,7 @@
 using namespace JRNN;
 using namespace boost::python;
 
-BOOST_PYTHON_MEMBER_FUNCTION_OVERLOADS(RevCCNetwork_buildoverloads, Build, 2, 5);
+BOOST_PYTHON_MEMBER_FUNCTION_OVERLOADS(RevCCNetwork_buildoverloads, Build, 2, 7);
 
 
 
