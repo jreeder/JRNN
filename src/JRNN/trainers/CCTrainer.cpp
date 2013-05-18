@@ -900,12 +900,16 @@ namespace JRNN {
 		int numInCorrect = 0;
 		int totalItems = ins.size();
 		int numTasks = (*itOuts).size();
+		bool shift = false;
+		if (network->GetLayer("out")->GetNodes()[0]->GetActFuncType() == Sigmoid::_type){
+			shift = true;
+		}
 		while(itIns != ins.end()){
 			vecDouble input = (*itIns);
 			vecDouble desiredOut = (*itOuts);
 			network->Activate(input);
 			vecDouble output = network->GetOutputs();
-			vecDouble thresOut = ApplyThreshold(output);
+			vecDouble thresOut = ApplyThreshold(output, shift);
 			vecDouble errors = desiredOut - thresOut;
 
 			for(int i = 0; i < numTasks; i++){
@@ -958,6 +962,24 @@ namespace JRNN {
 			SSE /= (double)network->GetNumOut();
 		}
 		return SSE; //This is now MSE 
+	}
+
+	double CCTrainer::ODSTestOnData( Dataset::datatype type, DatasetPtr ods)
+	{
+		DatasetPtr oldData = this->data;
+		SetDataSet(ods);
+		double retVal = TestOnData(type);
+		SetDataSet(oldData);
+		return retVal;
+	}
+
+	hashedDoubleMap CCTrainer::ODSTestWiClass( Dataset::datatype type, DatasetPtr ods )
+	{
+		DatasetPtr oldData = this->data;
+		SetDataSet(ods);
+		hashedDoubleMap retVal = TestWiClass(type);
+		SetDataSet(oldData);
+		return retVal;
 	}
 
 	void CCTrainer::InsertCandidate()

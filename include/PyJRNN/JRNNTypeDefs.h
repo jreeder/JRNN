@@ -126,6 +126,7 @@ void exportTypeDefs(){
 
 	class_<hashedDoubleMap>("hashedDoubleMap").
 		def(map_indexing_suite<hashedDoubleMap>());
+
 }
 
 #endif

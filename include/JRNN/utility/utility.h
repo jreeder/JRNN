@@ -30,15 +30,27 @@ namespace JRNN {
 		}
 		return result;
 	}
-	inline vecDouble ApplyThreshold(vecDouble& vector){
+	inline vecDouble ApplyThreshold(vecDouble& vector, bool shift = false){
 		//vecDouble::iterator it = vector.begin();
 		vecDouble result(vector.size());
 		for(unsigned int i = 0; i < vector.size(); i++){
-			if (vector[i] < 0.5){
-				result[i] = 0;
-			}
-			else{
-				result[i] = 1;
+			if (!shift)
+			{
+				if (vector[i] < 0.5){
+					result[i] = 0;
+				}
+				else{
+					result[i] = 1;
+				}
+			} 
+			else
+			{
+				if (vector[i] < 0.0){
+					result[i] = -0.5;
+				}
+				else {
+					result[i] = 0.5;
+				}
 			}
 		}
 		return result;

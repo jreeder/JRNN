@@ -105,6 +105,8 @@ void exportCCTrainer(){
 		def("TrainToConvergence", &CCTrainer::TrainToConvergence, CCTrainer_ttcoverloads()).
 		def("TestOnData", &CCTrainer::TestOnData, &CCTrainerWrap::default_TestOnData).
 		def("TestWiClass", &CCTrainer::TestWiClass, &CCTrainerWrap::default_TestWiClass).
+		def("ODSTestOnData", &CCTrainer::ODSTestOnData).
+		def("ODSTestWiData", &CCTrainer::ODSTestWiClass).
 		add_property("Epochs", &CCTrainer::GetEpochs).
 		add_property("NumResets", &CCTrainer::GetNumResets).
 		add_property("NumHidLayers", &CCTrainer::GetNumHidLayers).

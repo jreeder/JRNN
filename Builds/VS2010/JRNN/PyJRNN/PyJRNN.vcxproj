@@ -98,6 +98,7 @@
     <ClCompile Include="..\..\..\..\src\PyJRNN\trainers\pykbcctrainer.cpp" />
     <ClCompile Include="..\..\..\..\src\PyJRNN\trainers\pyrevcctrainer.cpp" />
     <ClCompile Include="..\..\..\..\src\PyJRNN\trainers\pyrproptrainer.cpp" />
+    <ClCompile Include="..\..\..\..\src\PyJRNN\utility\pyacttype.cpp" />
     <ClCompile Include="..\..\..\..\src\PyJRNN\utility\pycsmtldataset.cpp" />
     <ClCompile Include="..\..\..\..\src\PyJRNN\utility\pydataset.cpp" />
     <ClCompile Include="..\..\..\..\src\PyJRNN\utility\pymtldataset.cpp" />

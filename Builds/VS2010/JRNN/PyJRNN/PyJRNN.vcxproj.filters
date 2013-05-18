@@ -75,6 +75,9 @@
     <ClCompile Include="..\..\..\..\src\PyJRNN\trainers\pykbcctrainer.cpp">
       <Filter>Source Files\trainers</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\src\PyJRNN\utility\pyacttype.cpp">
+      <Filter>Source Files\utility</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\include\PyJRNN\networks\pynetworkshelper.h">

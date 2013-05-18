@@ -43,6 +43,9 @@ namespace JRNN {
 		virtual double TestOnData(Dataset::datatype type);
 		virtual hashedDoubleMap TestWiClass(Dataset::datatype type);
 
+		virtual double ODSTestOnData(Dataset::datatype type, DatasetPtr ods);
+		virtual hashedDoubleMap ODSTestWiClass(Dataset::datatype type, DatasetPtr ods);
+
 		//Network information methods. 
 		int GetEpochs();
 		int GetNumResets();

@@ -3,6 +3,10 @@
 
 debug = False
 
+import __main__
+if hasattr(__main__, 'debug'):
+    debug = __main__.debug
+
 if debug:
     import PyJRNN_d as PyJRNN # for debugging
     from PyJRNN_d.utility import DSDatatype, CSMTLDataset

@@ -483,7 +483,7 @@ namespace JRNN {
 			string num = lexical_cast<string>(i);
 			string name = baseName + num;
 			NodePtr np;
-			switch (i % 4)
+			switch (i % 3)
 			{
 			case 0:
 				np = Node::CreateNode<ASigmoid>(layerHeight, name);

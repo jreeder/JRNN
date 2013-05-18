@@ -39,6 +39,7 @@ void exportRevCCTrainer();
 void exportBackPropTrainer();
 void exportRPropTrainer();
 void exportKBCCTrainer();
+void exportActType();
 
 #ifdef _DEBUG
 	#define MODNAME "PyJRNN_d"
@@ -70,6 +71,7 @@ BOOST_PYTHON_MODULE(PyJRNN)
 	scope module2_scope = module2;
 	exportDatasets();
 	exportSerialization();
+	exportActType();
 
 	object module3(handle<>(borrowed(PyImport_AddModule(MODNAME ".trainers"))));
 	package.attr("trainers") = module3;
