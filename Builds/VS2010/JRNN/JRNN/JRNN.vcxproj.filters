@@ -114,6 +114,12 @@
     <ClCompile Include="..\..\..\..\src\JRNN\networks\KBCCNetwork.cpp">
       <Filter>Source Files\networks</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\src\JRNN\networks\RevKBCCNetwork.cpp">
+      <Filter>Source Files\networks</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\JRNN\trainers\RevKBCCTrainer.cpp">
+      <Filter>Source Files\trainers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\include\JRNN\JRNN.h">
@@ -192,6 +198,12 @@
       <Filter>Header Files\networks</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\JRNN\trainers\KBCCTrainer.h">
+      <Filter>Header Files\trainers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\JRNN\networks\RevKBCCNetwork.h">
+      <Filter>Header Files\networks</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\JRNN\trainers\RevKBCCTrainer.h">
       <Filter>Header Files\trainers</Filter>
     </ClInclude>
   </ItemGroup>

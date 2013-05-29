@@ -159,6 +159,7 @@
     <ClCompile Include="..\..\..\..\src\JRNN\networks\FFMLPNetwork.cpp" />
     <ClCompile Include="..\..\..\..\src\JRNN\networks\KBCCNetwork.cpp" />
     <ClCompile Include="..\..\..\..\src\JRNN\networks\RevCCNetwork.cpp" />
+    <ClCompile Include="..\..\..\..\src\JRNN\networks\RevKBCCNetwork.cpp" />
     <ClCompile Include="..\..\..\..\src\JRNN\structure\networknode.cpp" />
     <ClCompile Include="..\..\..\..\src\JRNN\trainers\BackPropTrainer.cpp" />
     <ClCompile Include="..\..\..\..\src\JRNN\trainers\CCTrainer.cpp" />
@@ -166,6 +167,7 @@
     <ClCompile Include="..\..\..\..\src\JRNN\trainers\KBCCTrainer.cpp" />
     <ClCompile Include="..\..\..\..\src\JRNN\trainers\MTLCCTrainer.cpp" />
     <ClCompile Include="..\..\..\..\src\JRNN\trainers\RevCCTrainer.cpp" />
+    <ClCompile Include="..\..\..\..\src\JRNN\trainers\RevKBCCTrainer.cpp" />
     <ClCompile Include="..\..\..\..\src\JRNN\trainers\RPropTrainer.cpp" />
     <ClCompile Include="..\..\..\..\src\JRNN\utility\activationfunctions.cpp" />
     <ClCompile Include="..\..\..\..\src\JRNN\utility\csmtldataset.cpp" />
@@ -186,6 +188,7 @@
     <ClInclude Include="..\..\..\..\include\JRNN\networks\FFMLPNetwork.h" />
     <ClInclude Include="..\..\..\..\include\JRNN\networks\KBCCNetwork.h" />
     <ClInclude Include="..\..\..\..\include\JRNN\networks\RevCCNetwork.h" />
+    <ClInclude Include="..\..\..\..\include\JRNN\networks\RevKBCCNetwork.h" />
     <ClInclude Include="..\..\..\..\include\JRNN\structure\connection.h" />
     <ClInclude Include="..\..\..\..\include\JRNN\structure\layer.h" />
     <ClInclude Include="..\..\..\..\include\JRNN\structure\network.h" />
@@ -195,6 +198,7 @@
     <ClInclude Include="..\..\..\..\include\JRNN\trainers\KBCCTrainer.h" />
     <ClInclude Include="..\..\..\..\include\JRNN\trainers\MTLCCTrainer.h" />
     <ClInclude Include="..\..\..\..\include\JRNN\trainers\RevCCTrainer.h" />
+    <ClInclude Include="..\..\..\..\include\JRNN\trainers\RevKBCCTrainer.h" />
     <ClInclude Include="..\..\..\..\include\JRNN\utility\activationfunctions.h" />
     <ClInclude Include="..\..\..\..\include\JRNN\utility\csmtldataset.h" />
     <ClInclude Include="..\..\..\..\include\JRNN\utility\dataset.h" />
