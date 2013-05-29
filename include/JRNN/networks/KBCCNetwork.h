@@ -36,6 +36,7 @@ namespace JRNN {
 
 		static KBCCNetworkPtr Create();
 		static KBCCNetworkPtr Clone(KBCCNetworkPtr net);
+		static void Clone(KBCCNetworkPtr newP, KBCCNetworkPtr oldP);
 
 		virtual NetworkPtr Clone();
 
@@ -53,7 +54,7 @@ namespace JRNN {
 
 		virtual void ConnectToHiddenNodes( NodeList nodes, conType cType = OUT );
 
-		virtual void InstallCandidate( NodePtr node, vecDouble outWeights = vecDouble(0 ) );
+		//virtual void InstallCandidate( NodePtr node, vecDouble outWeights = vecDouble(0 ) );
 		
 		void InstallCandidate( NodePtr node, hashedVecDoubleMap outWeights = hashedVecDoubleMap());
 		
@@ -70,19 +71,19 @@ namespace JRNN {
 		
 		virtual void CandFullyConnectBack( LayerPtr layer );
 
-		virtual void FullyConnectOut( LayerPtr layer );
+		/*virtual void FullyConnectOut( LayerPtr layer );
 
-		virtual void FullyConnectOut( LayerPtr layer, vecDouble outWeights );
+		virtual void FullyConnectOut( LayerPtr layer, vecDouble outWeights );*/
 
-		virtual void RemoveUnConnectedNodes();
+		/*virtual void RemoveUnConnectedNodes();
 
-		virtual void RemoveHiddenLayer( LayerPtr layer );
+		virtual void RemoveHiddenLayer( LayerPtr layer );*/
 
-		virtual void CandConnectOut( NodePtr node, vecDouble outWeights = vecDouble(0 ) );
+		//virtual void CandConnectOut( NodePtr node, vecDouble outWeights = vecDouble(0 ) );
 
-		virtual ConPtr Connect( NodePtr n1, NodePtr n2 );
+		//virtual ConPtr Connect( NodePtr n1, NodePtr n2 );
 
-		virtual ConPtr Connect( NodePtr n1, NodePtr n2, double conweight );
+		//virtual ConPtr Connect( NodePtr n1, NodePtr n2, double conweight );
 		void CandNetFullyConnectBack( NetworkNodePtr newNetNode, bool onlyDirect, bool reduceHeight );
 	};
 }

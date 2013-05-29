@@ -37,15 +37,15 @@ namespace JRNN {
 
 	RevCCNetworkPtr RevCCNetwork::Clone(RevCCNetworkPtr net){
 		RevCCNetworkPtr revccnet(new RevCCNetwork());
-		Network::Clone(revccnet, net);
+		CCNetwork::Clone(revccnet, net);
 		
-		revccnet->candLayer = revccnet->layers["cand"];
+		/*revccnet->candLayer = revccnet->layers["cand"];
 		BOOST_FOREACH(LayerPair lp, revccnet->layers){
 			if (lp.second->GetType() == Layer::hidden){
 				revccnet->hiddenLayers.push_back(lp.second);
 			}
 		}
-		revccnet->numUnits = net->numUnits;
+		revccnet->numUnits = net->numUnits;*/
 		revccnet->autoAssocLayer = revccnet->layers["autoassoc"];
 		revccnet->normOutLayer = revccnet->layers["normout"]; 
 		return revccnet;

@@ -39,6 +39,15 @@ namespace JRNN {
 		return kbccnet;
 	}
 
+	void KBCCNetwork::Clone( KBCCNetworkPtr newP, KBCCNetworkPtr oldP )
+	{
+		CCNetwork::Clone(newP, oldP);
+		BOOST_FOREACH(NetworkNodePtr nodep, oldP->SubNetworkNodes){
+			string nodeName = nodep->GetName();
+			newP->SubNetworkNodes.push_back(dynamic_pointer_cast<NetworkNode>(newP->GetNode(nodeName)));
+		}
+	}
+
 	void KBCCNetwork::CreateCandLayer( int numCand, NetPtrList candNets /*= NetPtrList()*/, int numCopies /*= 0*/ )
 	{
 		LayerPtr out = layers["out"];
@@ -223,10 +232,10 @@ namespace JRNN {
 
 	}
 
-	void KBCCNetwork::InstallCandidate( NodePtr node, vecDouble outWeights /*= vecDouble(0 ) */ )
-	{
-		CCNetwork::InstallCandidate(node, outWeights);
-	}
+	//void KBCCNetwork::InstallCandidate( NodePtr node, vecDouble outWeights /*= vecDouble(0 ) */ )
+	//{
+	//	CCNetwork::InstallCandidate(node, outWeights);
+	//}
 
 	void KBCCNetwork::InstallCandidate( NodePtr node, hashedVecDoubleMap outWeights /*= hashedVecDoubleMap()*/)
 	{
@@ -285,17 +294,17 @@ namespace JRNN {
 		CCNetwork::Reset();
 	}
 
-	void KBCCNetwork::FullyConnectOut( LayerPtr layer )
-	{
-		CCNetwork::FullyConnectOut(layer);
-	}
+	//void KBCCNetwork::FullyConnectOut( LayerPtr layer )
+	//{
+	//	CCNetwork::FullyConnectOut(layer);
+	//}
 
-	void KBCCNetwork::FullyConnectOut( LayerPtr layer, vecDouble outWeights )
-	{
-		CCNetwork::FullyConnectOut(layer);
-	}
+	//void KBCCNetwork::FullyConnectOut( LayerPtr layer, vecDouble outWeights )
+	//{
+	//	CCNetwork::FullyConnectOut(layer);
+	//}
 
-	void KBCCNetwork::RemoveUnConnectedNodes()
+	/*void KBCCNetwork::RemoveUnConnectedNodes()
 	{
 		CCNetwork::RemoveUnConnectedNodes();
 	}
@@ -303,22 +312,22 @@ namespace JRNN {
 	void KBCCNetwork::RemoveHiddenLayer( LayerPtr layer )
 	{
 		CCNetwork::RemoveHiddenLayer(layer);
-	}
+	}*/
 
-	void KBCCNetwork::CandConnectOut( NodePtr node, vecDouble outWeights /*= vecDouble(0 ) */ )
-	{
-		CCNetwork::CandConnectOut(node, outWeights);
-	}
+	//void KBCCNetwork::CandConnectOut( NodePtr node, vecDouble outWeights /*= vecDouble(0 ) */ )
+	//{
+	//	CCNetwork::CandConnectOut(node, outWeights);
+	//}
 
-	JRNN::ConPtr KBCCNetwork::Connect( NodePtr n1, NodePtr n2 )
-	{
-		return Network::Connect(n1,n2);
-	}
+	//JRNN::ConPtr KBCCNetwork::Connect( NodePtr n1, NodePtr n2 )
+	//{
+	//	return Network::Connect(n1,n2);
+	//}
 
-	JRNN::ConPtr KBCCNetwork::Connect( NodePtr n1, NodePtr n2, double conweight )
-	{
-		return Network::Connect(n1,n2,conweight);
-	}
+	//JRNN::ConPtr KBCCNetwork::Connect( NodePtr n1, NodePtr n2, double conweight )
+	//{
+	//	return Network::Connect(n1,n2,conweight);
+	//}
 
 	JRNN::NodePtr KBCCNetwork::AppendNewInputNode()
 	{
