@@ -163,6 +163,7 @@
     <ClCompile Include="..\..\..\..\src\JRNN\structure\networknode.cpp" />
     <ClCompile Include="..\..\..\..\src\JRNN\trainers\BackPropTrainer.cpp" />
     <ClCompile Include="..\..\..\..\src\JRNN\trainers\CCTrainer.cpp" />
+    <ClCompile Include="..\..\..\..\src\JRNN\trainers\DualKBCCTrainer.cpp" />
     <ClCompile Include="..\..\..\..\src\JRNN\trainers\EtaMTLRPropTrainer.cpp" />
     <ClCompile Include="..\..\..\..\src\JRNN\trainers\KBCCTrainer.cpp" />
     <ClCompile Include="..\..\..\..\src\JRNN\trainers\MTLCCTrainer.cpp" />
@@ -194,6 +195,7 @@
     <ClInclude Include="..\..\..\..\include\JRNN\structure\network.h" />
     <ClInclude Include="..\..\..\..\include\JRNN\structure\networknode.h" />
     <ClInclude Include="..\..\..\..\include\JRNN\structure\node.h" />
+    <ClInclude Include="..\..\..\..\include\JRNN\trainers\DualKBCCTrainer.h" />
     <ClInclude Include="..\..\..\..\include\JRNN\trainers\EtaMTLRPropTrainer.h" />
     <ClInclude Include="..\..\..\..\include\JRNN\trainers\KBCCTrainer.h" />
     <ClInclude Include="..\..\..\..\include\JRNN\trainers\MTLCCTrainer.h" />

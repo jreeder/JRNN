@@ -92,11 +92,14 @@
     <ClCompile Include="..\..\..\..\src\PyJRNN\networks\pykbccnetwork.cpp" />
     <ClCompile Include="..\..\..\..\src\PyJRNN\networks\pynetwork.cpp" />
     <ClCompile Include="..\..\..\..\src\PyJRNN\networks\pyrevccnetwork.cpp" />
+    <ClCompile Include="..\..\..\..\src\PyJRNN\networks\pyrevkbccnetwork.cpp" />
     <ClCompile Include="..\..\..\..\src\PyJRNN\PyJRNN.cpp" />
     <ClCompile Include="..\..\..\..\src\PyJRNN\trainers\pybackproptrainer.cpp" />
     <ClCompile Include="..\..\..\..\src\PyJRNN\trainers\pycctrainer.cpp" />
+    <ClCompile Include="..\..\..\..\src\PyJRNN\trainers\pydualkbcctrainer.cpp" />
     <ClCompile Include="..\..\..\..\src\PyJRNN\trainers\pykbcctrainer.cpp" />
     <ClCompile Include="..\..\..\..\src\PyJRNN\trainers\pyrevcctrainer.cpp" />
+    <ClCompile Include="..\..\..\..\src\PyJRNN\trainers\pyrevkbcctrainer.cpp" />
     <ClCompile Include="..\..\..\..\src\PyJRNN\trainers\pyrproptrainer.cpp" />
     <ClCompile Include="..\..\..\..\src\PyJRNN\utility\pyacttype.cpp" />
     <ClCompile Include="..\..\..\..\src\PyJRNN\utility\pycsmtldataset.cpp" />

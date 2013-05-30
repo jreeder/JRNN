@@ -15,6 +15,7 @@
 #include "networks/RevCCNetwork.h"
 #include "networks/FFMLPNetwork.h"
 #include "networks/KBCCNetwork.h"
+#include "networks/RevKBCCNetwork.h"
 #include "utility/dataset.h"
 #include "utility/csmtldataset.h"
 #include <iostream>
@@ -35,7 +36,8 @@ namespace JRNN {
 			FFMLP,
 			CC, 
 			RevCC,
-			KBCC
+			KBCC,
+			RevKBCC
 		};
 
 		struct Node {
@@ -121,6 +123,15 @@ namespace JRNN {
 		};
 
 		typedef boost::shared_ptr<KBCCNetwork> sKBCCNetworkPtr;
+
+		struct RevKBCCNetwork : KBCCNetwork {
+			string autoAssocLayerName;
+			string normOutLayerName;
+			virtual void ReadIn(RevKBCCNetworkPtr net);
+			virtual void WriteOut(RevKBCCNetworkPtr net);
+		};
+
+		typedef boost::shared_ptr<RevKBCCNetwork> sRevKBCCNetworkPtr;
 	}
 
 	class Serializer {
@@ -166,6 +177,8 @@ namespace JRNN {
 		void readRevCCNetwork(serialize::RevCCNetwork& sNet, mObject& net);
 		void writeKBCCNetwork( mObject& outNet, serialize::KBCCNetwork& sNet );
 		void readKBCCNetwork( serialize::KBCCNetwork& sNetKBCC, mObject& inNet );
+		void writeRevKBCCNetwork(mObject& outNet, serialize::RevKBCCNetwork& net);
+		void readRevKBCCNetwork(serialize::RevKBCCNetwork& sNet, mObject& net);
 
 		mArray writeLayers(std::vector<serialize::Layer>& layers);
 		std::vector<serialize::Layer> readLayers(mArray& layers);

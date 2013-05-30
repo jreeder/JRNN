@@ -40,6 +40,9 @@ void exportBackPropTrainer();
 void exportRPropTrainer();
 void exportKBCCTrainer();
 void exportActType();
+void exportRevKBCCNetwork();
+void exportRevKBCCTrainer();
+void exportDualKBCCTrainer();
 
 #ifdef _DEBUG
 	#define MODNAME "PyJRNN_d"
@@ -65,6 +68,7 @@ BOOST_PYTHON_MODULE(PyJRNN)
 	package.attr("networks") = module1;
 	scope module1_scope = module1;
 	exportNetworks();
+	exportRevKBCCNetwork();
 
 	object module2(handle<>(borrowed(PyImport_AddModule(MODNAME ".utility"))));
 	package.attr("utility") = module2;
@@ -81,4 +85,6 @@ BOOST_PYTHON_MODULE(PyJRNN)
 	exportBackPropTrainer();
 	exportRPropTrainer();
 	exportKBCCTrainer();
+	exportRevKBCCTrainer();
+	exportDualKBCCTrainer();
 }

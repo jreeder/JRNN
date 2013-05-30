@@ -249,6 +249,24 @@ namespace JRNN {
 		net->SetNormOutLayerByName(normOutLayerName);
 	}
 
+	void serialize::RevKBCCNetwork::ReadIn(RevKBCCNetworkPtr net)
+	{
+		KBCCNetwork::ReadIn(net);
+		netType = RevKBCC;
+		autoAssocLayerName = net->GetAutoAssocLayer()->GetName();
+		normOutLayerName = net->GetNormOutLayer()->GetName();
+	}
+
+	void serialize::RevKBCCNetwork::WriteOut(RevKBCCNetworkPtr net)
+	{
+		if (!net){
+			assert(0);
+		}
+		KBCCNetwork::WriteOut(net);
+		net->SetAutoAssocLayerByName(autoAssocLayerName);
+		net->SetNormOutLayerByName(normOutLayerName);
+	}
+
 	void serialize::FFMLPNetwork::ReadIn(FFMLPNetPtr net){
 		Network::ReadIn(net);
 		netType = FFMLP;
@@ -521,6 +539,22 @@ namespace JRNN {
 	}
 
 
+	void JSONArchiver::writeRevKBCCNetwork( mObject& outNet, serialize::RevKBCCNetwork& net )
+	{
+		writeKBCCNetwork(outNet, net);
+
+		outNet["autoAssocLayerName"] = net.autoAssocLayerName;
+		outNet["normOutLayerName"] = net.normOutLayerName;
+	}
+
+	void JSONArchiver::readRevKBCCNetwork( serialize::RevKBCCNetwork& sNet, mObject& net )
+	{
+		readKBCCNetwork(sNet, net);
+
+		sNet.autoAssocLayerName = findValue(net, "autoAssocLayerName").get_str();
+		sNet.normOutLayerName = findValue(net, "normOutLayerName").get_str();
+	}
+
 	mArray JSONArchiver::writeLayers( std::vector<serialize::Layer>& layers )
 	{
 		mArray newLayers;
@@ -726,6 +760,13 @@ namespace JRNN {
 			sNetKBCC.WriteOut(tmpNetKBCC);
 			retNet = tmpNetKBCC;
 		}
+		else if (netType == serialize::RevKBCC){
+			serialize::RevKBCCNetwork sNetRevKBCC;
+			readRevKBCCNetwork(sNetRevKBCC, inNet);
+			RevKBCCNetworkPtr tmpNetRevKBCC = RevKBCCNetwork::Create();
+			sNetRevKBCC.WriteOut(tmpNetRevKBCC);
+			retNet = tmpNetRevKBCC;
+		}
 		else {
 			assert(0);
 		}
@@ -757,6 +798,11 @@ namespace JRNN {
 			serialize::KBCCNetwork sNet;
 			sNet.ReadIn(dynamic_pointer_cast<KBCCNetwork>(inNet));
 			writeKBCCNetwork(outNet, sNet);
+		}
+		else if (typeid(RevKBCCNetwork) == typeid((*inNet))){
+			serialize::RevKBCCNetwork sNet;
+			sNet.ReadIn(dynamic_pointer_cast<RevKBCCNetwork>(inNet));
+			writeRevKBCCNetwork(outNet, sNet);
 		}
 		else {
 			serialize::Network sNet;

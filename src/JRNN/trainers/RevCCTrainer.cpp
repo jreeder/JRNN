@@ -16,11 +16,12 @@ namespace JRNN {
 
 	RandomGenerator01 RevCCTrainer::revRand = RandomGenerator01();
 
-	RevCCTrainer::RevCCTrainer(int numIn, int numOut, int numCandidates){
+	RevCCTrainer::RevCCTrainer( int numIn, int numOut, int numCandidates, string outNodeType /*= ASigmoid::_type*/, string autoAssocType /*= ASigmoid::_type*/ )
+	{
 		net1 = RevCCNetwork::Create();
 		net2 = RevCCNetwork::Create();
-		net1->Build(numIn, numOut);
-		net2->Build(numIn, numOut);
+		net1->Build(numIn, numOut, false, false, false, outNodeType, autoAssocType);
+		net2->Build(numIn, numOut, false, false, false, outNodeType, autoAssocType);
 		network = net1;
 		firstTrained = false;
 		ScopedOut = false;

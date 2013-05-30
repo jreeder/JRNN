@@ -39,6 +39,8 @@ namespace JRNN {
 		NetPtrList SubNetlist;
 		int numCopies;
 		
+		KBCCTrainer();
+
 		virtual status TrainOuts();
 
 		virtual void CreateCandidates();

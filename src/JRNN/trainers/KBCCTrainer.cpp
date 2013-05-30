@@ -17,7 +17,14 @@ namespace JRNN {
 		this->SubNetlist = SubNetList;
 		this->numCopies = numCopies;
 	}
-	
+
+	KBCCTrainer::KBCCTrainer() : CCTrainer()
+	{
+		this->SubNetlist.clear();
+		this->numCopies = 0;
+	}
+
+
 	KBCCTrainer::~KBCCTrainer(){}
 
 	double KBCCTrainer::TestOnData( Dataset::datatype type )

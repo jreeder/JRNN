@@ -17,7 +17,7 @@
 namespace JRNN {
 	class RevKBCCTrainer : public KBCCTrainer {
 	public:
-		RevKBCCTrainer(int numIn, int numOut, int numCandidates);
+		RevKBCCTrainer(int numIn, int numOut, int numCandidates, string outNodeType = ASigmoid::_type, string autoAssocType = ASigmoid::_type);
 		~RevKBCCTrainer();
 
 		struct TestResult {
@@ -120,7 +120,7 @@ namespace JRNN {
 		void SaveNetParameters(netparameters& netparms);
 
 		//Overloaded so that I can insert tests after each epoch. 
-		CCTrainer::status TrainOuts();
+		KBCCTrainer::status TrainOuts();
 
 		static RandomGenerator01 revRand;
 		//conVars assoc;

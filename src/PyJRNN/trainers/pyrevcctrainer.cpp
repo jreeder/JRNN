@@ -44,7 +44,7 @@ void exportRevCCTrainer(){
 
 	typedef boost::shared_ptr<RevCCTrainer> RevCCTrainerPtr;
 
-	class_<RevCCTrainer, RevCCTrainerPtr, bases<CCTrainer> >("RevCCTrainer", init<int, int, int>()).
+	class_<RevCCTrainer, RevCCTrainerPtr, bases<CCTrainer> >("RevCCTrainer", init<int, int, int, optional<string, string> >()).
 		def("TrainTask", &RevCCTrainer::TrainTask, RevCCTrainer_traintaskoverloads()).
 		def("TestOnData", &RevCCTrainer::TestOnData).
 		def("TestWiClass", &RevCCTrainer::TestWiClass).

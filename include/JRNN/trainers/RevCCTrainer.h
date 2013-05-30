@@ -20,7 +20,7 @@ namespace JRNN {
 	class RevCCTrainer : public CCTrainer
 	{
 	public:
-		RevCCTrainer(int numIn, int numOut, int numCandidates);
+		RevCCTrainer(int numIn, int numOut, int numCandidates, string outNodeType = ASigmoid::_type, string autoAssocType = ASigmoid::_type);
 		~RevCCTrainer();
 		
 		struct TestResult {

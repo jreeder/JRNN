@@ -78,6 +78,15 @@
     <ClCompile Include="..\..\..\..\src\PyJRNN\utility\pyacttype.cpp">
       <Filter>Source Files\utility</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\src\PyJRNN\trainers\pyrevkbcctrainer.cpp">
+      <Filter>Source Files\trainers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\PyJRNN\networks\pyrevkbccnetwork.cpp">
+      <Filter>Source Files\networks</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\PyJRNN\trainers\pydualkbcctrainer.cpp">
+      <Filter>Source Files\trainers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\include\PyJRNN\networks\pynetworkshelper.h">
