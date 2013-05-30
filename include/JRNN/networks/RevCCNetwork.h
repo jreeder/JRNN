@@ -32,6 +32,7 @@ namespace JRNN {
 		static RevCCNetworkPtr Create();
 		static RevCCNetworkPtr Clone(RevCCNetworkPtr net);
 		virtual NetworkPtr	Clone();
+		CCNetworkPtr CloneToCC();
 		const LayerPtr GetAutoAssocLayer();
 		const LayerPtr GetNormOutLayer();
 		void SetAutoAssocLayerByName(string name);

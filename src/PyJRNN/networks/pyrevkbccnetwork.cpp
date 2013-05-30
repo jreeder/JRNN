@@ -29,6 +29,7 @@ void exportRevKBCCNetwork(){
 		def("GetTrueOutputs", &RevKBCCNetwork::GetTrueOutputs).
 		def("Reset", &RevKBCCNetwork::Reset).
 		def_readwrite("getTrueOuts", &RevKBCCNetwork::getTrueOuts).
-		def("Clone", ClonePtr)
+		def("Clone", ClonePtr).
+		def("CloneToKBCC", &RevKBCCNetwork::CloneToKBCC)
 		;
 }

@@ -29,6 +29,7 @@ void exportRevCCNetwork(){
 		def("GetTrueOutputs", &RevCCNetwork::GetTrueOutputs).
 		def("Reset", &RevCCNetwork::Reset).
 		def_readwrite("getTrueOuts", &RevCCNetwork::getTrueOuts).
-		def("Clone", ClonePtr)
+		def("Clone", ClonePtr).
+		def("CloneToCC", &RevCCNetwork::CloneToCC)
 		;
 }

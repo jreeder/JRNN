@@ -30,6 +30,7 @@ namespace JRNN {
 		static RevKBCCNetworkPtr Create();
 		static RevKBCCNetworkPtr Clone(RevKBCCNetworkPtr net);
 		virtual NetworkPtr Clone();
+		KBCCNetworkPtr CloneToKBCC();
 		const LayerPtr GetAutoAssocLayer();
 		const LayerPtr GetNormOutLayer();
 		void SetAutoAssocLayerByName(string name);

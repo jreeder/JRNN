@@ -56,6 +56,19 @@ namespace JRNN {
 		return RevCCNetwork::Clone(oldP);
 	}
 
+	JRNN::CCNetworkPtr RevCCNetwork::CloneToCC()
+	{
+		RevCCNetworkPtr oldP = RevCCSharedFromThis::shared_from_This();
+		RevCCNetworkPtr newP = RevCCNetwork::Clone(oldP);
+		newP->RemoveConnections(newP->autoAssocLayer->GetConnections());
+		newP->autoAssocLayer->Clear(false);
+		newP->normOutLayer->Clear(false);
+		newP->layers.erase(newP->autoAssocLayer->GetName());
+		newP->layers.erase(newP->normOutLayer->GetName());
+		newP->layers["out"]->RemoveUnconnectedNodes();
+		return CCNetwork::Clone(newP);
+	}
+
 	const LayerPtr RevCCNetwork::GetAutoAssocLayer(){
 		return autoAssocLayer;
 	}

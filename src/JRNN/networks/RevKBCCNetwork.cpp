@@ -47,6 +47,19 @@ namespace JRNN {
 		return RevKBCCNetwork::Clone(oldP);
 	}
 
+	JRNN::KBCCNetworkPtr RevKBCCNetwork::CloneToKBCC()
+	{
+		RevKBCCNetworkPtr oldP = RevKBCCSharedFromThis::shared_from_This();
+		RevKBCCNetworkPtr newP = RevKBCCNetwork::Clone(oldP);
+		newP->RemoveConnections(newP->autoAssocLayer->GetConnections());
+		newP->autoAssocLayer->Clear(false);
+		newP->normOutLayer->Clear(false);
+		newP->layers.erase(newP->autoAssocLayer->GetName());
+		newP->layers.erase(newP->normOutLayer->GetName());
+		newP->layers["out"]->RemoveUnconnectedNodes();
+		return KBCCNetwork::Clone(newP);
+	}
+
 	const LayerPtr RevKBCCNetwork::GetAutoAssocLayer()
 	{
 		return autoAssocLayer;
@@ -158,4 +171,5 @@ namespace JRNN {
 	{
 		this->normOutLayer = GetLayer(name);
 	}
+
 }
