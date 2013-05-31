@@ -90,6 +90,9 @@ namespace JRNN {
 		KBCCNetworkPtr net2;
 		KBCCNetworkPtr revNet;
 
+		NetPtrList net1list;
+		NetPtrList net2list;
+
 		DatasetPtr bufferDS;
 		DatasetPtr outTestDS; //The dataset that will be monitored during training. 
 		Dataset::datatype outTestDStype;

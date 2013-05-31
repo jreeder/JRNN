@@ -37,6 +37,7 @@ namespace JRNN {
 		
 	protected:
 		NetPtrList SubNetlist;
+		NetPtrList resSubNetList;
 		int numCopies;
 		
 		KBCCTrainer();

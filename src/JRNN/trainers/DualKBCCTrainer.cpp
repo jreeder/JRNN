@@ -53,6 +53,7 @@ namespace JRNN {
 		bufferDS->Clear();
 		SaveNetParameters(net1vals);
 		SaveNetParameters(net2vals);
+		SubNetlist = resSubNetList;
 	}
 
 	void DualKBCCTrainer::FinishSetup(){
@@ -212,16 +213,21 @@ namespace JRNN {
 			if (!firstTrained)
 			{
 				//Initial Training
+				net1list = SubNetlist;
+				net2list = SubNetlist;
 				SetDataSet(taskData);
 				network = net1;
 				TrainToConvergence(maxEpochs, validate);
+				net1list = SubNetlist;
 				SaveNetParameters(net1vals);
 				//First Stage I
 				revNet = net1;
 				FillBufferDS(revparams.bufferSize);
 				network = net2; //This has to happen before SetDataset
 				SetDataSet(bufferDS);
+				SubNetlist = net2list;
 				TrainToConvergence(maxEpochs);
+				net2list = SubNetlist;
 				SaveNetParameters(net2vals);
 				bufferDS->Clear();
 				firstTrained = true;
@@ -242,7 +248,9 @@ namespace JRNN {
 				bufferDS->Clear();
 				SetDataSet(taskData);
 				network = net1;
+				SubNetlist = net1list;
 				TrainToConvergence(maxEpochs, validate);
+				net1list = SubNetlist;
 				SaveNetParameters(net1vals);
 	
 				//Turn this off for Stage I
@@ -252,7 +260,9 @@ namespace JRNN {
 				FillBufferDS(revparams.bufferSize);
 				network = net2;
 				SetDataSet(bufferDS);
+				SubNetlist = net2list;
 				TrainToConvergence(maxEpochs); //Not validating right now might need to come back and do that later. would require buffer dataset to have a validation set. 
+				net2list = SubNetlist;
 				SaveNetParameters(net2vals);
 				bufferDS->Clear();
 			}

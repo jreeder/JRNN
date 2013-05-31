@@ -30,6 +30,8 @@
 
 #tmpArray2 = map(lambda x: DiscritizeIntoRanges(x, testranges2, False), newOutputs[:, 0])
 
+debug = True
+
 import PyJRNN_d as PyJRNN
 import pyublas
 import numpy
@@ -148,7 +150,8 @@ def ParallelTabbedConsTest(dsname, numIns, numOuts, numTrain, numVal, numTest, n
         return (ds1, ds2, ds3, tr1)
     
     dstuple = CreateTabbedConsDS(dsname, numIns, numOuts, numTrain, numVal, numTest)
-    revCC = PyJRNN.trainers.RevCCTrainer(numIns, numOuts, numCand)
+    #revCC = PyJRNN.trainers.RevCCTrainer(numIns, numOuts, numCand)
+    revCC = PyJRNN.trainers.RevKBCCTrainer(numIns, numOuts, numCand)
     revCC.revparams.numRevTrainRatio = numRevTrainRatio
     if numRev == -1:
         revCC.revparams.bufferSize = 0
@@ -163,7 +166,7 @@ def ParallelTabbedConsTest(dsname, numIns, numOuts, numTrain, numVal, numTest, n
         with open(fileName, 'w') as fileh:
             json.dump(returnVal, fileh)
             
-    return returnVal
+    return returnVal, revCC
 
 import wingdbstub
 
@@ -179,4 +182,6 @@ useFannedTurn=True
 
 #parallelTest('Cong', 'Chase - 16Nov2012171621', maxEpochs=maxEpochs, numFrames=numFrames, indexes=indexes, distNums=distNums, numRev=numRev, reshuffle=reshuffle, useFannedTurn=useFannedTurn)
 
-result = ParallelTabbedConsTest('band-task2.txt', 2, 1, 50, 100, 400, numRev=1)
+result, testrcc = ParallelTabbedConsTest('band-task2.txt', 2, 1, 50, 100, 400, numRev=2)
+
+print "done"

@@ -15,12 +15,14 @@ namespace JRNN {
 	KBCCTrainer::KBCCTrainer( CCNetworkPtr network, DatasetPtr data, int numCandidates, NetPtrList SubNetList, int numCopies, ints primaryIndexes /*= ints(0)*/ ) : CCTrainer(network, data, numCandidates, primaryIndexes)
 	{
 		this->SubNetlist = SubNetList;
+		this->resSubNetList = SubNetList;
 		this->numCopies = numCopies;
 	}
 
 	KBCCTrainer::KBCCTrainer() : CCTrainer()
 	{
 		this->SubNetlist.clear();
+		this->resSubNetList.clear();
 		this->numCopies = 0;
 	}
 
@@ -147,21 +149,21 @@ namespace JRNN {
 				val = node->GetOut();
 				val = setPrecision(val, 3);
 				candSumVals[name] += val;
-#ifdef _DEBUG
+#ifdef _VERBOSE
 				ofstream tmp("debugfile.txt", ios::app);
 				tmp << name << " ValSums: " << candSumVals[name] << " Vals: " << val;
-#endif // _DEBUG
+#endif // _VERBOSE
 				//compute correlation for this unit
 				for (unsigned int j = 0; j < err.errors.size(); j++ ){
 					(*cCorr)[j] += val * err.errors[j];
-#ifdef _DEBUG
+#ifdef _VERBOSE
 					tmp << " val*err: " << val * err.errors[j] << " error: " << err.errors[j] << " cor[j]: " << (*cCorr)[j];
-#endif // _DEBUG
+#endif // _VERBOSE
 				}
-#ifdef _DEBUG	
+#ifdef _VERBOSE	
 				tmp << endl;
 				tmp.close();
-#endif // _DEBUG
+#endif // _VERBOSE
 			} 
 			else
 			{//Find out why score is so high. 
@@ -172,21 +174,21 @@ namespace JRNN {
 					cCorr = &candCorr[name];
 					val = setPrecision(val, 3);
 					candSumVals[name] += val;
-#ifdef _DEBUG
+#ifdef _VERBOSE
 					ofstream tmp("debugfile.txt", ios::app);
 					tmp << name << " ValSums: " << candSumVals[name] << " Vals: " << val;
-#endif // _DEBUG
+#endif // _VERBOSE
 					//compute correlation for this unit
 					for (unsigned int j = 0; j < err.errors.size(); j++ ){
 						(*cCorr)[j] += val * err.errors[j];
-#ifdef _DEBUG
+#ifdef _VERBOSE
 						tmp << " val*err: " << val * err.errors[j] << " error: " << err.errors[j] << " cor[j]: " << (*cCorr)[j];
-#endif // _DEBUG
+#endif // _VERBOSE
 					}
-#ifdef _DEBUG	
+#ifdef _VERBOSE	
 					tmp << endl;
 					tmp.close();
-#endif // _DEBUG
+#endif // _VERBOSE
 				}
 			}
 		}
@@ -225,10 +227,10 @@ namespace JRNN {
 	
 				candSumVals[name] += value;
 				actPrime /= err.sumSqErr;  
-#ifdef _DEBUG
+#ifdef _VERBOSE
 				ofstream tmp("debugfile.txt", ios::app);
 				tmp << name << " ValSums: " << candSumVals[name] << " Vals: " << value;
-#endif // _DEBUG
+#endif // _VERBOSE
 
 				//compute correlations to each output
 				for (int j = 0; j < nOuts; j++){
@@ -236,15 +238,15 @@ namespace JRNN {
 					direction = ((*cPCorr)[j] < 0.0) ? -1.0 : 1.0;
 					change -= direction * actPrime * (error - err.sumErrs[j]); 
 					(*cCorr)[j] += error * value;
-#ifdef _DEBUG
+#ifdef _VERBOSE
 					tmp << " val*err: " << value * err.errors[j] << " error: " << err.errors[j] << " cor[j]: " << (*cCorr)[j];
-#endif // _DEBUG
+#endif // _VERBOSE
 				}
 	
-#ifdef _DEBUG	
+#ifdef _VERBOSE	
 				tmp << endl;
 				tmp.close();
-#endif // _DEBUG
+#endif // _VERBOSE
 				//use change to compute new slopes
 	
 				ConList cons = candidate->GetConnections(IN);
@@ -266,17 +268,17 @@ namespace JRNN {
 						cCorr = &candCorr[name];
 						cPCorr = &candPCorr[name];
 
-#ifdef _DEBUG
+#ifdef _VERBOSE
 						ofstream tmp("debugfile.txt", ios::app);
-#endif // _DEBUG
+#endif // _VERBOSE
 
 						actPrime = setPrecision(candActPrimes[name][i], 7);
 						if (i == 0) {//This should only happen once per output node. 
 							candSumVals[name] += value;
-#ifdef _DEBUG
+#ifdef _VERBOSE
 							
 							tmp << name << " ValSums: " << candSumVals[name] << " Vals: " << value;
-#endif // _DEBUG
+#endif // _VERBOSE
 						}
 						actPrime /= err.sumSqErr;
 
@@ -287,15 +289,15 @@ namespace JRNN {
 							change -= direction * actPrime * (error - err.sumErrs[j]); 
 							if (i == 0) {//This should only happen once per output node. 
 								(*cCorr)[j] += error * value;
-#ifdef _DEBUG
+#ifdef _VERBOSE
 								tmp << " val*err: " << value * err.errors[j] << " error: " << err.errors[j] << " cor[j]: " << (*cCorr)[j];
-#endif // _DEBUG
+#endif // _VERBOSE
 							}
 						}
-#ifdef _DEBUG	
+#ifdef _VERBOSE	
 						tmp << endl;
 						tmp.close();
-#endif // _DEBUG
+#endif // _VERBOSE
 					}
 
 					//cout << candidate->GetName() << "input " << i << " Change: " << change << endl;
@@ -362,16 +364,19 @@ namespace JRNN {
 	{
 		netName = netName != "" ? netName : "network_" + lexical_cast<string>(SubNetlist.size());
 		SubNetlist.insert(NetPtrPair(netName, newNet));
+		resSubNetList.insert(NetPtrPair(netName, newNet));
 	}
 
 	void KBCCTrainer::ClearSubNetList()
 	{
 		SubNetlist.clear();
+		resSubNetList.clear();
 	}
 
 	void KBCCTrainer::Reset()
 	{
 		CCTrainer::Reset();
+		SubNetlist = resSubNetList;
 	}
 
 	void KBCCTrainer::RemoveSubNet( string netName )
