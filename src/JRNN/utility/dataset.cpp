@@ -264,7 +264,7 @@ void Dataset::AnalyzeDS(){
 	outClassIndexes.clear();
 	outClassPercentage.clear();
 	outClassNames.clear();
-	for (int i = 0; i < size; i++){
+	for (int i = size - 1; i >= 0; i--){ //reversed here so that data is loaded in the original order. 
 		string outname;
 		if(realOuts){
 			outname = "realouts";

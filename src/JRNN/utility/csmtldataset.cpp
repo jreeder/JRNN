@@ -297,7 +297,7 @@ namespace JRNN {
 			task->outClassPercentages.clear();
 			task->outClassNames.clear();
 			int taskSize = task->indexes.size();
-			for (int i = 0; i < taskSize; i++){
+			for (int i = taskSize - 1; i >= 0; i--){ //reversed so things are loaded in the correct order. 
 				string outname;
 				if (realOuts)	
 				{
