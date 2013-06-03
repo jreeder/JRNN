@@ -66,6 +66,8 @@ namespace JRNN {
 		bool GetVaryActFunc();
 		string GetDefaultCandType() const;
 		void SetDefaultCandType(string val);
+		bool GetUseRecurrency() const;
+		void SetUseRecurrency(bool val);
 
 	protected:
 		//int numIn;
@@ -78,6 +80,8 @@ namespace JRNN {
 		bool cloneOuts;
 		bool useSDCC;
 		bool varyActFunc;
+		bool useRecurrency;
+
 		string defaultCandType;
 	
 		virtual void CandFullyConnectBack(LayerPtr layer);

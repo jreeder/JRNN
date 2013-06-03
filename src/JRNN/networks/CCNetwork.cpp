@@ -189,7 +189,7 @@ namespace JRNN {
 
 	void CCNetwork::CreateCandLayer(int numCand)
 	{
-		//TODO allow for varied node types-- for now it's homogeneous
+		//TODO Add recurrent connection stuff. 
 		LayerPtr out = layers["out"];
 		int tmpHeight = out->GetHeight();
 		candLayer->Clear();
@@ -474,7 +474,7 @@ namespace JRNN {
 
 	void CCNetwork::BuildVariedLayer( LayerPtr candLayer, int numCands )
 	{
-		int layerSize = numCands;
+		int layerSize = numCands * 3;
 		int layerHeight = candLayer->GetHeight();
 		string baseName = candLayer->GetName() + "_";
 		NodeList& layerNodes = candLayer->GetNodes();
@@ -482,8 +482,9 @@ namespace JRNN {
 		{
 			string num = lexical_cast<string>(i);
 			string name = baseName + num;
+			int j = i / numCands; //This makes it add the nodes so that each type is continguous. 
 			NodePtr np;
-			switch (i % 3)
+			switch (j % 3)
 			{
 			case 0:
 				np = Node::CreateNode<ASigmoid>(layerHeight, name);
@@ -502,6 +503,7 @@ namespace JRNN {
 			}
 			layerNodes.push_back(np);
 		}
+		candLayer->SetLayerSize(layerSize);
 	}
 
 	void CCNetwork::SetNumUnits( int newNumUnits )
@@ -620,6 +622,16 @@ namespace JRNN {
 	void CCNetwork::SetDefaultCandType( string val )
 	{
 		defaultCandType = val;
+	}
+
+	bool CCNetwork::GetUseRecurrency() const
+	{
+		return useRecurrency;
+	}
+
+	void CCNetwork::SetUseRecurrency( bool val )
+	{
+		useRecurrency = val;
 	}
 
 }

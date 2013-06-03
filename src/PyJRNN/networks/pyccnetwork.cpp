@@ -26,7 +26,8 @@ void exportCCNetwork(){
 		add_property("useSDCC",&CCNetwork::GetSDCC,&CCNetwork::SetUseSDCC).
 		add_property("varyActFunc", &CCNetwork::GetVaryActFunc, &CCNetwork::SetVaryActFunc).
 		add_property("cloneOuts", &CCNetwork::GetCloneOuts, &CCNetwork::SetCloneOuts).
-		add_property("defaultCandType", &CCNetwork::GetDefaultCandType, &CCNetwork::SetDefaultCandType)
+		add_property("defaultCandType", &CCNetwork::GetDefaultCandType, &CCNetwork::SetDefaultCandType).
+		add_property("useRecurrency", &CCNetwork::GetUseRecurrency, &CCNetwork::SetUseRecurrency)
 		;
 
 }
