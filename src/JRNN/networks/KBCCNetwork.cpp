@@ -76,6 +76,9 @@ namespace JRNN {
 
 		candLayer->SetPrevLayer(out->GetPrevLayer());
 		CandFullyConnectBack(candLayer);
+		if (useRecurrency){
+			AddReccurentCons(candLayer, numCand);
+		}
 		CandSubNetNodes.clear();
 		BOOST_FOREACH(NetPtrPair net, candNets){
 			NetworkNodePtr newNetNode = NetworkNode::Create(tmpHeight, "tmpName");

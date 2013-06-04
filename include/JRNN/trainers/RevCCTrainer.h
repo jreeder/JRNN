@@ -74,6 +74,8 @@ namespace JRNN {
 
 		void SetSDCCandVaryActFunc( bool useSDCC, bool varyActFunc );
 
+		void SetUseRecurrence(bool useRecurrence);
+
 		virtual void AddNewInputs( ints inputIndexes, DatasetPtr newData, bool connectToHidden = false );
 
 		//these functions are used to get and set the networks. So i can save them away. 

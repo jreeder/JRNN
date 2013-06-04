@@ -495,4 +495,10 @@ namespace JRNN {
 		return net2;
 	}
 
+	void RevCCTrainer::SetUseRecurrence( bool useRecurrence )
+	{
+		net1->SetUseRecurrency(useRecurrence);
+		net2->SetUseRecurrency(useRecurrence);
+	}
+
 }

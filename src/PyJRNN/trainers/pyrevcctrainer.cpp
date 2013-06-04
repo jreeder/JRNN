@@ -52,6 +52,7 @@ void exportRevCCTrainer(){
 		def("Activate", &RevCCTrainer::Activate, "Activates the primary network and returns the output").
 		def("SetScaleAndOffset", &RevCCTrainer::SetScaleAndOffset).
 		def("SetSDCCandVaryActFunc", &RevCCTrainer::SetSDCCandVaryActFunc).
+		def("SetUseRecurrency", &RevCCTrainer::SetUseRecurrence).
 		def("getTestWhileTrainResults", &RevCCTrainer::getTestWhileTrainResults, return_value_policy<copy_const_reference>()).
 		def("AddNewInputs", &RevCCTrainer::AddNewInputs).
 		def("AddPrevTrainedNets", &RevCCTrainer::AddPrevTrainedNets).

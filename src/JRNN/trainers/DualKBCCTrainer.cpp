@@ -504,4 +504,11 @@ namespace JRNN {
 	{
 		return net2;
 	}
+
+	void DualKBCCTrainer::SetUseRecurrence( bool useRecurrence )
+	{
+		net1->SetUseRecurrency(useRecurrence);
+		net2->SetUseRecurrency(useRecurrence);
+	}
+
 }

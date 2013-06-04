@@ -85,6 +85,7 @@ namespace JRNN {
 		string defaultCandType;
 	
 		virtual void CandFullyConnectBack(LayerPtr layer);
+		void AddReccurentCons(LayerPtr layer, int numCands);
 		//LayerPtr AddHiddenLayer(); Moved to parent
 		virtual void FullyConnectOut(LayerPtr layer);
 		virtual void FullyConnectOut(LayerPtr layer, vecDouble outWeights);

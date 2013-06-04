@@ -503,4 +503,11 @@ namespace JRNN {
 	{
 		return net2;
 	}
+
+	void RevKBCCTrainer::SetUseRecurrence( bool useRecurrence )
+	{
+		net1->SetUseRecurrency(useRecurrence);
+		net2->SetUseRecurrency(useRecurrence);
+	}
+
 }

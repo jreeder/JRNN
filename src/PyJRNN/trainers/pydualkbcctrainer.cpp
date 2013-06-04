@@ -53,6 +53,7 @@ void exportDualKBCCTrainer(){
 		def("Activate", &DualKBCCTrainer::Activate, "Activates the primary network and returns the output").
 		def("SetScaleAndOffset", &DualKBCCTrainer::SetScaleAndOffset).
 		def("SetSDCCandVaryActFunc", &DualKBCCTrainer::SetSDCCandVaryActFunc).
+		def("SetUseRecurrency", &DualKBCCTrainer::SetUseRecurrence).
 		def("getTestWhileTrainResults", &DualKBCCTrainer::getTestWhileTrainResults, return_value_policy<copy_const_reference>()).
 		def("AddNewInputs", &DualKBCCTrainer::AddNewInputs).
 		def("AddPrevTrainedNets", &DualKBCCTrainer::AddPrevTrainedNets).

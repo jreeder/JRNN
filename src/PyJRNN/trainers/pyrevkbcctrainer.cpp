@@ -53,6 +53,7 @@ void exportRevKBCCTrainer(){
 		def("Activate", &RevKBCCTrainer::Activate, "Activates the primary network and returns the output").
 		def("SetScaleAndOffset", &RevKBCCTrainer::SetScaleAndOffset).
 		def("SetSDCCandVaryActFunc", &RevKBCCTrainer::SetSDCCandVaryActFunc).
+		def("SetUseRecurrency", &RevKBCCTrainer::SetUseRecurrence).
 		def("getTestWhileTrainResults", &RevKBCCTrainer::getTestWhileTrainResults, return_value_policy<copy_const_reference>()).
 		def("AddNewInputs", &RevKBCCTrainer::AddNewInputs).
 		def("AddPrevTrainedNets", &RevKBCCTrainer::AddPrevTrainedNets).

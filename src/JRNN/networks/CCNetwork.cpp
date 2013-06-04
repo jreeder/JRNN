@@ -188,8 +188,7 @@ namespace JRNN {
 	}
 
 	void CCNetwork::CreateCandLayer(int numCand)
-	{
-		//TODO Add recurrent connection stuff. 
+	{ 
 		LayerPtr out = layers["out"];
 		int tmpHeight = out->GetHeight();
 		candLayer->Clear();
@@ -217,6 +216,9 @@ namespace JRNN {
 		
 		candLayer->SetPrevLayer(out->GetPrevLayer());
 		CandFullyConnectBack(candLayer);
+		if(useRecurrency){
+			AddReccurentCons(candLayer, numCand);
+		}
 	}
 
 	void CCNetwork::InstallCandidate(NodePtr node, vecDouble outWeights)
@@ -299,6 +301,19 @@ namespace JRNN {
 			}
 		}
 
+	}
+
+	void CCNetwork::AddReccurentCons( LayerPtr layer, int numCands )
+	{
+		//This should be run after all the candidates have been made but before subnetworks are added. 
+		int layerSize = layer->GetSize();
+		NodeList layerNodes = layer->GetNodes();
+		for (uint i = 0; i < layerSize; i++){
+			int place = i % numCands; //If numCands == layerSize then all nodes are the same, otherwise there are numCands of each type.
+			if (place < 2 || place < (numCands/2)){ //Adds reccurent connects to only the first 2 or first half of each group. 
+				candConnections.push_back(Connect(layerNodes[i], layerNodes[i]));
+			}
+		}
 	}
 
 	//LayerPtr CCNetwork::AddHiddenLayer()
