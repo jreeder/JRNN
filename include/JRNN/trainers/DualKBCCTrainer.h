@@ -75,6 +75,8 @@ namespace JRNN {
 
 		//virtual void AddNewInputs( ints inputIndexes, DatasetPtr newData, bool connectToHidden = false );
 
+		DatasetPtr ReverbMainNet(int numTrain, int numVal = 0);
+
 		//these functions are used to get and set the networks. So i can save them away. 
 		void AddPrevTrainedNets( KBCCNetworkPtr inNet1, KBCCNetworkPtr inNet2);
 		KBCCNetworkPtr GetNet1();

@@ -78,6 +78,8 @@ namespace JRNN {
 
 		virtual void AddNewInputs( ints inputIndexes, DatasetPtr newData, bool connectToHidden = false );
 
+		DatasetPtr ReverbMainNet( int numTrain, int numVal = 0 );
+
 		//these functions are used to get and set the networks. So i can save them away. 
 		void AddPrevTrainedNets( RevCCNetworkPtr inNet1, RevCCNetworkPtr inNet2);
 		RevCCNetworkPtr GetNet1();
@@ -126,7 +128,7 @@ namespace JRNN {
 		
 		//Overloaded so that I can insert tests after each epoch. 
 		CCTrainer::status TrainOuts();
-
+		
 		static RandomGenerator01 revRand;
 		//conVars assoc;
 

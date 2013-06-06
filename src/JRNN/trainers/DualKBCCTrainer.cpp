@@ -314,6 +314,24 @@ namespace JRNN {
 	}
 
 
+	JRNN::DatasetPtr DualKBCCTrainer::ReverbMainNet( int numTrain, int numVal /*= 0*/ )
+	{
+		matDouble newInputs;
+		matDouble newOutputs;
+		int totalPoints = numTrain + numVal;
+		DatasetPtr newDS(new Dataset());
+		revNet = net1;
+		
+		for (int i = 0; i < totalPoints; i++){
+			reverbdpoint dpoint = ReverberateNetwork();
+			newInputs.push_back(dpoint.inPoint);
+			newOutputs.push_back(dpoint.outPoint);
+		}
+		newDS->LoadFromMatDoubles(newInputs, newOutputs);
+		newDS->DistData(numTrain, numVal, 0);
+		return newDS;
+	}
+
 	CCTrainer::status DualKBCCTrainer::TrainOuts()
 	{
 		int quitEpoch = 0;
