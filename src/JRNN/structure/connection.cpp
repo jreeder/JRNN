@@ -86,15 +86,18 @@ void Connection::Disconnect(){
 	outNode.reset();
 }
 
+//This is called from a node, and removes the connection from the node on the other side. 
 void Connection::Disconnect(string nodeName){
-	if (inNode->GetName() == nodeName){
-		outNode->RemoveConnection(name);
+	if (inNode != outNode){
+		if (inNode->GetName() == nodeName){
+			outNode->RemoveConnection(name);
+			outNode.reset();
+		}
+		else{
+			inNode->RemoveConnection(name);
+			inNode.reset();
+		}
 	}
-	else{
-		inNode->RemoveConnection(name);
-	}
-	inNode.reset();
-	outNode.reset();
 }
 
 void Connection::SetRandomSeed(){
