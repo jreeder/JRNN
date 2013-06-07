@@ -18,6 +18,7 @@ namespace JRNN {
 		this->cloneOuts = false;
 		this->useSDCC = false;
 		this->varyActFunc = false;
+		this->useRecurrency = false;
 		this->defaultCandType = ASigmoid::_type;
 	}
 
@@ -30,6 +31,7 @@ namespace JRNN {
 		this->cloneOuts = false;
 		this->useSDCC = false;
 		this->varyActFunc = false;
+		this->useRecurrency = false;
 		this->defaultCandType = ASigmoid::_type;
 	}
 
@@ -105,6 +107,7 @@ namespace JRNN {
 		newP->cloneOuts = oldP->cloneOuts;
 		newP->useSDCC = oldP->useSDCC;
 		newP->varyActFunc = oldP->varyActFunc;
+		newP->useRecurrency = oldP->useRecurrency;
 		newP->currentLayer = newP->layers[oldP->currentLayer->GetName()];
 		newP->defaultCandType = oldP->defaultCandType;
 	}
