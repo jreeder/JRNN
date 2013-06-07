@@ -101,6 +101,7 @@ namespace JRNN {
 			bool cloneOuts;
 			bool useSDCC;
 			bool varyActFunc;
+			bool useRecurrency;
 			virtual void ReadIn(CCNetworkPtr net);
 			virtual void WriteOut(CCNetworkPtr net, bool connect = true);
 		};

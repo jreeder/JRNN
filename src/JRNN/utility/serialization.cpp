@@ -124,6 +124,7 @@ namespace JRNN {
 		cloneOuts = net->GetCloneOuts();
 		useSDCC = net->GetSDCC();
 		varyActFunc = net->GetVaryActFunc();
+		useRecurrency = net->GetUseRecurrency();
 		LayerList tmpHidLayers = net->GetHiddenLayers();
 		LayerList::iterator it = tmpHidLayers.begin();
 		for (; it != tmpHidLayers.end(); it++){
@@ -143,6 +144,7 @@ namespace JRNN {
 		net->SetCloneOuts(cloneOuts);
 		net->SetUseSDCC(useSDCC);
 		net->SetVaryActFunc(varyActFunc);
+		net->SetUseRecurrency(useRecurrency);
 		vector<string>::iterator it = hiddenLayerNames.begin();
 		LayerList layerl = net->GetHiddenLayers();
 		for (;it != hiddenLayerNames.end(); it++){
@@ -415,6 +417,7 @@ namespace JRNN {
 		outNet["cloneOuts"] = net.cloneOuts;
 		outNet["useSDCC"] = net.useSDCC;
 		outNet["varyActFunc"] = net.varyActFunc;
+		outNet["useRecurrency"] = net.useRecurrency;
 	}
 
 	void JSONArchiver::readCCNetwork( serialize::CCNetwork& sNet, mObject& net )
@@ -431,6 +434,7 @@ namespace JRNN {
 		sNet.cloneOuts = findValue(net, "cloneOuts").get_bool();
 		sNet.useSDCC = findValue(net, "useSDCC").get_bool();
 		sNet.varyActFunc = findValue(net, "varyActFunc").get_bool();
+		sNet.useRecurrency = findValue(net, "useRecurrency").get_bool();
 	}
 
 
