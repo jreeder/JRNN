@@ -69,7 +69,8 @@ def loadScenarioFiles(scenarioPath):
     scenariofiles["history"] = [os.path.join(historydir, x) for x in os.listdir(historydir)]
     return scenariofiles
 
-
+def GetUsers():
+    return [d for d in os.listdir(userspath) if os.path.isdir(os.path.join(userspath, d))]
 
 def LoadUserData(username):
     global userspath
@@ -116,7 +117,13 @@ def SplitAndAdjustObsOutputs(array, settings=UserSettings(), useFannedTurn=False
     #This is purpose built for the outputs of the game
     splitRange = CreateRanges(-1.0, 2, 2)
     fannedRange = CreateRanges(-1, 2, percentages=[0.25, 0.15, 0.075, 0.05], symetric=True)
-    adjustArray = numpy.array([1, (100.0 / settings.turnSensitivity)])
+    adjustArray = None
+    shooting = False
+    if array.shape[1] == 2:
+        adjustArray = numpy.array([1, (100.0 / settings.turnSensitivity)])
+    else:
+        adjustArray = numpy.array([1, (100.0 / settings.turnSensitivity), 1])
+        shooting = True
     tmpArray = array * adjustArray
     tmpArray1 = map(lambda x: DiscritizeIntoRanges(x, splitRange, False), tmpArray[:,0])
     tmpArray2 = []
@@ -125,7 +132,11 @@ def SplitAndAdjustObsOutputs(array, settings=UserSettings(), useFannedTurn=False
     else:    
         tmpArray2 = map(lambda x: DiscritizeIntoRanges(x, splitRange, False), tmpArray[:,1])
     #retArray = numpy.concatenate((tmpArray1, tmpArray2), axis=1) this does weird things when checking the size
-    retArray = numpy.array([x[0] + x[1] for x in zip(tmpArray1, tmpArray2)])
+    retArray = None
+    if shooting is False:
+        retArray = numpy.array([x[0] + x[1] for x in zip(tmpArray1, tmpArray2)])
+    else:
+        retArray = numpy.array([x[0] + x[1] + [x[2]] for x in zip(tmpArray1, tmpArray2, tmpArray[:,2].tolist())])
     return retArray
 
 
@@ -270,8 +281,8 @@ def TestWiWinners(ds, dstype, rCC, winnerGroups):
     outputs = ds.GetOutputs(dstype)
     size = len(inputs)
     #totalOpps = size * len(winnerGroups)
-    totalDist = size * sum([x[-1] - x[0] for x in winnerGroups])
-    grpDists = [size * x[-1] - x[0] for x in winnerGroups]
+    totalDist = size * sum([(x[-1] - x[0]) if (x[-1] - x[0]) > 0 else 1 for x in winnerGroups])
+    grpDists = [size * ((x[-1] - x[0]) if (x[-1] - x[0]) > 0 else 1) for x in winnerGroups]
     winnerOutsSize = sum([len(x) for x in winnerGroups])
     grpOutsSize = [len(x) for x in winnerGroups]
     assert winnerOutsSize == len(outputs[0])
@@ -285,10 +296,15 @@ def TestWiWinners(ds, dstype, rCC, winnerGroups):
         for i, grp in enumerate(winnerGroups):
             netWinInd, netWinVal = GetWinnerIndex(netOut, grp)
             desWinInd, desWinVal = GetWinnerIndex(example[1], grp)
-            if netWinInd != desWinInd:
+
+            if len(grp) == 1:
+                if abs(netWinVal - desWinVal) > 0.4:
+                    numInCorrect += 1
+                    groupInc[i] += 1            
+            elif netWinInd != desWinInd:
                 numInCorrect += abs(netWinInd - desWinInd)  # This will give a more useful value when there are more than two in a group. It will give the distance away from the desired. 
                 groupInc[i] += abs(netWinInd - desWinInd)
-            
+                    
             groupRealErr[i] += SumSquareError(example[1], netOut, grp)
             #realError += (desWinVal - netWinVal)**2
             #groupRealErr[i] += (desWinVal - netWinVal)**2
