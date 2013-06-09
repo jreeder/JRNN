@@ -16,6 +16,8 @@ void exportSerialization(){
 
 	class_<JSONArchiver>("JSONArchiver").
 		def("SaveToFile", &JSONArchiver::SaveToFile).
-		def("LoadFromFile", &JSONArchiver::LoadFromFile)
+		def("LoadFromFile", &JSONArchiver::LoadFromFile).
+		def("SaveToString", &JSONArchiver::SaveToString).
+		def("LoadFromString", &JSONArchiver::LoadFromString)
 		;
 }

@@ -164,6 +164,8 @@ namespace JRNN {
 		virtual void Save(NetworkPtr inNet, ostream& outStream);
 		NetworkPtr LoadFromFile(string fileName);
 		void SaveToFile(NetworkPtr inNet, string fileName);
+		NetworkPtr LoadFromString( string netString );
+		string SaveToString(NetworkPtr inNet);
 
 	private:
 		const mValue& findValue( const mObject& obj, const string& name  );
@@ -196,6 +198,7 @@ namespace JRNN {
 		std::vector<serialize::sNodePtr> readNodes(mArray& nodes);
 		mArray writeNodes(std::vector<serialize::sNodePtr>& nodes);
 		
+
 		
 	};
 

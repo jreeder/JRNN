@@ -831,12 +831,27 @@ namespace JRNN {
 		return net;
 	}
 
+	NetworkPtr JSONArchiver::LoadFromString( string netString )
+	{
+		istringstream instring;
+		instring.str(netString);
+		NetworkPtr net = this->Load(instring);
+		return net;
+	}
+
 	void JSONArchiver::SaveToFile( NetworkPtr inNet, string fileName )
 	{
 		ofstream ofile;
 		ofile.open(fileName.c_str(), ios_base::out);
 		this->Save(inNet, ofile);
 		ofile.close();
+	}
+
+	string JSONArchiver::SaveToString( NetworkPtr inNet )
+	{
+		ostringstream outstring;
+		this->Save(inNet,outstring);
+		return outstring.str();
 	}
 
 	void DataSetArchiver::SaveDStoFile( DatasetPtr dataset, string filename )
