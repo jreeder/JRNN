@@ -450,6 +450,89 @@ def RevCCWorker(RevCCTrainer, results, numRuns, subView1, subView2, cds, testRec
         return resultArray
 
 
+def CreateSingleEpAgent(user, scene, episodeFile, numTries=5, numFrames=1000, distNums = (), maxEpochs=3000, numCand=12, useSDCC=True, useVaryActFunc=True, useRev=True, useRecurrency=False, useFannedTurn=True):
+    userData = LoadUserData(user)
+    settings = LoadUserSettings(user)
+    trainingFiles = [x for x in userData[scene]['training'] if episodeFile in x]
+    data = LoadTrainingData(trainingFiles)
+    cds = PyJRNN.utility.CSMTLDataset()
+    cds.realOuts = True
+    taskName = scene.split('-')[0].rstrip()
+    EpName = "Eps_{0}".format(sortField.search(episodeFile).group(1))
+    loadCSMTLDSfromData(cds, data, [0,], numFrames, taskName, useFannedTurn=useFannedTurn, settings=settings)
+    viewStrings = PyJRNN.types.strings()
+    viewStrings.append(taskName)
+    cds.View = viewStrings
+
+    numFrames = cds.GetSize(DSDatatype.ALL)    
+    
+    numTrain = 0
+    numVal = 0
+    numTest = 0
+    
+    if len(distNums) > 0:
+        numTrain = distNums[0]
+        numVal = distNums[1]
+        numTest = distNums[2]
+    else:
+        numTrain = 0.6 * numFrames
+        numVal = 0.2 * numFrames
+        numTest = 0.2 * numFrames
+        
+    del userData
+    del trainingFiles
+    del data
+    
+    cds.DistData(int(numTrain), int(numVal), int(numTest))
+    
+    winnerGroups = []
+    if useFannedTurn:
+        winnerGroups = [[0,1],[2,3,4,5,6,7,8]]
+    else:
+        winnerGroups = [[0,1],[2,3]]
+    
+    if 'Shoot' in scene:
+        winnerGroups.append([winnerGroups[1][-1]+1])
+    
+    trainer = None
+    netType = ""
+    if useRev is True:
+        trainer = PyJRNN.trainers.RevCCTrainer(cds.numInputs, cds.numOutputs, numCand)
+        netType = 'revcc'
+    else:
+        trainer = PyJRNN.trainers.DualKBCCTrainer(cds.numInputs, cds.numOutputs, numCand)
+        netType = 'kbcc'
+    
+    trainer.SetSDCCandVaryActFunc(useSDCC, useVaryActFunc)
+    trainer.SetUseRecurrency(useRecurrency)
+    trainer.revparams.numRev = 0
+    trainer.revparams.bufferSize = 0
+    archiver = PyJRNN.utility.JSONArchiver()
+    results = []
+    outFileName = '{user}-{scene}-{EpName}-nT{numTries}-nF{numFrames}-mE{maxEpochs}-nC{numCand}-uSD{useSDCC}-uVA{useVaryActFunc}-uR{useRev}-uRe{useRecurrency}-uFt{useFannedTurn}'.format(**locals())
+    for i in range(numTries):
+        trainer.TrainTask(cds, maxEpochs, True)
+        resultDict = {}
+        resultDict['epochs'] = trainer.net1vals.epochs
+        resultDict['hiddenLayers'] = trainer.net1vals.numHidLayers
+        resultDict['MSERec'] = [x for x in trainer.net1vals.MSERec]
+        testError = trainer.TestOnData(cds, DSDatatype.TEST)
+        resultDict['testError'] = testError
+        winError = TestWiWinners(cds, DSDatatype.TEST, trainer, winnerGroups)
+        resultDict['winError'] = winError
+        results.append(resultDict)
+        netName = outFileName + "-{i}-TE{testError}.{netType}".format(**locals())
+        netString = archiver.SaveToString(trainer.net1)
+        with open(os.path.join(os.curdir, 'Notebook Data', 'UserAgents', netName), 'w') as fileh:
+            fileh.write(netString)
+        trainer.Reset()
+
+    with open(os.path.join(os.curdir, 'Notebook Data', 'UserAgents', outFileName + '.json'), 'w') as fileh:
+        json.dump(results, fileh)
+        
+    return results
+
+
 def CreateRanges(minVal, dist, numRanges=5, percentages=[], symetric=False):
     ranges = []
     if len(percentages) == 0:
