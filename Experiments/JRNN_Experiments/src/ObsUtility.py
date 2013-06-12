@@ -188,6 +188,7 @@ def loadCSMTLDSfromData(outDS, data, indexes, numFrames, taskName, normalize=Tru
     subData = [data[x] for x in indexes]
     minSize = min([len(x) for x in subData])
     strideSize = minSize / numFrames
+    strideSize = strideSize if strideSize > 0 else 1
     for d in subData:
         inputs = numpy.array([item['sensors'] for item in d[-minSize::strideSize]])
         outputs = numpy.array([item['actions'] for item in d[-minSize::strideSize]])
