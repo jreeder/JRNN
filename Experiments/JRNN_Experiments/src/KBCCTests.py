@@ -4,8 +4,8 @@
 # <codecell>
 
 #%pylab
-debug = True
-import PyJRNN_d as PyJRNN
+debug = False
+import PyJRNN #_d as PyJRNN
 import pyublas
 import scipy.io
 import ObsUtility
