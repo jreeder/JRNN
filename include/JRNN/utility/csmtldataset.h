@@ -42,6 +42,7 @@ namespace JRNN {
 		void SetConceptData(bool isConceptData);
 		bool GetConceptData();
 		vecDouble GetRandContext();
+		vecDouble GetRandContext(strings inSubView);
 		int GetViewSize();
 		strings GetView();
 		strings GetTaskNames();
@@ -103,6 +104,7 @@ namespace JRNN {
 		virtual void FillSubset( matDouble& ins, matDouble& outs, int numExamples, hashedIntsMap& indexQueues, TaskPtr inTask, int numRepeats = 0);
 		virtual void Reshuffle();
 		vecDouble CreateContextIn(int taskNum);
+		vecDouble CreateContextIn(string taskName);
 		//vecDouble ConcatVec(vecDouble first, vecDouble second);
 		vecDouble VecDoubleFromDoubles( const doubles& inDoubles );
 		template<class outType, class inType> 

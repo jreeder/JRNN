@@ -73,13 +73,16 @@ namespace JRNN {
 
 	RevKBCCTrainer::~RevKBCCTrainer(){}
 
-	RevKBCCTrainer::reverbdpoint RevKBCCTrainer::ReverberateNetwork()
+	RevKBCCTrainer::reverbdpoint RevKBCCTrainer::ReverberateNetwork( strings subView /*= strings(0)*/ )
 	{
 		//changing the clean reverb to only threshold the outputs. 
 		//if the numcontexts is set above 0 then we'll get them from the dataset.
 		int inSize = revNet->GetNumIn();
-		if (revparams.numContexts > 0){
+		if (revparams.numContexts > 0 || subView.size() > 0){
 			//assert(revparams.numContexts > 0);
+			if(revparams.numContexts == 0){
+				revparams.numContexts = subView.size();
+			}
 			inSize -= revparams.numContexts;
 		}
 
@@ -89,7 +92,13 @@ namespace JRNN {
 			tmpIn[i] = revRand();
 		}
 		if (revparams.numContexts > 0){
-			vecDouble randContext = dynamic_pointer_cast<CSMTLDataset>(data)->GetRandContext();
+			vecDouble randContext;
+			if (subView.size() > 0){
+				randContext = dynamic_pointer_cast<CSMTLDataset>(data)->GetRandContext(subView);
+			}
+			else {
+				randContext = dynamic_pointer_cast<CSMTLDataset>(data)->GetRandContext();
+			}
 			tmpIn = ConcatVec(tmpIn,randContext);
 		}
 		revNet->Activate(tmpIn);
@@ -313,7 +322,7 @@ namespace JRNN {
 	}
 
 
-	JRNN::DatasetPtr RevKBCCTrainer::ReverbMainNet( int numTrain, int numVal /*= 0 */ )
+	JRNN::DatasetPtr RevKBCCTrainer::ReverbMainNet( int numTrain, int numVal /*= 0*/, strings subView /*= strings(0) */ )
 	{
 		matDouble newInputs;
 		matDouble newOutputs;
@@ -322,7 +331,7 @@ namespace JRNN {
 		revNet = net1;
 
 		for (int i = 0; i < totalPoints; i++){
-			reverbdpoint dpoint = ReverberateNetwork();
+			reverbdpoint dpoint = ReverberateNetwork(subView);
 			newInputs.push_back(dpoint.inPoint);
 			newOutputs.push_back(dpoint.outPoint);
 		}

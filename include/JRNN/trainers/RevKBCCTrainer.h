@@ -73,7 +73,7 @@ namespace JRNN {
 
 		void SetUseRecurrence(bool useRecurrence);
 
-		DatasetPtr ReverbMainNet( int numTrain, int numVal = 0 );
+		DatasetPtr ReverbMainNet( int numTrain, int numVal = 0, strings subView = strings(0) );
 
 		//virtual void AddNewInputs( ints inputIndexes, DatasetPtr newData, bool connectToHidden = false );
 
@@ -114,7 +114,7 @@ namespace JRNN {
 			TEST
 		} algPhase;
 
-		reverbdpoint ReverberateNetwork();
+		reverbdpoint ReverberateNetwork(strings subView = strings(0));
 
 		virtual vecDouble ActivateNet(vecDouble inPoint, vecDouble outPoint);
 

@@ -181,6 +181,17 @@ namespace JRNN {
 		return retVec;
 	}
 
+	JRNN::vecDouble CSMTLDataset::CreateContextIn( string taskName ){
+		vecDouble retVec(view.size());
+		FillVec(retVec, 0);
+		for (uint i = 0; i < view.size(); i++){
+			if (taskName == view[i]){
+				retVec[i] = 1;
+			}
+		}
+		return retVec;
+	}
+
 	//vecDouble CSMTLDataset::ConcatVec( vecDouble first, vecDouble second )
 	//{
 	//	vecDouble retVec(first.size() + second.size());
@@ -498,6 +509,13 @@ namespace JRNN {
 		int viewSize = view.size();
 		int randTaskNum = dRand() % viewSize;
 		return CreateContextIn(randTaskNum);
+	}
+
+	vecDouble CSMTLDataset::GetRandContext(strings inSubView)
+	{
+		int viewSize = inSubView.size();
+		int randTaskNum = dRand() % viewSize;
+		return CreateContextIn(inSubView[randTaskNum]);
 	}
 
 	int CSMTLDataset::GetViewSize()
