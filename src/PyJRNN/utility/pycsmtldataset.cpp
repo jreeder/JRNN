@@ -15,6 +15,9 @@ using namespace boost::python;
 void (CSMTLDataset::*dist1)(strings) = &CSMTLDataset::DistSubview;
 void (CSMTLDataset::*dist2)(strings, int, int, int) = &CSMTLDataset::DistSubview;
 
+vecDouble (CSMTLDataset::*getRandC)() = &CSMTLDataset::GetRandContext;
+vecDouble (CSMTLDataset::*getRandC2)(strings) = &CSMTLDataset::GetRandContext;
+
 BOOST_PYTHON_MEMBER_FUNCTION_OVERLOADS(CSMTLDataset_DDOverloads, DistData, 3,6);
 
 void exportCSMTLDataset(){
@@ -32,7 +35,8 @@ void exportCSMTLDataset(){
 		add_property("isConceptData", &CSMTLDataset::GetConceptData, &CSMTLDataset::SetConceptData).
 		def("DistData", &CSMTLDataset::DistData, CSMTLDataset_DDOverloads()).
 		def("ResetView", &CSMTLDataset::ResetView).
-		def("GetRandContext", &CSMTLDataset::GetRandContext).
+		def("GetRandContext", getRandC).
+		def("GetRandContext", getRandC2).
 		def("GetTaskNames", &CSMTLDataset::GetTaskNames)
 		;
 }
