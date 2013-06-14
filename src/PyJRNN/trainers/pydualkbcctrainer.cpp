@@ -57,6 +57,7 @@ void exportDualKBCCTrainer(){
 		def("getTestWhileTrainResults", &DualKBCCTrainer::getTestWhileTrainResults, return_value_policy<copy_const_reference>()).
 		def("AddNewInputs", &DualKBCCTrainer::AddNewInputs).
 		def("AddPrevTrainedNets", &DualKBCCTrainer::AddPrevTrainedNets).
+		def("ReverbMainNet", &DualKBCCTrainer::ReverbMainNet).
 		def_readwrite("revparams", &DualKBCCTrainer::revparams).
 		def_readonly("net1vals", &DualKBCCTrainer::net1vals).
 		def_readonly("net2vals", &DualKBCCTrainer::net2vals).

@@ -57,6 +57,7 @@ void exportRevKBCCTrainer(){
 		def("getTestWhileTrainResults", &RevKBCCTrainer::getTestWhileTrainResults, return_value_policy<copy_const_reference>()).
 		def("AddNewInputs", &RevKBCCTrainer::AddNewInputs).
 		def("AddPrevTrainedNets", &RevKBCCTrainer::AddPrevTrainedNets).
+		def("ReverbMainNet", &RevKBCCTrainer::ReverbMainNet).
 		def_readwrite("revparams", &RevKBCCTrainer::revparams).
 		def_readonly("net1vals", &RevKBCCTrainer::net1vals).
 		def_readonly("net2vals", &RevKBCCTrainer::net2vals).

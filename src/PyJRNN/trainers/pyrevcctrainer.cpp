@@ -56,6 +56,7 @@ void exportRevCCTrainer(){
 		def("getTestWhileTrainResults", &RevCCTrainer::getTestWhileTrainResults, return_value_policy<copy_const_reference>()).
 		def("AddNewInputs", &RevCCTrainer::AddNewInputs).
 		def("AddPrevTrainedNets", &RevCCTrainer::AddPrevTrainedNets).
+		def("ReverbMainNet", &RevCCTrainer::ReverbMainNet).
 		def_readwrite("revparams", &RevCCTrainer::revparams).
 		def_readonly("net1vals", &RevCCTrainer::net1vals).
 		def_readonly("net2vals", &RevCCTrainer::net2vals).
