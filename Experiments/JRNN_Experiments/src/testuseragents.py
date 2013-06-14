@@ -35,10 +35,21 @@ def testNetwork(netfilename, numRepeats=5, numTicks=2000):
     
     print "{0} Done".format(netname)
 
+def ShowNetsWOResults(firstlist, existlist):
+    retList = []
+    for filename in firstlist:
+        exists = len([x for x in existlist if filename in x])
+        if exists == 0:
+            retList.append(filename)
+    
+    return retList
+
+test = False
+
 if __name__=='__main__':
     
     if len(sys.argv) != 2:
-        user = 'jcginn'
+        user = 'Yinjie'
     else:    
         user = sys.argv[1]
     
@@ -46,12 +57,23 @@ if __name__=='__main__':
     
     networkfiles = os.listdir(userP)
     
+    resultP = os.path.join(luserspath, user, 'results')
+    
+    resultFiles = [x for x in os.listdir(resultP) if 'SimResults' in x]
+    
+    lefttodo = ShowNetsWOResults(networkfiles, resultFiles)
+    
+    print len(resultFiles)
+    print len(networkfiles)
+    print len(lefttodo)
+    
     if test:
-        testNetwork(networkfiles[0], 2, 1000)
+        pass
+        #testNetwork(networkfiles[0], 2, 1000)
     else:
         pool = Pool(numProcesses)
         for netfile in networkfiles:
-            print "Pooling {}".format(netfile)
+            #print "Pooling {}".format(netfile)
             pool.apply_async(testNetwork, (netfile,))
             
         pool.close()
