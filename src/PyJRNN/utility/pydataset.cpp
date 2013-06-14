@@ -32,6 +32,7 @@ void exportDatasets(){
 		def("Clear", &Dataset::Clear).
 		def("GetInputs", &Dataset::GetInputs, return_value_policy<copy_const_reference>()).
 		def("GetOutputs", &Dataset::GetOutputs, return_value_policy<copy_const_reference>()).
+		def("MergeSubsets", &Dataset::MergeSubsets).
 		add_property("numInputs", &Dataset::GetNumInputs).
 		add_property("numOutputs", &Dataset::GetNumOutputs).
 		add_property("realOuts", &Dataset::getRealOuts, &Dataset::setRealOuts)
