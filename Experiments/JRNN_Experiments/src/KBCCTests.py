@@ -11,6 +11,7 @@ import scipy.io
 import ObsUtility
 import numpy
 import os
+import re
 
 # <codecell>
 
@@ -93,23 +94,61 @@ def TestKBCC(cds, firsttask, secondtask, thirdtask):
     print "Done"
 # <codecell>
 
-def LoadBandCross(shift = False):
+def LoadBandCross(shift = False, view=[]):
     ds = scipy.io.loadmat("Notebook Data/datasets/bandcross.mat")
     cds = PyJRNN.utility.CSMTLDataset()
     cds.isConceptData = False
     inputs = numpy.ascontiguousarray(ds["inputs"])
+    outNames = None
     if shift:
         inputs = inputs - 0.5
-    outNames = ['outBox1', 'outBox2', 'outBox3', 'outBox12', 'outBox13', 'outBox123']
+    if len(view) == 0:
+        outNames = ['outBox1', 'outBox2', 'outBox3', 'outBox12', 'outBox13', 'outBox123']
+    else:
+        outNames = view
+        
     for outName in outNames:
         outputs = numpy.ascontiguousarray(ds[outName])
         if shift:
             outputs = outputs - 0.5
-        cds.AddMatDoublesToTask(ObsUtility.matDoubleFromArray(inputs), ObsUtility.matDoubleFromArray(outputs), outName)
+        cds.AddMatDoublesToTask(ObsUtility.matDoubleFromArray(inputs), ObsUtility.matDoubleFromArray(numpy.ascontiguousarray(ds[outName])), outName)
+    
+    inView = PyJRNN.types.strings()
+    for name in outNames:
+        inView.append(name)
+    
+    cds.View = inView
     
     cds.DistData(200,200,200)
     
     return cds
+
+def sortkey(string):
+    errRe = re.compile("-(\d+\.\d+)-")
+    return float(errRe.findall(string)[0])
+
+def TestWiClass(net, dataset, dstype):
+    inputs = dataset.GetInputs(dstype)
+    outputs = dataset.GetOutputs(dstype)
+    numInCorrect = 0
+    totalItems = len(inputs)
+    numTasks = len(outputs[0])
+    taskErrs = defaultdict(int)
+    taskErrorRate = {}
+    for (inputIt, outputIt) in zip(inputs, outputs):
+        net.Activate(inputIt)
+        netout = net.GetOutputs()
+        error = outputIt - netout
+        for i in range(numTasks):
+            name = "task-{0}".format(i)
+            err = error[i]
+            if abs(err) > 0.5:
+                taskErrs[name] += 1
+    
+    for i in range(numTasks):
+        name = "task-{0}".format(i)
+        taskErrorRate[name] = taskErrs[name] / (totalItems * 1.0)
+    return taskErrorRate
 
 def SingleDataTest(dsname, archive=True, count = 0, useVal = True, shift = True):
     cds = LoadBandCross(shift)
@@ -163,15 +202,115 @@ def SameDataTest(dsname):
     retVal = (result, epochs, numHid, [x for x in mseRec])
     return retVal
 
+def MergeNetTest(dsname1, dsname2, dsname12, count = 0, useVal = True, shift=False, useRev=True, numRev=2, bufferSize=200):
+    cds = LoadBandCross(shift)
+    tmpsview = PyJRNN.types.strings()
+    tmpsview.append(dsname12)
+    cds.DistSubview(tmpsview)
+    ds = cds.SpawnDS()
+    del tmpsview[:]
+    tmpsview.append(dsname1)
+    tmpsview.append(dsname2)
+    cds.DistSubview(tmpsview)
+    ds2 = cds.SpawnDS()
+    
+    numContext = cds.ViewSize
+    filename1 = ""
+    filename2 = ""
+    varString = "uVal{0}-uSh{1}".format(useVal, shift)
+    netType = 'revcc' if useRev else 'kbcc'
+    filename1 = sorted([x for x in os.listdir(networkpath) if dsname1+'-' in x and varString in x and netType in x], key=sortkey)[0]
+    filename2 = sorted([x for x in os.listdir(networkpath) if dsname2+'-' in x and varString in x and netType in x], key=sortkey)[0]
+    archiver = PyJRNN.utility.JSONArchiver()
+    print "Loading Existing Nets"
+    net1 = archiver.LoadFromFile(os.path.join(networkpath, filename1))
+    net2 = archiver.LoadFromFile(os.path.join(networkpath, filename2))
+    
+    revGenT = None
+    if useRev:
+        revGenT = PyJRNN.trainers.RevCCTrainer(net1.numIn, net1.numOut, 8)
+    else:
+        revGenT = PyJRNN.trainers.DualKBCCTrainer(net1.numIn, net1.numOut, 8)
+        
+    print "Generating Pseudo Data"
+    revGenT.AddPrevTrainedNets(net1, net1.Clone())
+    revGenT.revparams.numRev = numRev
+    revGenT.revparams.bufferSize = bufferSize
+    revGenT.revparams.numContexts = numContext
+    revGenT.revparams.cleanReverb = True
+    revGenT.SetDataSet(cds)
+    del tmpsview[:]
+    tmpsview.append(dsname1)
+    newDS = revGenT.ReverbMainNet(100, 100, tmpsview)
+    
+    del tmpsview[:]
+    tmpsview.append(dsname2)
+    revGenT.AddPrevTrainedNets(net2, net2.Clone())
+    secDS = revGenT.ReverbMainNet(100, 100, tmpsview)
+    
+    
+    newDS.MergeSubsets(secDS, True)
+    
+    kbcct = None
+    
+    if useRev:
+        kbcct = PyJRNN.trainers.RevKBCCTrainer(newDS.numInputs, newDS.numOutputs, 4) #use Varied means this gets trippled
+    else:
+        kbcct = PyJRNN.trainers.DualKBCCTrainer(newDS.numInputs, newDS.numOutputs, 4)
+        
+    print "Creating Trainer"
+    kbcct.SetSDCCandVaryActFunc(True, True)
+    kbcct.revparams.numRev = numRev if useRev else 0
+    kbcct.revparams.bufferSize = 0 # Only going to be training task once. 
+    
+    subnet1 = net1 if not useRev else net1.CloneToCC()
+    subnet2 = net2 if not useRev else net2.CloneToCC()
+    
+    kbcct.AddSubNet(subnet1)
+    kbcct.AddSubNet(subnet2)
+    kbcct.numCopies = 0 # only add direct connections
+    
+    print "Training Pseudo Set"
+    kbcct.TrainTask(newDS, 3000, useVal)
+    
+    print "Getting Results"
+    resultDict = {}
+    resultDict['FinTask'] = dsname12
+    resultDict['SubTasks'] = (filename1, filename2)
+    resultDict['epochs'] = kbcct.net1vals.epochs
+    resultDict['hiddenLayers'] = kbcct.net1vals.numHidLayers
+    resultDict['MSERec'] = [x for x in kbcct.net1vals.MSERec]
+    resultDict['testMSEComb'] = kbcct.TestOnData(ds, PyJRNN.utility.DSDatatype.TEST)
+    resultDict['errorRateComb'] = TestWiClass(kbcct.net1, ds, PyJRNN.utility.DSDatatype.TEST)
+    resultDict['testMSESep'] = kbcct.TestOnData(ds2, PyJRNN.utility.DSDatatype.TEST)
+    resultDict['errorRateSep'] = TestWiClass(kbcct.net1, ds2, PyJRNN.utility.DSDatatype.TEST)
+    
+    err = resultDict['errorRate']
+    newNetType = 'revkbcc' if useRev else 'kbcc'
+    archiver.SaveToFile(kbcct.net1, os.path.join(networkpath, "merged-{dsname12}-{err}-uSDTrue-uVATrue-uVal{useVal}-uSh{shift}-{count}.{newNetType}".format(**locals())))
+    
+    return resultDict
+
 import wingdbstub
 
 #TestKBCC(cds, "outBox1", "outBox2", "outBox12")
 
 networkpath = 'Notebook Data/networks/'
 dsname = 'outBox1'
+dsname1 = 'outBox1'
+dsname2 = 'outBox2'
+dsname12 = 'outBox12'
+
+useVal = True
+shift = False
+useRev=True
+varString = "uVal{0}-uSh{1}".format(useVal, shift)
+netType = 'revcc' if useRev else 'kbcc'
+
+results = MergeNetTest(dsname1, dsname2, dsname12, useVal = True, shift=False, useRev=False, numRev=2, bufferSize=200)
 
 #archiver = PyJRNN.utility.JSONArchiver()
 #kbccnet = archiver.LoadFromFile(os.path.join(networkpath, 'kbcc-outBox1.net'))
 
-SingleDataTest(dsname)
+#SingleDataTest(dsname)
 #SameDataTest(dsname)
