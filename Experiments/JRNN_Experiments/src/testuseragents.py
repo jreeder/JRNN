@@ -16,6 +16,9 @@ import json
 
 test = False
 
+def GetUsers():
+    return [d for d in os.listdir(luserspath) if os.path.isdir(os.path.join(luserspath, d))]
+
 def testNetwork(netfilename, numRepeats=5, numTicks=2000):
     print "{0} Starting".format(netfilename)
     openneroexe = sourcebase + r"/opennero/Build/dist/Release/OpenNERO.exe"
@@ -49,34 +52,43 @@ test = False
 if __name__=='__main__':
     
     if len(sys.argv) != 2:
-        user = 'Yinjie'
+        inuser = ''
     else:    
-        user = sys.argv[1]
-    
-    userP = os.path.join(luserspath, user, 'agents')
-    
-    networkfiles = os.listdir(userP)
-    
-    resultP = os.path.join(luserspath, user, 'results')
-    
-    resultFiles = [x for x in os.listdir(resultP) if 'SimResults' in x]
-    
-    lefttodo = ShowNetsWOResults(networkfiles, resultFiles)
-    
-    print len(resultFiles)
-    print len(networkfiles)
-    print len(lefttodo)
-    
-    if test:
-        pass
-        #testNetwork(networkfiles[0], 2, 1000)
+        inuser = sys.argv[1]
+
+    if inuser == '':
+        users = GetUsers()
     else:
-        pool = Pool(numProcesses)
-        for netfile in networkfiles:
-            #print "Pooling {}".format(netfile)
-            pool.apply_async(testNetwork, (netfile,))
-            
-        pool.close()
-        pool.join()
+        users = [inuser]
+        
+    for user in users:
     
+        userP = os.path.join(luserspath, user, 'agents')
+        
+        networkfiles = os.listdir(userP)
+        
+        resultP = os.path.join(luserspath, user, 'results')
+        
+        resultFiles = [x for x in os.listdir(resultP) if 'SimResults' in x]
+        
+        lefttodo = ShowNetsWOResults(networkfiles, resultFiles)
+        
+        print len(resultFiles)
+        print len(networkfiles)
+        print len(lefttodo)
+        
+        if test:
+            pass
+            #testNetwork(networkfiles[0], 2, 1000)
+        else:
+            pool = Pool(numProcesses)
+            for netfile in networkfiles:
+                #print "Pooling {}".format(netfile)
+                pool.apply_async(testNetwork, (netfile,))
+                
+            pool.close()
+            pool.join()
+        
+        print user + " Complete"
+        
     print "Finished"
