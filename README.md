@@ -23,8 +23,10 @@ This software is of primary use to my disseratation research. So things are pret
 
 Currently only the VS2010 build environment is kept up to date. At some point I will be adding cmake support. 
 
+All Python segments were developed and debugged using WingIDE available [Here](http://wingware.com/). 
+
 ***
-Copyright &copy; 2012 John Reeder
+Copyright &copy; 2014 John Reeder
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
